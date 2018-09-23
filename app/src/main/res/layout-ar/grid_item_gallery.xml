@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/recomend_list_item_bg"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/normal_padding_size"
+    android:paddingLeft="@dimen/normal_padding_size"
+    android:paddingTop="@dimen/normal_padding_size" >
+
+    <ImageView
+        android:id="@+id/iv_gallery_image"
+        android:layout_width="fill_parent"
+        android:layout_height="100.0dip"
+        android:layout_gravity="center_horizontal"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:paddingTop="10.0dip"
+        android:scaleType="fitCenter" />
+
+</LinearLayout>

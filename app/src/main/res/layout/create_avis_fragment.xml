@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/cinza" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="5.0dip"
+                android:layout_marginTop="5.0dip"
+                android:background="@drawable/formulaire_contour_title"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40.0dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/txtCreateAvis_textViewTitle"
+                    android:textColor="@color/white"
+                    android:textSize="16.0sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="5.0dip"
+                android:layout_marginTop="10.0dip"
+                android:background="@drawable/formulaire_contour"
+                android:orientation="vertical"
+                android:paddingBottom="10.0dip" >
+
+                <EditText
+                    android:id="@+id/idCreateAvis_editTextAvantage"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:hint="@string/txtCreateAvis_editTextAvantage"
+                    android:lines="3"
+                    android:paddingLeft="5.0dip"
+                    android:singleLine="false" />
+
+                <EditText
+                    android:id="@+id/idCreateAvis_editTextInconvenient"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:hint="@string/txtCreateAvis_editTextInconvenient"
+                    android:lines="3"
+                    android:paddingLeft="5.0dip"
+                    android:singleLine="false" />
+
+                <Spinner
+                    android:id="@+id/idCreateAvis_spinnerStatut"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:padding="2.0dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40.0dip"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="5.0dip"
+                    android:text="@string/txtCreateAvis_textViewEvaluation"
+                    android:textColor="@color/Gray"
+                    android:textSize="16.0sp" />
+
+                <RatingBar
+                    android:id="@+id/idCreateAvis_ratingBar"
+                    style="@style/RatingBarMidEdu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="10.0dip"
+                    android:layout_marginTop="10.0dip"
+                    android:gravity="center"
+                    android:numStars="5"
+                    android:paddingBottom="10.0dip"
+                    android:rating="2.0"
+                    android:stepSize="1.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="70.0dip"
+                android:weightSum="2.0" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1.0" >
+
+                    <View
+                        android:id="@id/tut1SplitBottom"
+                        android:layout_width="1.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginBottom="20.0dip"
+                        android:layout_marginTop="20.0dip"
+                        android:background="@android:color/white"
+                        android:visibility="invisible" />
+
+                    <LinearLayout
+                        android:id="@+id/idCreateAvis_linearLayoutAnnuler"
+                        android:layout_width="fill_parent"
+                        android:layout_height="45.0sp"
+                        android:layout_marginLeft="5.0dip"
+                        android:layout_marginRight="5.0dip"
+                        android:layout_marginTop="5.0dip"
+                        android:layout_toLeftOf="@id/tut1SplitBottom"
+                        android:layout_weight="1.0"
+                        android:background="@drawable/button_item"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/txtCreateAvis_textViewAnnuler"
+                            android:textColor="@color/white"
+                            android:textSize="18.0sp" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/idCreateAvis_linearLayoutValider"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45.0sp"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="5.0dip"
+                    android:layout_marginTop="5.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/button_item"
+                    android:clickable="true"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/txtCreateAvis_textViewValider"
+                        android:textColor="@color/white"
+                        android:textSize="18.0sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

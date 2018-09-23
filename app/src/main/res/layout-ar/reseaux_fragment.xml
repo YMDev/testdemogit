@@ -1,0 +1,197 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/cinza" >
+
+    <RelativeLayout
+        android:id="@+id/idSetting_relativeLayoutHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0sp"
+        android:background="@color/red_light"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/idSetting_linearLayoutRetour"
+            android:layout_width="wrap_content"
+            android:layout_height="45.0sp"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center"
+                android:src="@drawable/ic_action_previous_item_ar" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/idSetting_textViewTitleHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/idSetting_linearLayoutRetour"
+            android:gravity="center"
+            android:paddingLeft="5.0dip"
+            android:text="@string/txtSettings_textViewReseauSociauxTitle"
+            android:textColor="@color/white"
+            android:textSize="18.0sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/idSetting_relativeLayoutHeader" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/idSettings_textViewReseauSociauxTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="right"
+                android:paddingRight="10sp"
+                android:text="@string/txtSettings_textViewReseauSociauxTitle"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/idSettings_ViewReseauxSociauxTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@color/red_dark" />
+
+            <RelativeLayout
+                android:id="@+id/idSettings_relativeLayoutNousEcrire"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/settings_item"
+                android:clickable="true" >
+
+                <TextView
+                    android:id="@+id/idSettings_textViewNousEcrire"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:paddingBottom="15dip"
+                    android:paddingTop="15dip"
+                    android:text="@string/txtSettings_textViewNousEcrire"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/idSettings_ViewNousEcrire"
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@color/red_dark" />
+
+            <RelativeLayout
+                android:id="@+id/idSettings_relativeLayoutNousSuivreFacebook"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/settings_item"
+                android:clickable="true" >
+
+                <TextView
+                    android:id="@+id/idSettings_textViewNousSuivreFacebook"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:paddingBottom="15dip"
+                    android:paddingTop="15dip"
+                    android:text="@string/txtSettings_textViewNousSuivreFacebook"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/idSettings_ViewNousSuivreFacebook"
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@color/red_dark" />
+
+            <RelativeLayout
+                android:id="@+id/idSettings_relativeLayoutNousSuivreTwitter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/settings_item"
+                android:clickable="true" >
+
+                <TextView
+                    android:id="@+id/idSettings_textViewNousSuivreTwitter"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:paddingBottom="15dip"
+                    android:paddingTop="15dp"
+                    android:text="@string/txtSettings_textViewNousSuivreTwitter"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/idSettings_ViewNousSuivreTwitter"
+                android:layout_width="fill_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@color/red_dark" />
+
+            <RelativeLayout
+                android:id="@+id/idSettings_relativeLayoutNousSuivreGooglePlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/settings_item"
+                android:clickable="true" >
+
+                <TextView
+                    android:id="@+id/idSettings_textViewNousSuivreGooglePlay"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:gravity="right"
+                    android:paddingBottom="15dip"
+                    android:paddingTop="15dp"
+                    android:text="@string/txtSettings_textViewNousSuivreGooglePlay"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

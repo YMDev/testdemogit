@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="F:\Android_Works\3TECH\app\src\main\assets"><file name="fonts/harlowsi.ttf" path="F:\Android_Works\3TECH\app\src\main\assets\fonts\harlowsi.ttf"/></source><source path="F:\Android_Works\3TECH\app\build\generated\assets\shaders\debug"/></dataSet><dataSet config="debug"><source path="F:\Android_Works\3TECH\app\src\debug\assets"/></dataSet></merger>

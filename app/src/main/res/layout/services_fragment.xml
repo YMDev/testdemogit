@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_fb" >
+
+    <ImageButton
+        android:id="@+id/idDetailSrvc_Row_imageButtonAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="5.0dip"
+        android:layout_marginRight="10.0dip"
+        android:background="@drawable/ic_add_button"
+        android:contentDescription="@string/clear" />
+
+    <RelativeLayout
+        android:id="@+id/idListServices_linearlayoutSearch"
+        android:layout_width="fill_parent"
+        android:layout_height="50.0dip"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/white"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/idListService_imageButtonDefaut"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="?selectableItemBackground"
+            android:padding="5.0dip"
+            android:src="@drawable/order_c" />
+
+        <View
+            android:id="@+id/idListService_viewDefaut"
+            android:layout_width="1.0dip"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/idListService_imageButtonDefaut"
+            android:background="@color/Gray" />
+
+        <ImageButton
+            android:id="@+id/idListService_imageButtonDate"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/idListService_viewDefaut"
+            android:background="?selectableItemBackground"
+            android:padding="5.0dip"
+            android:src="@drawable/temps_c" />
+
+        <View
+            android:id="@+id/idListService_viewDate"
+            android:layout_width="1.0dip"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/idListService_imageButtonDate"
+            android:background="@color/Gray" />
+
+        <ImageButton
+            android:id="@+id/idListService_imageButtonDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/idListService_viewDate"
+            android:background="?selectableItemBackground"
+            android:padding="5.0dip"
+            android:src="@drawable/distance_c" />
+
+        <View
+            android:id="@+id/idListService_viewDistance"
+            android:layout_width="1.0dip"
+            android:layout_height="fill_parent"
+            android:layout_toLeftOf="@id/idListService_imageButtonDistance"
+            android:background="@color/Gray" />
+
+        <Spinner
+            android:id="@+id/idListService_spinnerType"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@id/idListService_viewDistance"
+            android:padding="5.0dip" />
+    </RelativeLayout>
+
+    <mobile.a3tech.com.a3tech.view.CustomListView
+        android:id="@id/mListView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/idListServices_linearlayoutSearch"
+        android:cacheColorHint="@android:color/transparent"
+        android:fadingEdgeLength="0dp" />
+
+</RelativeLayout>

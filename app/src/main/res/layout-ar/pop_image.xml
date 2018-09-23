@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_fb"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/image_bg"
+        android:padding="3.0dip" >
+
+        <ImageView
+            android:id="@+id/popup_row_article_picto"
+            android:layout_width="200.0dip"
+            android:layout_height="200.0dip"
+            android:contentDescription="@string/clear"
+            android:gravity="center"
+            android:src="@drawable/logo_portrait_bis" />
+    </LinearLayout>
+
+</RelativeLayout>

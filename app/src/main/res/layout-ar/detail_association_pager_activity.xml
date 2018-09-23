@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/cinza" >
+
+    <RelativeLayout
+        android:id="@+id/idDetailAssociation_relativeLayoutHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0sp"
+        android:background="@color/red_light"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/idDetailAssociation_linearLayoutRetour"
+            android:layout_width="wrap_content"
+            android:layout_height="45.0sp"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center"
+                android:src="@drawable/ic_action_previous_item_ar" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/idDetailAssociation_textViewTitleHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/idDetailAssociation_linearLayoutRetour"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center"
+            android:paddingLeft="5.0dip"
+            android:text="@string/txtDetailAssociation_textViewTitleHeader"
+            android:textColor="@color/white"
+            android:textSize="18.0sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/idDetailAssociation_relativeLayoutGalerie"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idDetailAssociation_relativeLayoutHeader"
+        android:layout_marginLeft="@dimen/normal_padding_size"
+        android:layout_marginRight="@dimen/normal_padding_size"
+        android:background="@drawable/achivement_fragment_bg" >
+
+        <RelativeLayout
+            android:id="@+id/idDetailAssociation_relativeLayoutImageGalerie"
+            android:layout_width="fill_parent"
+            android:layout_height="100.0dip"
+            android:layout_alignParentTop="true"
+            android:layout_margin="@dimen/normal_padding_size" >
+
+            <ImageView
+                android:id="@+id/idStore_imageGalerie"
+                android:layout_width="fill_parent"
+                android:layout_height="100.0dip"
+                android:layout_centerInParent="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/logo_portrait" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/idDetailAssociation_relativeLayoutCountSelect"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/idDetailAssociation_relativeLayoutImageGalerie" >
+
+            <LinearLayout
+                android:id="@+id/idStore_linearLayoutImageSelector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/images_layout_selector"
+                android:padding="4.0dip" >
+
+                <ImageView
+                    android:id="@+id/rent_flat_img_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/galleryicon" />
+
+                <TextView
+                    android:id="@+id/idStore_textCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="5.0dip"
+                    android:gravity="center_vertical"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="18.0dip" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <mobile.a3tech.com.a3tech.sliding.SlidingTabLayout
+        android:id="@+id/mTabs"
+        android:layout_width="fill_parent"
+        android:layout_height="48.0dip"
+        android:layout_below="@id/idDetailAssociation_relativeLayoutGalerie" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/mPager"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mTabs"
+        android:background="@color/white" />
+
+</RelativeLayout>

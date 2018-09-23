@@ -1,0 +1,745 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/cinza" >
+
+    <RelativeLayout
+        android:id="@+id/idPostage_relativeLayoutHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="45sp"
+        android:background="@color/red_light"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/idPostage_linearLayoutRetour"
+            android:layout_width="wrap_content"
+            android:layout_height="45sp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:src="@drawable/ic_action_previous_item" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:src="@drawable/ic_launcher" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/idPostage_textViewTitleHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/idPostage_linearLayoutRetour"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical|center_horizontal|center"
+            android:paddingLeft="5dip"
+            android:text="@string/txtPostage_textViewTitleHeader"
+            android:textColor="@color/branco"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/idPostage_relativeLayoutHeader" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/formulaire_contour_title"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/idPostage_Service_textViewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/clear"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/formulaire_contour"
+                android:orientation="vertical" >
+
+                <TableLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:columnCount="3"
+                    android:paddingLeft="3dip"
+                    android:paddingRight="3dip"
+                    android:orientation="horizontal"
+                    android:rowCount="5"
+                    android:stretchColumns="0,1,2" >
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical" >
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutElectronique"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutElectronique"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_electronique" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:singleLine="false"
+                                    android:text="@string/txtPostage_textViewElectronique"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutInformatique"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutInformatique"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_informatique" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewInformatique"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutVetementsHomme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutVetementsHomme"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_vetementshomme" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewVetementsHomme"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dip"
+                        android:gravity="center_vertical" >
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutVetementsFemme"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutVetementsFemme"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_vetementsfemme" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewVetementsFemme"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutEnfant"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutEnfant"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_enfant" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewEnfant"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutbebe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutbebe"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_bebe" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewBebe"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="30dip"
+                        android:gravity="center_vertical" >
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutBienEtre"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutBienEtre"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_bienetre" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewBienEtre"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutMaison"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutMaison"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_maison" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewMaison"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutTransport"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutTransport"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_transport" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewTransport"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginTop="30dip"
+                        android:gravity="center_vertical" >
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutBricolage"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutBricolage"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_bricolage" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewBricolage"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutLivre"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutLivre"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_livre" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewLivre"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutSport"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutSport"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_sport" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewSport"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginTop="30dip"
+                        android:gravity="center_vertical" >
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeSortie"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearSortie"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_auto_sortie" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewSortie"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutArt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutArt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_arts" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewArt"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutAlimentation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutAlimentation"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_alimentation" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewAlimentation"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginTop="30dip"
+                        android:gravity="center_vertical" >
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutAnimaux"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutAnimaux"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_animaux" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewAnimaux"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutCoupMain"
+                            android:layout_width="wrap_content"
+                            android:layout_height="fill_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutCoupMain"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_coupmain" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewCoupMain"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idPostage_relativeLayoutAutre"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.0"
+                            android:gravity="center_vertical|center_horizontal" >
+
+                            <LinearLayout
+                                android:id="@+id/idPostage_linearLayoutAutre"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/icon_item_style"
+                                android:clickable="true"
+                                android:gravity="center_horizontal"
+                                android:orientation="vertical" >
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:contentDescription="@string/app_name"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:src="@drawable/ic_cat_autre" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical|center_horizontal|center"
+                                    android:text="@string/txtPostage_textViewAutre"
+                                    android:textColor="@color/Gray"
+                                    android:textSize="12sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </TableRow>
+                </TableLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

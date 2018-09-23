@@ -1,0 +1,27 @@
+<resources>
+
+    <string name="txtPostage_textViewElectronique">Electronique</string>
+    <string name="txtPostage_textViewInformatique">Informatique</string>
+    <string name="txtPostage_textViewVetementsHomme">Homme</string>
+    
+    <string name="txtPostage_textViewVetementsFemme">Femme</string>
+    <string name="txtPostage_textViewEnfant">Enfant</string>
+    <string name="txtPostage_textViewBebe">Bébé</string>
+    
+    <string name="txtPostage_textViewBienEtre">Bien-être</string>
+    <string name="txtPostage_textViewMaison">Maison</string>
+    <string name="txtPostage_textViewTransport">Transport</string>
+    
+    <string name="txtPostage_textViewBricolage">Bricolage</string>
+    <string name="txtPostage_textViewLivre">Livres-CD-DVD</string>
+    <string name="txtPostage_textViewSport">Sport-Loisirs</string>
+    
+    <string name="txtPostage_textViewSortie">Logement</string>
+    <string name="txtPostage_textViewArt">Art</string>
+    
+    <string name="txtPostage_textViewAlimentation">Alimentation</string>
+    
+    <string name="txtPostage_textViewAnimaux">Animaux</string>
+    <string name="txtPostage_textViewCoupMain">Bon plan</string>
+    <string name="txtPostage_textViewAutre">Matériel</string>
+</resources>

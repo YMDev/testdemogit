@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/branco"
+   >
+
+    <View
+        android:id="@+id/idNotifSrvc_ViewSepService"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:background="@color/DarkGray" />
+
+    <RelativeLayout
+        android:id="@+id/idNotifSrv_relativeLayoutSthemeName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idNotifSrvc_ViewSepService"
+        android:background="@drawable/stheme_item"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/subcategoryName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp" />
+    </RelativeLayout>
+
+</RelativeLayout>

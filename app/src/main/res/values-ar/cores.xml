@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="pull_refresh_textview">#000000</color>
+    <color name="gold">#000000</color>
+    <color name="menu">#ab0132</color>
+    <color name="notifMove">#7e70ae</color>
+    <color name="viber">#6da24a</color>
+    <color name="text_color_fb">#9b9ea3</color>
+    <color name="bg_fc_srv">#fafafa</color>
+    <color name="bg_fb">#d3d6db</color>
+    <color name="progress_bg">#727072</color>
+    <color name="red">#ffe2231a</color>
+    <color name="dark_red">#ff510209</color>
+    <color name="dark">#FF222222</color>
+    <color name="light">#FFEEEEEE</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#E5E5E5</color>
+    <color name="black">#000000</color>
+    
+    <color name="background">#EEEEEE</color>
+    <color name="transparent">#00000000</color>
+    <color name="DarkGray">#A9A9A9</color>
+
+    <!-- Status para as lista -->
+    <color name="navigation_view">#DADADC</color>
+    <color name="navigation_items">#303030</color>
+    <color name="gray_navegation">#ffffff</color>
+    <color name="blue_light">#33B5E5</color>
+    <color name="purple_light">#AA66CC</color>
+    <color name="green_light">#99CC00</color>
+    <color name="orange_light">#FFBB33</color>
+    <color name="red_light">#c21613</color>
+    <color name="blue_dark">#0099CC</color>
+    <color name="purple_dark">#9933CC</color>
+    <color name="green_dark">#669900</color>
+    <color name="orange_dark">#FF8800</color>
+    <color name="red_dark">#CC0000</color>
+    <color name="branco">#ffffff</color>
+    <color name="cinza">#E5E5E5</color>
+    <color name="preto">#000000</color>
+    <color name="fundo">#EEEEEE</color>
+    <color name="cinza_escuro">#999999</color>
+    <color name="Gray">#808080</color>
+
+    <!-- Status para as lista -->
+
+    <color name="cinza_navegation">#ffffff</color>
+    <color name="azul_press">#CFE9F3</color>
+    <color name="azul_claro">#33B5E5</color>
+    <color name="roxo_claro">#AA66CC</color>
+    <color name="verde_claro">#99CC00</color>
+    <color name="laranja_claro">#FFBB33</color>
+    <color name="vermelho_claro">#FF4444</color>
+    <color name="azul_escuro">#0099CC</color>
+    <color name="roxo_escuro">#9933CC</color>
+    <color name="verde_escuro">#669900</color>
+    <color name="laranja_escuro">#FF8800</color>
+    <color name="vermelho_escuro">#CC0000</color>
+
+</resources>

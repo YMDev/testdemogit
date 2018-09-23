@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     <string-array name="type_employes">
+        <item>Statut</item>
+        <item>Ancien employé</item>
+        <item>Employé actuel</item>
+        <item>Futur employé</item>
+    </string-array>
+    
+    <string-array name="nav_menu_items">
+        <item>MON COMPTE</item>
+        <item>Paramétrage</item>
+        <item>Historique</item>
+        <item>Mes évaluations</item>
+        <item>ECHANGES</item>
+        <item>Echanges</item>
+<!--         <item>Dons</item> -->
+<!--         <item>ASSOCIATIONS</item> -->
+        
+<!--         <item>Annuaire</item> -->
+    </string-array>
+   
+    <string-array name="languages">
+        <item>Choisir votre langue</item>
+        <item>Français</item>
+        <item>Arabe</item>
+      
+    </string-array>
+    <string-array name="service_name">
+        <item></item>
+        <item>livre</item>
+        <item>concours</item>
+        <item>article</item>
+        <item>cours</item>
+        <item>cours particulier</item>
+        <item>thèse</item>
+        <item>vie active</item>
+        <item>pratique</item>
+        <item>stage</item>
+        <item>logement</item>
+        <item>transport</item>
+        <item>financement</item>
+        <item>événement</item>
+        <item>informatique</item>
+        <item>exercices</item>
+    </string-array>
+    <string-array name="cat_libelle">
+        <item></item>
+        <item>THEME</item>
+        <item>THEME</item>
+        <item>THEME</item>
+        <item>THEME</item>
+        <item>THEME</item>
+        <item>THEME</item>
+        <item>CADRE</item>
+        <item>CONTENU</item>
+        <item>TYPE STAGE</item>
+        <item>TYPE BIEN</item>
+        <item>FORME</item>
+        <item>TYPE PROJET</item>
+        <item>TYPE EVENEMENT</item>
+    </string-array>
+    <string-array name="scat_libelle">
+        <item></item>
+        <item>SOUS-THEME</item>
+        <item>SOUS-THEME</item>
+        <item>SOUS-THEME</item>
+        <item>SOUS-THEME</item>
+        <item>SOUS-THEME</item>
+        <item>SOUS-THEME</item>
+        <item></item>
+        <item></item>
+        <item>DOMAINE</item>
+        <item>FORME</item>
+        <item></item>
+        <item>TYPE FINANCEMENT</item>
+        <item></item>
+    </string-array>
+    <string-array name="rem">
+        <item>Choisir conditions</item>
+        <item>Achat</item>
+        <item>Prêt</item>
+        <item>Echange</item>
+        <item>Don</item>
+        <item>Payant</item>
+        <item>Gratuit</item>
+        <item>Bénévolat</item>
+        <item>obligatoire</item>
+        <item>non obligatoire</item>
+    </string-array>
+    <string-array name="pays">
+        <item>Choix du pays</item>
+        <item>Maroc</item>
+        <item>Arabie Saoudite</item>
+    </string-array>
+    <string-array name="langues">
+        <item>Français</item>
+        <item>English</item>
+        <item>العربية</item>
+    </string-array>
+    
+     <string-array name="statuts_offres">
+        <item>Nouveau</item>
+        <item>Accepté</item>
+        <item>Rejeté</item>
+    </string-array>
+</resources>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+     
+      <string-array name="nav_menu_items">
+        <item>حسابي</item>
+        <item>إعدادات</item>
+        <item>المعاملات الماضية</item>
+        <item>تقييماتي</item>
+        <item>تبادلات</item>
+        <item>تبادلات</item>
+<!--         <item>Dons</item> -->
+<!--         <item>ASSOCIATIONS</item> -->
+        
+<!--         <item>Annuaire</item> -->
+    </string-array>
+    
+     <string-array name="statuts_offres">
+        <item>جديد</item>
+        <item>مقبول</item>
+        <item>مرفوض</item>
+    </string-array>
+    
+       <string-array name="languages">
+        <item>اختر اللغة</item>
+        <item>الفرنسية</item>
+        <item>العربية</item>
+    </string-array>
+</resources>

@@ -1,0 +1,23 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    
+    <dimen name="about_Liveo_layout_height">165dp</dimen>
+    <dimen name="about_apis_layout_height">110dp</dimen>
+    <dimen name="about_Ajudou_layout_height">100dp</dimen>
+    <dimen name="about_Testes_layout_height">100dp</dimen>
+        
+    <dimen name="img_about_Liveo_marginLeft">40dp</dimen>
+    <dimen name="img_about_Liveo_marginTop">8dp</dimen>  	
+    
+    <dimen name="about_Liveo_titulo_textsize">15sp</dimen>    
+    <dimen name="about_Liveo_subtitulo_textsize">12sp</dimen> 
+    
+    <dimen name="txt_about_cabecalho_apis_marginTop">1dp</dimen>   
+    
+    <dimen name="img_about_Ajudou_gentileza_layout_width">45dp</dimen>
+    <dimen name="img_about_Ajudou_gentileza_layout_height">45dp</dimen>   
+
+</resources>

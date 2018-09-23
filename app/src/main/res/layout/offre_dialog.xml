@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/idOffreDialog_textViewForme"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginTop="10dp"
+        android:text="@string/txtOffreDialog_textViewForme"
+        android:textColor="@color/Gray"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/idOffreDialog_textViewContre"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dip"
+        android:layout_marginTop="15dp"
+        android:text="@string/txtOffreDialog_textViewContre"
+        android:textColor="@color/Gray"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/idOffreDialog_editTextContre"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:hint="@string/txtOffreDialog_editTextContre"
+        android:inputType="textNoSuggestions"
+        android:visibility="gone" >
+    </EditText>
+
+    <EditText
+        android:id="@+id/idOffreDialog_editTextMessagePrive"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/txtOffre_editTextMessagePrive"
+        android:inputType="textNoSuggestions|textMultiLine"
+        android:lines="2" >
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:weightSum="2" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" >
+
+            <View
+                android:id="@+id/tut1SplitBottom"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/white"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:id="@+id/idOffreDialog_linearLayoutAnnuler"
+                android:layout_width="fill_parent"
+                android:layout_height="45sp"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@+id/tut1SplitBottom"
+                android:layout_weight="1"
+                android:background="@drawable/button_item"
+                android:clickable="true"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal|center"
+                    android:text="@string/txtOffreDialog_textViewAnnuler"
+                    android:textColor="@color/branco"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/idOffreDialog_linearLayoutValider"
+            android:layout_width="fill_parent"
+            android:layout_height="45sp"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/button_item"
+            android:clickable="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:text="@string/txtOffreDialog_textViewValider"
+                android:textColor="@color/branco"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

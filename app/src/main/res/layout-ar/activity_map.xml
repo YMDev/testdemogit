@@ -1,0 +1,227 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cinza"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/idMap_relativeLayoutHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="45sp"
+        android:background="@color/red_light"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/idMap_linearLayoutRetour"
+            android:layout_width="wrap_content"
+            android:layout_height="45sp"
+            android:gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:orientation="horizontal" >
+             <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:src="@drawable/ic_launcher" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:src="@drawable/ic_action_previous_item_ar" />
+
+           
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/idMap_textViewTitleHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/idMap_linearLayoutRetour"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical|center_horizontal|center"
+            android:paddingLeft="5dip"
+            android:text="@string/txtMap_textViewTitleHeader"
+            android:textColor="@color/branco"
+            android:textSize="18sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/idMap_linearLayoutAdresseVille"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idMap_relativeLayoutHeader"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/formulaire_contour"
+        android:orientation="vertical"
+        android:paddingBottom="10dip" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp" >
+
+            <ImageButton
+                android:id="@+id/idAdresseMap_buttonEnregistrerVille"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:background="@null"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:src="@drawable/ic_action_send_gris_ar"
+                android:textColor="@color/white" />
+
+            <RelativeLayout
+                android:id="@+id/idAdresseMap_relativeLayoutSearchVille"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:layout_toRightOf="@id/idAdresseMap_buttonEnregistrerVille"
+                android:background="@drawable/newmission_bg_textfield"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip" >
+
+                <Spinner
+                    android:id="@+id/idAdresseMap_spinnerVille"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dip"
+                    android:paddingLeft="5dip" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+           
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dip" >
+
+            <TextView
+                android:id="@+id/idMap_viewCenter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:contentDescription="@string/clear"
+                android:gravity="center"
+                android:text="@string/txtMap_viewCenter"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="10dip"
+                android:layout_toRightOf="@id/idMap_viewCenter"
+                android:background="@color/red_dark" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="5dip"
+                android:layout_toLeftOf="@id/idMap_viewCenter"
+                android:background="@color/red_dark" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dip" >
+
+            <ImageButton
+                android:id="@+id/idAdresseMap_buttonEnregistrer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="5dip"
+                android:background="@null"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:src="@drawable/ic_action_send_gris_ar"
+                android:textColor="@color/white" />
+
+            <RelativeLayout
+                android:id="@+id/idAdresseMap_relativeLayoutSearch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:layout_toRightOf="@id/idAdresseMap_buttonEnregistrer"
+                android:background="@drawable/newmission_bg_textfield"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip" >
+
+                <EditText
+                    android:id="@+id/idAdresseMap_TextAdresse"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:enabled="false"
+                    android:hint="@string/txtAdresseMap_TextAdresse"
+                    android:imeOptions="actionDone"
+                    android:singleLine="true"
+                    android:textColor="@color/DarkGray"
+                    android:textSize="16sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/idMap_linearLayoutAdresseVille"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/formulaire_contour"
+        android:orientation="vertical"
+        android:padding="1dip"
+        android:paddingBottom="10dip" >
+
+        <View
+            android:id="@+id/idDetailSrvc_ViewSepCar1"
+            android:layout_width="0.5dp"
+            android:layout_height="0.5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:background="@color/DarkGray" />
+
+        <ImageButton
+            android:id="@+id/location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/idDetailSrvc_ViewSepCar1"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/position"
+            android:textColor="@color/white" />
+
+        <fragment
+            android:id="@+id/map"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            class="com.google.android.gms.maps.SupportMapFragment" />
+    </RelativeLayout>
+
+</RelativeLayout>

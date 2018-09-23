@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/cinza" >
+
+    <RelativeLayout
+        android:id="@+id/idProfil_relativeLayoutHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0sp"
+        android:background="@color/red_light"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:id="@+id/idProfil_linearLayoutRetour"
+            android:layout_width="wrap_content"
+            android:layout_height="45.0sp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center"
+                android:src="@drawable/ic_action_previous_item" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/app_name"
+                android:gravity="center"
+                android:src="@drawable/ic_launcher" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/idProfil_textViewTitleHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/idProfil_linearLayoutRetour"
+            android:gravity="center"
+            android:paddingLeft="5.0dip"
+            android:text="@string/txtProfil_textViewTitleHeader"
+            android:textColor="@color/white"
+            android:textSize="18.0sp" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/idProfil_relativeLayoutHeader" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5.0dip"
+                android:paddingRight="5.0dip"
+                android:paddingTop="10.0dip" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20.0dip"
+                    android:background="@drawable/service_contour"
+                    android:orientation="vertical"
+                    android:paddingBottom="12.0dip" >
+
+                    <TextView
+                        android:id="@+id/position_row_date_debut"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="70.0dip"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:singleLine="true"
+                        android:text="@string/txtInscription_tv_photo"
+                        android:textColor="@color/black"
+                        android:textSize="14.0sp" />
+
+                    <TableLayout
+                        android:id="@+id/table"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/position_row_date_debut"
+                        android:layout_marginTop="10.0dip"
+                        android:columnCount="2"
+                        android:orientation="horizontal"
+                        android:rowCount="1"
+                        android:stretchColumns="0,1" >
+
+                        <TableRow
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical" >
+
+                            <RelativeLayout
+                                android:id="@+id/rl1"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:gravity="center" >
+
+                                <EditText
+                                    android:id="@+id/idProfil_editTextNom"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:hint="@string/txtProfil_editTextNom"
+                                    android:inputType="textNoSuggestions" />
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:id="@+id/rl2"
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:gravity="center" >
+
+                                <EditText
+                                    android:id="@+id/idProfil_editTextPrenom"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:hint="@string/txtProfil_editTextPrenom"
+                                    android:inputType="textNoSuggestions" />
+                            </RelativeLayout>
+                        </TableRow>
+                    </TableLayout>
+
+                    <EditText
+                        android:id="@+id/idProfil_editTextPseudo"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/table"
+                        android:layout_marginTop="5.0dip"
+                        android:hint="@string/txtProfil_editTextPseudo"
+                        android:inputType="textEmailAddress" />
+
+                    <EditText
+                        android:id="@+id/idProfil_editTextEmail"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/idProfil_editTextPseudo"
+                        android:layout_marginTop="5.0dip"
+                        android:editable="false"
+                        android:hint="@string/txtProfil_editTextEmail"
+                        android:inputType="textEmailAddress" />
+
+                    <EditText
+                        android:id="@+id/idProfil_editTextMobile"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/idProfil_editTextEmail"
+                        android:layout_marginTop="5.0dip"
+                        android:hint="@string/txtProfil_editTextMobile"
+                        android:inputType="text" />
+
+                    <EditText
+                        android:id="@+id/idProfil_editTextAdresse"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/idProfil_editTextMobile"
+                        android:layout_marginTop="5.0dip"
+                        android:hint="@string/txtProfil_editTextAdresse"
+                        android:inputType="text" />
+
+                    <Spinner
+                        android:id="@+id/idProfil_spinnerVille"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/idProfil_editTextAdresse"
+                        android:layout_marginTop="10dp" />
+                </RelativeLayout>
+
+                <mobile.a3tech.com.a3tech.view.CircleImageView
+                    android:id="@+id/idProfil_buttonCamera"
+                    android:layout_width="80.0dip"
+                    android:layout_height="80.0dip"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/clear"
+                    android:src="@drawable/portrait"
+                    app:border_color="@color/light"
+                    app:border_width="2.0dip" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/idProfil_linearLayoutSave"
+                android:layout_width="fill_parent"
+                android:layout_height="45.0sp"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="5.0dip"
+                android:layout_marginTop="5.0dip"
+                android:background="@drawable/button_item"
+                android:clickable="true"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/txtInscription_tv_Validation"
+                    android:textColor="@color/white"
+                    android:textSize="18.0sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="5.0dip"
+                android:layout_marginTop="5.0dip"
+                android:background="@drawable/service_contour"
+                android:orientation="vertical"
+                android:paddingBottom="12.0dip"
+                android:paddingLeft="5.0dip"
+                android:paddingRight="5.0dip" >
+
+                <TextView
+                    android:id="@+id/idPopProfil_textViewelementsConfianceTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical|center_horizontal|center"
+                    android:singleLine="true"
+                    android:text="@string/txtPopProfil_textViewelementsConfianceTitle"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/trois"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:weightSum="3.0" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.0" >
+
+                        <LinearLayout
+                            android:id="@+id/idProfil_linearLayoutFacebook"
+                            android:layout_width="match_parent"
+                            android:layout_height="45sp"
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginRight="5dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1.0"
+                            android:background="@color/Gray"
+                            android:clickable="true"
+                            android:gravity="center_vertical|center_horizontal"
+                            android:orientation="horizontal" >
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dip"
+                                android:contentDescription="@string/app_name"
+                                android:gravity="center_vertical|center_horizontal|center"
+                                android:src="@drawable/white_facebook" />
+
+                            <ImageView
+                                android:id="@+id/idProfil_imageviewFacebookCheck"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dip"
+                                android:contentDescription="@string/app_name"
+                                android:gravity="center_vertical|center_horizontal|center"
+                                android:src="@drawable/white_uncheck" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:id="@+id/idProfil_linearLayoutMail"
+                        android:layout_width="match_parent"
+                        android:layout_height="45sp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1.0"
+                        android:background="@color/Gray"
+                        android:clickable="true"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dip"
+                            android:contentDescription="@string/app_name"
+                            android:gravity="center_vertical|center_horizontal|center"
+                            android:src="@drawable/white_mail" />
+
+                        <ImageView
+                            android:id="@+id/idProfil_imageviewMailCheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dip"
+                            android:contentDescription="@string/app_name"
+                            android:gravity="center_vertical|center_horizontal|center"
+                            android:src="@drawable/white_uncheck" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/idProfil_linearLayoutPhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="45sp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_weight="1.0"
+                        android:background="@color/Gray"
+                        android:clickable="true"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:orientation="horizontal" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dip"
+                            android:contentDescription="@string/app_name"
+                            android:gravity="center_vertical|center_horizontal|center"
+                            android:src="@drawable/white_phone" />
+
+                        <ImageView
+                            android:id="@+id/idProfil_imageviewPhoneCheck"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dip"
+                            android:contentDescription="@string/app_name"
+                            android:gravity="center_vertical|center_horizontal|center"
+                            android:src="@drawable/white_uncheck" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

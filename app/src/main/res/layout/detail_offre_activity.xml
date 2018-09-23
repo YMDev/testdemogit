@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/swipeRefreshLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_fb"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/idDetailOffre_relativeLayoutMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/branco"
+            android:descendantFocusability="beforeDescendants"
+            android:focusableInTouchMode="true"
+            android:orientation="horizontal" >
+
+            <EditText
+                android:id="@+id/idDetailOffre_editMessageText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="false"
+                android:layout_toLeftOf="@+id/idDetailOffre_buttonSendMessage"
+                android:hint="@string/txtDetailSrvc_editMessageTextPrive"
+                android:paddingLeft="10dp"
+                android:textSize="16sp" />
+
+            <ImageButton
+                android:id="@+id/idDetailOffre_buttonSendMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@drawable/ic_action_send_gris"
+                android:gravity="center_vertical|center_horizontal|center" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/idDetailOffre_relativeLayoutHeader"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0sp"
+            android:background="@color/red_light"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/idDetailOffre_linearLayoutRetour"
+                android:layout_width="wrap_content"
+                android:layout_height="45.0sp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:gravity="center"
+                    android:src="@drawable/ic_action_previous_item" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:gravity="center"
+                    android:src="@drawable/ic_launcher" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/idCV_textViewTitleHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/idDetailOffre_linearLayoutRetour"
+                android:gravity="center"
+                android:paddingLeft="5.0dip"
+                android:text="@string/txtDetailOffre_textViewTitleHeader"
+                android:textColor="@color/white"
+                android:textSize="18.0sp" />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/idDetailOffre_relativeLayoutMessage"
+            android:layout_below="@id/idDetailOffre_relativeLayoutHeader" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="5.0dip"
+                android:layout_marginTop="5.0dip"
+                android:background="@drawable/service_contour"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/idDetailOffre_relativeLayoutProfilEmetteur"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" >
+
+                    <LinearLayout
+                        android:id="@+id/idDetailOffre_linearLayout_picto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="5.0dip"
+                        android:layout_marginTop="5.0dip"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical" >
+
+                        <mobile.a3tech.com.a3tech.view.CircleImageView
+                            android:id="@+id/idDetailOffre_ci_picto"
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:contentDescription="@string/clear"
+                            android:src="@drawable/portrait"
+                            app:border_color="@color/light"
+                            app:border_width="2.0dip" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/idDetailOffre_infos_zone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/idDetailOffre_linearLayout_picto"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:id="@+id/idDetailOffre_tv_nom_prenom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:gravity="center_vertical|center_horizontal|center"
+                                android:singleLine="false"
+                                android:text="@string/txtDetailMissionSrvc_textViewPseudo"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                android:textStyle="italic" />
+
+                            <RatingBar
+                                android:id="@+id/idDetailOffre_ratinBarEval"
+                                style="@style/RatingBarSmallEdu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="5dp"
+                                android:gravity="center_vertical|center_horizontal|center"
+                                android:isIndicator="true"
+                                android:numStars="5"
+                                android:rating="2.0"
+                                android:stepSize="0.5" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idDetailOffre_ll_mobile_libelle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone" >
+
+                            <TextView
+                                android:id="@+id/idDetailOffre_tv_mobile_libelle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginTop="3.0dip"
+                                android:singleLine="true"
+                                android:text="@string/txtDetailOffre_tv_mobile_libelle"
+                                android:textColor="@color/black"
+                                android:textSize="14.0sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/idDetailOffre_tv_mobile_value"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="3.0dip"
+                                android:layout_toRightOf="@id/idDetailOffre_tv_mobile_libelle"
+                                android:singleLine="true"
+                                android:text="Value"
+                                android:textColor="@color/blue_dark"
+                                android:textSize="14.0sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/idDetailOffre_relativeLayoutProfilOffreur"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" >
+
+                    <LinearLayout
+                        android:id="@+id/idDetailOffre_linearLayout_pictoOffreur"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="5.0dip"
+                        android:layout_marginTop="5.0dip"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical" >
+
+                        <mobile.a3tech.com.a3tech.view.CircleImageView
+                            android:id="@+id/idDetailOffre_ci_pictoOffreur"
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:contentDescription="@string/clear"
+                            android:src="@drawable/portrait"
+                            app:border_color="@color/light"
+                            app:border_width="2.0dip" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/idDetailOffre_infos_zoneOffreur"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@id/idDetailOffre_linearLayout_pictoOffreur"
+                        android:orientation="vertical" >
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" >
+
+                            <TextView
+                                android:id="@+id/idDetailOffre_tv_nom_prenomOffreur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical|center_horizontal|center"
+                                android:singleLine="false"
+                                android:text="@string/txtDetailMissionSrvc_textViewPseudo"
+                                android:textColor="@color/black"
+                                android:textSize="12sp"
+                                android:textStyle="italic" />
+
+                            <RatingBar
+                                android:id="@+id/idDetailOffre_ratinBarEvalOffreur"
+                                style="@style/RatingBarSmallEdu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="5dp"
+                                android:gravity="center_vertical|center_horizontal|center"
+                                android:isIndicator="true"
+                                android:numStars="5"
+                                android:rating="2.0"
+                                android:stepSize="0.5" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/idDetailOffre_ll_mobile_libelleOffreur"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone" >
+
+                            <TextView
+                                android:id="@+id/idDetailOffre_tv_mobile_libelleOffreur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentLeft="true"
+                                android:layout_marginTop="3.0dip"
+                                android:singleLine="true"
+                                android:text="@string/txtDetailOffre_tv_mobile_libelle"
+                                android:textColor="@color/black"
+                                android:textSize="14.0sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/idDetailOffre_tv_mobile_valueOffreur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="3.0dip"
+                                android:layout_toRightOf="@id/idDetailOffre_tv_mobile_libelleOffreur"
+                                android:singleLine="true"
+                                android:text="Value"
+                                android:textColor="@color/blue_dark"
+                                android:textSize="14.0sp" />
+                        </RelativeLayout>
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:paddingLeft="5.0sp"
+                    android:paddingRight="10.0sp"
+                    android:text="@string/txtdetailOffre_textViewMapropositionTitle"
+                    android:textColor="@color/black"
+                    android:textSize="16.0sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2.0dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:background="@color/red_dark" />
+
+                <TextView
+                    android:id="@+id/idDetailOffre_tv_motivation_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginTop="3.0dip"
+                    android:singleLine="false"
+                    android:text=""
+                    android:textColor="@color/black"
+                    android:textSize="12.0sp" />
+
+                <TextView
+                    android:id="@+id/idDetailOffre_textViewPiecesJointes"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:paddingLeft="5.0sp"
+                    android:paddingRight="10.0sp"
+                    android:text="@string/txtdetailOffre_textViewAttachementsTitle"
+                    android:textColor="@color/black"
+                    android:textSize="16.0sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/idDetailOffre_viewPiecesJointes"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2.0dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:background="@color/red_dark" />
+
+                <LinearLayout
+                    android:id="@+id/idDetailOffre_linearLayoutPiecesJointes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/service_contour"
+                    android:orientation="vertical" >
+
+                    <com.twotoasters.android.horizontalimagescroller.widget.HorizontalImageScroller
+                        android:id="@+id/scroller_androids"
+                        style="@style/ToasterHorizontalImageScroller" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/idCV_textViewPositionsTitle"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10.0dip"
+                    android:paddingLeft="5.0sp"
+                    android:paddingRight="10.0sp"
+                    android:text="@string/txtDetailOffre_textViewConversationPriveeTitle"
+                    android:textColor="@color/black"
+                    android:textSize="16.0sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="2.0dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="10.0dip"
+                    android:background="@color/red_dark" />
+
+                <ListView
+                    android:id="@+id/idDetailOffre_listeChatPrive"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:dividerHeight="0dp"
+                    android:listSelector="@android:color/transparent" />
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</android.support.v4.widget.SwipeRefreshLayout>

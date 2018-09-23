@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/cinza"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dip"
+        android:layout_marginLeft="5dip"
+        android:layout_marginRight="5dip"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/retangulo_arredondado_contador"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/mission_row_category_picto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="5dip"
+            android:layout_marginTop="5dip"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_cat_private_lesson" />
+
+        <ImageView
+            android:id="@+id/mission_row_arrow_picto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dip"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_action_next_item" />
+
+        <LinearLayout
+            android:id="@+id/mission_row_linear_prix_km"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dip"
+            android:layout_toLeftOf="@id/mission_row_arrow_picto"
+            android:orientation="vertical"
+            android:paddingRight="10dip" >
+
+            <TextView
+                android:id="@+id/mission_row_prix"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3000 $"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/mission_row_km"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="65000 KM"
+                android:textColor="@color/DarkGray"
+                android:textSize="12sp"
+                android:textStyle="bold|italic" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mission_row_infos_zone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_toLeftOf="@id/mission_row_linear_prix_km"
+            android:layout_toRightOf="@id/mission_row_category_picto"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/mission_row_subcategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:singleLine="true"
+                android:text="Auto-Moto, Accèssoires et pièces de rechange"
+                android:textColor="@color/black"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/mission_row_posted_by"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dip"
+                android:text="Postée par : Test, le : 24 Déc. 2013"
+                android:textColor="@color/black"
+                android:textSize="12sp" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/mission_row_statusLibelle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dip"
+                    android:text="Statut"
+                    android:textColor="@color/DarkGray"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/mission_row_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dip"
+                    android:layout_toRightOf="@id/mission_row_statusLibelle"
+                    android:text="En Cours"
+                    android:textColor="@color/DarkGray"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

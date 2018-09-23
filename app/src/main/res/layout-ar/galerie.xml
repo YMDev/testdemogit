@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/cinza"
+    android:orientation="horizontal" >
+
+    <RelativeLayout
+        android:id="@+id/idGallery_relativeLayoutHeader"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/red_light"
+        android:paddingLeft="10.0dip"
+        android:paddingRight="10.0dip" >
+
+        <Button
+            android:id="@+id/idGallery_btn"
+            android:layout_width="40.0dip"
+            android:layout_height="40.0dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:drawableLeft="@drawable/backbtn"
+            android:gravity="center"
+            android:paddingLeft="10.0dip" />
+
+        <TextView
+            android:id="@+id/idGallery_TextViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5.0dip"
+            android:layout_toRightOf="@id/idGallery_btn"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:singleLine="true"
+            android:text="@string/txtGallery_TextViewTitle"
+            android:textColor="@color/white"
+            android:textSize="16.0dip" />
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/categoriesGridView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/idGallery_relativeLayoutHeader"
+        android:clipToPadding="false"
+        android:fastScrollEnabled="true"
+        android:horizontalSpacing="5.0dip"
+        android:numColumns="2"
+        android:paddingLeft="5.0dip"
+        android:paddingRight="5.0dip"
+        android:paddingTop="10.0dip"
+        android:verticalSpacing="5.0dip" />
+
+</RelativeLayout>

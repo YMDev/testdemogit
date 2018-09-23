@@ -1,0 +1,19 @@
+<resources>
+
+    <string name="txtInscription_tvTitleHeader">Inscription</string>
+    <string name="txtInscription_tv_photo">Cliquer pour changer votre photo</string>
+    <string name="txtInscription_et_nom">Nom</string>
+    <string name="txtInscription_et_prenom">Prénom</string>
+    <string name="txtInscription_et_email">Email</string>
+    <string name="txtInscription_et_password">Mot de passe</string>
+     <string name="txtInscription_et_ConfirmPassword">Confirmation du mot de passe</string>
+     <string name="txtInscription_cb_CGU">"Conditions générales d'utilisation"</string>
+     <string name="txtInscription_tv_Sincrire">"S'inscrire"</string>
+      <string name="txtInscription_pictureItemPrendreImage">Prendre photo</string>
+    <string name="txtInscription_pictureItemChoisirImage">Choisir photo</string>
+    <string name="txtInscription_pictureItemAnnuler">Annuler</string>
+    <string name="txtInscription_pictureTitleDialog">Importer Photo</string>
+    <string name="txtInscription_tv_Validation">"Enregistrer"</string>
+    <string name="txtProfil_textViewTitleHeader">Profil</string>
+
+</resources>

@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/about_dados"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cinza" >
+
+    <LinearLayout
+        android:id="@+id/animationLoginImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@color/cinza"/>
+
+    <RelativeLayout
+        android:id="@+id/a3tech_login_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="10dp" >
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/idLogin_relativeLayoutConnect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="5dp"
+        android:paddingBottom="10dp" >
+
+        <RelativeLayout
+            android:id="@+id/idLogin_linearLayoutFacebook"
+            android:layout_width="match_parent"
+            android:layout_height="45sp"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/facebook_item"
+            android:clickable="true"
+             >
+
+            <ImageView
+                android:id="@+id/idLogin_imageViewFacebook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/facebook_f" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:text="@string/txtLogin_buttonFb"
+                android:textColor="@color/branco"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+        
+        
+        
+          
+
+        <LinearLayout
+            android:id="@+id/deux"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@id/idLogin_linearLayoutFacebook"
+            android:weightSum="2.0" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.0" >
+
+                <View
+                    android:id="@+id/tut1SplitBottom"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@android:color/white"
+                    android:visibility="invisible" />
+
+                <LinearLayout
+                    android:id="@+id/idLogin_linearLayoutCreateAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="45sp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toLeftOf="@id/tut1SplitBottom"
+                    android:layout_weight="1.0"
+                    android:background="@drawable/button_item"
+                    android:clickable="true"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/txtLogin_textViewCreateAccount"
+                        android:textColor="@color/branco"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/idLogin_linearLayoutLogin"
+                android:layout_width="match_parent"
+                android:layout_height="45sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/button_item"
+                android:clickable="true"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/txtLogin_textViewLogin"
+                    android:textColor="@color/branco"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </LinearLayout>
+        
+        <RelativeLayout
+            android:id="@+id/idLogin_linearLayoutAnonyme"
+            android:layout_width="match_parent"
+            android:layout_height="45sp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1.0"
+            android:layout_below="@id/deux"
+            android:background="@drawable/button_item_black"
+            android:clickable="true"
+             >
+
+            <ImageView
+                android:id="@+id/idLogin_imageViewAnonyme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_gravity="center_vertical|center"
+                android:layout_centerVertical="true"
+               
+                android:layout_marginLeft="10dp"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/anonymous_access" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center_vertical|center_horizontal|center"
+                android:text="Accès anonyme"
+                android:textColor="@color/branco"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

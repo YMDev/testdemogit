@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/bg_fb"
+    android:orientation="horizontal" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:id="@+id/idInfoAssociation_linearLayoutCaracteristiques"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="5.0dip"
+                android:layout_marginTop="5.0dip"
+                android:background="@drawable/service_contour"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical" >
+
+                    <View
+                        android:id="@+id/idInfoAssociation_ViewSepCar1"
+                        android:layout_width="0.5dip"
+                        android:layout_height="25.0dip"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/DarkGray" />
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutSociete"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@id/idInfoAssociation_ViewSepCar1"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutSociete"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewSocieteLibelle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="5.0dip"
+                                android:text="@string/txtInforAssociation_textViewSocieteLibelle"
+                                android:textColor="@color/black"
+                                android:textSize="12.0sp" />
+
+                            <ImageView
+                                android:id="@+id/idInfoAssociation_imageViewSociete"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="10.0dip"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/association" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutSocieteValue"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/idInfoAssociation_ViewSepCar1"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutSocieteValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:clickable="true"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewSocieteValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginRight="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="10.0dip"
+                                android:text="@string/txtInfoAssociation_textViewSocieteValue"
+                                android:textColor="@color/DarkGray"
+                                android:textSize="12.0sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/idInfoAssociation_ViewSepCar2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@color/DarkGray" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical" >
+
+                    <View
+                        android:id="@+id/idInfoAssociation_ViewSepCar3"
+                        android:layout_width="0.5dip"
+                        android:layout_height="25.0dip"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/DarkGray" />
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutSite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toStartOf="@id/idInfoAssociation_ViewSepCar3"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutSite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewSite"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="5.0dip"
+                                android:text="@string/txtInfoAssociation_textViewSite"
+                                android:textColor="@color/black"
+                                android:textSize="12.0sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="10.0dip"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/siteweb" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutSiteValue"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/idInfoAssociation_ViewSepCar3"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutSiteValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewtSiteValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:autoLink="web"
+                                android:paddingRight="10.0dip"
+                                android:singleLine="false"
+                                android:text="@string/clear"
+                                android:textColor="@color/blue_light"
+                                android:textSize="12.0sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <View
+                    android:id="@+id/idInfoAssociation_ViewSepCar8"
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@color/DarkGray" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical" >
+
+                    <View
+                        android:id="@+id/idInfoAssociation_ViewSepCar9"
+                        android:layout_width="0.5dip"
+                        android:layout_height="25.0dip"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/DarkGray" />
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutAdresse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toStartOf="@id/idInfoAssociation_ViewSepCar9"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutAdresse"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewAdresse"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="5.0dip"
+                                android:text="@string/txtInfoAssociation_textViewAdresse"
+                                android:textColor="@color/black"
+                                android:textSize="12.0sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="10.0dip"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/adresse" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutAdresseValue"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/idInfoAssociation_ViewSepCar9"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutAdresseValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewtAdresseValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="10.0dip"
+                                android:gravity="center"
+                                android:singleLine="false"
+                                android:text="@string/clear"
+                                android:textColor="@color/DarkGray"
+                                android:textSize="12.0sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <!-- debut 4 -->
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@color/DarkGray" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical" >
+
+                    <View
+                        android:id="@+id/idInfoAssociation_ViewSepCar21"
+                        android:layout_width="0.5dip"
+                        android:layout_height="25.0dip"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/DarkGray" />
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutEffectif"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toStartOf="@id/idInfoAssociation_ViewSepCar21"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutEffectif"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewEffectif"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="5.0dip"
+                                android:text="@string/txtInfoAssociation_textViewPageFacebook"
+                                android:textColor="@color/black"
+                                android:textSize="12.0sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="10.0dip"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/facebook_logo_button" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutEffectifValue"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/idInfoAssociation_ViewSepCar21"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutEffectifValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewtEffectifValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:autoLink="web"
+                                android:paddingRight="10.0dip"
+                                android:singleLine="false"
+                                android:text="@string/clear"
+                                android:textColor="@color/blue_light"
+                                android:textSize="12.0sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <!-- fin 4 -->
+
+
+                <!-- debut 5 -->
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@color/DarkGray" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical" >
+
+                    <View
+                        android:id="@+id/idInfoAssociation_ViewSepCar22"
+                        android:layout_width="0.5dip"
+                        android:layout_height="25.0dip"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/DarkGray" />
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutSecteur"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toStartOf="@id/idInfoAssociation_ViewSepCar22"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutSecteur"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewSecteur"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="5.0dip"
+                                android:text="@string/txtInfoAssociation_textViewDateCreation"
+                                android:textColor="@color/black"
+                                android:textSize="12.0sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="10.0dip"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/datecreation" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutSecteurValue"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/idInfoAssociation_ViewSepCar22"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutSecteurValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewtSecteurValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="10.0dip"
+                                android:singleLine="false"
+                                android:text="@string/clear"
+                                android:textColor="@color/DarkGray"
+                                android:textSize="12.0sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!-- fin 5 -->
+
+
+                <!-- debut 6 -->
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@color/DarkGray" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical" >
+
+                    <View
+                        android:id="@+id/idInfoAssociation_ViewSepCar23"
+                        android:layout_width="0.5dip"
+                        android:layout_height="25.0dip"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/DarkGray" />
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutTel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toStartOf="@id/idInfoAssociation_ViewSepCar23"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutTel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewTel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="5.0dip"
+                                android:text="@string/txtInfoAssociation_textViewTel"
+                                android:textColor="@color/black"
+                                android:textSize="12.0sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="10.0dip"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/telephone" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutTelValue"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/idInfoAssociation_ViewSepCar23"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutTelValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewtTelValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="10.0dip"
+                                android:singleLine="false"
+                                android:text="@string/clear"
+                                android:textColor="@color/DarkGray"
+                                android:textSize="12.0sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!-- fin 6 -->
+
+
+                <!-- debut 6 -->
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.5dip"
+                    android:layout_marginLeft="1.0dip"
+                    android:layout_marginRight="1.0dip"
+                    android:background="@color/DarkGray" />
+
+                <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical" >
+
+                    <View
+                        android:id="@+id/idInfoAssociation_ViewSepCar24"
+                        android:layout_width="0.5dip"
+                        android:layout_height="25.0dip"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@color/DarkGray" />
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutCa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_toStartOf="@id/idInfoAssociation_ViewSepCar24"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutCa"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewCa"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="5.0dip"
+                                android:text="@string/txtInfoAssociation_textViewEmail"
+                                android:textColor="@color/black"
+                                android:textSize="12.0sp" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="10.0dip"
+                                android:contentDescription="@string/app_name"
+                                android:src="@drawable/email" />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/idInfoAssociation_relativeLayoutCaValue"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/idInfoAssociation_ViewSepCar24"
+                        android:gravity="center_vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/idInfoAssociation_linearLayoutCaValue"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerHorizontal="true"
+                            android:gravity="center_horizontal"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:id="@+id/idInfoAssociation_textViewtCaValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10.0dip"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="10.0dip"
+                                android:paddingRight="10.0dip"
+                                android:singleLine="false"
+                                android:text="@string/clear"
+                                android:textColor="@color/DarkGray"
+                                android:textSize="12.0sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+                <!-- fin 6 -->
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginRight="5.0dip"
+                android:layout_marginTop="5.0dip"
+                android:background="@drawable/service_contour"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/idInfoAssociation_textViewtDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10.0dip"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginTop="10.0dip"
+                    android:paddingRight="10.0dip"
+                    android:singleLine="false"
+                    android:text="@string/clear"
+                    android:textColor="@color/DarkGray"
+                    android:textSize="12.0sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/idItinerary_relativeLayoutBody"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="10dip"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/bg_global_itinerary"
+        android:orientation="vertical" >
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+        </SearchView>
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <RelativeLayout
+                android:id="@+id/idAdresseMapProfil_relativeLayoutAdresse"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dip"
+                android:orientation="horizontal" >
+
+                <ImageButton
+                    android:id="@+id/idAdresseMap_buttonEnregistrer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dip"
+                    android:background="@null"
+                    android:gravity="center_vertical|center_horizontal|center"
+                    android:src="@drawable/ic_action_send_gris"
+                    android:textColor="@color/white" />
+
+                <RelativeLayout
+                    android:id="@+id/idAdresseMap_relativeLayoutSearch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_toLeftOf="@id/idAdresseMap_buttonEnregistrer"
+                    android:background="@drawable/newmission_bg_textfield"
+                    android:paddingLeft="10dip"
+                    android:paddingRight="10dip" >
+
+                    <ImageButton
+                        android:id="@+id/idAdresseMap_buttonSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="2dip"
+                        android:background="@null"
+                        android:contentDescription=""
+                        android:gravity="right"
+                        android:src="@drawable/ic_action_search" />
+
+                    <EditText
+                        android:id="@+id/idAdresseMap_TextAdresse"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@id/idAdresseMap_buttonSearch"
+                        android:background="@null"
+                        android:hint="adresse"
+                        android:imeOptions="actionDone"
+                        android:singleLine="true"
+                        android:textColor="@color/DarkGray"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/idAdresseMapProfil_viewHelp"
+                android:layout_width="wrap_content"
+                android:layout_height="70dip"
+                android:layout_alignLeft="@+id/idAdresseMapProfil_map"
+                android:layout_alignRight="@+id/idAdresseMapProfil_map"
+                android:layout_alignTop="@+id/idAdresseMapProfil_map"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="help"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <fragment
+                android:id="@+id/idAdresseMapProfil_map"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/idAdresseMapProfil_relativeLayoutAdresse"
+                android:layout_marginBottom="5dip"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dip"
+                class="com.google.android.gms.maps.SupportMapFragment" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/idAdresseMapProfil_buttonsClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="10dip"
+        android:background="#00000000"
+        android:scaleType="fitXY"
+        android:src="@drawable/btn_croix" >
+    </ImageButton>
+
+</RelativeLayout>

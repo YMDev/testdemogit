@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:seekarc="http://schemas.android.com/apk/res/mobile.a3tech.com.a3tech"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cinza" >
+
+    <LinearLayout
+        android:id="@+id/idSimpleSearch_linearLayoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/idSimpleSearch_textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_horizontal"
+            android:text="@string/txtSimpleSearch_textViewTitle"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:id="@+id/idSimpleSearch_viewTitleSep"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@color/red_dark" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/idSimpleSearch_LinearLayoutButtons"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:weightSum="2.0" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1.0" >
+
+            <View
+                android:id="@+id/tut1SplitBottom"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/white"
+                android:visibility="invisible" />
+
+            <LinearLayout
+                android:id="@+id/idSimpleSearch_linearLayoutAnnuler"
+                android:layout_width="match_parent"
+                android:layout_height="45sp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toLeftOf="@id/tut1SplitBottom"
+                android:layout_weight="1.0"
+                android:background="@drawable/button_item"
+                android:clickable="true"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/txtLogin_textViewAnnuler"
+                    android:textColor="@color/branco"
+                    android:textSize="18sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/idSimpleSearch_linearLayoutValider"
+            android:layout_width="match_parent"
+            android:layout_height="45sp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1.0"
+            android:background="@drawable/button_item"
+            android:clickable="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:orientation="vertical" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/txtLogin_textViewValider"
+                android:textColor="@color/branco"
+                android:textSize="18sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/idSimpleSearch_LinearLayoutButtons"
+        android:layout_below="@id/idSimpleSearch_linearLayoutTitle" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/idSimpleSearch_textViewRecherchePar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp"
+                android:text="@string/txtSimpleSearch_textViewRecherchePar"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/idSimpleSearch_viewRechercheParSep"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/red_dark" />
+
+            <EditText
+                android:id="@+id/idSimpleSearch_editTextRecherchePar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="@string/txtSimpleSearch_editTextRecherchePar" />
+
+            <TextView
+                android:id="@+id/idSimpleSearch_textViewACoteDeMoi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp"
+                android:text="@string/txtSimpleSearch_textViewACoteDeMoi"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/idSimpleSearch_viewACoteDeMoi"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/red_dark" />
+
+            <RelativeLayout
+                android:id="@+id/idSimpleSearch_relativeLayoutActivationDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/settings_item"
+                android:clickable="true" >
+
+                <TextView
+                    android:id="@+id/idSimpleSearch_textViewActivationDistance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="left"
+                    android:paddingBottom="15dp"
+                    android:paddingTop="15dp"
+                    android:text="@string/txtSimpleSearch_textViewActivationDistance"
+                    android:textColor="@color/black"
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
+
+                <Switch
+                    android:id="@+id/idSimpleSearch_switcherActivationDistance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:textOff="@string/txtSimpleSearch_switcherActivationDistanceOff"
+                    android:textOn="@string/txtSimpleSearch_switcherActivationDistanceOn" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/idSimpleSearch_viewActivationDistance"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/red_dark" />
+
+            <LinearLayout
+                android:id="@+id/idSimpleSearch_linearLayoutGlobalRayon"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <RelativeLayout
+                    android:id="@+id/idSimpleSearch_relativeLayoutRayonAutourDeMoi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/settings_item"
+                    android:clickable="true" >
+
+                    <TextView
+                        android:id="@+id/idSimpleSearch_textViewRayonAutourDeMoi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="left"
+                        android:paddingBottom="15dp"
+                        android:paddingTop="15dp"
+                        android:text="@string/txtSimpleSearch_textViewRayonAutourDeMoi"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="normal" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="vertical" >
+
+                    <FrameLayout
+                        android:id="@+id/seekArcContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1.0" >
+
+                        <mobile.a3tech.com.a3tech.view.SeekArc
+                            android:id="@+id/seekArc"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:padding="30dp"
+                            seekarc:arcColor="@color/dark_red"
+                            seekarc:clockwise="true"
+                            seekarc:max="100"
+                            seekarc:progressColor="@color/red"
+                            seekarc:rotation="180"
+                            seekarc:startAngle="30"
+                            seekarc:sweepAngle="300"
+                            seekarc:thumb="@drawable/custom_seek_arc_control_selector"
+                            seekarc:touchInside="true" />
+
+                        <TextView
+                            android:id="@+id/seekArcProgress"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@string/txtSeekArcProgress"
+                            android:textSize="20sp" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/idSimpleSearch_viewRayonAutourDeMoi"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/red_dark" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/idSimpleSearch_textViewService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp"
+                android:text="@string/txtSimpleSearch_textViewService"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <View
+                android:id="@+id/idSimpleSearch_viewService"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/red_dark" />
+
+            <LinearLayout
+                android:id="@+id/idSimpleSearch_linearLayoutServices"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/service_contour"
+                android:orientation="vertical" >
+
+                <CheckBox
+                    android:id="@+id/idSimpleSearch_checkBoxAllServices"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/txtSimpleSearch_checkBoxAllServices"
+                    android:textColor="@color/Gray"
+                    android:textSize="14sp" />
+
+                <ListView
+                    android:id="@+id/idSimpleSearch_listServices"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="1dp"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginRight="1dp"
+                    android:childDivider="@null"
+                    android:divider="@null" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>
