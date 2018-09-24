@@ -74,24 +74,13 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
         this.isMessageNotif = "";
     }
 
-    private CoordinatorLayout rootView;
-    private ViewPager mViewPager;
-    ImageView zero, one, two;
-    ImageView[] indicators;
-    int lastLeftValue = 0;
-    RelativeLayout mCoordinator;
-    SectionsPagerAdapter mSectionsPagerAdapter;
-    static final String TAG = "PagerActivity";
-    int page = 0;   //  to track page position
 
 
-    private int previousState, currentState;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.a3tech_splash_activity);
-
         try {
             PackageInfo info = getPackageManager().getPackageInfo("mobile.a3tech.com.a3tech", PackageManager.GET_SIGNATURES);
             for (android.content.pm.Signature signature : info.signatures) {
@@ -106,59 +95,6 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
         }
         setVersionInfo();
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        zero = (ImageView) findViewById(R.id.intro_indicator_0);
-        one = (ImageView) findViewById(R.id.intro_indicator_1);
-        two = (ImageView) findViewById(R.id.intro_indicator_2);
-        mCoordinator = (RelativeLayout) findViewById(R.id.main_content);
-        indicators = new ImageView[]{zero, one, two};
-        // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.container);
-        mViewPager.setAdapter(mSectionsPagerAdapter);
-        mViewPager.setOffscreenPageLimit(mSectionsPagerAdapter.getCount());
-        mViewPager.setClipChildren(false);
-        mViewPager.setCurrentItem(page);
-        updateIndicators(page);
-        // Disable clip to padding
-        mViewPager.setClipToPadding(false);
-        // set padding manually, the more you set the padding the more you see of prev & next page
-        mViewPager.setPadding(40, 0, 40, 0);
-        // sets a margin b/w individual pages to ensure that there is a gap b/w them
-        mViewPager.setPageMargin(20);
-        final Drawable color1 = ContextCompat.getDrawable(this, R.drawable.image10);
-        final Drawable color2 = ContextCompat.getDrawable(this, R.drawable.image11);
-        final Drawable color3 = ContextCompat.getDrawable(this, R.drawable.image12);
-
-        final Drawable[] colorList = new Drawable[]{color1, color2, color3};
-
-        final ArgbEvaluator evaluator = new ArgbEvaluator();
-
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-                /*
-                color update
-                 */
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-                page = position;
-
-                updateIndicators(page);
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
 
         this.idMissionNotif = getIntent().getStringExtra("idMissionNot");
         this.userIdNotif = getIntent().getStringExtra("userIdNot");
@@ -171,14 +107,17 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
         if (!isConnected()) {
             Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.txtSplash_messageCheckConnexion), Toast.LENGTH_SHORT).show();
             //finish();
-        } else if (this.conMode.equals("facebook")) {
+        }
+
+         //else
+            if (this.conMode.equals("facebook")) {
             Intent mainIntent = new Intent(this, FacebookActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString(Constant.RESULT_ACTION_CODE_FACEBOOK_SRC, Constant.RESULT_ACTION_CODE_FACEBOOK_SRC_SPLASH);
             mainIntent.putExtras(bundle);
             startActivityForResult(mainIntent, requExce);
         } else if (this.conMode.length() == 0) {
-            startActivity(new Intent(this, LoginActivity.class));
+            startActivity(new Intent(this, A3techLoginActivity.class));
             finish();
         } else {
             //UserManager.getInstance().getProfil(this.connectedUser,password, this);
@@ -279,105 +218,4 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
     public void dataLoadingError(String error) {
     }
 
-    void updateIndicators(int position) {
-        for (int i = 0; i < indicators.length; i++) {
-            indicators[i].setBackgroundResource(
-                    i == position ? R.drawable.indicator_selected : R.drawable.indicator_unselected
-            );
-        }
-    }
-
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        ImageView img;
-
-        int[] bgs = new int[]{R.drawable.image10, R.drawable.image11, R.drawable.image12};
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.a3tech_fragment_pager, container, false);
-            ImageView backImage = (ImageView) rootView.findViewById(R.id.section_img);
-            Integer position = getArguments().getInt(ARG_SECTION_NUMBER);
-            rootView.setBackgroundResource(R.drawable.image10);
-            return rootView;
-        }
-
-
-    }
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-
-        public SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
-
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return (view == object);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "SECTION 1";
-                case 1:
-                    return "SECTION 2";
-                case 2:
-                    return "SECTION 3";
-            }
-            return null;
-        }
-
-    }
 }

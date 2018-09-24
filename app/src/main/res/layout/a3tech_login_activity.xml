@@ -5,12 +5,10 @@
     android:layout_height="match_parent"
     android:background="@color/cinza" >
 
-    <LinearLayout
-        android:id="@+id/animationLoginImage"
+    <include layout="@layout/a3tech_custom_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:background="@color/cinza"/>
+        ></include>
 
     <RelativeLayout
         android:id="@+id/a3tech_login_header"
@@ -19,7 +17,6 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="5dp"
         android:paddingBottom="10dp" >
-
 
     </RelativeLayout>
 

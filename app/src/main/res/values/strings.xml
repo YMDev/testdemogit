@@ -569,8 +569,20 @@
     <string name="txtProfil_choisirdelagalerie">Veuillez sélectionner le menu Galerie pour choisir la photo</string>
     <string name="txtReseaux_textViewTitleHeader">Réseaux sociaux</string>
     <string name="txtSettings_textViewAproposTitle">A propos</string>
-    
+
     <string name="txtSevices_tous_les_echanges">Tous les échanges</string>
     <string name="txtSevices_tous_les_objets">Echange d\'objets</string>
     <string name="txtSevices_tous_les_services">Echange de services</string>
+    <string name="header_create_account">Créer un Compte</string>
+    <string name="facebook_label">FACEBOOK</string>
+    <string name="a3tech_terme_of_use_header">En m\'inscrivant, j\'accepte les conditions d\'utilisation de 3tech.ma</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="header_select_account">Selectionner votre compte</string>
+    <string name="header_i_want_to_hire">Je veux recruter</string>
+    <string name="header_i_want_to_work">Je veux travailler</string>
+    <string name="header_create_an_account">Créer un Compte</string>
+    <string name="hint_username"><![CDATA[Choisir un Nom & Prénom]]></string>
+    <string name="next">Suivant</string>
 </resources>

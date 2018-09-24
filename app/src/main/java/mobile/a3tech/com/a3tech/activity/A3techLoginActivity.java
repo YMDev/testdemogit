@@ -1,5 +1,6 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -10,9 +11,11 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.CoordinatorLayout;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.view.View;
@@ -29,19 +32,21 @@ import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
 import java.security.SecureRandom;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.regex.Pattern;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.adapter.A3techLoginPagerviewerAdapter;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
-
+import android.support.v4.view.ViewPager;
 public class A3techLoginActivity extends Activity implements DataLoadCallback {
 
 	AlertDialog alertDialog;
-	ImageView animationLoginImage;
 	static int requestKey = 3422;
 	ProgressDialog dialog = null;
 
@@ -63,6 +68,22 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 
 	AnimationDrawable rocketAnimation;
 
+
+	/*
+	First view pager of login screen
+	 */
+    private CoordinatorLayout rootView;
+    private ViewPager mViewPager;
+    ImageView zero, one, two;
+    ImageView[] indicators;
+    int lastLeftValue = 0;
+    RelativeLayout mCoordinator;
+    int page = 0;   //  to track page position
+
+    /*
+    End of view pager
+     */
+
 	private OnClickListener faceBookListener = new OnClickListener() {
 		public void onClick(View v) {
 			Intent mainIntent = new Intent(A3techLoginActivity.this,
@@ -78,8 +99,10 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 
 	private OnClickListener addContactListener = new OnClickListener() {
 		public void onClick(View v) {
+			/*A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
+					InscriptionActivity.class));*/
 			A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
-					InscriptionActivity.class));
+					A3techCreateAccountActivity.class));
 			A3techLoginActivity.this.finish();
 		}
 	};
@@ -206,24 +229,15 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(1);
-		setContentView(R.layout.login_activity);
-		this.animationLoginImage = (ImageView) findViewById(R.id.animationLoginImage);
+		setContentView(R.layout.a3tech_login_activity);
 		this.idLogin_linearLayoutLogin = (LinearLayout) findViewById(R.id.idLogin_linearLayoutLogin);
 		this.idLogin_linearLayoutCreateAccount = (LinearLayout) findViewById(R.id.idLogin_linearLayoutCreateAccount);
 		this.idLogin_linearLayoutFacebook = (RelativeLayout) findViewById(R.id.idLogin_linearLayoutFacebook);
 		this.idLogin_linearLayoutFacebook
 				.setOnClickListener(this.faceBookListener);
-		this.animationLoginImage
-				.setBackgroundResource(R.drawable.rocket_thrust);
-		this.rocketAnimation = (AnimationDrawable) this.animationLoginImage
-				.getBackground();
-		this.rocketAnimation.start();
 		this.idLogin_linearLayoutLogin.setOnClickListener(this.loginListener);
 		this.idLogin_linearLayoutCreateAccount
 				.setOnClickListener(this.addContactListener);
-		((TextView) findViewById(R.id.idLogin_textViewlogan))
-				.setTypeface(Typeface.createFromAsset(getAssets(),
-						"fonts/harlowsi.ttf"));
 		idLogin_linearLayoutAnonyme = (RelativeLayout) findViewById(R.id.idLogin_linearLayoutAnonyme);
 		idLogin_linearLayoutAnonyme.setOnClickListener(new OnClickListener() {
 			@Override
@@ -235,7 +249,51 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 
 			}
 		});
+
+		iniPager();
 	}
+
+	private void iniPager(){
+        zero = (ImageView) findViewById(R.id.intro_indicator_0);
+        one = (ImageView) findViewById(R.id.intro_indicator_1);
+        two = (ImageView) findViewById(R.id.intro_indicator_2);
+        mCoordinator = (RelativeLayout) findViewById(R.id.main_content);
+        indicators = new ImageView[]{zero, one, two};
+        // Set up the ViewPager with the sections adapter.
+        mViewPager = (ViewPager) findViewById(R.id.container);
+		final int[] listeBack = new int[]{R.drawable.a3tech_back_4, R.drawable.a3tech_back_4, R.drawable.a3tech_back_4};
+        mViewPager.setAdapter(new A3techLoginPagerviewerAdapter(this,listeBack));
+        mViewPager.setOffscreenPageLimit(3);
+        mViewPager.setClipChildren(false);
+        mViewPager.setCurrentItem(page);
+        updateIndicators(page);
+        mViewPager.setClipToPadding(false);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+            @Override
+            public void onPageSelected(int position) {
+                page = position;
+                updateIndicators(page);
+            }
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+		Timer timer = new Timer();
+		timer.scheduleAtFixedRate(new SliderTimer(), 2000, 4000);
+
+    }
+	void updateIndicators(int position) {
+		for (int i = 0; i < indicators.length; i++) {
+			indicators[i].setBackgroundResource(
+					i == position ? R.drawable.indicator_selected : R.drawable.indicator_unselected
+			);
+		}
+	}
+
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode != requestKey
@@ -361,5 +419,22 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 
 	public void dataLoadingError(String error) {
 		this.dialog = CustomProgressDialog.createProgressDialog(this, error);
+	}
+
+	private class SliderTimer extends TimerTask {
+
+		@Override
+		public void run() {
+			A3techLoginActivity.this.runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					if (mViewPager.getCurrentItem() < 2) {
+						mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+					} else {
+						mViewPager.setCurrentItem(0);
+					}
+				}
+			});
+		}
 	}
 }

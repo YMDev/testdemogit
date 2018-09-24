@@ -18,6 +18,7 @@
     <dimen name="txt_about_cabecalho_apis_marginTop">1dp</dimen>   
     
     <dimen name="img_about_Ajudou_gentileza_layout_width">45dp</dimen>
-    <dimen name="img_about_Ajudou_gentileza_layout_height">45dp</dimen>   
+    <dimen name="img_about_Ajudou_gentileza_layout_height">45dp</dimen>
+    <dimen name="header_create_account_size">25</dimen>
 
 </resources>
