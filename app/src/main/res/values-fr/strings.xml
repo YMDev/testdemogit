@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="header_create_account">Créer un Compte</string>
+    <string name="facebook_label">FACEBOOK</string>
+    <string name="a3tech_terme_of_use_header">En m\'inscrivant, j\'accepte les conditions d\'utilisation de 3tech.ma</string>
+</resources>

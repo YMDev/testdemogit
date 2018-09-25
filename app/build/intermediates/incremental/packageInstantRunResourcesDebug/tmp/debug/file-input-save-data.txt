@@ -1,7 +1,7 @@
 #Internal package file, do not edit.
-#Sat Sep 22 16:02:31 UTC 2018
+#Mon Sep 24 11:49:03 WAT 2018
 0.baseType=DIRECTORY
-0.base=F\:\\Android_Works\\3TECH\\app\\build\\intermediates\\assets\\debug
+0.base=D\:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\assets\\debug
 0.path=fonts/harlowsi.ttf
 0.set=ASSET
 count=1

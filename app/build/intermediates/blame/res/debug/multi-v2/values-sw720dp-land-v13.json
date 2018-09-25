@@ -1,16 +1,16 @@
 {
     "logs": [
         {
-            "outputFile": "F:\\Android_Works\\3TECH\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sw720dp-land-v13\\values-sw720dp-land-v13.xml",
+            "outputFile": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-sw720dp-land-v13\\values-sw720dp-land-v13.xml",
             "map": [
                 {
-                    "source": "F:\\Android_Works\\3TECH\\app\\src\\main\\res\\values-sw720dp-land\\dimens.xml",
+                    "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\values-sw720dp-land\\dimens.xml",
                     "from": {
                         "startLines": "6",
                         "startColumns": "4",
-                        "startOffsets": "205",
+                        "startOffsets": "206",
                         "endColumns": "58",
-                        "endOffsets": "259"
+                        "endOffsets": "260"
                     },
                     "to": {
                         "startLines": "2",

@@ -1,15 +1,15 @@
 #Internal package file, do not edit.
-#Sun Sep 23 15:00:41 UTC 2018
-1.base=F\:\\Android_Works\\3TECH\\app\\build\\intermediates\\assets\\debug
-2.path=classes.dex
+#Mon Sep 24 16:07:04 WAT 2018
+1.base=D\:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\11
+2.path=fonts/harlowsi.ttf
 0.baseType=DIRECTORY
-2.base=F\:\\Android_Works\\3TECH\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\42
-2.set=DEX
+2.base=D\:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\assets\\debug
+2.set=ASSET
 1.baseType=DIRECTORY
 count=3
-1.set=ASSET
+1.set=DEX
 0.path=classes.dex
 0.set=DEX
-0.base=F\:\\Android_Works\\3TECH\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\43
+0.base=D\:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\12
 2.baseType=DIRECTORY
-1.path=fonts/harlowsi.ttf
+1.path=classes.dex

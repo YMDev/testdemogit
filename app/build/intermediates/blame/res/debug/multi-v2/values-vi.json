@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "F:\\Android_Works\\3TECH\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-vi\\values-vi.xml",
+            "outputFile": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-vi\\values-vi.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\SPIA\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\15c19d61560268701cfbbdba4fc54de8\\res\\values-vi\\values-vi.xml",
+                    "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\values-vi\\values-vi.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -21,24 +21,24 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\SPIA\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-15.0.1.aar\\906565ce7750d7ccb4f2463b2592e881\\res\\values-vi\\values.xml",
+                    "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\values-vi\\values.xml",
                     "from": {
                         "startLines": "4",
-                        "startColumns": "0",
-                        "startOffsets": "247",
-                        "endColumns": "194",
-                        "endOffsets": "441"
+                        "startColumns": "4",
+                        "startOffsets": "181",
+                        "endColumns": "58",
+                        "endOffsets": "235"
                     },
                     "to": {
-                        "startLines": "29",
+                        "startLines": "39",
                         "startColumns": "4",
-                        "startOffsets": "3248",
-                        "endColumns": "194",
-                        "endOffsets": "3438"
+                        "startOffsets": "4815",
+                        "endColumns": "58",
+                        "endOffsets": "4869"
                     }
                 },
                 {
-                    "source": "C:\\Users\\SPIA\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-15.0.1.aar\\bea296e3f60265b65a0cf203907ac865\\res\\values-vi\\values.xml",
+                    "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-15.0.1.aar\\bc1a364e8bc2f5c6f65dc6496748d8d9\\res\\values-vi\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20",
                         "startColumns": "0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0",
@@ -55,20 +55,20 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\SPIA\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\815bf6de5cee101d95db487e8730546a\\res\\values-vi\\values.xml",
+                    "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-basement-15.0.1.aar\\2a500a30f1b276e1417823241e9f9aa4\\res\\values-vi\\values.xml",
                     "from": {
                         "startLines": "4",
-                        "startColumns": "4",
-                        "startOffsets": "181",
-                        "endColumns": "58",
-                        "endOffsets": "235"
+                        "startColumns": "0",
+                        "startOffsets": "247",
+                        "endColumns": "194",
+                        "endOffsets": "441"
                     },
                     "to": {
-                        "startLines": "39",
+                        "startLines": "29",
                         "startColumns": "4",
-                        "startOffsets": "4815",
-                        "endColumns": "58",
-                        "endOffsets": "4869"
+                        "startOffsets": "3248",
+                        "endColumns": "194",
+                        "endOffsets": "3438"
                     }
                 }
             ]
