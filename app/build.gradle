@@ -45,5 +45,6 @@ dependencies {
     implementation group: 'com.nostra13.universalimageloader', name: 'universal-image-loader', version: '1.9.2'
     implementation group: 'com.bakerj', name: 'backgrounddark-popupwindow', version: '1.0.0'
     implementation 'com.facebook.android:facebook-android-sdk:4.0.0'
+    implementation 'com.aurelhubert:ahbottomnavigation:2.0.4'
 }
 apply plugin: 'com.google.gms.google-services'

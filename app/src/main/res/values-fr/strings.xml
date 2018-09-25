@@ -3,4 +3,9 @@
     <string name="header_create_account">Créer un Compte</string>
     <string name="facebook_label">FACEBOOK</string>
     <string name="a3tech_terme_of_use_header">En m\'inscrivant, j\'accepte les conditions d\'utilisation de 3tech.ma</string>
+    <string name="hint_email">Ajouter votre adresse mail</string>
+    <string name="hint_password">Ajouter un mot de passe</string>
+    <string name="commencer">Commencer</string>
+    <string name="error_email_empty">Mail obligatoire</string>
+    <string name="error_username_empty"><![CDATA[nom & prénom est obligatoire]]></string>
 </resources>

@@ -103,7 +103,7 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 					InscriptionActivity.class));*/
 			A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
 					A3techCreateAccountActivity.class));
-			A3techLoginActivity.this.finish();
+			//A3techLoginActivity.this.finish();
 		}
 	};
 

@@ -132,7 +132,7 @@ public class UserService extends AbstractService implements Constant {
 
 
 		User userMocked = new User();
-		userMocked.setEmail("mouad.test@gmail.com");
+		userMocked.setEmail(email != null ? email : "");
 		userMocked.setAdresse("adresse rabat hay riad");
 		userMocked.setCheckphone("02922029292");
 		userMocked.setDateCreation("01/01/2012");
@@ -142,6 +142,7 @@ public class UserService extends AbstractService implements Constant {
 		userMocked.setNbrServiceEmis("0");
 		userMocked.setNom("miyad");
 		userMocked.setPrenom("kdkdlll");
+		userMocked.setPseudo(pseudo);
 
 		return userMocked;
 	}

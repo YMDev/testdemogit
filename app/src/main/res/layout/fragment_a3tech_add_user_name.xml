@@ -21,7 +21,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
+                android:layout_marginBottom="7dp"
                 android:layout_marginLeft="25dp"
                 android:text="@string/header_create_an_account"
                 android:textColor="@color/colorPrimary"
@@ -48,7 +48,9 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_username"
                         android:textColorHint="@color/colorPrimary"
-                        />
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:textColorLink="@color/colorPrimary" />
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -57,19 +59,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
                     android:layout_below="@+id/input_layout_username"
+                    android:layout_marginTop="50dp"
                     android:background="@color/transparent"
                     android:orientation="horizontal"></LinearLayout>
 
                 <Button
                     android:id="@+id/next"
                     android:layout_width="100dp"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
                     android:layout_below="@+id/spacerss"
-                    android:background="@color/transparent"
+                    android:background="@drawable/a3tech_btn_facebook"
                     android:text="@string/next"
                     android:textAllCaps="false"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/white"
                     android:textSize="16dp"
                     android:textStyle="bold" />
             </RelativeLayout>

@@ -17,8 +17,8 @@ public class CustomProgressDialog {
         progressDialog.show();
 		LayoutInflater inflater =((Activity)mContext).getLayoutInflater();
     	View content =inflater.inflate(R.layout.custom_progressdialog, null);
-    	TextView  myTitle =  (TextView) content.findViewById(R.id.idTextViewDialog);  
-    	myTitle.setText(text);
+    	/*TextView  myTitle =  (TextView) content.findViewById(R.id.idTextViewDialog);
+    	myTitle.setText(text);*/
     	progressDialog.setContentView(content);
     	progressDialog.setIndeterminate(true);
 		progressDialog.setCancelable(false);

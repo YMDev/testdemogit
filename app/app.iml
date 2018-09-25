@@ -124,6 +124,7 @@
     <orderEntry type="library" name="Gradle: com.google.http-client:google-http-client-jackson2:1.25.0@jar" level="project" />
     <orderEntry type="library" scope="TEST" name="Gradle: com.squareup:javawriter:2.1.1@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:multidex-1.0.3" level="project" />
+    <orderEntry type="library" name="Gradle: com.aurelhubert:ahbottomnavigation-2.0.4" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support.constraint:constraint-layout-1.1.3" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-media-compat-26.1.0" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-annotations:26.1.0@jar" level="project" />
@@ -142,7 +143,6 @@
     <orderEntry type="library" scope="TEST" name="Gradle: com.android.support.test:monitor-1.0.2" level="project" />
     <orderEntry type="library" name="Gradle: com.google.api-client:google-api-client:1.25.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.android.support:support-core-utils-26.1.0" level="project" />
-    <orderEntry type="library" name="Gradle: __local_aars__:D.\AndroidWorks\testdemogit\app\libs\android-support-design.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.code.findbugs:jsr305:3.0.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: __local_aars__:D.\AndroidWorks\testdemogit\app\libs\YouTubeAndroidPlayerApi.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.oauth-client:google-oauth-client:1.25.0@jar" level="project" />

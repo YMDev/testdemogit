@@ -161,6 +161,7 @@
         <activity
             android:name="mobile.a3tech.com.a3tech.activity.A3techCreateAccountActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name="mobile.a3tech.com.a3tech.activity.A3techHomeActivity" />
 
         <meta-data
             android:name="android.support.VERSION"

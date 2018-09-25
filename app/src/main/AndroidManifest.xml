@@ -148,8 +148,10 @@
 
         <service android:name=".GCMIntentService" />
 
-        <activity android:name=".activity.A3techCreateAccountActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <activity
+            android:name=".activity.A3techCreateAccountActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".activity.A3techHomeActivity"></activity>
     </application>
 
 </manifest>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techCreateAccountActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -89,19 +90,19 @@ public class A3techSelecteAccountFragment extends Fragment {
         });
         viewFr.setFocusableInTouchMode(true);
         viewFr.requestFocus();
-        viewFr.setOnKeyListener( new View.OnKeyListener()
+       /* viewFr.setOnKeyListener( new View.OnKeyListener()
         {
             @Override
             public boolean onKey( View v, int keyCode, KeyEvent event )
             {
                 if( keyCode == KeyEvent.KEYCODE_BACK )
                 {
-                    mListener.backAction();
+                    mListener.backAction(A3techCreateAccountActivity.DEST_HOME);
                     return true;
                 }
                 return false;
             }
-        } );
+        } );*/
 
         return viewFr;
     }
@@ -143,7 +144,7 @@ public class A3techSelecteAccountFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-        void backAction();
+        void backAction(int destination);
         void actionNext(Integer typeAction, Object data);
     }
 }

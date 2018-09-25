@@ -120,7 +120,7 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
             startActivity(new Intent(this, A3techLoginActivity.class));
             finish();
         } else {
-            //UserManager.getInstance().getProfil(this.connectedUser,password, this);
+            UserManager.getInstance().getProfil(this.connectedUser,password, this);
         }
     }
 
@@ -170,7 +170,10 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
                 break;
             case Constant.KEY_USER_GET_VERSION:
                 String version = (String) data;
-                Intent mainIntent = new Intent(this, NavigationMain.class);
+                /*Intent mainIntent = new Intent(this, NavigationMain.class);*/
+                Intent mainIntent = new Intent(this, A3techHomeActivity.class);
+                startActivity(mainIntent);
+                finish();
                 if (versionname.equals(version)) {
                     mainIntent.putExtra("nomPrenom", usern.getPrenom() + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + usern.getNom());
                     mainIntent.putExtra("nbr", usern.getNbrServiceEmis());

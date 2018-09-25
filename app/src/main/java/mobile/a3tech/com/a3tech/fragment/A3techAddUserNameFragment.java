@@ -10,9 +10,14 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
+import org.apache.commons.lang3.StringUtils;
+
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techCreateAccountActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,25 +77,30 @@ public class A3techAddUserNameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_user_name, container, false);
         username = viewFr.findViewById(R.id.input_layout_username);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(username.getEditText(), InputMethodManager.SHOW_FORCED);
         next = viewFr.findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String emailSaisi = username.getEditText().getText() != null ? username.getEditText().getText().toString() :"";
+                if(StringUtils.isBlank(emailSaisi)){
+                    username.getEditText().setError(getString(R.string.error_username_empty));
+                    return;
+                }
                 mListener.actionNext(ACTION_TYPE_USERNAME, username.getEditText().getText().toString());
             }
         });
-        viewFr.setFocusableInTouchMode(true);
-        viewFr.requestFocus();
-        viewFr.setOnKeyListener(new View.OnKeyListener() {
+        /*viewFr.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_BACK) {
-                    mListener.backAction();
+                    mListener.backAction(A3techCreateAccountActivity.DEST_SELECT_ACCOUNT);
                     return true;
                 }
                 return false;
             }
-        });
+        });*/
 
         return viewFr;
     }
@@ -133,7 +143,7 @@ public class A3techAddUserNameFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
 
-        void backAction();
+        void backAction(int destination);
 
         void actionNext(Integer typeAction, Object data);
     }
