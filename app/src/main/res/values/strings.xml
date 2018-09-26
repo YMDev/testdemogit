@@ -601,7 +601,12 @@
     <string name="toolbar_mission_title">Mes Missions</string>
     <string name="header_log_in">Se connecter</string>
     <string name="header_log_in_email">Continuer avec mon email</string>
-    <string name="header_log_in_reset">Changer mon mot de passe</string>
+    <string name="header_log_in_reset">Mot de passe oublié</string>
     <string name="a3tech_no_account_signin">vous n\'avez pas de compte?</string>
     <string name="a3tech_no_account_signin_2"><u>s\'inscrire</u></string>
+    <string name="header_log_in_title">Log in</string>
+    <string name="connexion">Connexion</string>
+    <string name="hint_passwor_log_in">Mot de passe</string>
+    <string name="hint_username_log">Email</string>
+    <string name="error_password_non_valides">Mot de passe non valide</string>
 </resources>

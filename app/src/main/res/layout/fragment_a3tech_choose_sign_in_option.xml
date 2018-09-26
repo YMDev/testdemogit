@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.A3techChooseSignInOption">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/reset_password"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/transparent"
+                android:text="@string/header_log_in_reset"
+                android:textAllCaps="true"
+                android:textColor="@color/colorPrimary"
+                android:textSize="13dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="false"
+                android:layout_marginTop="90dp"
+                android:orientation="vertical">
+
+                <!--  create account libelle-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="@string/header_log_in"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <!--facebook account-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/a3tech_btn_facebook">
+
+                    <Button
+                        android:id="@+id/btnfacebookConnection"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|center_horizontal|center"
+                        android:background="@drawable/a3tech_btn_facebook"
+                        android:drawableLeft="@drawable/white_facebook"
+                        android:text="@string/facebook_label"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/a3tech_btn_create_account_back">
+
+                    <Button
+                        android:id="@+id/btn_connect_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center_vertical|center_horizontal|center"
+                        android:layout_margin="2dp"
+                        android:background="@color/transparent"
+                        android:text="@string/header_log_in_email"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_margin="30dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/a3tech_no_account_signin"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/signin_action"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/a3tech_no_account_signin_2"
+                    android:textColor="@color/colorPrimary"
+                    android:clickable="true"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</FrameLayout>

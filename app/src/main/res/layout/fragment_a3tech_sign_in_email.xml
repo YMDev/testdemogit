@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.A3techSignInEmailFragment">
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="false"
+                android:layout_marginTop="20dp"
+                android:orientation="vertical">
+
+                <!--  create account libelle-->
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="25dp"
+                    android:text="@string/header_log_in_title"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="24dp"
+                    android:textStyle="bold" />
+
+
+                <!--i want to hire-->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp" >
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginBottom="30dp">
+
+                        <EditText
+                            android:id="@+id/input_username_log_in"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:hint="@string/hint_username_log"
+                            android:textColorHint="@color/colorPrimary"
+                            android:textColorLink="@color/colorPrimary" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_layout_password"
+                        android:layout_below="@id/input_layout_username"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <EditText
+                            android:id="@+id/input_password_log_in"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/hint_passwor_log_in"
+                            android:textColorHint="@color/colorPrimary"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:textColorLink="@color/colorPrimary" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <LinearLayout
+                        android:id="@+id/spacerss"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:layout_below="@+id/input_layout_username"
+                        android:layout_marginTop="50dp"
+                        android:background="@color/transparent"
+                        android:orientation="horizontal"></LinearLayout>
+
+                    <Button
+                        android:id="@+id/next"
+                        android:layout_width="100dp"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@+id/spacerss"
+                        android:background="@drawable/a3tech_btn_facebook"
+                        android:text="@string/connexion"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="16dp"
+                        android:textStyle="bold" />
+                </RelativeLayout>
+
+                <!--i want to worK-->
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
