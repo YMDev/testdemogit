@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-157:12
-INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-157:12
-INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-157:12
-INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-157:12
+ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-162:12
+INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-162:12
+INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-162:12
+INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-162:12
 MERGED from [com.aurelhubert:ahbottomnavigation:2.0.4] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\ahbottomnavigation-2.0.4.aar\2112e42c3381886f9daafb1371b9999a\AndroidManifest.xml:2:1-13:12
 MERGED from [com.android.support:design:26.1.0] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\e5a8f843c92c524d43e03a7e564a8410\AndroidManifest.xml:17:1-31:12
 MERGED from [com.bakerj:backgrounddark-popupwindow:1.0.0] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\backgrounddark-popupwindow-1.0.0.aar\f07c292a299ed48c74409be0c6f00795\AndroidManifest.xml:2:1-18:12
@@ -30,22 +30,22 @@ MERGED from [com.android.support:support-media-compat:26.1.0] C:\Users\bouhjra\.
 MERGED from [com.android.support:support-core-utils:26.1.0] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\support-core-utils-26.1.0.aar\b18a53c5f2c7048393420695b47622f2\AndroidManifest.xml:17:1-31:12
 MERGED from [com.android.support:support-compat:26.1.0] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\support-compat-26.1.0.aar\d38a44ca43ddd8049ae9430ce6cf0488\AndroidManifest.xml:17:1-31:12
 MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\runtime-1.0.0.aar\ed3b808be12fef3b6a4b0681143213b8\AndroidManifest.xml:17:1-30:12
-INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-157:12
-INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-157:12
-INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-157:12
+INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-162:12
+INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-162:12
+INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-162:12
 	package
 		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:4:5-39
 		INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml
 		INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml
-		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-157:12
+		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-162:12
 		INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml
 	xmlns:tools
 		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
 		INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml
-		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-157:12
+		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:1-162:12
 		INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:2:11-69
@@ -112,7 +112,7 @@ ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:28:5-63
 	android:name
 		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:28:22-60
 application
-ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:30:5-155:19
+ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:30:5-160:19
 MERGED from [com.aurelhubert:ahbottomnavigation:2.0.4] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\ahbottomnavigation-2.0.4.aar\2112e42c3381886f9daafb1371b9999a\AndroidManifest.xml:11:5-20
 MERGED from [com.aurelhubert:ahbottomnavigation:2.0.4] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\ahbottomnavigation-2.0.4.aar\2112e42c3381886f9daafb1371b9999a\AndroidManifest.xml:11:5-20
 MERGED from [com.android.support:design:26.1.0] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\design-26.1.0.aar\e5a8f843c92c524d43e03a7e564a8410\AndroidManifest.xml:25:5-29:19
@@ -400,9 +400,17 @@ ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:151:9-15
 	android:name
 		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:152:13-65
 activity#mobile.a3tech.com.a3tech.activity.A3techHomeActivity
-ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:154:9-74
+ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:154:9-156:72
+	android:theme
+		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:156:13-69
 	android:name
-		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:154:19-62
+		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:155:13-56
+activity#mobile.a3tech.com.a3tech.activity.A3techSignInActivity
+ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:157:9-159:81
+	android:theme
+		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:159:13-69
+	android:name
+		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:158:13-58
 uses-sdk
 INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml

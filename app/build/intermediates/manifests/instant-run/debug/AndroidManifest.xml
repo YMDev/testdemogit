@@ -40,7 +40,7 @@
         android:name="mobile.a3tech.com.a3tech.MeducationApplication"
         android:allowBackup="true"
         android:debuggable="true"
-        android:icon="@mipmap/a3tech_logo_1"
+        android:icon="@mipmap/a3tech_logo_2"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:testOnly="true"
@@ -161,7 +161,12 @@
         <activity
             android:name="mobile.a3tech.com.a3tech.activity.A3techCreateAccountActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name="mobile.a3tech.com.a3tech.activity.A3techHomeActivity" />
+        <activity
+            android:name="mobile.a3tech.com.a3tech.activity.A3techHomeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name="mobile.a3tech.com.a3tech.activity.A3techSignInActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <meta-data
             android:name="android.support.VERSION"

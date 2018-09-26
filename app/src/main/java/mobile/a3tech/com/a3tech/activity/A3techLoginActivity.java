@@ -146,8 +146,10 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 	private OnClickListener loginListener = new OnClickListener() {
 
 		public void onClick(View v) {
+			A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
+                    A3techSignInActivity.class));
 
-			new Handler().post(new Runnable() {
+		/*	new Handler().post(new Runnable() {
 
 				@Override
 				public void run() {
@@ -184,7 +186,7 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 					A3techLoginActivity.this.alertDialog.show();
 
 				}
-			});
+			});*/
 		}
 	};
 

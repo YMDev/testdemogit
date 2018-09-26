@@ -1,24 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-tools:context=".activity.A3techHomeActivity"
-android:id="@+id/coordinator"
-android:layout_width="match_parent"
-android:layout_height="match_parent">
-
-<mobile.a3tech.com.a3tech.view.NoSwipePager
-    android:id="@+id/home_view_pager_navigation"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:background="#EFEFEF"/>
+    tools:context=".activity.A3techHomeActivity">
 
-<com.aurelhubert.ahbottomnavigation.AHBottomNavigation
-    android:id="@+id/home_bottom_navigation"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom"/>
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_home"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        >
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <include
+                android:id="@+id/toolbar_echange"
+                layout="@layout/a3tech_toolbar_echange_fragment"
+                android:visibility="visible" />
+
+            <include
+                android:id="@+id/toolbar_mission"
+                layout="@layout/a3tech_toolbar_mission_fragment"
+                android:visibility="gone" />
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <mobile.a3tech.com.a3tech.view.NoSwipePager
+        android:id="@+id/home_view_pager_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:background="#EFEFEF" />
+
+    <com.aurelhubert.ahbottomnavigation.AHBottomNavigation
+        android:id="@+id/home_bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
 
 </android.support.design.widget.CoordinatorLayout>
