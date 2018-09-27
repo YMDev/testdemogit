@@ -591,7 +591,7 @@
     <string name="error_email_empty">Mail obligatoire</string>
     <string name="error_username_empty"><![CDATA[nom & prénom est obligatoire]]></string>
     <string name="error_email_not_valide">Email non valide</string>
-    <string name="error_password_empty">Mot de passe obligatoire</string>
+    <string name="error_password_empty">Mot de passe non valide </string>
     <string name="home_tab_1">Echanges</string>
     <string name="home_tab_2">Missions</string>
     <string name="home_tab_3">Accueil</string>
@@ -609,4 +609,11 @@
     <string name="hint_passwor_log_in">Mot de passe</string>
     <string name="hint_username_log">Email</string>
     <string name="error_password_non_valides">Mot de passe non valide</string>
+    <string name="hint_phone">N° de Téléphone</string>
+    <string name="error_phone_empty">N° de téléphone obligatoire</string>
+    <string name="toolbar_account_sub_title">Afficher et Modifier votre profil</string>
+    <string name="toolbar_account_name_example">Mouad B.</string>
+    <string name="header_account_balance">Solde valable</string>
+    <string name="solde_par_default">0,00 MAD</string>
+    <string name="header_account_setting">Paramétrage du Compte</string>
 </resources>

@@ -13,9 +13,11 @@ import android.widget.Button;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.model.User;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +36,7 @@ public class A3techAddEmailFragment extends Fragment {
     private String mParam2;
 
     private TextInputLayout email;
+    private TextInputLayout phone;
     private Button next;
     private OnFragmentInteractionListener mListener;
 
@@ -73,6 +76,7 @@ public class A3techAddEmailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_email, container, false);
         email = viewFr.findViewById(R.id.input_layout_email);
+        phone = viewFr.findViewById(R.id.input_layout_phone);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(email.getEditText(), InputMethodManager.SHOW_FORCED);
         next = viewFr.findViewById(R.id.next);
@@ -80,15 +84,25 @@ public class A3techAddEmailFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String emailSaisi = email.getEditText().getText() != null ? email.getEditText().getText().toString() :"";
+                String phoneSaisi = phone.getEditText().getText() != null ? phone.getEditText().getText().toString() :"";
                 if(StringUtils.isBlank(emailSaisi)){
                     email.getEditText().setError(getString(R.string.error_email_empty));
                     return;
                 }
+                if(StringUtils.isBlank(phoneSaisi)){
+                    phone.getEditText().setError(getString(R.string.error_phone_empty));
+                    return;
+                }
+
+
                 if(!isValidEmailAddress(emailSaisi)){
                     email.getEditText().setError(getString(R.string.error_email_not_valide));
                     return;
                 }
-                mListener.actionNext(ACTION_TYPE_EMAIL, email.getEditText().getText().toString());
+                HashMap mapData  = new HashMap();
+                mapData.put("EMAIL", emailSaisi);
+                mapData.put("PHONE", phoneSaisi);
+                mListener.actionNext(ACTION_TYPE_EMAIL, mapData);
             }
         });
         return viewFr;

@@ -21,28 +21,33 @@ import mobile.a3tech.com.a3tech.R;
 public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.SimpleItemVH> {
 
     //  Data
-    private List<Dessert> desserts = new ArrayList<>();
+    private List<ObjectMenu> listeObjects = new ArrayList<>();
 
     private Context context;
 
     public SimpleAdapterTest(Context context) {
         this.context = context;
-        prepareDesserts();
+        preparelisteObjects();
     }
 
-    private void prepareDesserts() {
+    public SimpleAdapterTest(Context context, List objectMenu) {
+        this.context = context;
+        listeObjects = objectMenu;
+    }
+
+    private void preparelisteObjects() {
         String[] nameArray = context.getResources().getStringArray(R.array.dessert_names);
         String[] descArray = context.getResources().getStringArray(R.array.dessert_descriptions);
 
         final int SIZE = nameArray.length;
 
         for (int i = 0; i < SIZE; i++) {
-            Dessert dessert = new Dessert(
+            ObjectMenu dessert = new ObjectMenu(
                     nameArray[i],
-                    descArray[i]
+                    descArray[i],0,0
             );
 
-            desserts.add(dessert);
+            listeObjects.add(dessert);
         }
     }
 
@@ -56,7 +61,7 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
 
     @Override
     public void onBindViewHolder(SimpleItemVH holder, int position) {
-        Dessert dessert = desserts.get(position);
+        ObjectMenu dessert = listeObjects.get(position);
 
         holder.txtTitle.setText(dessert.getName());
         holder.txtDesc.setText(dessert.getDescription());
@@ -64,7 +69,7 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
 
     @Override
     public int getItemCount() {
-        return desserts != null ? desserts.size() : 0;
+        return listeObjects != null ? listeObjects.size() : 0;
     }
 
     protected static class SimpleItemVH extends RecyclerView.ViewHolder {

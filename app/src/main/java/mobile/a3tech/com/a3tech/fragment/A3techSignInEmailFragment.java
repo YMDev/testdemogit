@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.utils.ValidationPatternUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,17 +79,21 @@ public class A3techSignInEmailFragment extends Fragment {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_sign_in_email, container, false);
         email = viewFr.findViewById(R.id.input_layout_username);
         pass = viewFr.findViewById(R.id.input_layout_password);
-        btnConnexion = viewFr.findViewById(R.id.btn_connect_email);
+        btnConnexion = viewFr.findViewById(R.id.btn_start_connexion);
 
         btnConnexion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 //TODO VERIFICATION
-                if(isValidEmailAddress(pass.getEditText().getText().toString())){
-                    pass.getEditText().setError(getString(R.string.error_password_non_valides));
+                if(!ValidationPatternUtils.isValideEmail(email.getEditText().getText().toString())){
+                    email.getEditText().setError(getString(R.string.error_email_not_valide));
                     return;
                 }
+               /* if(!ValidationPatternUtils.isValidPassword(pass.getEditText().getText().toString())){
+                    pass.getEditText().setError(getString(R.string.error_password_empty));
+                    return;
+                }*/
                 HashMap hashData = new HashMap();
                 hashData.put("EMAIL", email.getEditText().getText().toString());
                 hashData.put("PASS", pass.getEditText().getText().toString());
@@ -104,12 +109,7 @@ public class A3techSignInEmailFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-    private boolean isValidEmailAddress(String emailAddress) {
-        return Pattern
-                .compile(
-                        "^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+.([a-zA-Z])+([a-zA-Z])+",
-                        Pattern.CASE_INSENSITIVE).matcher(emailAddress).matches();
-    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);

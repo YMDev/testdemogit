@@ -1,4 +1,4 @@
-#Wed Sep 26 16:25:51 WAT 2018
+#Thu Sep 27 13:21:40 WAT 2018
 base.0=D\:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\10
 path.1=classes2.dex
 renamed.1=classes2.dex

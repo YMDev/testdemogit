@@ -168,7 +168,7 @@ MERGED from [android.arch.lifecycle:runtime:1.0.0] C:\Users\bouhjra\.gradle\cach
 	android:largeHeap
 		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:35:9-33
 	android:icon
-		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:33:9-45
+		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:33:9-46
 		REJECTED from [com.bakerj:backgrounddark-popupwindow:1.0.0] C:\Users\bouhjra\.gradle\caches\transforms-1\files-1.1\backgrounddark-popupwindow-1.0.0.aar\f07c292a299ed48c74409be0c6f00795\AndroidManifest.xml:13:9-45
 	android:allowBackup
 		ADDED from D:\AndroidWorks\testdemogit\app\src\main\AndroidManifest.xml:32:9-35

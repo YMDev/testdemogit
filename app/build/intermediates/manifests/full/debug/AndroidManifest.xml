@@ -40,7 +40,7 @@
         android:name="mobile.a3tech.com.a3tech.MeducationApplication"
         android:allowBackup="true"
         android:debuggable="true"
-        android:icon="@mipmap/a3tech_logo_2"
+        android:icon="@mipmap/a3tech_logo_v3"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:testOnly="true"

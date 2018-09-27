@@ -3,6 +3,7 @@ package mobile.a3tech.com.a3tech.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -27,11 +28,12 @@ import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
+import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
-public class A3techHomeActivity extends AppCompatActivity {
+public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener {
     private final int[] colors = {R.color.white, R.color.white, R.color.white, R.color.white};
     private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
@@ -40,6 +42,7 @@ public class A3techHomeActivity extends AppCompatActivity {
     AppBarLayout appBarHome ;
     Toolbar toolMission;
     Toolbar toolEchange;
+    Toolbar toolAccount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +51,7 @@ public class A3techHomeActivity extends AppCompatActivity {
         setupViewPager();
         toolMission = findViewById(R.id.toolbar_mission);
         toolEchange = findViewById(R.id.toolbar_echange);
+        toolAccount = findViewById(R.id.toolbar_account);
         appBarHome = findViewById(R.id.appbar_home);
         updateAppbarLayout(0);
 
@@ -80,14 +84,23 @@ public class A3techHomeActivity extends AppCompatActivity {
             case 0:
                 toolEchange.setVisibility(View.VISIBLE);
                 toolMission.setVisibility(View.GONE);
+                toolAccount.setVisibility(View.GONE);
                 appBarHome.setBackgroundColor(getResources().getColor(R.color.white));
                 setSupportActionBar(toolEchange);
                 break;
             case 1:
                 toolMission.setVisibility(View.VISIBLE);
                 toolEchange.setVisibility(View.GONE);
+                toolAccount.setVisibility(View.GONE);
                 appBarHome.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 setSupportActionBar(toolMission);
+                break;
+            case 3:
+                toolMission.setVisibility(View.GONE);
+                toolEchange.setVisibility(View.GONE);
+                toolAccount.setVisibility(View.VISIBLE);
+                appBarHome.setBackgroundColor(getResources().getColor(R.color.white));
+                setSupportActionBar(toolAccount);
                 break;
         }
      }
@@ -98,7 +111,7 @@ public class A3techHomeActivity extends AppCompatActivity {
         pagerAdapter.addFragments(createFragment(colors[0]));
         pagerAdapter.addFragments(createFragment(colors[0]));
         pagerAdapter.addFragments(createFragment(colors[0]));
-        pagerAdapter.addFragments(createFragment(colors[0]));
+        pagerAdapter.addFragments(new A3techHomeAccountFragment());
         viewPager.setAdapter(pagerAdapter);
     }
 
@@ -206,7 +219,7 @@ public class A3techHomeActivity extends AppCompatActivity {
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
 
-        if(bottomNavigation.getCurrentItem() == 1 ) {
+        if(bottomNavigation.getCurrentItem() == 1 || bottomNavigation.getCurrentItem() == 3 ) {
             searchItem.setVisible(false);
         } else{
             searchItem.setVisible(true);
@@ -225,4 +238,8 @@ public class A3techHomeActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 }

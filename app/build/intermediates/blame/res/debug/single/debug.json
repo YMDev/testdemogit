@@ -24,6 +24,10 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\e5a8f843c92c524d43e03a7e564a8410\\res\\layout\\design_layout_snackbar_include.xml"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_a3tech_logo_v3.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xhdpi\\a3tech_logo_v3.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_action_cancel.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_action_cancel.png"
     },
@@ -60,20 +64,20 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\animator\\slide_in_right_back.xml"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\color_common_google_signin_btn_tint.xml.flat",
-        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-15.0.1.aar\\bc1a364e8bc2f5c6f65dc6496748d8d9\\res\\color\\common_google_signin_btn_tint.xml"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_action_email.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_action_email.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_btn_radio_to_on_mtrl_015.png.flat",
-        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-mdpi-v4\\abc_btn_radio_to_on_mtrl_015.png"
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\color_common_google_signin_btn_tint.xml.flat",
+        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\play-services-base-15.0.1.aar\\bc1a364e8bc2f5c6f65dc6496748d8d9\\res\\color\\common_google_signin_btn_tint.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_tint_btn_checkable.xml.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\color\\abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_btn_radio_to_on_mtrl_015.png.flat",
+        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-mdpi-v4\\abc_btn_radio_to_on_mtrl_015.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_list_divider_mtrl_alpha.9.png.flat",
@@ -100,12 +104,12 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-hdpi-v4\\abc_text_select_handle_right_mtrl_dark.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_list_longpressed_holo.9.png.flat",
-        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-mdpi-v4\\abc_list_longpressed_holo.9.png"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_messenger_bubble_large_white.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\drawable-xxhdpi-v4\\messenger_bubble_large_white.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_list_longpressed_holo.9.png.flat",
+        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-mdpi-v4\\abc_list_longpressed_holo.9.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_scrubber_control_off_mtrl_alpha.png.flat",
@@ -116,12 +120,12 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\advanced_search.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_temps_c.png.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\temps_c.png"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_btn_radio_to_on_mtrl_000.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xhdpi-v4\\abc_btn_radio_to_on_mtrl_000.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_temps_c.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\temps_c.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_action_call.png.flat",
@@ -200,6 +204,10 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xxxhdpi-v4\\abc_text_select_handle_right_mtrl_dark.png"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_a3tech_choose_sign_in_option.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\fragment_a3tech_choose_sign_in_option.xml"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_text_select_handle_middle_mtrl_light.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-hdpi-v4\\abc_text_select_handle_middle_mtrl_light.png"
     },
@@ -226,6 +234,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_activity_fullscreen_view.xml.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\activity_fullscreen_view.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_a3tech_logo_v3_round.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xhdpi\\a3tech_logo_v3_round.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_notification_bg_low_pressed.9.png.flat",
@@ -328,20 +340,20 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\nous_ecrire_dialog.xml"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_grid_item_video.xml.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\grid_item_video.xml"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_design_navigation_item.xml.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\e5a8f843c92c524d43e03a7e564a8410\\res\\layout\\design_navigation_item.xml"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_ic_star_half_black_16dp.png.flat",
-        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-hdpi-v4\\abc_ic_star_half_black_16dp.png"
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_grid_item_video.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\grid_item_video.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_chat_row_layout_right.xml.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\chat_row_layout_right.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_ic_star_half_black_16dp.png.flat",
+        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-hdpi-v4\\abc_ic_star_half_black_16dp.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_parametrage_fragment.xml.flat",
@@ -392,6 +404,10 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\langue_fragment.xml"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_a3tech_logo_v3.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xxhdpi\\a3tech_logo_v3.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_tab_indicator_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xhdpi-v4\\abc_tab_indicator_mtrl_alpha.9.png"
     },
@@ -408,16 +424,20 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\seek_thumb_pressed.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_scrubber_control_focused_holo.png.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-xhdpi\\scrubber_control_focused_holo.png"
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\anim-v21_design_bottom_sheet_slide_in.xml.flat",
+        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\e5a8f843c92c524d43e03a7e564a8410\\res\\anim-v21\\design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_a3tech_logo_v3_round.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xxxhdpi\\a3tech_logo_v3_round.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_textfield_search_default_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-hdpi-v4\\abc_textfield_search_default_mtrl_alpha.9.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\anim-v21_design_bottom_sheet_slide_in.xml.flat",
-        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\e5a8f843c92c524d43e03a7e564a8410\\res\\anim-v21\\design_bottom_sheet_slide_in.xml"
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_scrubber_control_focused_holo.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-xhdpi\\scrubber_control_focused_holo.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable_icon_item_style.xml.flat",
@@ -452,6 +472,10 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\help_view.xml"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_a3tech_default_avatare.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xhdpi\\a3tech_default_avatare.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_subcategory_row.xml.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout-ar\\subcategory_row.xml"
     },
@@ -464,12 +488,12 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\layout\\tooltip.xml"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\anim_design_snackbar_in.xml.flat",
-        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\e5a8f843c92c524d43e03a7e564a8410\\res\\anim\\design_snackbar_in.xml"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_home_mbank_2_normal.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\home_mbank_2_normal.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\anim_design_snackbar_in.xml.flat",
+        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\e5a8f843c92c524d43e03a7e564a8410\\res\\anim\\design_snackbar_in.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_cat_beaute.png.flat",
@@ -556,16 +580,16 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-hdpi-v4\\abc_list_divider_mtrl_alpha.9.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_bgnavbar.png.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\bgnavbar.png"
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_image10.jpg.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\image10.jpg"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ic_star_half_black_48dp.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xxhdpi-v4\\abc_ic_star_half_black_48dp.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_image10.jpg.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\image10.jpg"
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_bgnavbar.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\bgnavbar.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_grid_item_gallery.xml.flat",
@@ -784,12 +808,12 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\color\\abc_tint_spinner.xml"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_services_interessants_fragment.xml.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\services_interessants_fragment.xml"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_com_facebook_button_icon.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\drawable-mdpi-v4\\com_facebook_button_icon.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_services_interessants_fragment.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\services_interessants_fragment.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_scrubber_track_mtrl_alpha.9.png.flat",
@@ -844,12 +868,12 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\red_pin.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_cat_accompanying_business.png.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_cat_accompanying_business.png"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_association_item_grid.xml.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout-ar\\association_item_grid.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_cat_accompanying_business.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_cat_accompanying_business.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_postage_activity_step1.xml.flat",
@@ -858,6 +882,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_text_select_handle_right_mtrl_dark.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-mdpi-v4\\abc_text_select_handle_right_mtrl_dark.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable_ic_launcher_background.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable\\ic_launcher_background.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_ic_star_half_black_16dp.png.flat",
@@ -874,6 +902,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_textfield_activated_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xhdpi-v4\\abc_textfield_activated_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_a3tech_default_avatare.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xxhdpi\\a3tech_default_avatare.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_gray_mail.png.flat",
@@ -916,16 +948,16 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xhdpi-v4\\abc_textfield_default_mtrl_alpha.9.png"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_a3tech_sign_in_activity.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\a3tech_sign_in_activity.xml"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_action_map.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_action_map.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_ic_menu_paste_mtrl_am_alpha.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xxxhdpi-v4\\abc_ic_menu_paste_mtrl_am_alpha.png"
-    },
-    {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_a3tech_sign_in_activity.xml.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\a3tech_sign_in_activity.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_galerie.xml.flat",
@@ -972,6 +1004,10 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\white_facebook.png"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_a3tech_default_avatare.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-mdpi\\a3tech_default_avatare.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_text_select_handle_middle_mtrl_dark.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-hdpi-v4\\abc_text_select_handle_middle_mtrl_dark.png"
     },
@@ -980,12 +1016,12 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xhdpi-v4\\abc_switch_track_mtrl_alpha.9.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_cat_livre.png.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_cat_livre.png"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_a3tech_logo_2_round.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xhdpi\\a3tech_logo_2_round.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_cat_livre.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_cat_livre.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_nb_alarm.png.flat",
@@ -1034,6 +1070,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\color-v23_abc_tint_btn_checkable.xml.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\color-v23\\abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_a3tech_logo_v3_round.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-anydpi-v26\\a3tech_logo_v3_round.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\color_abc_primary_text_disable_only_material_light.xml.flat",
@@ -1086,6 +1126,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4_abc_menu_hardkey_panel_mtrl_mult.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xhdpi-v4\\abc_menu_hardkey_panel_mtrl_mult.9.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_a3tech_default_avatare.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-hdpi\\a3tech_default_avatare.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_stheme_row.xml.flat",
@@ -1164,16 +1208,16 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\logo_portrait_bis.png"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_a3tech_logo_2_round.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-mdpi\\a3tech_logo_2_round.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_cat_project_financing.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_cat_project_financing.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-anydpi-v21_design_ic_visibility.xml.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\design-26.1.0.aar\\e5a8f843c92c524d43e03a7e564a8410\\res\\drawable-anydpi-v21\\design_ic_visibility.xml"
-    },
-    {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_a3tech_logo_2_round.png.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-mdpi\\a3tech_logo_2_round.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_notify_panel_notification_icon_bg.png.flat",
@@ -1228,6 +1272,10 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\drawable-xhdpi-v4\\messenger_bubble_small_blue.png"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_a3tech_logo_v3.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-hdpi\\a3tech_logo_v3.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_tab_indicator_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-mdpi-v4\\abc_tab_indicator_mtrl_alpha.9.png"
     },
@@ -1262,6 +1310,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable_tsam_ratingbar_full.xml.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable\\tsam_ratingbar_full.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_a3tech_logo_v3.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-mdpi\\a3tech_logo_v3.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_text_select_handle_left_mtrl_dark.png.flat",
@@ -1536,6 +1588,10 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable\\task_gradient_bg_hover.xml"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_a3tech_show_next.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-xhdpi\\a3tech_show_next.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_abc_textfield_activated_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-mdpi-v4\\abc_textfield_activated_mtrl_alpha.9.png"
     },
@@ -1552,6 +1608,10 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\galleryicon.png"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_a3tech_home_account.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\fragment_a3tech_home_account.xml"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_abc_cab_background_top_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-hdpi-v4\\abc_cab_background_top_mtrl_alpha.9.png"
     },
@@ -1562,6 +1622,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_textfield_search_activated_mtrl_alpha.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xxhdpi-v4\\abc_textfield_search_activated_mtrl_alpha.9.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_a3tech_show_next.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-xxhdpi\\a3tech_show_next.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_menu_moreoverflow_normal_holo_light.png.flat",
@@ -1664,6 +1728,10 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xhdpi-v4\\abc_ic_menu_paste_mtrl_am_alpha.png"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_a3tech_logo_v3_round.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-hdpi\\a3tech_logo_v3_round.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_action_collection.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_action_collection.png"
     },
@@ -1712,12 +1780,12 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_action_echange.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_messenger_button_send_white_round.xml.flat",
-        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\layout\\messenger_button_send_white_round.xml"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_item_simplevh.xml.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\item_simplevh.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_messenger_button_send_white_round.xml.flat",
+        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\layout\\messenger_button_send_white_round.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_abc_expanded_menu_layout.xml.flat",
@@ -1900,12 +1968,12 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\color\\abc_tint_default.xml"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_check_to_on_mtrl_000.png.flat",
-        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xxhdpi-v4\\abc_btn_check_to_on_mtrl_000.png"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_a3tech_logo_2.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xxxhdpi\\a3tech_logo_2.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi-v4_abc_btn_check_to_on_mtrl_000.png.flat",
+        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xxhdpi-v4\\abc_btn_check_to_on_mtrl_000.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_notification_bg_normal_pressed.9.png.flat",
@@ -1974,6 +2042,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_a3tech_logo_2_round.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-hdpi\\a3tech_logo_2_round.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_a3tech_logo_v3_round.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-mdpi\\a3tech_logo_v3_round.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_white_phone.png.flat",
@@ -2118,6 +2190,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_btn_switch_to_on_mtrl_00012.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xxxhdpi-v4\\abc_btn_switch_to_on_mtrl_00012.9.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_fragment_a3tech_sign_in_email.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\fragment_a3tech_sign_in_email.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi-v4_common_google_signin_btn_text_light_normal_background.9.png.flat",
@@ -2676,12 +2752,12 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\drawable-xxhdpi-v4\\com_facebook_button_like_icon_selected.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_cat_student_event.png.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_cat_student_event.png"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_a3tech_filter_liste.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-xhdpi\\a3tech_filter_liste.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_cat_student_event.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_cat_student_event.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_action_overflow.png.flat",
@@ -2720,12 +2796,12 @@
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable-xhdpi-v4\\abc_btn_radio_to_on_mtrl_015.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_create_avis_fragment.xml.flat",
-        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout-ar\\create_avis_fragment.xml"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxhdpi_a3tech_filter_liste.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-xxhdpi\\a3tech_filter_liste.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_create_avis_fragment.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout-ar\\create_avis_fragment.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_action_previous_item_ar.png.flat",
@@ -3212,6 +3288,10 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable\\a3tech_back_4.png"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_a3tech_toolbar_account_fragment.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout\\a3tech_toolbar_account_fragment.xml"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_cat_auto_moto.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_cat_auto_moto.png"
     },
@@ -3250,6 +3330,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_textfield_search_material.xml.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable\\abc_textfield_search_material.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_a3tech_show_next.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-mdpi\\a3tech_show_next.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xxxhdpi-v4_abc_ic_star_half_black_48dp.png.flat",
@@ -3416,6 +3500,10 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable\\seek_arc_control_selector.xml"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_a3tech_logo_v3_round.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xxhdpi\\a3tech_logo_v3_round.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_evaluation_fragment.xml.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout-ar\\evaluation_fragment.xml"
     },
@@ -3426,6 +3514,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_list.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\ic_list.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-anydpi-v26_a3tech_logo_v3.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-anydpi-v26\\a3tech_logo_v3.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_services_fragment.xml.flat",
@@ -3538,6 +3630,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_messenger_bubble_small_white.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\drawable-hdpi-v4\\messenger_bubble_small_white.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_a3tech_account_solde_layout.xml.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-xhdpi\\a3tech_account_solde_layout.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_detail_offre_activity.xml.flat",
@@ -3916,12 +4012,12 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher_foreground.png"
     },
     {
-        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ic_voice_search_api_material.xml.flat",
-        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable\\abc_ic_voice_search_api_material.xml"
-    },
-    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_a3tech_logo_2.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-hdpi\\a3tech_logo_2.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable_abc_ic_voice_search_api_material.xml.flat",
+        "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\drawable\\abc_ic_voice_search_api_material.xml"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout-ar_theme_row.xml.flat",
@@ -3950,6 +4046,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_media_action.xml.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\support-media-compat-26.1.0.aar\\6425c03f02cceaae44dc54cb45ec7813\\res\\layout\\notification_media_action.xml"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_a3tech_default_avatare.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xxxhdpi\\a3tech_default_avatare.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_notification_template_part_chronometer.xml.flat",
@@ -4296,6 +4396,10 @@
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\layout-ar\\head.xml"
     },
     {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_a3tech_show_next.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-hdpi\\a3tech_show_next.png"
+    },
+    {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_scrubber_control_pressed_holo.png.flat",
         "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\drawable-xhdpi\\scrubber_control_pressed_holo.png"
     },
@@ -4322,6 +4426,10 @@
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4_com_facebook_tooltip_blue_background.9.png.flat",
         "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\drawable-hdpi-v4\\com_facebook_tooltip_blue_background.9.png"
+    },
+    {
+        "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_a3tech_logo_v3.png.flat",
+        "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\mipmap-xxxhdpi\\a3tech_logo_v3.png"
     },
     {
         "merged": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\res\\merged\\debug\\layout_avis_row.xml.flat",

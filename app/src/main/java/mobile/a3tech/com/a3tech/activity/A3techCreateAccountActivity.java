@@ -20,6 +20,8 @@ import android.widget.ProgressBar;
 
 import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
+import java.util.HashMap;
+
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.fragment.A3techAddEmailFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techAddPasswordFragment;
@@ -152,7 +154,9 @@ public class A3techCreateAccountActivity extends Activity implements A3techSelec
                 break;
             case A3techAddEmailFragment.ACTION_TYPE_EMAIL:
                 progressBarchangeSmouthly(progressbarAccountCreation.getProgress() + 20);
-                account.setEmail(String.valueOf(data));
+                HashMap mapData  = (HashMap)data;
+                account.setEmail(String.valueOf(mapData.get("EMAIL")));
+                account.setTelephone(String.valueOf(mapData.get("PHONE")));
                 setFragment(new A3techAddPasswordFragment(), true, false);
                 break;
             case A3techAddPasswordFragment.ACTION_TYPE_PASS:
