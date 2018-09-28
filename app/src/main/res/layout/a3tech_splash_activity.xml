@@ -4,8 +4,15 @@
     android:id="@+id/about_dados"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cinza" >
-    <LinearLayout
+    android:gravity="center"
+    android:background="@color/white" >
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/a3tech_logo_v3"
+        />
+    <!--<LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -16,6 +23,6 @@
             android:layout_height="20dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="40dp" />
-    </LinearLayout>
+    </LinearLayout>-->
 
 </RelativeLayout>

@@ -8,9 +8,9 @@ package com.google.android.gms.plus;
 
 public final class R {
     public static final class drawable {
-        public static final int ic_plusone_medium_off_client = 0x7f08014a;
-        public static final int ic_plusone_small_off_client = 0x7f08014b;
-        public static final int ic_plusone_standard_off_client = 0x7f08014c;
-        public static final int ic_plusone_tall_off_client = 0x7f08014d;
+        public static final int ic_plusone_medium_off_client = 0x7f08014e;
+        public static final int ic_plusone_small_off_client = 0x7f08014f;
+        public static final int ic_plusone_standard_off_client = 0x7f080150;
+        public static final int ic_plusone_tall_off_client = 0x7f080151;
     }
 }

@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_horizontal_margin"
     app:paddingStart="@dimen/activity_horizontal_margin"
-    tools:background="#EFEFEF">
+    tools:background="@color/white">
 
     <TextView
         android:id="@+id/item_simplevh_txttitle"
