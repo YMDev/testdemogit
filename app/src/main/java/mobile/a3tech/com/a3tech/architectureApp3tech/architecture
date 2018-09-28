@@ -1,0 +1,23 @@
+
+
+##################################    A3techSplashActivity  ################################
+
+################################# A3techLoginActivity #############################
+
+Creation nouveau Compte                              Authentification
+## A3techCreateAccountActivity ##                 ## A3techSignInActivity ##
+
+---> A3techStep1CreatAccountFragment (par email)              ---> A3techChooseSignInOption
+ (Par facebook a faire)
+---> A3techSelecteAccountFragment                 ---> A3techSignInEmailFragment (Authentification par email)
+---> A3techAddUserNameFragment                    ---> par facebook a faire
+---> A3techAddEmailFragment
+---> A3techAddPasswordFragment
+
+
+--> go vers Activity HOME
+
+
+################################# A3techHomeActivity #######################
+
+

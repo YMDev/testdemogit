@@ -121,7 +121,13 @@
         <item>Marshmallow</item>
         <item>Nougat</item>
     </string-array>
-
+    <declare-styleable name="AvatarImageBehavior">
+        <attr name="finalYPosition" format="dimension"/>
+        <attr name="startXPosition" format="dimension"/>
+        <attr name="startToolbarPosition" format="dimension"/>
+        <attr name="startHeight" format="dimension"/>
+        <attr name="finalHeight" format="dimension"/>
+    </declare-styleable>
     <string-array name="dessert_descriptions">
         <item>A small cake designed to serve one person, which may be baked in a small thin paper or aluminum cup. As with larger cakes, icing and other cake decorations, such as candy, may be applied.</item>
         <item>A type of fried dough confectionery or dessert food.</item>

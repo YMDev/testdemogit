@@ -2,6 +2,7 @@ package mobile.a3tech.com.a3tech.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Handler;
@@ -21,6 +22,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -43,6 +46,8 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     Toolbar toolMission;
     Toolbar toolEchange;
     Toolbar toolAccount;
+    TextView nomPrenomUser;
+    ImageView userAvatar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +57,19 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         toolMission = findViewById(R.id.toolbar_mission);
         toolEchange = findViewById(R.id.toolbar_echange);
         toolAccount = findViewById(R.id.toolbar_account);
+
+        toolAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent mainIntent = new Intent(A3techHomeActivity.this, A3techViewEditProfilActivity.class);
+                startActivity(mainIntent);
+            }
+        });
+
+        userAvatar = findViewById(R.id.photo_user);
+        nomPrenomUser = findViewById(R.id.user_name_pname);
+
+        nomPrenomUser.setText(getIntent().getStringExtra("nomPrenom"));
         appBarHome = findViewById(R.id.appbar_home);
         updateAppbarLayout(0);
 
@@ -201,6 +219,10 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         bottomNavigation.addItem(item4);
     }
 
+
+    private void prepareElementToolbar(){
+
+    }
 
     /**
      * Simple facade to fetch color resource, so I avoid writing a huge line every time.

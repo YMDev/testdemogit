@@ -167,6 +167,9 @@
         <activity
             android:name="mobile.a3tech.com.a3tech.activity.A3techSignInActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name="mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <meta-data
             android:name="android.support.VERSION"
