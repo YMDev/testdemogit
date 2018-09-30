@@ -12,16 +12,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techProfilFragmentAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techProfilInformationFragment;
+import mobile.a3tech.com.a3tech.view.CircleImageView;
 
 public class A3techViewEditProfilActivity extends AppCompatActivity  implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener {
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
     private static final float PERCENTAGE_TO_SHOW_TOOLBAR  = 0.7f;
+    private static final float PERCENTAGE_TO_HIDE_CIRCLE_IMAGE  = 0.5f;
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
     private static final int ALPHA_ANIMATIONS_DURATION              = 200;
     private static final int ALPHA_ANIMATIONS_DURATION_TOOL              = 400;
@@ -29,6 +32,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
     private boolean mIsTheTitleVisible          = false;
     private boolean mIsTheTitleContainerVisible = true;
     private boolean mIsTheToolbarVisible = false;
+    private boolean mIsTheCircleVisible = true;
 
     private LinearLayout mTitleContainer;
     private TextView mTitle;
@@ -37,6 +41,10 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
 
     private TabLayout tabLayouProfil;
     private ViewPager viewPagerProfil;
+
+    private ImageView backBtn;
+
+    private de.hdodenhof.circleimageview.CircleImageView circleImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +95,15 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
         mAppBarLayout   = (AppBarLayout) findViewById(R.id.main_appbar);
         viewPagerProfil = (ViewPager) findViewById(R.id.viewpager_profile_detail);
         tabLayouProfil = (TabLayout) findViewById(R.id.tabs_profil);
+        circleImage = findViewById(R.id.avatare_user_cicle);
+        backBtn = findViewById(R.id.back_home_btn);
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               A3techViewEditProfilActivity.this.finish();
+            }
+        });
     }
 
     @Override
@@ -97,6 +114,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
         handleAlphaOnTitle(percentage);
         handleToolbarTitleVisibility(percentage);
         handleAlphaOnToolbar(percentage);
+        handleAlphaOnCircleImage(percentage);
     }
 
     private void handleToolbarTitleVisibility(float percentage) {
@@ -148,6 +166,22 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
         }
     }
 
+
+    private void handleAlphaOnCircleImage(float percentage) {
+        if (percentage >= PERCENTAGE_TO_HIDE_CIRCLE_IMAGE) {
+            if(mIsTheCircleVisible) {
+                startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
+                mIsTheCircleVisible = false;
+            }
+
+        } else {
+
+            if (!mIsTheCircleVisible) {
+                startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
+                mIsTheCircleVisible = true;
+            }
+        }
+    }
     public static void startAlphaAnimation (View v, long duration, int visibility) {
         AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
                 ? new AlphaAnimation(0f, 1f)

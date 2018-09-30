@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "D:\\AndroidWorks\\testdemogit\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v14\\values-v14.xml",
+            "outputFile": "F:\\android_workspace_V1\\testdemogit\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-v14\\values-v14.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\64d5d3906936708f237885249c97a42f\\res\\values-v14\\values-v14.xml",
+                    "source": "C:\\Users\\SPIA\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-26.1.0.aar\\15c19d61560268701cfbbdba4fc54de8\\res\\values-v14\\values-v14.xml",
                     "from": {
                         "startLines": "2,7,8,9,15",
                         "startColumns": "4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "D:\\AndroidWorks\\testdemogit\\app\\src\\main\\res\\values-v14\\styles.xml",
+                    "source": "F:\\android_workspace_V1\\testdemogit\\app\\src\\main\\res\\values-v14\\styles.xml",
                     "from": {
                         "startLines": "3,24,19,13,9",
                         "startColumns": "4,4,4,4,1",

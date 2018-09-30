@@ -1,10 +1,12 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
@@ -23,7 +25,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -34,6 +38,7 @@ import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
+import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
 public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener {
@@ -53,6 +58,13 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3tech_home_activity);
+
+        new InitActivityTask(A3techHomeActivity.this).execute();
+
+    }
+
+
+    private void initiInterfaceActivity(){
         setupViewPager();
         toolMission = findViewById(R.id.toolbar_mission);
         toolEchange = findViewById(R.id.toolbar_echange);
@@ -76,7 +88,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.home_bottom_navigation);
         setupBottomNavBehaviors();
         setupBottomNavStyle();
-        createFakeNotification();
+        //createFakeNotification();
         addBottomNavigationItems();
         bottomNavigation.setCurrentItem(0);
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
@@ -93,9 +105,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
                 return true;
             }
         });
-
     }
-
 
     private void updateAppbarLayout(int position){
         switch (position){
@@ -129,7 +139,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         pagerAdapter.addFragments(createFragment(colors[0]));
         pagerAdapter.addFragments(createFragment(colors[0]));
         pagerAdapter.addFragments(createFragment(colors[0]));
-        pagerAdapter.addFragments(new A3techHomeAccountFragment());
+        pagerAdapter.addFragments(A3techHomeAccountFragment.newInstance(null,null));
         viewPager.setAdapter(pagerAdapter);
     }
 
@@ -189,11 +199,11 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
          */
         bottomNavigation.setDefaultBackgroundColor(Color.WHITE);
         bottomNavigation.setAccentColor(fetchColor(R.color.accent_500));
-        bottomNavigation.setInactiveColor(fetchColor(R.color.gray));
+        bottomNavigation.setInactiveColor(fetchColor(R.color.semi_transparent));
 
         // Colors for selected (active) and non-selected items.
-        bottomNavigation.setColoredModeColors(Color.BLUE,
-                fetchColor(R.color.gray));
+        bottomNavigation.setColoredModeColors(getResources().getColor(R.color.colorPrimary),
+                fetchColor(R.color.semi_transparent));
 
         //  Enables Reveal effect
         bottomNavigation.setColored(true);
@@ -263,5 +273,35 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+
+
+    public class InitActivityTask extends AsyncTask<Void, Void, Boolean> {
+        private Context activity;
+        private ProgressDialog pd;
+
+        public InitActivityTask(Context activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        protected void onPreExecute() {
+           pd  = CustomProgressDialog.createProgressDialog(
+                   activity,
+                   "");
+            pd.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... arg0) {
+            initiInterfaceActivity();
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            pd.dismiss();
+        }
     }
 }

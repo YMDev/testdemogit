@@ -5,48 +5,9 @@
     android:layout_height="match_parent"
     tools:context=".fragment.A3techProfilInformationFragment">
 
-    <RelativeLayout
-        android:id="@+id/container_profil_informations"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp">
-
-        <TextView
-            android:id="@+id/title_about"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/about"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <mobile.a3tech.com.a3tech.view.ExpandableTextView
-            android:id="@+id/detail_about_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/title_about"
-            android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-medium"
-            android:textColor="@color/black"
-            android:textSize="12dp"
-            android:textStyle="normal" />
-
-        <TextView
-            android:id="@+id/title_ssabout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/detail_about_user"
-            android:fontFamily="sans-serif-medium"
-            android:text="@string/about"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-
-    </RelativeLayout>
+<android.support.v7.widget.RecyclerView
+    android:id="@+id/recyle_profile_informations"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
 </FrameLayout>

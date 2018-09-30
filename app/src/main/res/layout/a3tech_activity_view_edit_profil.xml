@@ -11,13 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/main_collapsing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-
             <ImageView
                 android:id="@+id/main_imageview_placeholder"
                 android:layout_width="match_parent"
@@ -131,7 +129,8 @@
                     android:layout_below="@+id/tabs_profil"
                     android:layout_marginLeft="16dp"
                     android:layout_marginRight="16dp"
-                    android:background="@android:color/white" />
+                    android:background="@android:color/white"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
             </RelativeLayout>
         </FrameLayout>
 
@@ -152,9 +151,12 @@
             android:layout_height="match_parent"
             android:orientation="horizontal">
 
-            <Space
-                android:layout_width="32dp"
-                android:layout_height="32dp" />
+           <ImageView
+               android:id="@+id/back_home_btn"
+               android:layout_width="40dp"
+               android:layout_height="40dp"
+               android:src="@drawable/a3tech_back"
+               android:layout_gravity="center_vertical"/>
 
             <TextView
                 android:id="@+id/main_textview_title"
@@ -173,6 +175,7 @@
     </android.support.v7.widget.Toolbar>
 
     <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/avatare_user_cicle"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:layout_gravity="center_horizontal"

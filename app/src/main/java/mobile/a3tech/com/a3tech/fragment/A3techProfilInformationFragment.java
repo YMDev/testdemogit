@@ -1,14 +1,28 @@
 package mobile.a3tech.com.a3tech.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
+import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
+import mobile.a3tech.com.a3tech.test.ObjectMenu;
+import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 
 /**
@@ -29,7 +43,7 @@ public class A3techProfilInformationFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private ExpandableTextView aboutDetail;
+    private RecyclerView recycleProfil;
     private OnFragmentInteractionListener mListener;
 
     public A3techProfilInformationFragment() {
@@ -67,11 +81,43 @@ public class A3techProfilInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        View viewFr = inflater.inflate(R.layout.fragment_a3tech_profil_information, container, false);
-       aboutDetail = viewFr.findViewById(R.id.detail_about_user);
-       aboutDetail.setText(R.string.lorem);
+       recycleProfil = viewFr.findViewById(R.id.recyle_profile_informations);
+      prepareListeCoordonne();
        return viewFr;
     }
 
+
+    private List prepareListeCoordonne(){
+        final List listeRetour = new ArrayList();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        String connectedUser = prefs.getString("identifiant", "");
+        String password = prefs.getString("password", "");
+        UserManager.getInstance().getProfil(connectedUser, password, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                switch (method) {
+                    case Constant.KEY_USER_MANAGER_GET_PROFIL:
+                        User user = (User) data;
+                        listeRetour.add(new ObjectMenu(user.getEmail(), "Email", 1, 0));
+                        listeRetour.add(new ObjectMenu(user.getTelephone(), "Telephone", 2, 0));
+                        listeRetour.add(new ObjectMenu(user.getAdresse(), "Adresse", 3, 0));
+                        break;
+                }
+
+                A3techProfileInformationAdapter  mAdapter = new A3techProfileInformationAdapter(getActivity(), listeRetour);
+                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+                recycleProfil.setLayoutManager(mLayoutManager);
+                recycleProfil.setItemAnimator(new DefaultItemAnimator());
+                recycleProfil.setAdapter(mAdapter);
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+
+            }
+        });
+        return listeRetour;
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

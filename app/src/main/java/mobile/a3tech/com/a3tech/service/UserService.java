@@ -184,6 +184,7 @@ public class UserService extends AbstractService implements Constant {
 		userMocked.setEmail("mouad.test@gmail.com");
 		userMocked.setAdresse("adresse rabat hay riad");
 		userMocked.setCheckphone("02922029292");
+		userMocked.setTelephone("0430030020");
 		userMocked.setDateCreation("01/01/2012");
 		userMocked.setDateNaissance("01/03/1922");
 		userMocked.setIdentifiant("kdaasa");

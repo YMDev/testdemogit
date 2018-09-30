@@ -26,11 +26,11 @@
                 layout="@layout/a3tech_toolbar_mission_fragment"
                 android:visibility="gone" />
 
-
             <include
                 android:id="@+id/toolbar_account"
                 layout="@layout/a3tech_toolbar_account_fragment"
                 android:visibility="gone" />
+
 
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
