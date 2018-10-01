@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,18 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
         View viewFr =  inflater.inflate(R.layout.fragment_a3tech_select_category_mission, container, false);
         recycleSelectCategory = viewFr.findViewById(R.id.recycle_select_category_mission);
         prepareListeCategories();
+        viewFr.setFocusableInTouchMode(true);
+        viewFr.requestFocus();
+        viewFr.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if (keyEvent.getAction() == KeyEvent.ACTION_UP && i == KeyEvent.KEYCODE_BACK){
+                    mListener.backAction();
+                    return true;
+                }
+                return false;
+            }
+        });
         return viewFr;
     }
 
@@ -159,6 +172,7 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
         void actionNext(Integer typeAction, Object data);
+        void backAction();
     }
 
     public OnFragmentInteractionListener getmListener() {

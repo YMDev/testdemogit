@@ -3,9 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
     tools:context=".fragment.A3techPostMissionFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp">
     <RelativeLayout
         android:id="@+id/title_container"
         android:layout_width="match_parent"
@@ -157,10 +160,27 @@
 
     </RelativeLayout>
     <View
+        android:id="@+id/devider_location"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="20dp"
         android:background="@color/semi_transparent"
         android:layout_below="@id/location_mission_container"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/valider_mission_container"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp">
+
+      <Button
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/colorPrimary"
+          android:textColor="@color/white"
+          android:text="@string/affecter_un_technicien"/>
+
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -92,7 +92,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     }
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
             getFragmentManager().popBackStack();
             updateProgress();
         } else {
@@ -121,6 +121,11 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
                 setFragment(A3techPostMissionFragment.newInstance(null, null), true, false);
                 break;
         }
+    }
+
+    @Override
+    public void backAction() {
+        onBackPressed();
     }
 
 

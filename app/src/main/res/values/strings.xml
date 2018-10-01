@@ -639,6 +639,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="date_mission_header">Date intervention</string>
     <string name="hint_date_mission">Ajouter une Date pour cette mission</string>
     <string name="location_mission_header">Location</string>
+    <string name="affecter_un_technicien">Affecter à un Technicien Atech</string>
 
 
 </resources>
