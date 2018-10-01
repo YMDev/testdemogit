@@ -4,7 +4,9 @@ import android.animation.ObjectAnimator;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -42,10 +44,14 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3tech_add_mission_activity);
+        new InitActivityTask(A3techAddMissionActivity.this).execute();
+
+    }
+
+    private void initiInterfaceActivity(){
         bindComponents();
         updateAppbarLayout(0);
         setFragment(A3techSelectCategoryMissionFragment.newInstance(null, null), true, false);
-
     }
 
 
@@ -118,7 +124,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
                 progressBarchangeSmouthly(100);
                 Categorie categorieSelected = (Categorie)data;
                 updateAppbarLayout(1);
-                setFragment(A3techPostMissionFragment.newInstance(null, null), true, false);
+                setFragment(A3techPostMissionFragment.newInstance(categorieSelected), true, false);
                 break;
         }
     }
@@ -141,6 +147,35 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
                 toolbarSelectCategoryMission.setVisibility(View.GONE);
                 setSupportActionBar(toolbarPostMission);
                 break;
+        }
+    }
+
+
+    public class InitActivityTask extends AsyncTask<Void, Void, Boolean> {
+        private Context activity;
+        private ProgressDialog pd;
+
+        public InitActivityTask(Context activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            pd  = CustomProgressDialog.createProgressDialog(
+                    activity,
+                    "");
+            pd.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... arg0) {
+            initiInterfaceActivity();
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+            pd.dismiss();
         }
     }
 

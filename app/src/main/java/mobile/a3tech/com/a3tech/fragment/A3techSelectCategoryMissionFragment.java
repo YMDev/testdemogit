@@ -1,8 +1,10 @@
 package mobile.a3tech.com.a3tech.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.preference.PreferenceManager;
@@ -28,6 +30,7 @@ import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.ObjectMenu;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -105,6 +108,8 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
     }
 
 
+
+
     private List prepareListeCategories(){
         final List<Categorie> listeRetour = new ArrayList();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
@@ -178,4 +183,6 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
     public OnFragmentInteractionListener getmListener() {
         return mListener;
     }
+
+
 }

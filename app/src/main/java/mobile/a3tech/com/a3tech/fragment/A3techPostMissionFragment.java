@@ -7,8 +7,10 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.model.Categorie;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,8 +27,9 @@ public class A3techPostMissionFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String categoryLibelle;
+    private String categoryDescription;
+    private TextView categorySelcted;
 
     private OnFragmentInteractionListener mListener;
 
@@ -38,16 +41,14 @@ public class A3techPostMissionFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment A3techPostMissionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static A3techPostMissionFragment newInstance(String param1, String param2) {
+    public static A3techPostMissionFragment newInstance(Categorie categorieSelected) {
         A3techPostMissionFragment fragment = new A3techPostMissionFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1, categorieSelected.getLibelle());
+        args.putString(ARG_PARAM2, categorieSelected.getDescription());
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,8 +57,8 @@ public class A3techPostMissionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            categoryLibelle = getArguments().getString(ARG_PARAM1);
+            categoryDescription = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -65,6 +66,8 @@ public class A3techPostMissionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_post_mission, container, false);
+        categorySelcted = viewFr.findViewById(R.id.category_mission_selected);
+        categorySelcted.setText(categoryLibelle);
         return viewFr;
     }
 

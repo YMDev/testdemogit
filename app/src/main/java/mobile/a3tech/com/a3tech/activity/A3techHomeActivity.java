@@ -278,7 +278,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
 
 
 
-    public class InitActivityTask extends AsyncTask<Void, Void, Boolean> {
+    private class InitActivityTask extends AsyncTask<Void, Void, Boolean> {
         private Context activity;
         private ProgressDialog pd;
 
