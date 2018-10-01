@@ -630,6 +630,15 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="about">A propos</string>
     <string name="coordonnees">coordonnées</string>
     <string name="nbr_mission">Missions</string>
+    <string name="toolbar_select_category_title">Publier une Mission</string>
+    <string name="toolbar_select_category_mission_sub_title">Sélectionner la catégorie de la Mision</string>
+    <string name="title_mission_header">Titre</string>
+    <string name="hint_title_mission">Qu\'avez-vous besoin de faire ?</string>
+    <string name="description_mission_header">Description</string>
+    <string name="hint_description_mission">Ajouter plus de détails</string>
+    <string name="date_mission_header">Date intervention</string>
+    <string name="hint_date_mission">Ajouter une Date pour cette mission</string>
+    <string name="location_mission_header">Location</string>
 
 
 </resources>

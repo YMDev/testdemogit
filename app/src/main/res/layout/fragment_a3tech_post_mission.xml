@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="20dp"
+    tools:context=".fragment.A3techPostMissionFragment">
+
+    <RelativeLayout
+        android:id="@+id/title_container"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_alignParentTop="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/title_mission_header"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/title_mission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/hint_title_mission"
+            android:textColor="@color/black"
+            android:inputType="text"
+            android:maxLines="1"
+            android:background="@null"
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+    <View
+        android:id="@+id/devider_tiltle"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/semi_transparent"
+        android:layout_below="@id/title_container"/>
+
+    <RelativeLayout
+        android:id="@+id/description_container"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:layout_below="@id/devider_tiltle"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/header_desc_mission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/description_mission_header"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <EditText
+            android:id="@+id/description_mission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@+id/header_desc_mission"
+            android:layout_marginTop="10dp"
+            android:background="@null"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/hint_description_mission"
+            android:inputType="textMultiLine"
+            android:minLines="2"
+            android:maxLines="5"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
+
+    </RelativeLayout>
+    <View
+        android:id="@+id/devider_deesc"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/semi_transparent"
+        android:layout_below="@id/description_container"/>
+    <RelativeLayout
+    android:id="@+id/date_mission_container"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:layout_below="@id/devider_deesc"
+    android:layout_marginTop="10dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:fontFamily="sans-serif-light"
+        android:text="@string/date_mission_header"
+        android:textColor="@color/black"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/date_mission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/hint_date_mission"
+        android:inputType="date|datetime"
+        android:textColor="@color/black"
+        android:background="@null"
+        android:textSize="18dp" />
+
+</RelativeLayout>
+    <View
+        android:id="@+id/devuider_date"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/semi_transparent"
+        android:layout_below="@id/date_mission_container"/>
+
+    <RelativeLayout
+        android:id="@+id/location_mission_container"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_below="@id/devuider_date"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/location_mission_header"
+            android:textColor="@color/black"
+            android:textSize="15dp" />
+
+        <AutoCompleteTextView
+            android:id="@+id/location_mission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@null"
+            android:fontFamily="sans-serif-light"
+            android:hint="@string/hint_date_mission"
+            android:textColor="@color/black"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/a3tech_gps_position"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/semi_transparent"
+        android:layout_below="@id/location_mission_container"/>
+
+</RelativeLayout>

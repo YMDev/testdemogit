@@ -9,9 +9,24 @@ public class Categorie implements Parcelable {
 	private String service;
 	private String srvcType  ;
 
+	private boolean selected;
+	private String libelle;
+	private String logo;
+	private String type;
+	private String parentId;
+	private String ordre;
+	private String description;
 
-	
 
+	public Categorie(String identifiant, String libelle, String description,String type, String ordre) {
+		this.identifiant = identifiant;
+		this.libelle = libelle;
+		this.type = type;
+		this.ordre = ordre;
+		this.description = description;
+	}
+	public Categorie() {
+	}
 	public String getSrvcType() {
 		return srvcType;
 	}
@@ -84,12 +99,13 @@ public class Categorie implements Parcelable {
 		this.ordre = ordre;
 	}
 
-	private boolean selected;
-	private String libelle;
-	private String logo;
-	private String type;
-	private String parentId;
-	private String ordre;
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/container_item_category"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
+    app:paddingStart="8dp"
+    tools:background="@color/white">
+
+    <TextView
+        android:id="@+id/title_category"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.87"
+        android:textColor="@android:color/black"
+        tools:text="Dessert Name"
+        android:fontFamily="sans-serif-meduim"
+        android:textSize="19dp"
+        android:textStyle="normal"/>
+
+    <TextView
+        android:id="@+id/sub_title_category"
+        style="@style/TextAppearance.AppCompat.Small"
+        android:layout_below="@+id/title_category"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:alpha="0.54"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:fontFamily="sans-serif-meduim"
+        android:textSize="15dp"
+        android:textColor="@android:color/black"
+        tools:text="A really long description of the dessert, with a maximum three lines." />
+
+    <ImageView
+        android:id="@+id/select_action"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/a3tech_show_next"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_below="@+id/sub_title_category"
+        android:background="@color/gray" />
+
+
+</RelativeLayout>

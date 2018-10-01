@@ -1,29 +1,24 @@
 package mobile.a3tech.com.a3tech.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
-import mobile.a3tech.com.a3tech.activity.A3techLoginActivity;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link A3techMissionsHomeFragment.OnFragmentInteractionListener} interface
+ * {@link A3techPostMissionFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link A3techMissionsHomeFragment#newInstance} factory method to
+ * Use the {@link A3techPostMissionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class A3techMissionsHomeFragment extends Fragment {
+public class A3techPostMissionFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -33,13 +28,9 @@ public class A3techMissionsHomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-
-    private RecyclerView recycleMission;
-    private FloatingActionButton addMission;
-
     private OnFragmentInteractionListener mListener;
 
-    public A3techMissionsHomeFragment() {
+    public A3techPostMissionFragment() {
         // Required empty public constructor
     }
 
@@ -49,11 +40,11 @@ public class A3techMissionsHomeFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment A3techMissionsHomeFragment.
+     * @return A new instance of fragment A3techPostMissionFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static A3techMissionsHomeFragment newInstance(String param1, String param2) {
-        A3techMissionsHomeFragment fragment = new A3techMissionsHomeFragment();
+    public static A3techPostMissionFragment newInstance(String param1, String param2) {
+        A3techPostMissionFragment fragment = new A3techPostMissionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -73,17 +64,7 @@ public class A3techMissionsHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-       View viewFr = inflater.inflate(R.layout.fragment_a3tech_missions_home, container, false);
-       recycleMission = viewFr.findViewById(R.id.recycle_missions);
-       addMission = viewFr.findViewById(R.id.add_mission);
-       addMission.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               // start activity add mission
-               startActivity(new Intent(getActivity(), A3techAddMissionActivity.class));
-           }
-       });
+        View viewFr = inflater.inflate(R.layout.fragment_a3tech_post_mission, container, false);
         return viewFr;
     }
 

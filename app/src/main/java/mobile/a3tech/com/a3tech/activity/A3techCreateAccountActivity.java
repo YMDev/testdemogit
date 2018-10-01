@@ -49,7 +49,6 @@ public class A3techCreateAccountActivity extends Activity implements A3techSelec
         super.onCreate(savedInstanceState);
         account = new User();
         setContentView(R.layout.a3tech_create_account_activity);
-
         frameView = findViewById(R.id.frame_create_account);
         progressbarAccountCreation = findViewById(R.id.progress_creation_account);
         setFragment(new A3techStep1CreatAccountFragment(), false, false);

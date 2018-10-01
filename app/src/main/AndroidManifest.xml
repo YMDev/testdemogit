@@ -67,8 +67,8 @@
         <activity
             android:name=".activity.A3techSplashActivity"
             android:label="@string/app_name"
-            android:theme="@style/transparent_alertDialog"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/transparent_alertDialog">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -158,8 +158,12 @@
         <activity
             android:name=".activity.A3techSignInActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".activity.A3techViewEditProfilActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
+        <activity
+            android:name=".activity.A3techViewEditProfilActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".activity.A3techAddMissionActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -36,12 +36,13 @@ import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
-public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener {
+public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener {
     private final int[] colors = {R.color.white, R.color.white, R.color.white, R.color.white};
     private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
@@ -137,7 +138,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         viewPager.setPagingEnabled(false);
         pagerAdapter = new BottomBarAdapter(getSupportFragmentManager());
         pagerAdapter.addFragments(createFragment(colors[0]));
-        pagerAdapter.addFragments(createFragment(colors[0]));
+        pagerAdapter.addFragments(A3techMissionsHomeFragment.newInstance(null,null));
         pagerAdapter.addFragments(createFragment(colors[0]));
         pagerAdapter.addFragments(A3techHomeAccountFragment.newInstance(null,null));
         viewPager.setAdapter(pagerAdapter);
