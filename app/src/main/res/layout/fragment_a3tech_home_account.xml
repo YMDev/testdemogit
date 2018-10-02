@@ -17,6 +17,7 @@
                 android:id="@+id/solde_layout"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
+                android:layout_centerHorizontal="true"
                 android:layout_marginEnd="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
@@ -58,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/solde_layout"
+                android:layout_centerHorizontal="true"
                 android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
                 android:paddingBottom="@dimen/bottom_navigation_height"
@@ -79,6 +81,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/title_account_setting"
+                android:layout_centerHorizontal="true"
                 android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
                 android:paddingBottom="@dimen/bottom_navigation_height" />

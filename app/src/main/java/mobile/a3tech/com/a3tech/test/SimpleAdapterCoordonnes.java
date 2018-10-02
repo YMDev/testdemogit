@@ -20,6 +20,7 @@ import java.util.List;
 
 import mobile.a3tech.com.a3tech.Manifest;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.model.User;
 
 /**
  * Created by Suleiman on 03/02/17.
@@ -31,14 +32,16 @@ public class SimpleAdapterCoordonnes extends RecyclerView.Adapter<SimpleAdapterC
     private List<ObjectMenu> listeObjects = new ArrayList<>();
 
     private Context context;
+    private User user;
 
     public SimpleAdapterCoordonnes(Context context) {
         this.context = context;
     }
 
-    public SimpleAdapterCoordonnes(Context context, List objectMenu) {
+    public SimpleAdapterCoordonnes(Context context, List objectMenu, User vUser) {
         this.context = context;
         listeObjects = objectMenu;
+        user = vUser;
     }
 
 

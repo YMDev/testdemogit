@@ -16,9 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techProfilFragmentAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techProfilInformationFragment;
+import mobile.a3tech.com.a3tech.model.Mission;
+import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.view.CircleImageView;
 
 public class A3techViewEditProfilActivity extends AppCompatActivity  implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener {
@@ -28,6 +32,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
     private static final int ALPHA_ANIMATIONS_DURATION              = 200;
     private static final int ALPHA_ANIMATIONS_DURATION_TOOL              = 400;
+    public static final String ARG_USER_OBJECT = "ARG_USER_OBJECT";
 
     private boolean mIsTheTitleVisible          = false;
     private boolean mIsTheTitleContainerVisible = true;
@@ -43,16 +48,28 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
     private ViewPager viewPagerProfil;
 
     private ImageView backBtn;
+    private TextView userNamePname;
+    User userToDisplay;
 
     private de.hdodenhof.circleimageview.CircleImageView circleImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String jsonMyObject = null;
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            jsonMyObject = b.getString(ARG_USER_OBJECT);
+        }
+        if(jsonMyObject != null){
+            userToDisplay = new Gson().fromJson(jsonMyObject, User.class);
+        }
+
+
         setContentView(R.layout.a3tech_activity_view_edit_profil);
 
         bindActivity();
         viewPagerProfil.setAdapter(new A3techProfilFragmentAdapter(getSupportFragmentManager(),
-                A3techViewEditProfilActivity.this));
+                A3techViewEditProfilActivity.this, userToDisplay));
 
         tabLayouProfil.post(new Runnable() {
             @Override
@@ -96,6 +113,8 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
         viewPagerProfil = (ViewPager) findViewById(R.id.viewpager_profile_detail);
         tabLayouProfil = (TabLayout) findViewById(R.id.tabs_profil);
         circleImage = findViewById(R.id.avatare_user_cicle);
+        userNamePname = findViewById(R.id.user_name_pname_detail);
+        userNamePname.setText(userToDisplay.getNom()+" "+userToDisplay.getPrenom() );
         backBtn = findViewById(R.id.back_home_btn);
 
         backBtn.setOnClickListener(new View.OnClickListener() {

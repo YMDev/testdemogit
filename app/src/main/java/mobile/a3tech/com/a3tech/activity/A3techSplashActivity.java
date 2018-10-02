@@ -220,5 +220,9 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
 
     public void dataLoadingError(String error) {
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finishAffinity();
+    }
 }

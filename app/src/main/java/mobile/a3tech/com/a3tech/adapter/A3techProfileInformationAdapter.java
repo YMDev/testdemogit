@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterCoordonnes;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTest;
 import mobile.a3tech.com.a3tech.view.ExpandableTextView;
@@ -19,9 +20,11 @@ import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 public class A3techProfileInformationAdapter extends RecyclerView.Adapter<A3techProfileInformationAdapter.A3techPIViewHolder> {
    Context context;
    List objectMenu;
-   public A3techProfileInformationAdapter(Context con,List objectMenus){
+   User user;
+   public A3techProfileInformationAdapter(Context con,List objectMenus, User vuser){
        context = con;
        objectMenu = objectMenus;
+       user = vuser;
    }
 
     public class A3techPIViewHolder extends RecyclerView.ViewHolder {
@@ -49,7 +52,7 @@ public class A3techProfileInformationAdapter extends RecyclerView.Adapter<A3tech
     public void onBindViewHolder(A3techPIViewHolder holder, int position) {
         holder.about.setText(R.string.lorem);
         holder.recycyleCoordonnees.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false));
-        SimpleAdapterCoordonnes adapterrecycyleAccountSetting = new SimpleAdapterCoordonnes(context, objectMenu);
+        SimpleAdapterCoordonnes adapterrecycyleAccountSetting = new SimpleAdapterCoordonnes(context, objectMenu, user);
         holder.recycyleCoordonnees.setAdapter(adapterrecycyleAccountSetting);
         holder.recycyleCoordonnees.getAdapter().notifyDataSetChanged();
     }

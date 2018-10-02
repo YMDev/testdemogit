@@ -2,6 +2,8 @@ package mobile.a3tech.com.a3tech.manager;
 import android.os.Handler;
 import android.os.Message;
 
+import java.util.List;
+
 import mobile.a3tech.com.a3tech.exception.EducationException;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
@@ -540,8 +542,44 @@ public class UserManager implements Constant {
 			}
 		}.start();
 	}
-	
-	
-	
+
+
+	public void getTechnicienNearLocation(final String latitude,final String longitude,final String ville,
+						  final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer) message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,
+							KEY_USER_MANAGER_GET_PROFIL,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					UserService service = new UserService();
+					List<User> user = service.getTechnicienNearLocation(latitude,longitude,ville);
+					/*wait(500);*/
+					if (user == null) {
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					} else {
+						Message message = handler.obtainMessage(0, user);
+						handler.sendMessage(message);
+					}
+				} catch (Exception e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
 
 }

@@ -79,12 +79,12 @@ public class A3techHomeAccountFragment extends Fragment {
         View viewFr =  inflater.inflate(R.layout.fragment_a3tech_home_account, container, false);
         recycyleInformation = (RecyclerView) viewFr.findViewById(R.id.recycle_informtaions);
         recycyleInformation.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        SimpleAdapterTest adapter = new SimpleAdapterTest(getContext(), prepareListeObjectToshow(1));
+        SimpleAdapterTest adapter = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(1));
         recycyleInformation.setAdapter(adapter);
 
         recycyleAccountSetting = (RecyclerView) viewFr.findViewById(R.id.recycle_account_setting);
         recycyleAccountSetting.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        SimpleAdapterTest adapterrecycyleAccountSetting = new SimpleAdapterTest(getContext(), prepareListeObjectToshow(2));
+        SimpleAdapterTest adapterrecycyleAccountSetting = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(2));
         recycyleAccountSetting.setAdapter(adapterrecycyleAccountSetting);
 
         return viewFr;
@@ -104,6 +104,7 @@ public class A3techHomeAccountFragment extends Fragment {
                 listeRetour.add(new ObjectMenu("Notification","Les notification du jour", 2, 1));
                 listeRetour.add(new ObjectMenu("Demander une mission","chercher parmi nos meilleurs techniciens", 2, 2));
                 listeRetour.add(new ObjectMenu("Recever un crédit gratuit","Inviter vos amis est gagner 200 MAD", 2, 3));
+                listeRetour.add(new ObjectMenu("Deconnexion","", 2, 4));
         }
         return listeRetour;
     }

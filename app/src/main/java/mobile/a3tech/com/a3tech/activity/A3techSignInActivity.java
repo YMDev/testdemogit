@@ -84,7 +84,15 @@ String password;
                  connecter(username, password);
         }
     }
-
+    @Override
+    public void onBackPressed() {
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
+            getFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+            finish();
+        }
+    }
     @Override
     public void dataLoaded(Object data, int method, int typeOperation) {
         User user = (User) data;

@@ -1,13 +1,13 @@
 package mobile.a3tech.com.a3tech.activity;
 
 import android.animation.ObjectAnimator;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.AppBarLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -23,14 +23,16 @@ import mobile.a3tech.com.a3tech.adapter.A3techSelectMissionCategoryAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techAddEmailFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techAddPasswordFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techAddUserNameFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techAffecterTechnicienFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techPostMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelectCategoryMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techStep1CreatAccountFragment;
 import mobile.a3tech.com.a3tech.model.Categorie;
+import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
-public class A3techAddMissionActivity extends AppCompatActivity implements A3techSelectCategoryMissionFragment.OnFragmentInteractionListener,A3techPostMissionFragment.OnFragmentInteractionListener {
+public class A3techAddMissionActivity extends AppCompatActivity implements A3techSelectCategoryMissionFragment.OnFragmentInteractionListener,A3techPostMissionFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener {
 
 
     private FrameLayout framePostMission;
@@ -71,7 +73,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     }
 
     protected void setFragment(Fragment fragment, boolean withAnim, boolean back) {
-        FragmentTransaction t = getFragmentManager().beginTransaction();
+        android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         if (withAnim) {
             if (!back) {
                 t.setCustomAnimations(R.animator.slide_in_left,
@@ -98,8 +100,8 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     }
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 1) {
-            getFragmentManager().popBackStack();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            getSupportFragmentManager().popBackStack();
             updateProgress();
         } else {
             super.onBackPressed();
@@ -108,8 +110,17 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     }
 
     private void updateProgress() {
+         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_add_mission);
+        if (f instanceof A3techSelectCategoryMissionFragment) {
             progressBarchangeSmouthly(0);
-           updateAppbarLayout(0);
+            updateAppbarLayout(0);
+        } else if (f instanceof A3techPostMissionFragment) {
+            progressBarchangeSmouthly(0);
+            updateAppbarLayout(0);
+        } else if (f instanceof A3techAffecterTechnicienFragment) {
+            progressBarchangeSmouthly(50);
+            updateAppbarLayout(1);
+        }
     }
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -121,10 +132,17 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
         switch (typeAction) {
             case A3techSelectCategoryMissionFragment.ACTION_SELECT_CATEGORY_MISSION:
                 //Categorie Mission selectionnée
-                progressBarchangeSmouthly(100);
+                progressBarchangeSmouthly(50);
                 Categorie categorieSelected = (Categorie)data;
                 updateAppbarLayout(1);
                 setFragment(A3techPostMissionFragment.newInstance(categorieSelected), true, false);
+                break;
+            case A3techPostMissionFragment.ACTION_SAVE_MISSION_INFO:
+                //Categorie Mission selectionnée
+                progressBarchangeSmouthly(100);
+                Mission mission = (Mission)data;
+                updateAppbarLayout(3);
+                setFragment(A3techAffecterTechnicienFragment.newInstance(mission), true, false);
                 break;
         }
     }
@@ -146,6 +164,10 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
                 toolbarPostMission.setVisibility(View.VISIBLE);
                 toolbarSelectCategoryMission.setVisibility(View.GONE);
                 setSupportActionBar(toolbarPostMission);
+                break;
+            case 3:
+                toolbarPostMission.setVisibility(View.GONE);
+                toolbarSelectCategoryMission.setVisibility(View.GONE);
                 break;
         }
     }

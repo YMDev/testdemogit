@@ -4,10 +4,13 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
+import android.os.UserManager;
+import android.preference.PreferenceManager;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
@@ -32,12 +35,15 @@ import android.widget.Toast;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
+import com.google.gson.Gson;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
+import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
@@ -74,8 +80,27 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         toolAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mainIntent = new Intent(A3techHomeActivity.this, A3techViewEditProfilActivity.class);
-                startActivity(mainIntent);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String connectedUser = prefs.getString("identifiant", "");
+                String password = prefs.getString("password", "");
+
+                mobile.a3tech.com.a3tech.manager.UserManager.getInstance().getProfil(connectedUser, password, new DataLoadCallback() {
+                    @Override
+                    public void dataLoaded(Object data, int method, int typeOperation) {
+                        User user = (User)data;
+                        Bundle bExtra = new Bundle();
+                        bExtra.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(user));
+                        Intent mainIntent = new Intent(A3techHomeActivity.this, A3techViewEditProfilActivity.class);
+                        mainIntent.putExtras(bExtra);
+                        startActivity(mainIntent);
+                    }
+
+                    @Override
+                    public void dataLoadingError(int errorCode) {
+
+                    }
+                });
+
             }
         });
 
@@ -303,6 +328,15 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         @Override
         protected void onPostExecute(Boolean result) {
             pd.dismiss();
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+            this.finishAffinity();
         }
     }
 }

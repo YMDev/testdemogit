@@ -2,59 +2,54 @@ package mobile.a3tech.com.a3tech.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.activity.PostageActivityStep2;
-import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
+import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techSelectMissionCategoryAdapter;
-import mobile.a3tech.com.a3tech.manager.CategorieManager;
 import mobile.a3tech.com.a3tech.manager.UserManager;
-import mobile.a3tech.com.a3tech.model.Categorie;
+import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
-import mobile.a3tech.com.a3tech.test.ObjectMenu;
-import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link A3techSelectCategoryMissionFragment.OnFragmentInteractionListener} interface
+ * {@link A3techAffecterTechnicienFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link A3techSelectCategoryMissionFragment#newInstance} factory method to
+ * Use the {@link A3techAffecterTechnicienFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class A3techSelectCategoryMissionFragment extends Fragment {
+public class A3techAffecterTechnicienFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    public static final int ACTION_SELECT_CATEGORY_MISSION = 1;
-
+    private static final String ARG_MISSION_OBJECT = "ARG_MISSION_OBJECT";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Mission mission;
 
-    private RecyclerView recycleSelectCategory;
+    private RecyclerView recyclerViewTechnicien;
+
     private OnFragmentInteractionListener mListener;
 
-    public A3techSelectCategoryMissionFragment() {
+    public A3techAffecterTechnicienFragment() {
         // Required empty public constructor
     }
 
@@ -62,16 +57,14 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment A3techSelectCategoryMissionFragment.
+     * @param mission Mission.
+     * @return A new instance of fragment A3techAffecterTechnicienFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static A3techSelectCategoryMissionFragment newInstance(String param1, String param2) {
-        A3techSelectCategoryMissionFragment fragment = new A3techSelectCategoryMissionFragment();
+    public static A3techAffecterTechnicienFragment newInstance(Mission mission) {
+        A3techAffecterTechnicienFragment fragment = new A3techAffecterTechnicienFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_MISSION_OBJECT, new Gson().toJson(mission));
         fragment.setArguments(args);
         return fragment;
     }
@@ -79,57 +72,35 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+            String jsonMyObject = null;
+            Bundle extras = getArguments();
+            if (extras != null) {
+                jsonMyObject = extras.getString(ARG_MISSION_OBJECT);
+            }
+            if(jsonMyObject != null){
+                  mission = new Gson().fromJson(jsonMyObject, Mission.class);
+            }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View viewFr =  inflater.inflate(R.layout.fragment_a3tech_select_category_mission, container, false);
-        recycleSelectCategory = viewFr.findViewById(R.id.recycle_select_category_mission);
-        prepareListeCategories();
-        viewFr.setFocusableInTouchMode(true);
-        viewFr.requestFocus();
-        viewFr.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == KeyEvent.ACTION_UP && i == KeyEvent.KEYCODE_BACK){
-                    mListener.backAction();
-                    return true;
-                }
-                return false;
-            }
-        });
-        return viewFr;
-    }
-
-
-
-
-    private List prepareListeCategories(){
-        final List<Categorie> listeRetour = new ArrayList();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        String connectedUser = prefs.getString("identifiant", "");
-        String password = prefs.getString("password", "");
-        String lang = prefs.getString("ApplicationLanguage", Constant.LANGUAGE_FRENSH);
-        CategorieManager.getInstance().listeCategories(null,null, null, null,lang,connectedUser,password, new DataLoadCallback() {
+        View viewFr = inflater.inflate(R.layout.fragment_a3tech_affecter_technicien, container, false);
+        recyclerViewTechnicien = viewFr.findViewById(R.id.recycle_techniciens);
+        final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
+        dd.show();
+        UserManager.getInstance().getTechnicienNearLocation(mission.getLatitude(), mission.getLongitude(), mission.getAdresse(), new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
-                switch (method) {
-                    case Constant.KEY_CATEGORIE_MANAGER_LISTE_CATEGORIE:
-                          listeRetour.addAll((List<Categorie>) data);
-                        break;
-                }
-
-                A3techSelectMissionCategoryAdapter mAdapter = new A3techSelectMissionCategoryAdapter(getActivity(), listeRetour, A3techSelectCategoryMissionFragment.this);
+                List<User> listeRetour = (List<User>) data;
+                SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),listeRetour, (A3techAddMissionActivity) getActivity());
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-                recycleSelectCategory.setLayoutManager(mLayoutManager);
-                recycleSelectCategory.setItemAnimator(new DefaultItemAnimator());
-                recycleSelectCategory.setAdapter(mAdapter);
+                recyclerViewTechnicien.setLayoutManager(mLayoutManager);
+                recyclerViewTechnicien.setItemAnimator(new DefaultItemAnimator());
+                recyclerViewTechnicien.setAdapter(adapter);
+                dd.dismiss();
             }
 
             @Override
@@ -137,8 +108,10 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
 
             }
         });
-        return listeRetour;
+
+        return viewFr;
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -176,13 +149,5 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-        void actionNext(Integer typeAction, Object data);
-        void backAction();
     }
-
-    public OnFragmentInteractionListener getmListener() {
-        return mListener;
-    }
-
-
 }
