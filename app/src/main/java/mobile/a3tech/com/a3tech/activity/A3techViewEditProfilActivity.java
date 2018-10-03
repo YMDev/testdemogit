@@ -26,7 +26,7 @@ import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.view.CircleImageView;
 
 public class A3techViewEditProfilActivity extends AppCompatActivity  implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener {
-    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.9f;
+    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.72f;
     private static final float PERCENTAGE_TO_SHOW_TOOLBAR  = 0.7f;
     private static final float PERCENTAGE_TO_HIDE_CIRCLE_IMAGE  = 0.5f;
     private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;

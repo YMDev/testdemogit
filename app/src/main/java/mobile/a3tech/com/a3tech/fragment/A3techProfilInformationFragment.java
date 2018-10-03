@@ -109,6 +109,8 @@ public class A3techProfilInformationFragment extends Fragment {
                             listeRetour.add(new ObjectMenu(userV.getEmail(), "Email", 1, 0));
                             listeRetour.add(new ObjectMenu(userV.getTelephone(), "Telephone", 2, 0));
                             listeRetour.add(new ObjectMenu(userV.getAdresse(), "Adresse", 3, 0));
+                            listeRetour.add(new ObjectMenu(user.getNbr() == null || user.getNbr() == "" ? "0" : user.getNbr(), "Nombre de missions", 4, 0));
+                            listeRetour.add(new ObjectMenu(userV.getDateNaissance(), "Date naissance", 4, 0));
                             A3techProfileInformationAdapter mAdapter = new A3techProfileInformationAdapter(getActivity(), listeRetour, userV);
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
                             recycleProfil.setLayoutManager(mLayoutManager);
@@ -129,6 +131,8 @@ public class A3techProfilInformationFragment extends Fragment {
             listeRetour.add(new ObjectMenu(user.getEmail(), "Email", 1, 0));
             listeRetour.add(new ObjectMenu(user.getTelephone(), "Telephone", 2, 0));
             listeRetour.add(new ObjectMenu(user.getAdresse(), "Adresse", 3, 0));
+            listeRetour.add(new ObjectMenu(user.getNbr() == null || user.getNbr() == "" ? "0" : user.getNbr(), "Nombre de missions", 4, 0));
+            listeRetour.add(new ObjectMenu(user.getDateNaissance(), "Date naissance", 4, 0));
             A3techProfileInformationAdapter mAdapter = new A3techProfileInformationAdapter(getActivity(), listeRetour, user);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
             recycleProfil.setLayoutManager(mLayoutManager);
