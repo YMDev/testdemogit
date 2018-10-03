@@ -130,7 +130,24 @@
                     android:layout_below="@+id/tabs_profil"
                     android:background="@android:color/white"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+                <RelativeLayout
+                    android:id="@+id/valider_mission_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_alignParentBottom="true"
+                     >
+
+                    <Button
+                        android:id="@+id/validate_mission"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/affecter_un_technicien"
+                        android:textColor="@color/white" />
+                </RelativeLayout>
             </RelativeLayout>
+
         </FrameLayout>
 
 
