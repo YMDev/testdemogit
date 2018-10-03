@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "F:\\android_workspace_V1\\testdemogit\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-es-rES\\values-es-rES.xml",
+            "outputFile": "D:\\AndroidWorks\\testdemogitv2\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-es-rES\\values-es-rES.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\SPIA\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\815bf6de5cee101d95db487e8730546a\\res\\values-es-rES\\values.xml",
+                    "source": "C:\\Users\\bouhjra\\.gradle\\caches\\transforms-1\\files-1.1\\facebook-android-sdk-4.0.0.aar\\dd4725a3e6f50905d89902dea5fe6076\\res\\values-es-rES\\values.xml",
                     "from": {
                         "startLines": "4",
                         "startColumns": "4",

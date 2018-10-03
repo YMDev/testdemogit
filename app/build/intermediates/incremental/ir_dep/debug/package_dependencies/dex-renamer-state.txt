@@ -1,7 +1,7 @@
-#Sun Sep 30 00:04:21 UTC 2018
-base.0=F\:\\android_workspace_V1\\testdemogit\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\56
+#Wed Oct 03 10:09:14 WAT 2018
+base.0=D\:\\AndroidWorks\\testdemogitv2\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\11
 path.1=classes2.dex
 renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
-base.1=F\:\\android_workspace_V1\\testdemogit\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\56
+base.1=D\:\\AndroidWorks\\testdemogitv2\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\11

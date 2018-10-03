@@ -18,7 +18,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import mobile.a3tech.com.a3tech.Manifest;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.model.User;
 

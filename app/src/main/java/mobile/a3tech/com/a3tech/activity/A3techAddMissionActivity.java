@@ -17,6 +17,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techSelectMissionCategoryAdapter;
@@ -39,6 +40,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     private AppBarLayout appBarLayoutPostMission;
     private Toolbar toolbarPostMission;
     private Toolbar toolbarSelectCategoryMission;
+    private Toolbar toolbarAffecterTech;
     private ProgressBar progressPostMission;
     private ImageView backAction;
 
@@ -53,6 +55,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     private void initiInterfaceActivity(){
         bindComponents();
         updateAppbarLayout(0);
+        getSupportActionBar().setElevation(0);
         setFragment(A3techSelectCategoryMissionFragment.newInstance(null, null), true, false);
     }
 
@@ -62,6 +65,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
         appBarLayoutPostMission = findViewById(R.id.appbar_add_mission);
         toolbarPostMission = findViewById(R.id.toolbar_post_mission);
         toolbarSelectCategoryMission = findViewById(R.id.toolbar_select_category);
+        toolbarAffecterTech = findViewById(R.id.toolbar_affect_tech);
         progressPostMission = findViewById(R.id.progress_add_mission);
         backAction = findViewById(R.id.back_action);
         backAction.setOnClickListener(new View.OnClickListener() {
@@ -70,6 +74,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
                 onBackPressed();
             }
         });
+
     }
 
     protected void setFragment(Fragment fragment, boolean withAnim, boolean back) {
@@ -126,14 +131,14 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     public void onFragmentInteraction(Uri uri) {
 
     }
-
+    Categorie categorieSelected;
     @Override
     public void actionNext(Integer typeAction, Object data) {
         switch (typeAction) {
             case A3techSelectCategoryMissionFragment.ACTION_SELECT_CATEGORY_MISSION:
                 //Categorie Mission selectionnée
                 progressBarchangeSmouthly(50);
-                Categorie categorieSelected = (Categorie)data;
+                  categorieSelected = (Categorie)data;
                 updateAppbarLayout(1);
                 setFragment(A3techPostMissionFragment.newInstance(categorieSelected), true, false);
                 break;
@@ -142,6 +147,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
                 progressBarchangeSmouthly(100);
                 Mission mission = (Mission)data;
                 updateAppbarLayout(3);
+                ((TextView)toolbarAffecterTech.findViewById(R.id.big_title)).setText(mission.getCategoryMission().getLibelle());
                 setFragment(A3techAffecterTechnicienFragment.newInstance(mission), true, false);
                 break;
         }
@@ -158,18 +164,23 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
             case 0:
                 toolbarSelectCategoryMission.setVisibility(View.VISIBLE);
                 toolbarPostMission.setVisibility(View.GONE);
+                toolbarAffecterTech.setVisibility(View.GONE);
                 setSupportActionBar(toolbarSelectCategoryMission);
                 break;
             case 1:
                 toolbarPostMission.setVisibility(View.VISIBLE);
                 toolbarSelectCategoryMission.setVisibility(View.GONE);
+                toolbarAffecterTech.setVisibility(View.GONE);
                 setSupportActionBar(toolbarPostMission);
                 break;
             case 3:
                 toolbarPostMission.setVisibility(View.GONE);
                 toolbarSelectCategoryMission.setVisibility(View.GONE);
+                toolbarAffecterTech.setVisibility(View.VISIBLE);
+                setSupportActionBar(toolbarAffecterTech);
                 break;
         }
+        getSupportActionBar().setElevation(0);
     }
 
 

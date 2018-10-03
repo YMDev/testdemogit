@@ -638,12 +638,13 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="hint_description_mission">Ajouter plus de détails</string>
     <string name="date_mission_header">Date intervention</string>
     <string name="hint_date_mission">Ajouter une Date pour cette mission</string>
-    <string name="location_mission_header">Location</string>
+    <string name="location_mission_header">Adresse</string>
     <string name="affecter_un_technicien">Affecter à un Technicien Atech</string>
     <string name="choose_time_mission">Séléctionner l\'heure de l\'intervention</string>
     <string name="cancel">Annuler</string>
     <string name="ok_label">Ok</string>
     <string name="nbr_intervention">Nombre d\'intervention</string>
+    <string name="hint_adresse_mission">où va se dérouler cette Mission ?</string>
 
 
 </resources>

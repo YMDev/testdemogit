@@ -70,7 +70,16 @@ public class Mission implements Parcelable {
 	private String facebookid ;
 	private String checkmail ;
 	private String checkphone ;
-	
+	private Categorie categoryMission;
+
+	public Categorie getCategoryMission() {
+		return categoryMission;
+	}
+
+	public void setCategoryMission(Categorie categoryMission) {
+		this.categoryMission = categoryMission;
+	}
+
 	public String getFacebookid() {
 		return facebookid;
 	}

@@ -5,15 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.A3techAddMissionActivity">
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_add_mission"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        >
+        android:background="@color/white"
+        app:elevation="0dp"
+        android:fitsSystemWindows="true">
+
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
             <include
                 android:id="@+id/toolbar_select_category"
                 layout="@layout/a3tech_toolbar_select_category_mission_fragment"
@@ -24,6 +29,10 @@
                 layout="@layout/a3tech_toolbar_post_mission_fragment"
                 android:visibility="gone" />
 
+            <include
+                android:id="@+id/toolbar_affect_tech"
+                layout="@layout/a3tech_toolbar_affect_tech_fragment"
+                android:visibility="gone" />
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
     <ProgressBar

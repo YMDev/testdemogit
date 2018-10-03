@@ -1,7 +1,9 @@
 package mobile.a3tech.com.a3tech.fragment;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -9,6 +11,8 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -30,8 +36,10 @@ import eltos.simpledialogfragment.SimpleDialog;
 import eltos.simpledialogfragment.SimpleTimeDialog;
 import eltos.simpledialogfragment.list.SimpleListDialog;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.model.Mission;
+import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 
@@ -46,9 +54,34 @@ import mobile.a3tech.com.a3tech.utils.DateStuffs;
 public class A3techPostMissionFragment extends Fragment implements SimpleDialog.OnDialogResultListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    private static final String[] INITIAL_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+    private static final String[] CAMERA_PERMS={
+            Manifest.permission.CAMERA
+    };
+    private static final String[] CONTACTS_PERMS={
+            Manifest.permission.READ_CONTACTS
+    };
+    private static final String[] LOCATION_PERMS={
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+    private static final int INITIAL_REQUEST=1337;
+    private static final int CAMERA_REQUEST=INITIAL_REQUEST+1;
+    private static final int CONTACTS_REQUEST=INITIAL_REQUEST+2;
+    private static final int LOCATION_REQUEST=INITIAL_REQUEST+3;
+
+
+
+
+
+
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_CAT_ID = "ID_CAT";
+    private static final String ARG_CAT_OBJECT = "ID_CAT";
     private static final String TAG_CALENDAR_MISSION = "MISSION_DATE";
     private static final String TAG_TIME_MISSION = "MISSION_TIME";
     public static final int ACTION_SAVE_MISSION_INFO = 2;
@@ -57,11 +90,12 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
     private String categoryLibelle;
     private String categoryDescription;
     private String categoryIdentifiant;
+    private Categorie categoryObject;
     private TextView categorySelcted;
     private TextView dateIntervension;
     private EditText titleMission;
     private EditText descriptionMission;
-    private AutoCompleteTextView locationMission;
+    private EditText locationMission;
     private Double latitude;
     private Double longitude;
     private String cityName, stateName, countryName;
@@ -88,6 +122,7 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         args.putString(ARG_PARAM1, categorieSelected.getLibelle());
         args.putString(ARG_PARAM2, categorieSelected.getDescription());
         args.putString(ARG_CAT_ID, categorieSelected.getIdentifiant());
+        args.putString(ARG_CAT_OBJECT, new Gson().toJson(categorieSelected));
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,6 +134,10 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
             categoryLibelle = getArguments().getString(ARG_PARAM1);
             categoryDescription = getArguments().getString(ARG_PARAM2);
             categoryIdentifiant = getArguments().getString(ARG_CAT_ID);
+             String jsonMyObject = getArguments().getString(ARG_CAT_OBJECT);
+            if (jsonMyObject != null) {
+                categoryObject = new Gson().fromJson(jsonMyObject, Categorie.class);
+            }
         }
     }
 
@@ -127,29 +166,10 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
             public void onClick(View v) {
                 // create class object
                 gps = new GPSTracker(getActivity());
-
-                // check if GPS enabled
-                if (gps.canGetLocation()) {
-
-                    latitude = gps.getLatitude();
-                    longitude = gps.getLongitude();
-                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-                    try {
-                        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                        cityName = addresses.get(0).getAddressLine(0);
-                        stateName = addresses.get(0).getAddressLine(1);
-                        countryName = addresses.get(0).getAddressLine(2);
-                        Toast.makeText(getActivity().getApplicationContext(), "Your Location is - \ncity: " + cityName + "\nstate: " + stateName + "\ncounrty: " + countryName, Toast.LENGTH_LONG).show();
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-
-                    // \n is for new line
-                } else {
-
-                    gps.showSettingsAlert();
+                if (!canAccessLocation()) {
+                    requestPermissions(INITIAL_PERMS, INITIAL_REQUEST);
                 }
+               gpsGetLocation();
 
             }
         });
@@ -166,6 +186,35 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         return viewFr;
     }
 
+    private void gpsGetLocation() {
+        // check if GPS enabled
+        if (gps.canGetLocation()) {
+
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
+            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+            try {
+                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                cityName = addresses.get(0).getAddressLine(0); // adresse
+                stateName = addresses.get(0).getFeatureName(); // city
+                countryName = addresses.get(0).getCountryName(); // country
+                Toast.makeText(getActivity().getApplicationContext(), "Your Location is - \ncity: " + cityName + "\nstate: " + stateName + "\ncounrty: " + countryName, Toast.LENGTH_LONG).show();
+
+                if(cityName != null){
+                    locationMission.setText(cityName);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            // \n is for new line
+        } else {
+
+            gps.showSettingsAlert();
+        }
+    }
+
+
     private Mission populateMission() {
         Mission mission = new Mission();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
@@ -177,6 +226,7 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         mission.setLongitude(String.valueOf(longitude));
         mission.setCatDescription(descriptionMission.getText().toString());
         mission.setCategorieId(categoryIdentifiant);
+        mission.setCategoryMission(categoryObject);
         return mission;
     }
 
@@ -254,4 +304,54 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         }
         return false;
     }
+
+
+    private boolean canAccessLocation() {
+        return(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
+    }
+
+    private boolean canAccessCamera() {
+        return(hasPermission(Manifest.permission.CAMERA));
+    }
+
+    private boolean canAccessContacts() {
+        return(hasPermission(Manifest.permission.READ_CONTACTS));
+    }
+
+    private boolean hasPermission(String perm) {
+        return(PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(getContext(), perm));
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch(requestCode) {
+            case CAMERA_REQUEST:
+                if (canAccessCamera()) {
+                    ///doCameraThing();
+                }
+                else {
+                   // bzzzt();
+                }
+                break;
+
+            case CONTACTS_REQUEST:
+                if (canAccessContacts()) {
+                    // doContactsThing();
+                }
+                else {
+                    //  bzzzt();
+                }
+                break;
+
+            case LOCATION_REQUEST:
+                if (canAccessLocation()) {
+                    gpsGetLocation();
+                }
+                else {
+                    // bzzzt();
+                }
+                break;
+        }
+    }
+
 }
