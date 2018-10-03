@@ -1,34 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    tools:context=".fragment.A3techPostMissionFragment">
-
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp">
+        android:scrollbars="vertical"
+        android:layout_margin="20dp">
 
         <TextView
             android:id="@+id/category_mission_selected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:alpha="0.77"
+            android:layout_marginBottom="30dp"
             android:fontFamily="sans-serif-meduim"
             android:text="@string/title_mission_header"
             android:textColor="@color/black"
-            android:textSize="25dp"
+            android:textSize="30dp"
             android:textStyle="bold" />
 
         <RelativeLayout
             android:id="@+id/title_container"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="65dp"
             android:layout_below="@id/category_mission_selected">
 
             <TextView
@@ -51,7 +45,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
         </RelativeLayout>
 
@@ -66,7 +60,7 @@
         <RelativeLayout
             android:id="@+id/description_container"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="75dp"
             android:layout_below="@id/devider_tiltle"
             android:layout_marginTop="10dp">
 
@@ -94,7 +88,7 @@
                 android:maxLines="5"
                 android:minLines="2"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
         </RelativeLayout>
 
@@ -109,10 +103,9 @@
         <RelativeLayout
             android:id="@+id/date_mission_container"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="65dp"
             android:layout_below="@id/devider_deesc"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/ripple_effect_btn">
+            android:layout_marginTop="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -123,15 +116,17 @@
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
-            <TextView
+            <EditText
                 android:id="@+id/date_mission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:background="@null"
                 android:fontFamily="sans-serif-light"
                 android:hint="@string/hint_date_mission"
+                android:inputType="date|datetime"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
         </RelativeLayout>
 
@@ -159,23 +154,18 @@
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/location_mission"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
                 android:background="@null"
                 android:fontFamily="sans-serif-light"
-                android:hint="@string/hint_adresse_mission"
-                android:inputType="textMultiLine"
-                android:maxLines="5"
-                android:minLines="2"
+                android:hint="@string/hint_date_mission"
                 android:textColor="@color/black"
-                android:textSize="16dp" />
+                android:textSize="18dp" />
 
             <ImageView
-                android:id="@+id/getMyLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -191,23 +181,6 @@
             android:layout_below="@id/location_mission_container"
             android:layout_marginTop="20dp"
             android:background="@color/semi_transparent" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/valider_mission_container"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp">
-
-        <Button
-            android:id="@+id/validate_mission"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorPrimary"
-            android:text="@string/affecter_un_technicien"
-            android:textColor="@color/white" />
-
     </RelativeLayout>
 
 </RelativeLayout>

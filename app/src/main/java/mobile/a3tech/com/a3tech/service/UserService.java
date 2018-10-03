@@ -291,6 +291,10 @@ public class UserService extends AbstractService implements Constant {
         userMocked.setNom(name);
         userMocked.setPrenom(pname);
         userMocked.setPseudo(name);
+        userMocked.setRating(rand.nextInt(5)+"");
+        userMocked.setNbrReviews(rand.nextInt(15)+"");
+        userMocked.setLatitude("53.2734");
+        userMocked.setLongitude("-7.77832031");
         return userMocked;
     }
     //

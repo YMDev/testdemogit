@@ -56,7 +56,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
         bindComponents();
         updateAppbarLayout(0);
         getSupportActionBar().setElevation(0);
-        setFragment(A3techSelectCategoryMissionFragment.newInstance(null, null), true, false);
+        setFragment(A3techSelectCategoryMissionFragment.newInstance(null, null), false, false);
     }
 
 

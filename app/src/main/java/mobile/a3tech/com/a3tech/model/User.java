@@ -3,6 +3,8 @@ package mobile.a3tech.com.a3tech.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 public class User implements  Parcelable {
 	
 	
@@ -27,6 +29,34 @@ public class User implements  Parcelable {
 	private String mobil_check ;
 	private String checkmail ;
 	private String checkphone ;
+	private String rating;
+	private String nbrReviews;
+	private List<Avis> listAvis;
+
+	public String getRating() {
+		return rating;
+	}
+
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+
+	public String getNbrReviews() {
+		return nbrReviews;
+	}
+
+	public void setNbrReviews(String nbrReviews) {
+		this.nbrReviews = nbrReviews;
+	}
+
+	public List<Avis> getListAvis() {
+		return listAvis;
+	}
+
+	public void setListAvis(List<Avis> listAvis) {
+		this.listAvis = listAvis;
+	}
+
 	public String getCheckmail() {
 		return checkmail;
 	}

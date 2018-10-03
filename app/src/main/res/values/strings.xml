@@ -643,7 +643,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="choose_time_mission">Séléctionner l\'heure de l\'intervention</string>
     <string name="cancel">Annuler</string>
     <string name="ok_label">Ok</string>
-    <string name="nbr_intervention">Nombre d\'intervention</string>
+    <string name="nbr_intervention">Missions accomplies</string>
     <string name="hint_adresse_mission">où va se dérouler cette Mission ?</string>
 
 

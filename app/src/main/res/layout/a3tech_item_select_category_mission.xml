@@ -5,10 +5,9 @@
     android:id="@+id/container_item_category"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:background="?attr/selectableItemBackground"
+    android:background="@color/white"
     android:clickable="true"
     android:orientation="vertical"
-    android:paddingTop="8dp"
     app:paddingStart="8dp"
     tools:background="@color/white">
 

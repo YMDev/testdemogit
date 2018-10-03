@@ -90,7 +90,6 @@ public class A3techAffecterTechnicienFragment extends Fragment {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_affecter_technicien, container, false);
         recyclerViewTechnicien = viewFr.findViewById(R.id.recycle_techniciens);
         final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
-        dd.show();
         UserManager.getInstance().getTechnicienNearLocation(mission.getLatitude(), mission.getLongitude(), mission.getAdresse(), new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
@@ -105,7 +104,7 @@ public class A3techAffecterTechnicienFragment extends Fragment {
 
             @Override
             public void dataLoadingError(int errorCode) {
-
+                dd.dismiss();
             }
         });
 

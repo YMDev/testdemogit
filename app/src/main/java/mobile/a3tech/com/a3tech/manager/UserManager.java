@@ -565,7 +565,6 @@ public class UserManager implements Constant {
 				try {
 					UserService service = new UserService();
 					List<User> user = service.getTechnicienNearLocation(latitude,longitude,ville);
-					/*wait(500);*/
 					if (user == null) {
 						Message message = handler.obtainMessage(0, 0);
 						handler.sendMessage(message);
