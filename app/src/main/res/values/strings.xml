@@ -645,6 +645,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="ok_label">Ok</string>
     <string name="nbr_intervention">Missions accomplies</string>
     <string name="hint_adresse_mission">où va se dérouler cette Mission ?</string>
+    <string name="embaucher_moi">Embauchez-moi</string>
 
 
 </resources>

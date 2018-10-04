@@ -61,6 +61,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     TextView nomPrenomUser;
     ImageView userAvatar;
 
+    public static final String ACTION_FROM_A3techHomeActivity = "A3techHomeActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +90,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
                     public void dataLoaded(Object data, int method, int typeOperation) {
                         User user = (User)data;
                         Bundle bExtra = new Bundle();
+                        bExtra.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, A3techHomeActivity.ACTION_FROM_A3techHomeActivity);
                         bExtra.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(user));
                         Intent mainIntent = new Intent(A3techHomeActivity.this, A3techViewEditProfilActivity.class);
                         mainIntent.putExtras(bExtra);

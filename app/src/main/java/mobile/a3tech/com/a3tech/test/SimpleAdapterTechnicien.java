@@ -25,6 +25,7 @@ import java.util.List;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
+import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.utils.SphericalUtil;
 import mobile.a3tech.com.a3tech.utils.StringStuffs;
@@ -38,6 +39,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
     //  Data
     private List<User> listeObjects = new ArrayList<>();
 
+    private Mission mission;
     private Context context;
     private A3techAddMissionActivity parentActivity;
 
@@ -45,10 +47,11 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
         this.context = context;
     }
 
-    public SimpleAdapterTechnicien(Context context, List objectMenu, A3techAddMissionActivity parent) {
+    public SimpleAdapterTechnicien(Context context, List objectMenu, A3techAddMissionActivity parent, Mission vMission) {
         this.context = context;
         listeObjects = objectMenu;
         parentActivity = parent;
+        mission = vMission;
     }
 
 
@@ -66,7 +69,8 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
         if (technicien == null) return;
 
         holder.nameTech.setText(technicien.getNom() + " " + technicien.getPrenom().substring(0, 1) + ".");
-        holder.nbrIntervTech.setText(technicien.getNbr());
+       /* String adresseFromGpsLocation = StringStuffs.getAdresseFromGpsLocation(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude()),context);
+      */  holder.adresse.setText(technicien.getAdresse());
         holder.avatareTech.setImageDrawable(context.getDrawable(R.drawable.photo_login_1));
         holder.ratingTech.setNumStars(5);
         holder.ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
@@ -74,13 +78,15 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
         holder.numberOfReviews.setText("(+ " + technicien.getNbrReviews() + " avis )");
         holder.disponibilite.setText("DIS");
         Double distance = SphericalUtil.computeDistanceBetween(new LatLng(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude())), new LatLng(Double.valueOf("52.736291655910925"), Double.valueOf("-8.261718750000002")));
-        holder.adresse.setText(Math.round((distance/1000) * 100.0) / 100.0+ " Km de distance");
+        holder.distanceEnKm.setText(Math.round((distance/1000) * 100.0) / 100.0+ " Km de distance");
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent mainIntent = new Intent(parentActivity, A3techViewEditProfilActivity.class);
                 Bundle bundle = new Bundle();
+                bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, "MISSION");
                 bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
+                bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
                 mainIntent.putExtras(bundle);
                 parentActivity.startActivityForResult(mainIntent, 545);
             }
@@ -95,7 +101,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
     }
 
     protected static class SimpleItemVH extends RecyclerView.ViewHolder {
-        TextView nameTech, nbrIntervTech;
+        TextView nameTech, distanceEnKm;
         LinearLayout layoutContainerInfo;
         ImageView avatareTech;
         RatingBar ratingTech;
@@ -109,7 +115,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
             super(itemView);
 
             nameTech = (TextView) itemView.findViewById(R.id.name_tech);
-            nbrIntervTech = (TextView) itemView.findViewById(R.id.nbr_intervention_tech);
+            distanceEnKm = (TextView) itemView.findViewById(R.id.distance);
             layoutContainerInfo = itemView.findViewById(R.id.container_informations_user);
             avatareTech = itemView.findViewById(R.id.avatare_technicien);
             ratingTech = itemView.findViewById(R.id.rating_tech);
@@ -117,7 +123,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
             numberOfReviews = itemView.findViewById(R.id.rating_nbr_text);
             container = itemView.findViewById(R.id.container_item_tech);
             disponibilite = itemView.findViewById(R.id.disponibilite);
-            adresse = itemView.findViewById(R.id.adresse);
+            adresse = itemView.findViewById(R.id.adresse_alpha);
         }
     }
 }

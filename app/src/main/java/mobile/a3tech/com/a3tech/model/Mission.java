@@ -65,12 +65,22 @@ public class Mission implements Parcelable {
 	private List<Offre> offres = new ArrayList<Offre>();
 	private String typeTransaction ;
 	private String titre ;
+
+	public User getTechnicien() {
+		return technicien;
+	}
+
+	public void setTechnicien(User technicien) {
+		this.technicien = technicien;
+	}
+
 	private Integer sponsorise ;
 	private Integer evalmission ;
 	private String facebookid ;
 	private String checkmail ;
 	private String checkphone ;
 	private Categorie categoryMission;
+	private User technicien;
 
 	public Categorie getCategoryMission() {
 		return categoryMission;

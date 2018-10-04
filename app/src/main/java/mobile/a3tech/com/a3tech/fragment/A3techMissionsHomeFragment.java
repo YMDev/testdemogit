@@ -1,19 +1,41 @@
 package mobile.a3tech.com.a3tech.fragment;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
+
+import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
+import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techLoginActivity;
+import mobile.a3tech.com.a3tech.activity.ServicesFragment;
+import mobile.a3tech.com.a3tech.manager.MissionManager;
+import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.Mission;
+import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterMission;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,11 +50,18 @@ public class A3techMissionsHomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static final int REQ_ADD_MISSION = 4953;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    String keyWord = "";
+    String premium ="" ;
+    String lang = "";
+    String connectedUser = "";
+    String password ="" ;
+    int distance = -1;
+    int limit = 10;
 
     private RecyclerView recycleMission;
     private FloatingActionButton addMission;
@@ -70,18 +99,49 @@ public class A3techMissionsHomeFragment extends Fragment {
         }
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        this.connectedUser = prefs.getString("identifiant", "");
+        this.password = prefs.getString("password", "");
+        this.lang = prefs.getString("ApplicationLanguage",
+                Constant.LANGUAGE_FRENSH);
        View viewFr = inflater.inflate(R.layout.fragment_a3tech_missions_home, container, false);
        recycleMission = viewFr.findViewById(R.id.recycle_missions);
+
+        final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
+        MissionManager.getInstance().filtreMission(lang, connectedUser,
+                keyWord, String.valueOf(distance), "",
+                Constant.LOAD_DATA_FINISH, String.valueOf(0),
+                String.valueOf(limit), connectedUser, null, premium, password, 0, 0,
+                new DataLoadCallback() {
+                    @Override
+                    public void dataLoaded(Object data, int method, int typeOperation) {
+                        List<Mission> listeRetour = (List<Mission>) data;
+                        SimpleAdapterMission adapter = new SimpleAdapterMission(getActivity(),listeRetour, (A3techHomeActivity) getActivity());
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+                        recycleMission.setLayoutManager(mLayoutManager);
+                        recycleMission.setItemAnimator(new DefaultItemAnimator());
+                        recycleMission.setAdapter(adapter);
+                        dd.dismiss();
+                    }
+
+                    @Override
+                    public void dataLoadingError(int errorCode) {
+
+                    }
+                });
+
        addMission = viewFr.findViewById(R.id.add_mission);
        addMission.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View view) {
                // start activity add mission
-               startActivity(new Intent(getActivity(), A3techAddMissionActivity.class));
+               startActivityForResult(new Intent(getActivity(), A3techAddMissionActivity.class),REQ_ADD_MISSION);
            }
        });
         return viewFr;
@@ -124,5 +184,21 @@ public class A3techMissionsHomeFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (REQ_ADD_MISSION): {
+                if (resultCode == Activity.RESULT_OK) {
+                    String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
+                    Mission mission = new Gson().fromJson(jsonMission, Mission.class);
+                    ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
+                    Toast.makeText(getContext(), "" + mission.getTechnicien().getNom() + " \n" + mission.getAdresse(), Toast.LENGTH_LONG).show();
+                }
+                break;
+            }
+        }
     }
 }

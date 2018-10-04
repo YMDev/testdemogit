@@ -1,9 +1,11 @@
 package mobile.a3tech.com.a3tech.activity;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.AppBarLayout;
@@ -18,6 +20,9 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techSelectMissionCategoryAdapter;
@@ -43,6 +48,8 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     private Toolbar toolbarAffecterTech;
     private ProgressBar progressPostMission;
     private ImageView backAction;
+
+    public static final String TAG_RESULT_FROM_SELECT_TECH ="TAG_RESULT_FROM_SELECT_TECH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,4 +219,22 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
         }
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (545): {
+                if (resultCode == Activity.RESULT_OK) {
+                    String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
+                    Mission mission = new Gson().fromJson(jsonMission, Mission.class);
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH,jsonMission);
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    finish();
+                }
+                break;
+            }
+        }
+    }
 }

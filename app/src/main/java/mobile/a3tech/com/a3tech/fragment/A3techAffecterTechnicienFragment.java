@@ -94,7 +94,7 @@ public class A3techAffecterTechnicienFragment extends Fragment {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 List<User> listeRetour = (List<User>) data;
-                SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),listeRetour, (A3techAddMissionActivity) getActivity());
+                SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),listeRetour, (A3techAddMissionActivity) getActivity(), mission);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
                 recyclerViewTechnicien.setLayoutManager(mLayoutManager);
                 recyclerViewTechnicien.setItemAnimator(new DefaultItemAnimator());

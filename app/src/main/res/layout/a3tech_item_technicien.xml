@@ -122,32 +122,15 @@
                     android:layout_height="wrap_content">
 
                     <TextView
-                        android:id="@+id/label_nbr_intervention_tech"
+                        android:id="@+id/adresse_alpha"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:fontFamily="sans-serif-light"
+                        android:fontFamily="sans-serif-meduim"
                         android:text="@string/nbr_intervention"
-                        android:textColor="@color/colorPrimary"
+                        android:textColor="@color/black"
                         android:textSize="15dp" />
 
-                    <RelativeLayout
-                        android:layout_width="30dp"
-                        android:layout_height="20dp"
-                        android:layout_toRightOf="@id/label_nbr_intervention_tech"
-                        android:background="@drawable/style_layout_raduis">
-
-                        <TextView
-                            android:id="@+id/nbr_intervention_tech"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
-                            android:fontFamily="sans-serif-meduim"
-                            android:textColor="@color/white"
-                            android:textSize="13dp" />
-                    </RelativeLayout>
                 </RelativeLayout>
 
 
@@ -158,10 +141,11 @@
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
+                        android:id="@+id/distance_container"
                         android:layout_height="20dp">
 
                         <TextView
-                            android:id="@+id/adresse"
+                            android:id="@+id/distance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerInParent="true"
@@ -169,6 +153,25 @@
                             android:layout_centerVertical="true"
                             android:fontFamily="sans-serif-meduim"
                             android:textColor="@color/black"
+                            android:textSize="13dp" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/disponibilite_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_below="@id/distance_container">
+
+                        <TextView
+                            android:id="@+id/disponibilite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:fontFamily="sans-serif-meduim"
+                            android:textStyle="bold"
+                            android:textColor="@color/green_dark"
                             android:textSize="13dp" />
                     </RelativeLayout>
                 </RelativeLayout>
@@ -184,25 +187,7 @@
                 android:layout_centerVertical="true"
                 android:src="@drawable/a3tech_show_next" />
 
-            <RelativeLayout
-                android:id="@+id/disponibilite_container"
-                android:layout_width="40dp"
-                android:layout_height="20dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/background_container_disponibilite_dis">
 
-                <TextView
-                    android:id="@+id/disponibilite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="sans-serif-meduim"
-                    android:textColor="@color/white"
-                    android:textSize="13dp" />
-            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"

@@ -17,16 +17,15 @@
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/add_mission"
-        android:background="@color/colorPrimary"
-        android:src="@drawable/ic_add_action_3tech"
-        app:backgroundTint="@color/colorPrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="60dp"
-        android:layout_marginRight="40dp"
-        />
+        android:layout_marginRight="15dp"
+        android:background="@color/colorPrimary"
+        android:src="@drawable/ic_add_action_3tech"
+        app:backgroundTint="@color/colorPrimary" />
 
 
 </RelativeLayout>

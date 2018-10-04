@@ -1,5 +1,7 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -12,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +36,8 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
     private static final int ALPHA_ANIMATIONS_DURATION              = 200;
     private static final int ALPHA_ANIMATIONS_DURATION_TOOL              = 400;
     public static final String ARG_USER_OBJECT = "ARG_USER_OBJECT";
+    public static final String ARG_SRC_ACTION = "ARG_SRC_ACTION";
+    public static final String ARG_MISSION_OBJECT = "ARG_MISSION_OBJECT";
 
     private boolean mIsTheTitleVisible          = false;
     private boolean mIsTheTitleContainerVisible = true;
@@ -49,21 +54,35 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
 
     private ImageView backBtn;
     private TextView userNamePname;
+    private Boolean isFromHomeAccount = false;
+    private LinearLayout validationContainer;
+    private Button btnValidationSelection;
     User userToDisplay;
-
+    Mission mission;
     private de.hdodenhof.circleimageview.CircleImageView circleImage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String jsonMyObject = null;
+        String jsonMyObjectMission = null;
+        String srcAction = null;
         Bundle b = getIntent().getExtras();
         if (b != null) {
             jsonMyObject = b.getString(ARG_USER_OBJECT);
+            srcAction = b.getString(ARG_SRC_ACTION);
+            jsonMyObjectMission = b.getString(ARG_MISSION_OBJECT);
         }
         if(jsonMyObject != null){
             userToDisplay = new Gson().fromJson(jsonMyObject, User.class);
         }
-
+        if(jsonMyObjectMission != null){
+            mission = new Gson().fromJson(jsonMyObjectMission, Mission.class);
+        }
+        if(srcAction != null && srcAction.equalsIgnoreCase(A3techHomeActivity.ACTION_FROM_A3techHomeActivity)){
+            isFromHomeAccount = true;
+        }else{
+            isFromHomeAccount = false;
+        }
 
         setContentView(R.layout.a3tech_activity_view_edit_profil);
 
@@ -121,6 +140,24 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
             @Override
             public void onClick(View view) {
                A3techViewEditProfilActivity.this.finish();
+            }
+        });
+        validationContainer = findViewById(R.id.validation_selection_container);
+        btnValidationSelection = findViewById(R.id.validate_selection);
+        if(isFromHomeAccount){
+            validationContainer.setVisibility(View.GONE);
+        }else{
+            validationContainer.setVisibility(View.VISIBLE);
+        }
+
+        btnValidationSelection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mission.setTechnicien(userToDisplay);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH, new Gson().toJson(mission));
+                setResult(Activity.RESULT_OK, resultIntent);
+                finish();
             }
         });
     }

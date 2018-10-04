@@ -11,6 +11,7 @@ import org.codehaus.jackson.type.TypeReference;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
 import mobile.a3tech.com.a3tech.model.Mission;
+import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.utils.Constant;
 
 public class MissionService extends AbstractService implements Constant {
@@ -81,6 +82,9 @@ public class MissionService extends AbstractService implements Constant {
 		List<Mission> missions = result.get("missions");*/
 		List<Mission> missions = new ArrayList<>();
 		Mission mm1 = new Mission();
+		mm1.setTechnicien(new User());
+		mm1.getTechnicien().setNom("mouad");
+		mm1.getTechnicien().setPrenom("bouhjra");
 		mm1.setAdresse("adresse mission 1");
 		mm1.setArticle("article mission");
 		mm1.setCatDescription("cat description");

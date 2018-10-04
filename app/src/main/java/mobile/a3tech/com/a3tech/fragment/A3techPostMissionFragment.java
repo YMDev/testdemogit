@@ -227,6 +227,7 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         mission.setCatDescription(descriptionMission.getText().toString());
         mission.setCategorieId(categoryIdentifiant);
         mission.setCategoryMission(categoryObject);
+        mission.setAdresse(locationMission.getText().toString());
         return mission;
     }
 
