@@ -25,7 +25,10 @@
                 android:id="@+id/toolbar_mission"
                 layout="@layout/a3tech_toolbar_mission_fragment"
                 android:visibility="gone" />
-
+            <include
+                android:id="@+id/toolbar_browse"
+                layout="@layout/a3tech_toolbar_browse_tech_fragment"
+                android:visibility="gone" />
             <include
                 android:id="@+id/toolbar_account"
                 layout="@layout/a3tech_toolbar_account_fragment"

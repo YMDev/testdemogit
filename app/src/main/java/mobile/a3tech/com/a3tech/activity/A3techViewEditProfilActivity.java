@@ -24,11 +24,12 @@ import com.google.gson.Gson;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techProfilFragmentAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techProfilInformationFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techReviewsFragment;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.view.CircleImageView;
 
-public class A3techViewEditProfilActivity extends AppCompatActivity  implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener {
+public class A3techViewEditProfilActivity extends AppCompatActivity  implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener, A3techReviewsFragment.OnFragmentInteractionListener {
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.72f;
     private static final float PERCENTAGE_TO_SHOW_TOOLBAR  = 0.7f;
     private static final float PERCENTAGE_TO_HIDE_CIRCLE_IMAGE  = 0.5f;

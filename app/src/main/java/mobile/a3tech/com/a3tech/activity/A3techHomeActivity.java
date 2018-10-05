@@ -58,6 +58,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     Toolbar toolMission;
     Toolbar toolEchange;
     Toolbar toolAccount;
+    Toolbar toolBrowse;
     TextView nomPrenomUser;
     ImageView userAvatar;
 
@@ -77,7 +78,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         toolMission = findViewById(R.id.toolbar_mission);
         toolEchange = findViewById(R.id.toolbar_echange);
         toolAccount = findViewById(R.id.toolbar_account);
-
+        toolBrowse = findViewById(R.id.toolbar_browse);
         toolAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,6 +142,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
                 toolEchange.setVisibility(View.VISIBLE);
                 toolMission.setVisibility(View.GONE);
                 toolAccount.setVisibility(View.GONE);
+                toolBrowse.setVisibility(View.GONE);
                 appBarHome.setBackgroundColor(getResources().getColor(R.color.white));
                 setSupportActionBar(toolEchange);
                 break;
@@ -148,13 +150,23 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
                 toolMission.setVisibility(View.VISIBLE);
                 toolEchange.setVisibility(View.GONE);
                 toolAccount.setVisibility(View.GONE);
+                toolBrowse.setVisibility(View.GONE);
                 appBarHome.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 setSupportActionBar(toolMission);
+                break;
+            case 2:
+                toolMission.setVisibility(View.GONE);
+                toolEchange.setVisibility(View.GONE);
+                toolAccount.setVisibility(View.GONE);
+                toolBrowse.setVisibility(View.VISIBLE);
+                appBarHome.setBackgroundColor(getResources().getColor(R.color.white));
+                setSupportActionBar(toolBrowse);
                 break;
             case 3:
                 toolMission.setVisibility(View.GONE);
                 toolEchange.setVisibility(View.GONE);
                 toolAccount.setVisibility(View.VISIBLE);
+                toolBrowse.setVisibility(View.GONE);
                 appBarHome.setBackgroundColor(getResources().getColor(R.color.white));
                 setSupportActionBar(toolAccount);
                 break;
@@ -279,7 +291,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
 
-        if(bottomNavigation.getCurrentItem() == 1 || bottomNavigation.getCurrentItem() == 3 ) {
+        if(bottomNavigation.getCurrentItem() == 1 || bottomNavigation.getCurrentItem() == 2  || bottomNavigation.getCurrentItem() == 3) {
             searchItem.setVisible(false);
         } else{
             searchItem.setVisible(true);

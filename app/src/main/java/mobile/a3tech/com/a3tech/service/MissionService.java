@@ -104,6 +104,8 @@ public class MissionService extends AbstractService implements Constant {
 		mm1.setStatut("3");
 		mm1.setIdentifiant("928292");
 		mm1.setOriginator("kdaasa");
+		mm1.setAdresse("Hay Riad, Rabat Maroc P10200");
+		mm1.setTitre("Installation Climatiseur");
 		missions.add(mm1);
 		return missions;
     }

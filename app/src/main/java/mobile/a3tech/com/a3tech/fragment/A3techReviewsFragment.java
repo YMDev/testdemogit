@@ -1,14 +1,31 @@
 package mobile.a3tech.com.a3tech.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
+
+import java.util.List;
+
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
+import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.Avis;
+import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
+import mobile.a3tech.com.a3tech.test.ObjectMenu;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterReviews;
+import mobile.a3tech.com.a3tech.utils.Constant;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,11 +40,14 @@ public class A3techReviewsFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    public static final String ARG_OBJECT_USER = "ARG_OBJECT_USER";
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private User userReviews;
 
+    private RecyclerView recyclerViewReviews;
     private OnFragmentInteractionListener mListener;
 
     public A3techReviewsFragment() {
@@ -38,16 +58,13 @@ public class A3techReviewsFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment A3techReviewsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static A3techReviewsFragment newInstance(String param1, String param2) {
+    public static A3techReviewsFragment newInstance(User user) {
         A3techReviewsFragment fragment = new A3techReviewsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_OBJECT_USER, new Gson().toJson(user));
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,16 +73,44 @@ public class A3techReviewsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            String jsonUser = getArguments().getString(ARG_OBJECT_USER);
+            if(jsonUser != null){
+                userReviews = new Gson().fromJson(jsonUser, User.class);
+            }
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_a3tech_reviews, container, false);
+        View viewFr = inflater.inflate(R.layout.fragment_a3tech_reviews, container, false);
+        recyclerViewReviews = viewFr.findViewById(R.id.recycle_reviews);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        String connectedUser = prefs.getString("identifiant", "");
+        String password = prefs.getString("password", "");
+        UserManager.getInstance().getUserReviews(connectedUser, password, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                switch (method) {
+                    case Constant.KEY_USER_MANAGER_GET_PROFIL:
+                        List<Avis> userV = (List) data;
+                        SimpleAdapterReviews mAdapter = new SimpleAdapterReviews(getActivity(), userV, getActivity());
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+                        recyclerViewReviews.setLayoutManager(mLayoutManager);
+                        recyclerViewReviews.setItemAnimator(new DefaultItemAnimator());
+                        recyclerViewReviews.setAdapter(mAdapter);
+                        break;
+                }
+
+
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+
+            }
+        });
+        return viewFr;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

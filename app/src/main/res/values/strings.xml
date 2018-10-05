@@ -646,6 +646,8 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="nbr_intervention">Missions accomplies</string>
     <string name="hint_adresse_mission">où va se dérouler cette Mission ?</string>
     <string name="embaucher_moi">Embauchez-moi</string>
+    <string name="toolbar_browse_title">Recherche</string>
+    <string name="toolbar_browse_sub_title" />
 
 
 </resources>

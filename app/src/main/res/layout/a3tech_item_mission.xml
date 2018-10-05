@@ -4,26 +4,36 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container_item_tech"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
-    android:layout_marginBottom="10dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
     android:clickable="true"
     android:orientation="vertical"
     tools:background="@color/white">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="10dp"
+        android:background="@color/gray" />
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
         android:layout_marginTop="2dp"
-        app:cardCornerRadius="6dp"
+        android:layout_marginBottom="2dp"
 
+        app:cardCornerRadius="6dp"
         app:cardElevation="2dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
             android:gravity="center_vertical">
 
             <RelativeLayout
@@ -31,8 +41,8 @@
                 android:layout_width="70dp"
                 android:layout_height="20dp"
                 android:layout_alignParentTop="true"
-                android:layout_marginBottom="5dp"
                 android:layout_marginLeft="10dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/a3tech_back_border_colored_layout">
 
                 <TextView
@@ -40,10 +50,11 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:fontFamily="sans-serif-light"
+                    android:fontFamily="sans-serif-meduim"
                     android:text="CREEE"
                     android:textColor="@color/orange"
-                    android:textSize="12dp" />
+                    android:textSize="12dp"
+                    android:textStyle="bold" />
             </RelativeLayout>
 
             <LinearLayout
@@ -91,14 +102,16 @@
                     <RelativeLayout
                         android:id="@+id/technicien_container"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp">
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/date_mission_container">
 
                         <TextView
                             android:id="@+id/technicien_selected"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
                             android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="sans-serif-meduim"
                             android:text="Par : Bouhjra M."
@@ -109,21 +122,20 @@
                     <RelativeLayout
                         android:id="@+id/date_mission_container"
                         android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:layout_below="@id/technicien_container">
+                        android:layout_height="20dp">
 
                         <TextView
                             android:id="@+id/date_mission"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
                             android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="sans-serif-meduim"
-                            android:text=" 01/02/2017"
+                            android:text="Intervention Le 01/02/2017 10:10"
                             android:textColor="@color/black"
                             android:textSize="13dp"
-                            android:textStyle="bold" />
+                              />
                     </RelativeLayout>
                 </RelativeLayout>
 
@@ -132,11 +144,4 @@
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="10dp"
-        android:background="@color/gray" />
 </RelativeLayout>

@@ -261,7 +261,45 @@ public class UserManager implements Constant {
 				}
 			}.start();
 		}
-		
+
+
+	// get profil de la personne
+	public void getUserReviews(final String idUser,final String password,
+						  final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer) message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,
+							KEY_USER_MANAGER_GET_PROFIL,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+					UserService service = new UserService();
+					List reviews = service.getUserReviews(idUser,password);
+					if (reviews == null) {
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					} else {
+						Message message = handler.obtainMessage(0, reviews);
+						handler.sendMessage(message);
+					}
+				} catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
 	
 	// get profil de la personne
 	public void getProfil(final String idUser,final String password,

@@ -10,6 +10,7 @@ import java.util.Random;
 import org.codehaus.jackson.type.TypeReference;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
+import mobile.a3tech.com.a3tech.model.Avis;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.utils.Constant;
 
@@ -298,6 +299,29 @@ public class UserService extends AbstractService implements Constant {
         userMocked.setLongitude("-7.77832031");
         return userMocked;
     }
+
+    public List getUserReviews(String idUser, String password) throws EducationException {
+	/*	Map<String, String> params = new HashMap<String, String>();
+		params.put("idUser", idUser);
+		params.put("password", password);
+		User result = getResult(CHECK_EDU_PROFIL_URL, params,
+				new TypeReference<User>() {
+				});*/
+
+	List<Avis> listeReview = new ArrayList<>();
+
+        listeReview.add(new Avis("Goood job","02/02/2010", "4","", null));
+        listeReview.add(new Avis("Cool Fancy Text Generator is a copy and paste font generator and font changer that creates Twitter, Facebook, Instagram fonts. It converts a normal text to different free cool fonts styles, such as tattoo fonts, calligraphy fonts","02/02/2010", "4","", null));
+        listeReview.add(new Avis("\n" +
+                "Cool Fancy Text Generator is a copy and paste font generator and font changer that creates Twitter, Facebook, Instagram fonts. It converts a normal text to different free cool fonts styles, such as tattoo fonts, calligraphy fonts, web script fonts, cursive fonts, handwriting fonts, old English fonts, word fonts, pretty fonts, font art... Facebook, Twitter, Instagram Fonts or Fonts for Instagram, Twitter, Facebook - If that is what you want then this tool is a perfect place to go because it provides more than that!\n" +
+                "Basically, Cool Text Generator a cute copy and paste font generator online, font ma","02/02/2010", "4","", null));
+        listeReview.add(new Avis("ext generator, weird text generator, word art generatb","02/02/2010", "4","", null));
+        listeReview.add(new Avis("Goood job","02/02/2010", "4","", null));
+        listeReview.add(new Avis("Goood job","02/02/2010", "4","", null));
+        return listeReview;
+    }
+
+
     //
     // public User getProfil(String idUser)throws TsamsiratException{
     // Map<String, String> params = new HashMap<String, String>();

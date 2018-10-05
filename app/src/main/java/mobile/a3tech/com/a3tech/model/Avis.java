@@ -68,6 +68,15 @@ public class Avis implements Parcelable {
     private String note;
     private String statut;
     private User creator;
+    public Avis() {
+    }
+    public Avis(String avantage, String date_creation, String note, String statut, User creator) {
+        this.avantage = avantage;
+        this.date_creation = date_creation;
+        this.note = note;
+        this.statut = statut;
+        this.creator = creator;
+    }
 
     @Override
     public int describeContents() {
