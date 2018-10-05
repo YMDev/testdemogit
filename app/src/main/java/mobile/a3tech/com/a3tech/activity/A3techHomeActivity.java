@@ -1,11 +1,14 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -20,6 +23,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -37,23 +43,37 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.google.gson.Gson;
 
+import java.util.List;
+import java.util.Locale;
+
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
+import mobile.a3tech.com.a3tech.fragment.A3techAffecterTechnicienFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechniciensFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techHomeBrowseTechFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techPostMissionFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techSelectCategoryMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
+import mobile.a3tech.com.a3tech.model.Categorie;
+import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
+import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
-public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener {
+public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener, A3techHomeBrowseTechFragment.OnFragmentInteractionListener {
     private final int[] colors = {R.color.white, R.color.white, R.color.white, R.color.white};
     private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
     private BottomBarAdapter pagerAdapter;
     private boolean notificationVisible = false;
+    private Categorie categorieSelected;
     AppBarLayout appBarHome ;
     Toolbar toolMission;
     Toolbar toolEchange;
@@ -63,6 +83,8 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     ImageView userAvatar;
 
     public static final String ACTION_FROM_A3techHomeActivity = "A3techHomeActivity";
+    public static final String TAG_CATEGORY_SELECTED_FROM_HOME_ACTIVITY = "TAG_RESULT_FROM_SELECT_TECH";
+    public static final int REQUEST_START_DISPLAY_TECH_ACTIVITY = 255;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -178,7 +200,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         pagerAdapter = new BottomBarAdapter(getSupportFragmentManager());
         pagerAdapter.addFragments(createFragment(colors[0]));
         pagerAdapter.addFragments(A3techMissionsHomeFragment.newInstance(null,null));
-        pagerAdapter.addFragments(createFragment(colors[0]));
+        pagerAdapter.addFragments(A3techHomeBrowseTechFragment.newInstance(null,null));
         pagerAdapter.addFragments(A3techHomeAccountFragment.newInstance(null,null));
         viewPager.setAdapter(pagerAdapter);
     }
@@ -259,9 +281,9 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
      */
     private void addBottomNavigationItems() {
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.home_tab_1, R.drawable.ic_action_echange, colors[0]);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.home_tab_2, R.drawable.ic_action_don, colors[1]);
-        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.home_tab_3, R.drawable.ic_action_computer, colors[2]);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.home_tab_4, R.drawable.ic_action_call, colors[3]);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.home_tab_2, R.drawable.a3tech_missions_icon, colors[1]);
+        AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.home_tab_3, R.drawable.a3tech_search_icon, colors[2]);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.home_tab_4, R.drawable.a3tech_account_icon, colors[3]);
 
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
@@ -315,7 +337,43 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
 
     }
 
+    @Override
+    public void backAction() {
 
+    }
+
+    @Override
+    public void actionNext(Integer typeAction, Object data) {
+        switch (typeAction) {
+            case A3techHomeBrowseTechFragment.ACTION_SELECT_CATEGORY_BROWSE_TECH:
+                categorieSelected = (Categorie)data;
+                 Intent mainIntent = new Intent(this, A3techDisplayTechniciensListeActivity.class);
+                 mainIntent.putExtra(A3techHomeActivity.TAG_CATEGORY_SELECTED_FROM_HOME_ACTIVITY,new Gson().toJson(categorieSelected));
+                 startActivityForResult(mainIntent,REQUEST_START_DISPLAY_TECH_ACTIVITY );
+                break;
+
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case (REQUEST_START_DISPLAY_TECH_ACTIVITY): {
+                if (resultCode == Activity.RESULT_OK) {
+                    String jsonMission = data.getStringExtra(A3techDisplayTechniciensListeActivity.TAG_MISSION_TO_SAVE_FROM_BROWS_TECH);
+                    Mission mission = new Gson().fromJson(jsonMission, Mission.class);
+                    //TODO display progress bar, save mission,whene finish saving, dismiss progress bar
+                  if(onActivityInteractionMissionListener != null){
+                      onActivityInteractionMissionListener.onAddElementToList(mission);
+                  }
+                    bottomNavigation.setCurrentItem(1);
+                }
+                break;
+            }
+        }
+    }
 
     private class InitActivityTask extends AsyncTask<Void, Void, Boolean> {
         private Context activity;
@@ -352,5 +410,25 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
             super.onBackPressed();
             this.finishAffinity();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        onActivityInteractionMissionListener = null;
+    }
+
+    OnActivityInteractionListener onActivityInteractionMissionListener;
+
+    public OnActivityInteractionListener getOnActivityInteractionMissionListener() {
+        return onActivityInteractionMissionListener;
+    }
+
+    public void setOnActivityInteractionMissionListener(OnActivityInteractionListener onActivityInteractionMissionListener) {
+        this.onActivityInteractionMissionListener = onActivityInteractionMissionListener;
+    }
+
+    public interface OnActivityInteractionListener {
+        void onAddElementToList(Mission mission);
     }
 }

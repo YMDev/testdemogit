@@ -594,7 +594,7 @@
     <string name="error_password_empty">Mot de passe non valide </string>
     <string name="home_tab_1">Echanges</string>
     <string name="home_tab_2">Missions</string>
-    <string name="home_tab_3">Accueil</string>
+    <string name="home_tab_3">Parcourir</string>
     <string name="home_tab_4">Compte</string>
     <string name="toolbar_echange_title">Echanges</string>
     <string name="toolbar_echange_sub_title">Historique des echanges</string>
@@ -648,6 +648,10 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="embaucher_moi">Embauchez-moi</string>
     <string name="toolbar_browse_title">Recherche</string>
     <string name="toolbar_browse_sub_title" />
+    <string name="find_best_tech">Cherchez parmi nos meilleurs Techniciens</string>
+    <string name="complete_mission_informations">Completer les données pour l\'intervention</string>
+    <string name="save_mission">Creation de mission</string>
+    <string name="title_technicien_header">Technicien</string>
 
 
 </resources>

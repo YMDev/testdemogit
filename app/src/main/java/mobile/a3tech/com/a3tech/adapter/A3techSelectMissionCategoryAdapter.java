@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.adapter;
 
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.fragment.A3techHomeBrowseTechFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelectCategoryMissionFragment;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterCoordonnes;
@@ -21,9 +23,9 @@ import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 public class A3techSelectMissionCategoryAdapter extends RecyclerView.Adapter<A3techSelectMissionCategoryAdapter.A3techPIViewHolder> {
     Context context;
     List objectMenu;
-    A3techSelectCategoryMissionFragment parent;
+    Fragment parent;
 
-    public A3techSelectMissionCategoryAdapter(Context con, List objectMenus, A3techSelectCategoryMissionFragment vparent) {
+    public A3techSelectMissionCategoryAdapter(Context con, List objectMenus, Fragment vparent) {
         context = con;
         objectMenu = objectMenus;
         parent = vparent;
@@ -61,7 +63,12 @@ public class A3techSelectMissionCategoryAdapter extends RecyclerView.Adapter<A3t
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parent.getmListener().actionNext(A3techSelectCategoryMissionFragment.ACTION_SELECT_CATEGORY_MISSION,categoryTmp);
+                if(parent instanceof A3techSelectCategoryMissionFragment){
+                    ((A3techSelectCategoryMissionFragment)parent).getmListener().actionNext(A3techSelectCategoryMissionFragment.ACTION_SELECT_CATEGORY_MISSION,categoryTmp);
+                }else if(parent instanceof A3techHomeBrowseTechFragment){
+                    ((A3techHomeBrowseTechFragment)parent).getmListener().actionNext(A3techHomeBrowseTechFragment.ACTION_SELECT_CATEGORY_BROWSE_TECH,categoryTmp);
+                }
+
             }
         });
     }

@@ -36,6 +36,7 @@ import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techStep1CreatAccountFragment;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.model.Mission;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 public class A3techAddMissionActivity extends AppCompatActivity implements A3techSelectCategoryMissionFragment.OnFragmentInteractionListener,A3techPostMissionFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener {
@@ -224,7 +225,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case (545): {
+            case (SimpleAdapterTechnicien.REQUEST_DISPLAY_TECH_FROM_MISSION): {
                 if (resultCode == Activity.RESULT_OK) {
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
                     Mission mission = new Gson().fromJson(jsonMission, Mission.class);

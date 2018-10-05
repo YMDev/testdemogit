@@ -27,6 +27,7 @@ import mobile.a3tech.com.a3tech.fragment.A3techProfilInformationFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techReviewsFragment;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.view.CircleImageView;
 
 public class A3techViewEditProfilActivity extends AppCompatActivity  implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener, A3techReviewsFragment.OnFragmentInteractionListener {
@@ -56,6 +57,8 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
     private ImageView backBtn;
     private TextView userNamePname;
     private Boolean isFromHomeAccount = false;
+    private Boolean isFromAddMission = false;
+    private Boolean isFromBrowseTech = false;
     private LinearLayout validationContainer;
     private Button btnValidationSelection;
     User userToDisplay;
@@ -78,12 +81,23 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
         }
         if(jsonMyObjectMission != null){
             mission = new Gson().fromJson(jsonMyObjectMission, Mission.class);
+        }else{
+            mission = new Mission();
         }
         if(srcAction != null && srcAction.equalsIgnoreCase(A3techHomeActivity.ACTION_FROM_A3techHomeActivity)){
             isFromHomeAccount = true;
-        }else{
+            isFromBrowseTech = false;
+            isFromAddMission = false;
+        }else  if(srcAction != null && srcAction.equalsIgnoreCase(SimpleAdapterTechnicien.SRC_FROM_HOME_ADD_MISSION)){
+            isFromAddMission = true;
             isFromHomeAccount = false;
+            isFromBrowseTech = false;
+        } else if(srcAction != null && srcAction.equalsIgnoreCase(SimpleAdapterTechnicien.SRC_FROM_HOME_BROWSE_TECH)){
+            isFromBrowseTech = true;
+            isFromHomeAccount = false;
+            isFromAddMission = false;
         }
+
 
         setContentView(R.layout.a3tech_activity_view_edit_profil);
 

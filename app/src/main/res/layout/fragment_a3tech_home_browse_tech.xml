@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.A3techHomeBrowseTechFragment">
+    tools:context=".fragment.A3techHomeBrowseTechFragment"
+    android:background="@color/white">
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_select_category_mission"
+        android:id="@+id/recycle_select_category_browse_tech"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"

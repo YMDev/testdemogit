@@ -20,6 +20,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-
+import mobile.a3tech.com.a3tech.utils.PermissionsStuffs.*;
 import eltos.simpledialogfragment.SimpleDateDialog;
 import eltos.simpledialogfragment.SimpleDialog;
 import eltos.simpledialogfragment.SimpleTimeDialog;
@@ -42,6 +43,7 @@ import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
+import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,41 +57,23 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
-    private static final String[] INITIAL_PERMS={
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
-    private static final String[] CAMERA_PERMS={
-            Manifest.permission.CAMERA
-    };
-    private static final String[] CONTACTS_PERMS={
-            Manifest.permission.READ_CONTACTS
-    };
-    private static final String[] LOCATION_PERMS={
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
-    private static final int INITIAL_REQUEST=1337;
-    private static final int CAMERA_REQUEST=INITIAL_REQUEST+1;
-    private static final int CONTACTS_REQUEST=INITIAL_REQUEST+2;
-    private static final int LOCATION_REQUEST=INITIAL_REQUEST+3;
-
-
-
-
-
 
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_CAT_ID = "ID_CAT";
     private static final String ARG_CAT_OBJECT = "ID_CAT";
+    private static final String ARG_MISS_OBJECT = "ARG_MISS_OBJECT";
     private static final String TAG_CALENDAR_MISSION = "MISSION_DATE";
     private static final String TAG_TIME_MISSION = "MISSION_TIME";
     public static final int ACTION_SAVE_MISSION_INFO = 2;
+    public static final int ACTION_SAVE_MISSION_INFO_FROM_TECH = 3;
     private Date dateAlarmSelected;
     // TODO: Rename and change types of parameters
     private String categoryLibelle;
     private String categoryDescription;
     private String categoryIdentifiant;
+    private Mission missionObject;
     private Categorie categoryObject;
     private TextView categorySelcted;
     private TextView dateIntervension;
@@ -101,6 +85,10 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
     private String cityName, stateName, countryName;
     private ImageView btnGetLocation;
     private Button btnValidation;
+    private RelativeLayout containerUserSelected;
+    private ImageView avatareTechnicien;
+    private TextView nameTechnicien;
+    private TextView adresseTechnicien;
     GPSTracker gps;
     String CityName;
     private OnFragmentInteractionListener mListener;
@@ -115,7 +103,6 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
      *
      * @return A new instance of fragment A3techPostMissionFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static A3techPostMissionFragment newInstance(Categorie categorieSelected) {
         A3techPostMissionFragment fragment = new A3techPostMissionFragment();
         Bundle args = new Bundle();
@@ -126,7 +113,13 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         fragment.setArguments(args);
         return fragment;
     }
-
+    public static A3techPostMissionFragment newInstance(Mission missionSelected) {
+        A3techPostMissionFragment fragment = new A3techPostMissionFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_MISS_OBJECT, new Gson().toJson(missionSelected));
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,9 +127,13 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
             categoryLibelle = getArguments().getString(ARG_PARAM1);
             categoryDescription = getArguments().getString(ARG_PARAM2);
             categoryIdentifiant = getArguments().getString(ARG_CAT_ID);
-             String jsonMyObject = getArguments().getString(ARG_CAT_OBJECT);
-            if (jsonMyObject != null) {
-                categoryObject = new Gson().fromJson(jsonMyObject, Categorie.class);
+             String jsonCategory = getArguments().getString(ARG_CAT_OBJECT);
+            String jsonMission = getArguments().getString(ARG_MISS_OBJECT);
+            if (jsonCategory != null) {
+                categoryObject = new Gson().fromJson(jsonCategory, Categorie.class);
+            }
+            if (jsonMission != null) {
+                missionObject = new Gson().fromJson(jsonMission, Mission.class);
             }
         }
     }
@@ -149,7 +146,24 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         descriptionMission = viewFr.findViewById(R.id.description_mission);
         locationMission = viewFr.findViewById(R.id.location_mission);
         categorySelcted = viewFr.findViewById(R.id.category_mission_selected);
-        categorySelcted.setText(categoryLibelle);
+        containerUserSelected = viewFr.findViewById(R.id.user_selected);
+        avatareTechnicien = viewFr.findViewById(R.id.avatare_technicien);
+        nameTechnicien = viewFr.findViewById(R.id.name_tech);
+        adresseTechnicien = viewFr.findViewById(R.id.adresse_alpha);
+        String categorie  = "";
+        if(categoryObject != null){
+            categorie = categoryObject.getLibelle();
+            categorySelcted.setText(categorie);
+            categorySelcted.setVisibility(View.VISIBLE);
+            containerUserSelected.setVisibility(View.GONE);
+        }else if(missionObject != null){
+            categorySelcted.setVisibility(View.GONE);
+            containerUserSelected.setVisibility(View.VISIBLE);
+            nameTechnicien.setText(missionObject.getTechnicien().getNom()+" "+missionObject.getTechnicien().getPrenom());
+            adresseTechnicien.setText(missionObject.getTechnicien().getAdresse());
+            avatareTechnicien.setImageDrawable(getResources().getDrawable(R.drawable.photo_login_1));
+        }
+
         dateIntervension = viewFr.findViewById(R.id.date_mission);
         dateIntervension.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,8 +180,8 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
             public void onClick(View v) {
                 // create class object
                 gps = new GPSTracker(getActivity());
-                if (!canAccessLocation()) {
-                    requestPermissions(INITIAL_PERMS, INITIAL_REQUEST);
+                if (!PermissionsStuffs.canAccessLocation(getActivity())) {
+                    requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
                 }
                gpsGetLocation();
 
@@ -179,7 +193,12 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
-                    mListener.actionNext(ACTION_SAVE_MISSION_INFO, populateMission());
+                   if(missionObject != null){
+                       mListener.actionNext(ACTION_SAVE_MISSION_INFO_FROM_TECH, populateMission());
+                   }else if(categoryObject != null){
+                       mListener.actionNext(ACTION_SAVE_MISSION_INFO, populateMission());
+                   }
+
                 }
             }
         });
@@ -216,18 +235,21 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
 
 
     private Mission populateMission() {
-        Mission mission = new Mission();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        String connectedUser = prefs.getString("identifiant", "");
-        mission.setTitre(titleMission.getText().toString());
-        mission.setDateCreation(DateStuffs.dateToString(DateStuffs.TIME_FORMAT, new Date()));
-        mission.setOriginator(connectedUser);
-        mission.setLatitude(String.valueOf(latitude));
-        mission.setLongitude(String.valueOf(longitude));
-        mission.setCatDescription(descriptionMission.getText().toString());
-        mission.setCategorieId(categoryIdentifiant);
-        mission.setCategoryMission(categoryObject);
-        mission.setAdresse(locationMission.getText().toString());
+        Mission mission = null;
+        if(missionObject != null){
+              mission = missionObject;
+        }else {
+            mission = new Mission();
+            mission.setCategoryMission(categoryObject);
+        }
+            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            String connectedUser = prefs.getString("identifiant", "");
+            mission.setTitre(titleMission.getText().toString());
+            mission.setDateCreation(DateStuffs.dateToString(DateStuffs.TIME_FORMAT, new Date()));
+            mission.setOriginator(connectedUser);
+            mission.setLatitude(String.valueOf(latitude));
+            mission.setLongitude(String.valueOf(longitude));
+            mission.setAdresse(locationMission.getText().toString());
         return mission;
     }
 
@@ -307,27 +329,13 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
     }
 
 
-    private boolean canAccessLocation() {
-        return(hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
-    }
 
-    private boolean canAccessCamera() {
-        return(hasPermission(Manifest.permission.CAMERA));
-    }
-
-    private boolean canAccessContacts() {
-        return(hasPermission(Manifest.permission.READ_CONTACTS));
-    }
-
-    private boolean hasPermission(String perm) {
-        return(PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(getContext(), perm));
-    }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
         switch(requestCode) {
-            case CAMERA_REQUEST:
-                if (canAccessCamera()) {
+            case PermissionsStuffs.CAMERA_REQUEST:
+                if (PermissionsStuffs.canAccessCamera(getActivity())) {
                     ///doCameraThing();
                 }
                 else {
@@ -335,8 +343,8 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
                 }
                 break;
 
-            case CONTACTS_REQUEST:
-                if (canAccessContacts()) {
+            case PermissionsStuffs.CONTACTS_REQUEST:
+                if (PermissionsStuffs.canAccessContacts(getActivity())) {
                     // doContactsThing();
                 }
                 else {
@@ -344,8 +352,8 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
                 }
                 break;
 
-            case LOCATION_REQUEST:
-                if (canAccessLocation()) {
+            case PermissionsStuffs.LOCATION_REQUEST:
+                if (PermissionsStuffs.canAccessLocation(getActivity())) {
                     gpsGetLocation();
                 }
                 else {

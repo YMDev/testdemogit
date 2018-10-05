@@ -32,7 +32,7 @@ import mobile.a3tech.com.a3tech.utils.SphericalUtil;
  * Created by Suleiman on 03/02/17.
  */
 
-public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMission.SimpleItemVH> {
+public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMission.SimpleItemVH> implements A3techHomeActivity.OnActivityInteractionListener {
 
     //  Data
     private List<Mission> listeObjects = new ArrayList<>();
@@ -95,6 +95,11 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         return listeObjects != null ? listeObjects.size() : 0;
     }
 
+    @Override
+    public void onAddElementToList(Mission mission) {
+        this.addMissionb(mission);
+    }
+
     protected static class SimpleItemVH extends RecyclerView.ViewHolder {
         LinearLayout layoutContainerInfo;
         TextView titreMission;
@@ -109,4 +114,6 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
             adresse = itemView.findViewById(R.id.adresse_alpha);
         }
     }
+
+
 }

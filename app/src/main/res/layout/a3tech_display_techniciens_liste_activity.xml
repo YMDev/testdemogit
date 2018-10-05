@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.A3techDisplayTechniciensListeActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_select_technicien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:elevation="0dp"
+        android:fitsSystemWindows="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+            <include
+                android:id="@+id/toolbar_select_tech"
+                layout="@layout/a3tech_toolbar_select_category_mission_fragment"
+                android:visibility="visible" />
+
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
+    <ProgressBar
+        android:id="@+id/progress_add_mission"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="6dp"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/progress_bar_color_back"
+        android:layout_below="@id/appbar_select_technicien"/>
+    <FrameLayout
+        android:id="@+id/frame_add_mission"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/progress_add_mission"
+        ></FrameLayout>
+</RelativeLayout>

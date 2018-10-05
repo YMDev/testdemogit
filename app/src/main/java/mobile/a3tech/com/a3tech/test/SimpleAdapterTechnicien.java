@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.test;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -24,7 +25,9 @@ import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
+import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
+import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.utils.SphericalUtil;
@@ -41,13 +44,17 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
 
     private Mission mission;
     private Context context;
-    private A3techAddMissionActivity parentActivity;
+    private Activity parentActivity;
 
+    public static final int REQUEST_DISPLAY_TECH_FROM_MISSION = 545;
+    public static final int REQUEST_DISPLAY_TECH_FROM_HOME = 546;
+    public static final String SRC_FROM_HOME_BROWSE_TECH = "BROWSE_TECH";
+    public static final String SRC_FROM_HOME_ADD_MISSION = "ADD_MISSION";
     public SimpleAdapterTechnicien(Context context) {
         this.context = context;
     }
 
-    public SimpleAdapterTechnicien(Context context, List objectMenu, A3techAddMissionActivity parent, Mission vMission) {
+    public SimpleAdapterTechnicien(Context context, List objectMenu, Activity parent, Mission vMission) {
         this.context = context;
         listeObjects = objectMenu;
         parentActivity = parent;
@@ -76,7 +83,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
         holder.ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
         holder.ratingNumberValue.setText(technicien.getRating());
         holder.numberOfReviews.setText("(+ " + technicien.getNbrReviews() + " avis )");
-        holder.disponibilite.setText("DIS");
+        holder.disponibilite.setText("D");
         Double distance = SphericalUtil.computeDistanceBetween(new LatLng(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude())), new LatLng(Double.valueOf("52.736291655910925"), Double.valueOf("-8.261718750000002")));
         holder.distanceEnKm.setText(Math.round((distance/1000) * 100.0) / 100.0+ " Km de distance");
         holder.container.setOnClickListener(new View.OnClickListener() {
@@ -84,11 +91,21 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
             public void onClick(View view) {
                 Intent mainIntent = new Intent(parentActivity, A3techViewEditProfilActivity.class);
                 Bundle bundle = new Bundle();
-                bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, "MISSION");
-                bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
-                bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
-                mainIntent.putExtras(bundle);
-                parentActivity.startActivityForResult(mainIntent, 545);
+                if(parentActivity instanceof A3techAddMissionActivity){
+                    bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, SRC_FROM_HOME_ADD_MISSION);
+                    bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
+                    bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
+                    mainIntent.putExtras(bundle);
+                    parentActivity.startActivityForResult(mainIntent, REQUEST_DISPLAY_TECH_FROM_MISSION);
+                }else if(parentActivity instanceof A3techDisplayTechniciensListeActivity){
+                    bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, SRC_FROM_HOME_BROWSE_TECH);
+                    bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
+                    bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
+                    mainIntent.putExtras(bundle);
+                    parentActivity.startActivityForResult(mainIntent, REQUEST_DISPLAY_TECH_FROM_HOME);
+                }
+
+
             }
 
         });
