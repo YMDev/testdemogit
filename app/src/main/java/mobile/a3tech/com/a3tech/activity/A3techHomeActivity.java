@@ -291,7 +291,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
 
-        if(bottomNavigation.getCurrentItem() == 1 || bottomNavigation.getCurrentItem() == 2  || bottomNavigation.getCurrentItem() == 3) {
+        if(bottomNavigation.getCurrentItem() == 1  || bottomNavigation.getCurrentItem() == 3) {
             searchItem.setVisible(false);
         } else{
             searchItem.setVisible(true);
