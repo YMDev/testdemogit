@@ -172,6 +172,11 @@
             android:name=".activity.A3techDisplayTechniciensListeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
+
+        <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyARw82NVG53Spsc4s_8hrpIrI5wPc06lWM"/>
+
     </application>
 
 </manifest>

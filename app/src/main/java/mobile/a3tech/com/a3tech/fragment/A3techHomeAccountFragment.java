@@ -77,12 +77,12 @@ public class A3techHomeAccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View viewFr =  inflater.inflate(R.layout.fragment_a3tech_home_account, container, false);
-        recycyleInformation = (RecyclerView) viewFr.findViewById(R.id.recycle_informtaions);
+        recycyleInformation = viewFr.findViewById(R.id.recycle_informtaions);
         recycyleInformation.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         SimpleAdapterTest adapter = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(1));
         recycyleInformation.setAdapter(adapter);
 
-        recycyleAccountSetting = (RecyclerView) viewFr.findViewById(R.id.recycle_account_setting);
+        recycyleAccountSetting = viewFr.findViewById(R.id.recycle_account_setting);
         recycyleAccountSetting.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         SimpleAdapterTest adapterrecycyleAccountSetting = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(2));
         recycyleAccountSetting.setAdapter(adapterrecycyleAccountSetting);

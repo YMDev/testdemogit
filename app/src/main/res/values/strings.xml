@@ -657,6 +657,8 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="intervention_prevue_le">Intervention prévue le</string>
     <string name="a_date_time">a</string>
     <string name="par_tech">Par </string>
+    <string name="display_tech_tab_1">Map</string>
+    <string name="display_tech_tab_2">Liste</string>
 
 
 </resources>

@@ -116,8 +116,10 @@
                             android:layout_centerVertical="true"
                             android:fontFamily="sans-serif-meduim"
                             android:text="Par : Bouhjra M."
-                            android:textColor="@color/black"
-                            android:textSize="15dp" />
+                            android:textColor="@color/orange"
+                            android:textStyle="bold"
+                            android:textSize="12dp"
+                            android:alpha="0.77"/>
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -134,8 +136,10 @@
                             android:layout_centerVertical="true"
                             android:fontFamily="sans-serif-meduim"
                             android:text="Intervention Le 01/02/2017 10:10"
-                            android:textColor="@color/black"
-                            android:textSize="13dp"
+                            android:textColor="@color/orange"
+                            android:textSize="12dp"
+                            android:textStyle="bold"
+                            android:alpha="0.77"
                               />
                     </RelativeLayout>
                 </RelativeLayout>

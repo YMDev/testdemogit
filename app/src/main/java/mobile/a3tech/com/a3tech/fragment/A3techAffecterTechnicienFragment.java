@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
@@ -40,10 +42,12 @@ public class A3techAffecterTechnicienFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_MISSION_OBJECT = "ARG_MISSION_OBJECT";
+    private static final String ARG_LIST_TECH = "ARG_LIST_TECH";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private Mission mission;
+    private  List<User> listeOfTechToDisplay;
 
     private RecyclerView recyclerViewTechnicien;
 
@@ -61,10 +65,11 @@ public class A3techAffecterTechnicienFragment extends Fragment {
      * @return A new instance of fragment A3techAffecterTechnicienFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static A3techAffecterTechnicienFragment newInstance(Mission mission) {
+    public static A3techAffecterTechnicienFragment newInstance(Mission mission, List techniciens) {
         A3techAffecterTechnicienFragment fragment = new A3techAffecterTechnicienFragment();
         Bundle args = new Bundle();
         args.putString(ARG_MISSION_OBJECT, new Gson().toJson(mission));
+        args.putString(ARG_LIST_TECH, new Gson().toJson(techniciens));
         fragment.setArguments(args);
         return fragment;
     }
@@ -73,12 +78,18 @@ public class A3techAffecterTechnicienFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
             String jsonMyObject = null;
+            String jsonListTech = null;
             Bundle extras = getArguments();
             if (extras != null) {
                 jsonMyObject = extras.getString(ARG_MISSION_OBJECT);
+                jsonListTech = extras.getString(ARG_LIST_TECH);
             }
             if(jsonMyObject != null){
                   mission = new Gson().fromJson(jsonMyObject, Mission.class);
+            }
+
+            if(jsonListTech != null){
+                listeOfTechToDisplay = new Gson().fromJson(jsonListTech, new TypeToken<List<User>>(){}.getType());
             }
 
     }
@@ -89,25 +100,12 @@ public class A3techAffecterTechnicienFragment extends Fragment {
         // Inflate the layout for this fragment
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_affecter_technicien, container, false);
         recyclerViewTechnicien = viewFr.findViewById(R.id.recycle_techniciens);
-        final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
-        UserManager.getInstance().getTechnicienNearLocation(mission.getLatitude(), mission.getLongitude(), mission.getAdresse(), new DataLoadCallback() {
-            @Override
-            public void dataLoaded(Object data, int method, int typeOperation) {
-                List<User> listeRetour = (List<User>) data;
-                SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),listeRetour, (A3techAddMissionActivity) getActivity(), mission);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-                recyclerViewTechnicien.setLayoutManager(mLayoutManager);
-                recyclerViewTechnicien.setItemAnimator(new DefaultItemAnimator());
-                recyclerViewTechnicien.setAdapter(adapter);
-                dd.dismiss();
-            }
-
-            @Override
-            public void dataLoadingError(int errorCode) {
-                dd.dismiss();
-            }
-        });
-
+        if(listeOfTechToDisplay == null) listeOfTechToDisplay = new ArrayList<>();
+        SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),listeOfTechToDisplay, getActivity(), mission);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerViewTechnicien.setLayoutManager(mLayoutManager);
+        recyclerViewTechnicien.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewTechnicien.setAdapter(adapter);
         return viewFr;
     }
 

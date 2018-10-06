@@ -30,6 +30,8 @@ import mobile.a3tech.com.a3tech.fragment.A3techAddEmailFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techAddPasswordFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techAddUserNameFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techAffecterTechnicienFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechInMapFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechniciensPArentFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techPostMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelectCategoryMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
@@ -39,7 +41,8 @@ import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
-public class A3techAddMissionActivity extends AppCompatActivity implements A3techSelectCategoryMissionFragment.OnFragmentInteractionListener,A3techPostMissionFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener {
+public class A3techAddMissionActivity extends AppCompatActivity implements A3techSelectCategoryMissionFragment.OnFragmentInteractionListener,A3techPostMissionFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener, A3techDisplayTechniciensPArentFragment.OnFragmentInteractionListener, A3techDisplayTechInMapFragment.OnFragmentInteractionListener
+{
 
 
     private FrameLayout framePostMission;
@@ -156,7 +159,8 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
                 Mission mission = (Mission)data;
                 updateAppbarLayout(3);
                 ((TextView)toolbarAffecterTech.findViewById(R.id.big_title)).setText(mission.getCategoryMission().getLibelle());
-                setFragment(A3techAffecterTechnicienFragment.newInstance(mission), true, false);
+               // avant d'introduire buttom tabs : setFragment(A3techAffecterTechnicienFragment.newInstance(mission), true, false);
+                setFragment(A3techDisplayTechniciensPArentFragment.newInstance(mission), true, false);
                 break;
         }
     }

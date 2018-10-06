@@ -96,7 +96,14 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
             holder.adresse.setVisibility(View.GONE);
 
         if(missionTmp.getTechnicien() != null){
-            holder.technicien.setText(context.getText(R.string.par_tech)+" "+ missionTmp.getTechnicien().getNom()+" "+missionTmp.getTechnicien().getPrenom());
+            String nameTech = "";
+            String nameAbrTech = missionTmp.getTechnicien().getNom();
+            String pnameAbrTech = missionTmp.getTechnicien().getPrenom();
+
+            if(pnameAbrTech != null && pnameAbrTech.length() != 0){
+                nameTech = nameAbrTech+" "+pnameAbrTech.substring(0,1).toUpperCase();
+            }
+            holder.technicien.setText(context.getText(R.string.par_tech)+" "+ nameTech);
         }else
             holder.technicien.setVisibility(View.GONE);
 

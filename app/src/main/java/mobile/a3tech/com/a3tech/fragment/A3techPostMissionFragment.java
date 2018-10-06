@@ -305,7 +305,6 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
 
     private void showAlarmDateTimePickup() {
         SimpleTimeDialog cal = SimpleTimeDialog.build().title(R.string.choose_time_mission).cancelable(true).neg(R.string.cancel).pos(R.string.ok_label);
-        ;
         cal.setCancelable(true);
         cal.show(this, TAG_TIME_MISSION);
     }
