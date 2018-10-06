@@ -12,6 +12,7 @@ import java.util.Locale;
 
 public class DateStuffs {
     public static String TIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
+    public static String HOURS_MINUTES_FORMAT = "HH:mm";
     public static String SIMPLE_DATE_FORMAT = "dd/MM/yyyy";
     public static String MOUNTH_ONY = "MMMM";
     public static String YEAR_ONY = "yyyy";

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container_toast"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/a3tech_toast_background_layout_info">
+
+    <RelativeLayout
+        android:id="@+id/icons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/icon_toast_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/a3tech_toast_icon_info"
+            android:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/icon_toast_warn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/a3tech_toast_icon_warning"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/icon_toast_alert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/a3tech_toast_icon_error"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/content_toast_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="18dp"
+        android:layout_toRightOf="@+id/icons">
+
+        <TextView
+            android:id="@+id/toast_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:alpha="0.77"
+            android:fontFamily="sans-serif"
+            android:text="example test taost for testing a3tech"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="normal|italic"
+            tools:layout_width="wrap_content" />
+    </RelativeLayout>
+</RelativeLayout>

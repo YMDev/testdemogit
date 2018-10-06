@@ -35,6 +35,7 @@ import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterMission;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
@@ -195,10 +196,16 @@ public class A3techMissionsHomeFragment extends Fragment {
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
                     Mission mission = new Gson().fromJson(jsonMission, Mission.class);
                     ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
-                    Toast.makeText(getContext(), "" + mission.getTechnicien().getNom() + " \n" + mission.getAdresse(), Toast.LENGTH_LONG).show();
+                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_INFO);
+
                 }
                 break;
             }
         }
+    }
+
+
+    public void addMissionToLise(Mission mission){
+        ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
     }
 }

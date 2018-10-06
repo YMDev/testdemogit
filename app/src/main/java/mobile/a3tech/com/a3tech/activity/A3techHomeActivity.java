@@ -64,6 +64,7 @@ import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
@@ -365,10 +366,11 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
                     String jsonMission = data.getStringExtra(A3techDisplayTechniciensListeActivity.TAG_MISSION_TO_SAVE_FROM_BROWS_TECH);
                     Mission mission = new Gson().fromJson(jsonMission, Mission.class);
                     //TODO display progress bar, save mission,whene finish saving, dismiss progress bar
-                  if(onActivityInteractionMissionListener != null){
-                      onActivityInteractionMissionListener.onAddElementToList(mission);
-                  }
                     bottomNavigation.setCurrentItem(1);
+                    ((A3techMissionsHomeFragment) pagerAdapter.getItem(1)).addMissionToLise(mission);
+                    A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_INFO);
+                    //A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, "Mission created with success", Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_WARNING);
+                    //A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, "Mission created with success", Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
                 }
                 break;
             }
@@ -415,20 +417,6 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        onActivityInteractionMissionListener = null;
     }
 
-    OnActivityInteractionListener onActivityInteractionMissionListener;
-
-    public OnActivityInteractionListener getOnActivityInteractionMissionListener() {
-        return onActivityInteractionMissionListener;
-    }
-
-    public void setOnActivityInteractionMissionListener(OnActivityInteractionListener onActivityInteractionMissionListener) {
-        this.onActivityInteractionMissionListener = onActivityInteractionMissionListener;
-    }
-
-    public interface OnActivityInteractionListener {
-        void onAddElementToList(Mission mission);
-    }
 }

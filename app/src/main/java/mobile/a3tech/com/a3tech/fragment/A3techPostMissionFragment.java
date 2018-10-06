@@ -150,18 +150,21 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         avatareTechnicien = viewFr.findViewById(R.id.avatare_technicien);
         nameTechnicien = viewFr.findViewById(R.id.name_tech);
         adresseTechnicien = viewFr.findViewById(R.id.adresse_alpha);
+        btnValidation = viewFr.findViewById(R.id.validate_mission);
         String categorie  = "";
         if(categoryObject != null){
             categorie = categoryObject.getLibelle();
             categorySelcted.setText(categorie);
             categorySelcted.setVisibility(View.VISIBLE);
             containerUserSelected.setVisibility(View.GONE);
+            btnValidation.setText(getText(R.string.affecter_un_technicien));
         }else if(missionObject != null){
             categorySelcted.setVisibility(View.GONE);
             containerUserSelected.setVisibility(View.VISIBLE);
             nameTechnicien.setText(missionObject.getTechnicien().getNom()+" "+missionObject.getTechnicien().getPrenom());
             adresseTechnicien.setText(missionObject.getTechnicien().getAdresse());
             avatareTechnicien.setImageDrawable(getResources().getDrawable(R.drawable.photo_login_1));
+            btnValidation.setText(getText(R.string.valider_votre_demande));
         }
 
         dateIntervension = viewFr.findViewById(R.id.date_mission);
@@ -188,7 +191,7 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
             }
         });
 
-        btnValidation = viewFr.findViewById(R.id.validate_mission);
+
         btnValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

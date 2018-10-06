@@ -652,6 +652,11 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="complete_mission_informations">Completer les données pour l\'intervention</string>
     <string name="save_mission">Creation de mission</string>
     <string name="title_technicien_header">Technicien</string>
+    <string name="valider_votre_demande">Valider votre demande</string>
+    <string name="mission_cree">Mission créée avec succés</string>
+    <string name="intervention_prevue_le">Intervention prévue le</string>
+    <string name="a_date_time">a</string>
+    <string name="par_tech">Par </string>
 
 
 </resources>

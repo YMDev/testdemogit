@@ -5,7 +5,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -83,7 +87,8 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
         holder.ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
         holder.ratingNumberValue.setText(technicien.getRating());
         holder.numberOfReviews.setText("(+ " + technicien.getNbrReviews() + " avis )");
-        holder.disponibilite.setText("D");
+        GradientDrawable backCheckPhone = (GradientDrawable) ((RelativeLayout)holder.checkPhone.getParent()).getBackground();
+        backCheckPhone.setColorFilter(context.getResources().getColor(R.color.red), PorterDuff.Mode.SRC_IN);
         Double distance = SphericalUtil.computeDistanceBetween(new LatLng(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude())), new LatLng(Double.valueOf("52.736291655910925"), Double.valueOf("-8.261718750000002")));
         holder.distanceEnKm.setText(Math.round((distance/1000) * 100.0) / 100.0+ " Km de distance");
         holder.container.setOnClickListener(new View.OnClickListener() {
@@ -124,7 +129,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
         RatingBar ratingTech;
         TextView ratingNumberValue;
         TextView numberOfReviews;
-        TextView disponibilite;
+        ImageView disponibilite, checkPhone,checkMail;
         TextView adresse;
         RelativeLayout container;
 
@@ -140,6 +145,9 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
             numberOfReviews = itemView.findViewById(R.id.rating_nbr_text);
             container = itemView.findViewById(R.id.container_item_tech);
             disponibilite = itemView.findViewById(R.id.disponibilite);
+            checkMail = itemView.findViewById(R.id.check_mail);
+            checkPhone = itemView.findViewById(R.id.check_phone);
+
             adresse = itemView.findViewById(R.id.adresse_alpha);
         }
     }

@@ -14,10 +14,12 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
@@ -26,13 +28,14 @@ import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.SphericalUtil;
 
 /**
  * Created by Suleiman on 03/02/17.
  */
 
-public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMission.SimpleItemVH> implements A3techHomeActivity.OnActivityInteractionListener {
+public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMission.SimpleItemVH> {
 
     //  Data
     private List<Mission> listeObjects = new ArrayList<>();
@@ -50,7 +53,7 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         parentActivity = parent;
     }
 
-    public void addMissionb(Mission missionV){
+    public void addMissionb(Mission missionV) {
         this.listeObjects.add(missionV);
         this.notifyDataSetChanged();
     }
@@ -69,11 +72,34 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         final Mission missionTmp = listeObjects.get(position);
         if (missionTmp == null) return;
 
-       /* holder.technicienName.setText(missionTmp.getTechnicien().getNom() + " " + missionTmp.getTechnicien().getPrenom().substring(0, 1) + ".");
-       *//* String adresseFromGpsLocation = StringStuffs.getAdresseFromGpsLocation(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude()),context);
-      */  holder.adresse.setText(missionTmp.getAdresse());
-       /* holder.dateMission.setText(missionTmp.getDateCreation());
-       */ holder.titreMission.setText(missionTmp.getTitre());
+
+        Date dateIntervention = DateStuffs.stringToDate(missionTmp.getDateCreation(), DateStuffs.SIMPLE_DATE_FORMAT);
+        if (dateIntervention != null) {
+            String dateInterventionAlphaSimple = DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, dateIntervention);
+            String timeIntervention = DateStuffs.dateToString(DateStuffs.HOURS_MINUTES_FORMAT, dateIntervention);
+            holder.dateMission.setText(context.getText(R.string.intervention_prevue_le) + " " + dateInterventionAlphaSimple + " " + context.getString(R.string.a_date_time) + " " + timeIntervention);
+
+        }
+        else
+            holder.dateMission.setVisibility(View.GONE);
+
+        if(missionTmp.getTitre() != null){
+            holder.titreMission.setText(missionTmp.getTitre());
+
+        }else
+            holder.titreMission.setVisibility(View.GONE);
+
+        if(missionTmp.getAdresse() != null){
+            holder.adresse.setText(missionTmp.getAdresse());
+
+        }else
+            holder.adresse.setVisibility(View.GONE);
+
+        if(missionTmp.getTechnicien() != null){
+            holder.technicien.setText(context.getText(R.string.par_tech)+" "+ missionTmp.getTechnicien().getNom()+" "+missionTmp.getTechnicien().getPrenom());
+        }else
+            holder.technicien.setVisibility(View.GONE);
+
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,15 +121,13 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         return listeObjects != null ? listeObjects.size() : 0;
     }
 
-    @Override
-    public void onAddElementToList(Mission mission) {
-        this.addMissionb(mission);
-    }
 
     protected static class SimpleItemVH extends RecyclerView.ViewHolder {
         LinearLayout layoutContainerInfo;
         TextView titreMission;
         TextView adresse;
+        TextView dateMission;
+        TextView technicien;
         RelativeLayout container;
 
         public SimpleItemVH(View itemView) {
@@ -112,6 +136,8 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
             titreMission = itemView.findViewById(R.id.title_mission);
             container = itemView.findViewById(R.id.container_item_tech);
             adresse = itemView.findViewById(R.id.adresse_alpha);
+            dateMission = itemView.findViewById(R.id.date_mission);
+            technicien = itemView.findViewById(R.id.technicien_selected);
         }
     }
 

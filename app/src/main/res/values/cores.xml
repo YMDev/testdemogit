@@ -141,4 +141,11 @@
     <color name="amber_50">#FFF8E1</color>
     <color name="purple_50">#F3E5F5</color>
 
+
+    <color name="info_toast_color">#cfffc9</color>
+    <color name="warning_toat_color">#ffe3b9</color>
+    <color name="error_toast_color">#ffd7d7</color>
+
+
+
 </resources>

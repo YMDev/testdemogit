@@ -17,11 +17,12 @@
         android:layout_marginTop="6dp"
         android:layout_marginBottom="6dp"
         app:cardCornerRadius="6dp"
-        app:cardElevation="2dp">
+        app:cardElevation="2dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <android.support.v7.widget.CardView
                 android:id="@+id/avatare_technicien_card"
@@ -162,26 +163,65 @@
 
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/disponibilite_container"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/a3tech_back_circular_colored_layout">
+            <LinearLayout
+                android:id="@+id/cotainer_indicators"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/avatare_technicien_card"
+                android:layout_marginLeft="20dp"
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/disponibilite"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:fontFamily="sans-serif-meduim"
-                    android:textColor="@color/white"
-                    android:textSize="12dp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/disponibilite_container"
+                    android:layout_width="18dp"
+                    android:layout_height="15dp"
+                    android:background="@drawable/a3tech_back_circular_colored_layout">
+
+                    <ImageView
+                        android:id="@+id/disponibilite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/a3tech_dispo_white_indic" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/check_phone_container"
+                    android:layout_width="18dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/a3tech_back_circular_colored_layout">
+
+                    <ImageView
+                        android:id="@+id/check_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/a3tech_phone_white_indic" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/check_mail_container"
+                    android:layout_width="18dp"
+                    android:layout_height="15dp"
+                    android:layout_marginLeft="5dp"
+                    android:background="@drawable/a3tech_back_circular_colored_layout">
+
+                    <ImageView
+                        android:id="@+id/check_mail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/a3tech_check_mail_white_indic" />
+                </RelativeLayout>
+            </LinearLayout>
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
