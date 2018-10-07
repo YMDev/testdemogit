@@ -356,8 +356,8 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         }
     }
 
-
     @Override
+
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
@@ -368,7 +368,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
                     //TODO display progress bar, save mission,whene finish saving, dismiss progress bar
                     bottomNavigation.setCurrentItem(1);
                     ((A3techMissionsHomeFragment) pagerAdapter.getItem(1)).addMissionToLise(mission);
-                    A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_INFO);
+                    A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
                     //A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, "Mission created with success", Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_WARNING);
                     //A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, "Mission created with success", Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
                 }
@@ -406,11 +406,11 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     }
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();
-        } else {
+        if(bottomNavigation.getCurrentItem() == 0) {
             super.onBackPressed();
             this.finishAffinity();
+        } else{
+            bottomNavigation.setCurrentItem(0);
         }
     }
 

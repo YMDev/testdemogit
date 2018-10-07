@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.fragment;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -44,6 +45,7 @@ import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
+import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -182,6 +184,7 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
             @Override
             public void onClick(View v) {
                 // create class object
+
                 gps = new GPSTracker(getActivity());
                 if (!PermissionsStuffs.canAccessLocation(getActivity())) {
                     requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
@@ -210,30 +213,53 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
 
     private void gpsGetLocation() {
         // check if GPS enabled
-        if (gps.canGetLocation()) {
+        final ProgressDialog waitingDialog = CustomProgressDialog.createProgressDialog(getActivity(),"");
+        latitude = null;
+        longitude = null;
 
-            latitude = gps.getLatitude();
-            longitude = gps.getLongitude();
-            Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-            try {
-                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                cityName = addresses.get(0).getAddressLine(0); // adresse
-                stateName = addresses.get(0).getFeatureName(); // city
-                countryName = addresses.get(0).getCountryName(); // country
-                Toast.makeText(getActivity().getApplicationContext(), "Your Location is - \ncity: " + cityName + "\nstate: " + stateName + "\ncounrty: " + countryName, Toast.LENGTH_LONG).show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (gps.canGetLocation()) {
 
-                if(cityName != null){
-                    locationMission.setText(cityName);
+                    latitude = gps.getLatitude();
+                    longitude = gps.getLongitude();
+                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                        cityName = addresses.get(0).getAddressLine(0); // adresse
+                        stateName = addresses.get(0).getFeatureName(); // city
+                        countryName = addresses.get(0).getCountryName(); // country
+
+                        if(cityName != null){
+                            try {
+                                getActivity().runOnUiThread(new Runnable() {
+
+                                    @Override
+                                    public void run() {
+                                        locationMission.setText(cityName);
+                                        waitingDialog.dismiss();
+                                    }
+                                });
+                                Thread.sleep(300);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        waitingDialog.dismiss();
+                    }
+
+                    // \n is for new line
+                } else {
+                    waitingDialog.dismiss();
+                    gps.showSettingsAlert();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        }).start();
 
-            // \n is for new line
-        } else {
-
-            gps.showSettingsAlert();
-        }
     }
 
 
@@ -356,7 +382,7 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
 
             case PermissionsStuffs.LOCATION_REQUEST:
                 if (PermissionsStuffs.canAccessLocation(getActivity())) {
-                    gpsGetLocation();
+                    //gpsGetLocation();
                 }
                 else {
                     // bzzzt();

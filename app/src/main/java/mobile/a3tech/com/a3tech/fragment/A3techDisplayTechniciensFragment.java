@@ -87,9 +87,15 @@ public class A3techDisplayTechniciensFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        displayTechniciens();
+    }
+    View viewFr;
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View viewFr = inflater.inflate(R.layout.fragment_a3tech_display_techniciens, container, false);
+         if(viewFr == null) viewFr = inflater.inflate(R.layout.fragment_a3tech_display_techniciens, container, false);
         recyclerViewTechnicien = viewFr.findViewById(R.id.recycle_techniciens);
         displayTechniciens();
         return viewFr;

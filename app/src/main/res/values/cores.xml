@@ -134,7 +134,7 @@
     <color name="orange">#FF9800</color>
     <color name="deep_orange">#FF5722</color>
     <color name="brown">#795548</color>
-    <color name="grey">#E0E0E0</color>
+    <color name="grey">#ad9f9f9f</color>
 
     <color name="white_70">#B3FFFFFF</color>
     <color name="cyan_50">#E0F7FA</color>
@@ -142,10 +142,10 @@
     <color name="purple_50">#F3E5F5</color>
 
 
-    <color name="info_toast_color">#cfffc9</color>
-    <color name="warning_toat_color">#ffe3b9</color>
-    <color name="error_toast_color">#ffd7d7</color>
-
+    <color name="sucess_toast_color">#76dc68</color>
+    <color name="warning_toat_color">#ecab47</color>
+    <color name="error_toast_color">#e75245</color>
+    <color name="info_toast_color">#585dfa</color>
 
 
 </resources>

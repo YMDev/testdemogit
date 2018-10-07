@@ -101,7 +101,7 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
             String pnameAbrTech = missionTmp.getTechnicien().getPrenom();
 
             if(pnameAbrTech != null && pnameAbrTech.length() != 0){
-                nameTech = nameAbrTech+" "+pnameAbrTech.substring(0,1).toUpperCase();
+                nameTech = nameAbrTech+" "+pnameAbrTech.substring(0,1).toUpperCase()+".";
             }
             holder.technicien.setText(context.getText(R.string.par_tech)+" "+ nameTech);
         }else

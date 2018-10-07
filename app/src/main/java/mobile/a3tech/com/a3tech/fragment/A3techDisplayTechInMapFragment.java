@@ -5,15 +5,19 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -27,12 +31,16 @@ import com.google.gson.reflect.TypeToken;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.service.GPSTracker;
+import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
+import mobile.a3tech.com.a3tech.view.DialogDisplayTechProfile;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -55,6 +63,9 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     private Mission mission;
     SupportMapFragment mMapFragment;
     GoogleMap map;
+    GPSTracker gps;
+    Double userLatitude;
+    Double userLongetude;
     MarkerOptions currentPositionMarker;
     Marker currentLocationMarker;
     private OnFragmentInteractionListener mListener;
@@ -99,23 +110,43 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View viewFr =  inflater.inflate(R.layout.fragment_a3tech_display_tech_in_map, container, false);
+       final View viewFr =  inflater.inflate(R.layout.fragment_a3tech_display_tech_in_map, container, false);
+       final RelativeLayout mMapLayout = viewFr.findViewById(R.id.layout_container_map);
+        gps = new GPSTracker(getActivity());
+        if (!PermissionsStuffs.canAccessLocation(getActivity())) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
+            }
+        }
         FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
-        mMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map);
+        mMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_tech);
         if (mMapFragment == null) {
             mMapFragment = SupportMapFragment.newInstance();
-            fm.beginTransaction().replace(R.id.map, mMapFragment).commit();
+            fm.beginTransaction().replace(R.id.map_tech, mMapFragment).commit();
         }
-        mMapFragment.getMapAsync(this);
+        refreshMap();
+
+
         return viewFr;
     }
 
+
+    public void destroyMap(){
+            if (mMapFragment != null)
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .remove(mMapFragment).commit();
+    }
+    public void refreshMap(){
+        mMapFragment.getMapAsync(this);
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+
+
 
     @Override
     public void onAttach(Context context) {
@@ -142,49 +173,63 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
             return;
         }
         map.setMyLocationEnabled(true);
-        map.animateCamera(CameraUpdateFactory.zoomTo(15));
+        zoomCamMapToUserLocation();
         addMArker();
     }
 
-    private static final LatLng PERTH = new LatLng(-31.952854, 115.857342);
-    private static final LatLng SYDNEY = new LatLng(-33.87365, 151.20689);
-    private static final LatLng BRISBANE = new LatLng(-27.47093, 153.0235);
-    private Marker mPerth;
-    private Marker mSydney;
-    private Marker mBrisbane;
+
+    private void zoomCamMapToUserLocation(){
+        gpsGetLocation();
+
+    }
+
+    private void gpsGetLocation() {
+        if (gps.canGetLocation()) {
+            userLatitude = gps.getLatitude();
+            userLongetude = gps.getLongitude();
+            float zoomLevel = 12.0f; //This goes up to 21
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLatitude,userLongetude), zoomLevel));
+        } else {
+            gps.showSettingsAlert();
+        }
+    }
+    private List<Marker> markers = new ArrayList<>();
 
  private void addMArker(){
-     mPerth = map.addMarker(new MarkerOptions()
-             .position(PERTH)
-             .title("Perth"));
-     mPerth.setTag(0);
-
-     mSydney = map.addMarker(new MarkerOptions()
-             .position(SYDNEY)
-             .title("Sydney"));
-     mSydney.setTag(0);
-
-     mBrisbane = map.addMarker(new MarkerOptions()
-             .position(BRISBANE)
-             .title("Brisbane"));
-     mBrisbane.setTag(0);
-
+     for (Marker markerToRemove:markers
+          ) {
+         if(markerToRemove != null) markerToRemove.remove();
+     }
+     markers.clear();
+     if(listeOfTechToDisplay != null){
+         for (User userTmp:listeOfTechToDisplay
+              ) {
+             if(userTmp != null){
+                 addMarkerFotUSer(userTmp);
+             }
+         }
+     }
      // Set a listener for marker click.
      map.setOnMarkerClickListener(this);
 
+ }
+ private void addMarkerFotUSer(User user){
+     Marker markerUserTmp = map.addMarker(new MarkerOptions()
+             .position(new LatLng(Double.valueOf(user.getLatitude()), Double.valueOf(user.getLongitude())))
+             .title(user.getNom()+" "+user.getPrenom().substring(0,1)+"."));
+     markerUserTmp.setTag(user);
+     markerUserTmp.setSnippet(user.getNom());
+     markers.add(markerUserTmp);
  }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         // Retrieve the data from the marker.
-        Integer clickCount = (Integer) marker.getTag();
+        User userClicked = (User) marker.getTag();
 
         // Check if a click count was set, then display the click count.
-        if (clickCount != null) {
-            clickCount = clickCount + 1;
-            marker.setTag(clickCount);
-            A3techCustomToastDialog.createToastDialog(getActivity(), marker.getTitle() +
-                    " has been clicked " + clickCount + " times.",Toast.LENGTH_SHORT,A3techCustomToastDialog.TOAST_INFO);
+        if (userClicked != null) {
+            DialogDisplayTechProfile.createProfileDialog(getActivity(),userClicked);
         }
 
         // Return false to indicate that we have not consumed the event and that we wish

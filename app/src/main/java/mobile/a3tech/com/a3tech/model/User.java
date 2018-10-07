@@ -33,6 +33,7 @@ public class User implements  Parcelable {
 	private String nbrReviews;
 	private List<Avis> listAvis;
 
+
 	public String getRating() {
 		return rating;
 	}

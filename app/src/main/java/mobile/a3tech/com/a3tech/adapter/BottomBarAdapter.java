@@ -3,9 +3,12 @@ package mobile.a3tech.com.a3tech.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechInMapFragment;
 
 /**
  * BottomNav
@@ -32,5 +35,14 @@ public class BottomBarAdapter extends SmartFragmentStatePagerAdapter {
     @Override
     public int getCount() {
         return fragments.size();
+    }
+
+
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        super.setPrimaryItem(container, position, object);
+//        if(position == 1 && getItem(position) instanceof A3techDisplayTechInMapFragment){
+//            ((A3techDisplayTechInMapFragment)getItem(position)).refreshMap();
+//        }
     }
 }

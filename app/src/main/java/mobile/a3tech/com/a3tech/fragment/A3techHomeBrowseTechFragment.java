@@ -86,17 +86,6 @@ public class A3techHomeBrowseTechFragment extends Fragment {
         prepareListeCategories();
         viewFr.setFocusableInTouchMode(true);
         viewFr.requestFocus();
-        viewFr.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if (keyEvent.getAction() == KeyEvent.ACTION_UP && i == KeyEvent.KEYCODE_BACK){
-                    mListener.backAction();
-                    return true;
-                }
-                return false;
-            }
-        });
-
         return viewFr;
     }
     private List prepareListeCategories(){

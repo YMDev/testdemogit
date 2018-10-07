@@ -108,7 +108,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
         if (android.os.Build.VERSION.SDK_INT >= 11) {
             // will update the "progress" propriety of seekbar until it reaches progress
             ObjectAnimator animation = ObjectAnimator.ofInt(progressPostMission, "progress", progress);
-            animation.setDuration(500); // 0.5 second
+            animation.setDuration(1000); // 0.5 second
             animation.setInterpolator(new DecelerateInterpolator());
             animation.start();
         } else
@@ -133,15 +133,26 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
         } else if (f instanceof A3techPostMissionFragment) {
             progressBarchangeSmouthly(0);
             updateAppbarLayout(0);
-        } else if (f instanceof A3techAffecterTechnicienFragment) {
+        } else if (f instanceof A3techDisplayTechniciensPArentFragment) {
             progressBarchangeSmouthly(50);
             updateAppbarLayout(1);
+            ((A3techDisplayTechniciensPArentFragment)f).deleteMapInFragment();
         }
     }
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+    @Override
+    public void actionToolbar(boolean hide) {
+        if(hide){
+            getSupportActionBar().hide();
+        }else{
+            getSupportActionBar().show();
+        }
+    }
+
     Categorie categorieSelected;
     @Override
     public void actionNext(Integer typeAction, Object data) {

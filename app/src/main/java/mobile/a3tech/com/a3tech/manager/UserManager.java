@@ -583,7 +583,8 @@ public class UserManager implements Constant {
 
 
 	public void getTechnicienNearLocation(final String latitude,final String longitude,final String ville,
-						  final DataLoadCallback dataLoadCallback) {
+						  final DataLoadCallback dataLoadCallback)   {
+
 		final Handler handler = new Handler() {
 
 			// @Override
@@ -601,6 +602,7 @@ public class UserManager implements Constant {
 			@Override
 			public void run() {
 				try {
+
 					UserService service = new UserService();
 					List<User> user = service.getTechnicienNearLocation(latitude,longitude,ville);
 					if (user == null) {

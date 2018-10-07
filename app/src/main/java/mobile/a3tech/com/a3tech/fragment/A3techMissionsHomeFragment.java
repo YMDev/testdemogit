@@ -196,7 +196,7 @@ public class A3techMissionsHomeFragment extends Fragment {
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
                     Mission mission = new Gson().fromJson(jsonMission, Mission.class);
                     ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
-                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_INFO);
+                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
 
                 }
                 break;

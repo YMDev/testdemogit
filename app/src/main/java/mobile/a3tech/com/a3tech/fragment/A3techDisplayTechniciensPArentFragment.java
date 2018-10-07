@@ -27,6 +27,7 @@ import java.util.List;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
 import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
@@ -46,11 +47,12 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_SELECTED_MISSION = "param1";
-
+    private static final String ARG_SELECTED_CAT = "ARG_SELECTED_CAT";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     private Mission mission;
+    private Categorie categorie;
 
     private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
@@ -64,6 +66,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
 
 
     List<User> listeOfTechToDisplay;
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -79,12 +82,36 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
         return fragment;
     }
 
+
+    public static A3techDisplayTechniciensPArentFragment newInstance(Categorie catSelected) {
+        A3techDisplayTechniciensPArentFragment fragment = new A3techDisplayTechniciensPArentFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_SELECTED_CAT, new Gson().toJson(catSelected));
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             String jsonMission = getArguments().getString(ARG_SELECTED_MISSION);
-            if(jsonMission != null) mission = new Gson().fromJson(jsonMission, Mission.class);
+            if (jsonMission != null) mission = new Gson().fromJson(jsonMission, Mission.class);
+
+
+            String jsonCat = getArguments().getString(ARG_SELECTED_CAT);
+            if (jsonCat != null) categorie = new Gson().fromJson(jsonCat, Categorie.class);
+
+
+            if (mission == null) {
+                mission = new Mission();
+            }
+
+            if (categorie != null) {
+                mission.setCategoryMission(categorie);
+            }
+
         }
     }
 
@@ -105,6 +132,16 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
             public boolean onTabSelected(int position, boolean wasSelected) {
                 if (!wasSelected)
                     viewPager.setCurrentItem(position);
+
+                if(position == 1){
+                    if(mListener != null){
+                        mListener.actionToolbar(true);
+                    }
+                }else{
+                    if(mListener != null){
+                        mListener.actionToolbar(false);
+                    }
+                }
                 return true;
             }
         });
@@ -118,16 +155,22 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
 
     }
 
-    private void getListOFTechToDisplay(){
+    public void deleteMapInFragment(){
+        ((A3techDisplayTechInMapFragment) pagerAdapter.getItem(1)).destroyMap();
+    }
+
+    private void getListOFTechToDisplay() {
         final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
+        //TODO get location of connected user not mission
         UserManager.getInstance().getTechnicienNearLocation(mission.getLatitude(), mission.getLongitude(), mission.getAdresse(), new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 listeOfTechToDisplay = (List<User>) data;
-                if(listeOfTechToDisplay == null) listeOfTechToDisplay = new ArrayList<>();
+                if (listeOfTechToDisplay == null) listeOfTechToDisplay = new ArrayList<>();
                 pagerAdapter = new BottomBarAdapter(getFragmentManager());
-                pagerAdapter.addFragments(A3techDisplayTechInMapFragment.newInstance(mission,listeOfTechToDisplay));
-                pagerAdapter.addFragments(A3techAffecterTechnicienFragment.newInstance(mission,listeOfTechToDisplay));
+                pagerAdapter.addFragments(A3techAffecterTechnicienFragment.newInstance(mission, listeOfTechToDisplay));
+                pagerAdapter.addFragments(A3techDisplayTechInMapFragment.newInstance(mission, listeOfTechToDisplay));
+
                 viewPager.setAdapter(pagerAdapter);
                 dd.dismiss();
                 return;
@@ -139,6 +182,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
             }
         });
     }
+
     /**
      * Adds styling properties to {@link AHBottomNavigation}
      */
@@ -154,7 +198,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
 
         // Colors for selected (active) and non-selected items.
         bottomNavigation.setColoredModeColors(getResources().getColor(R.color.white),
-                fetchColor(R.color.semi_transparent));
+                fetchColor(R.color.grey));
 
         //  Enables Reveal effect
         bottomNavigation.setColored(true);
@@ -168,15 +212,16 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
      * Also assigns a distinct color to each Bottom Navigation item, used for the color ripple.
      */
     private void addBottomNavigationItems() {
-        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.display_tech_tab_1, R.drawable.a3tech_display_as_maps, R.color.colorPrimary);
-        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.display_tech_tab_2, R.drawable.a3tech_display_as_list, R.color.colorPrimary);
+        AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.display_tech_tab_2, R.drawable.a3tech_display_as_list, R.color.colorPrimary);
+        AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.display_tech_tab_1, R.drawable.a3tech_display_as_maps, R.color.colorPrimary);
+
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
 
     }
 
 
-    private void prepareElementToolbar(){
+    private void prepareElementToolbar() {
 
     }
 
@@ -227,5 +272,6 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+        void actionToolbar(boolean hide);
     }
 }

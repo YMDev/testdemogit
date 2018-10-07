@@ -272,6 +272,22 @@ public class UserService extends AbstractService implements Constant {
         listeRetour.add(getUserMocked("EDROML", "Ismail"));
         listeRetour.add(getUserMocked("BOUZIDI", "Badr"));
 
+        listeRetour.get(3).setLatitude("34.263927");
+        listeRetour.get(3).setLongitude("-6.569619");
+
+        listeRetour.get(4).setLatitude("34.263431");
+        listeRetour.get(4).setLongitude("-6.567302");
+
+        listeRetour.get(5).setLatitude("34.263928");
+        listeRetour.get(5).setLongitude("-6.569600");
+
+
+        listeRetour.get(6).setLatitude("34.263937");
+        listeRetour.get(6).setLongitude("-6.564619");
+
+
+        listeRetour.get(7).setLatitude("34.263727");
+        listeRetour.get(7).setLongitude("-6.565619");
         return listeRetour;
     }
 
@@ -295,8 +311,8 @@ public class UserService extends AbstractService implements Constant {
         userMocked.setPseudo(name);
         userMocked.setRating(rand.nextInt(5)+"");
         userMocked.setNbrReviews(rand.nextInt(15)+"");
-        userMocked.setLatitude("53.2734");
-        userMocked.setLongitude("-7.77832031");
+        userMocked.setLatitude("34.267471");
+        userMocked.setLongitude("-6.562630");
         return userMocked;
     }
 
