@@ -112,11 +112,9 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
             @Override
             public void onClick(View view) {
              Intent mainIntent = new Intent(parentActivity, A3techDisplayMissionActivity.class);
-  /*              Bundle bundle = new Bundle();
-                bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, "MISSION");
-                bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
-                bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
-                mainIntent.putExtras(bundle);*/
+                Bundle bundle = new Bundle();
+                bundle.putString(A3techDisplayMissionActivity.TAG_MISSION_SELECTED_FROM_HOME_ACTIVITY, new Gson().toJson(missionTmp));
+                mainIntent.putExtras(bundle);
                 parentActivity.startActivityForResult(mainIntent, 545);
             }
 
