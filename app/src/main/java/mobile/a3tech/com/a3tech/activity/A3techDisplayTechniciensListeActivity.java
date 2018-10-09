@@ -171,6 +171,13 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
 
     }
 
+    public void nextStepAfterSelectTechnicien(Mission mission){
+        missionSelected = mission;
+        // next step add mission informations
+        progressBarchangeSmouthly(100);
+        updateAppbarLayout(1);
+        setFragment(A3techPostMissionFragment.newInstance(missionSelected), true, false);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -180,10 +187,7 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
                 if (resultCode == Activity.RESULT_OK) {
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
                     missionSelected = new Gson().fromJson(jsonMission, Mission.class);
-                    // next step add mission informations
-                    progressBarchangeSmouthly(100);
-                    updateAppbarLayout(1);
-                    setFragment(A3techPostMissionFragment.newInstance(missionSelected), true, false);
+                    nextStepAfterSelectTechnicien(missionSelected);
                 }
                 break;
             }

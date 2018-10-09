@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.gesture.GestureUtils;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,16 +21,22 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
+import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.utils.SphericalUtil;
 
 public class DialogDisplayTechProfile {
+
+    public static String SRC_FROM_DIALOGUE_DISPLAY_TECH = "SRC_FROM_DIALOGUE_DISPLAY_TECH";
+    public static int REQUEST_DISPLAY_TECH_FROM_DIALOGUE = 3221;
 	
-	public static Dialog createProfileDialog(final Context mContext, final User user) {
-		Dialog progressDialog = new Dialog(mContext);
+	public static Dialog createProfileDialog(final Context mContext, final User user, final Mission mission, final boolean isFromAddmission) {
+		final  Dialog progressDialog = new Dialog(mContext);
         progressDialog.show();
 		LayoutInflater inflater =((Activity)mContext).getLayoutInflater();
     	View content =inflater.inflate(R.layout.a3tech_dialogue_profile_user, null);
@@ -50,13 +57,45 @@ public class DialogDisplayTechProfile {
 		TextView categoryTech =  content.findViewById(R.id.category_tech);
 		categoryTech.setText("Technicien Category");
         Button displayProfile =  content.findViewById(R.id.display_profile);
+        Button hireTech = content.findViewById(R.id.select_tech);
         displayProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Bundle bundle = new Bundle();
                 Intent mainIntent = new Intent(mContext, A3techViewEditProfilActivity.class);
-                mainIntent.putExtra(A3techViewEditProfilActivity.ARG_USER_OBJECT,new Gson().toJson(user));
-                ((Activity) mContext).startActivityForResult(mainIntent,A3techHomeActivity.REQUEST_START_DISPLAY_TECH_ACTIVITY );
+                String src_action ="";
+                int req = 0;
+                if(isFromAddmission){
+                    src_action = SimpleAdapterTechnicien.SRC_FROM_HOME_ADD_MISSION;
+                    req = SimpleAdapterTechnicien.REQUEST_DISPLAY_TECH_FROM_MISSION;
+                }else{
+                    src_action = SimpleAdapterTechnicien.SRC_FROM_HOME_BROWSE_TECH;
+                    req = SimpleAdapterTechnicien.REQUEST_DISPLAY_TECH_FROM_HOME;
+                }
+                bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, SRC_FROM_DIALOGUE_DISPLAY_TECH);
+                bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(user));
+                bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
+                mainIntent.putExtras(bundle);
+                ((Activity)mContext).startActivityForResult(mainIntent, req);
 
+                progressDialog.dismiss();
+            }
+        });
+        hireTech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mission.setTechnicien(user);
+                int req = 0;
+                if(isFromAddmission){
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH,new Gson().toJson(mission));
+                    ((Activity)mContext).setResult(Activity.RESULT_OK, resultIntent);
+                    ((Activity)mContext).finish();
+                }else{
+                    ((A3techDisplayTechniciensListeActivity)mContext).nextStepAfterSelectTechnicien(mission);
+                }
+
+                progressDialog.dismiss();
             }
         });
     	progressDialog.setContentView(content);

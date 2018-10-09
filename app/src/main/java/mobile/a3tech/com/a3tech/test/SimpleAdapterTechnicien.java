@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
+import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -34,6 +35,7 @@ import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.utils.SphericalUtil;
 import mobile.a3tech.com.a3tech.utils.StringStuffs;
 
@@ -76,13 +78,24 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
 
     @Override
     public void onBindViewHolder(SimpleItemVH holder, int position) {
+        if(position == listeObjects.size()){
+            final float scale = context.getResources().getDisplayMetrics().density;
+            int pixels = (int) (70 * scale + 0.5f);
+            holder.container.getLayoutParams().height = pixels;
+            holder.container.setVisibility(View.INVISIBLE);
+            return;
+        }
         final User technicien = listeObjects.get(position);
         if (technicien == null) return;
 
         holder.nameTech.setText(technicien.getNom() + " " + technicien.getPrenom().substring(0, 1) + ".");
        /* String adresseFromGpsLocation = StringStuffs.getAdresseFromGpsLocation(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude()),context);
-      */  holder.adresse.setText(technicien.getAdresse());
-        holder.avatareTech.setImageDrawable(context.getDrawable(R.drawable.photo_login_1));
+      */
+        final LetterTileProvider tileProvider = new LetterTileProvider(context);
+        final Bitmap letterTile = tileProvider.getLetterTile(technicien.getNom(), technicien.getNom(), 88, 88);
+
+        holder.adresse.setText(technicien.getAdresse());
+        holder.avatareTech.setImageBitmap(letterTile);
         holder.ratingTech.setNumStars(5);
         holder.ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
         holder.ratingNumberValue.setText(technicien.getRating());
@@ -119,7 +132,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
 
     @Override
     public int getItemCount() {
-        return listeObjects != null ? listeObjects.size() : 0;
+        return listeObjects != null ? listeObjects.size()+1 : 0;
     }
 
     protected static class SimpleItemVH extends RecyclerView.ViewHolder {

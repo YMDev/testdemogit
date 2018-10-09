@@ -49,6 +49,7 @@ import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.A3techCustomViewPager;
 import mobile.a3tech.com.a3tech.view.PagerContainer;
 
@@ -105,7 +106,7 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
         this.connectedUser = prefs.getString("identifiant", "");
         this.password = prefs.getString("password", "");
         if (!isConnected()) {
-            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.txtSplash_messageCheckConnexion), Toast.LENGTH_SHORT).show();
+            A3techCustomToastDialog.createToastDialog(A3techSplashActivity.this,getApplicationContext().getString(R.string.txtSplash_messageCheckConnexion), Toast.LENGTH_SHORT,A3techCustomToastDialog.TOAST_INFO);
             //finish();
         }
 

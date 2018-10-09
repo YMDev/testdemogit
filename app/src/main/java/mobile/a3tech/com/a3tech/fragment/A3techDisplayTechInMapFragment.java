@@ -3,6 +3,7 @@ package mobile.a3tech.com.a3tech.fragment;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -24,6 +25,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
@@ -35,9 +37,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
+import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
+import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
+import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
+import mobile.a3tech.com.a3tech.utils.MapUtilities;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.DialogDisplayTechProfile;
@@ -50,13 +57,12 @@ import mobile.a3tech.com.a3tech.view.DialogDisplayTechProfile;
  * Use the {@link A3techDisplayTechInMapFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class A3techDisplayTechInMapFragment extends Fragment implements OnMapReadyCallback ,GoogleMap.OnMarkerClickListener
-{
+public class A3techDisplayTechInMapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_MISSION_SELECTED = "param1";
     private static final String ARG_LIST_TECH = "ARG_LIST_TECH";
-    private  List<User> listeOfTechToDisplay;
+    private List<User> listeOfTechToDisplay;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -96,12 +102,13 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             String jsonMission = getArguments().getString(ARG_MISSION_SELECTED);
-            if(StringUtils.isNoneBlank(jsonMission)){
+            if (StringUtils.isNoneBlank(jsonMission)) {
                 mission = new Gson().fromJson(jsonMission, Mission.class);
             }
             String jsonListTech = getArguments().getString(ARG_LIST_TECH);
-            if(StringUtils.isNoneBlank(jsonListTech)){
-                listeOfTechToDisplay = new Gson().fromJson(jsonListTech, new TypeToken<List<User>>(){}.getType());
+            if (StringUtils.isNoneBlank(jsonListTech)) {
+                listeOfTechToDisplay = new Gson().fromJson(jsonListTech, new TypeToken<List<User>>() {
+                }.getType());
             }
         }
     }
@@ -110,8 +117,8 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       final View viewFr =  inflater.inflate(R.layout.fragment_a3tech_display_tech_in_map, container, false);
-       final RelativeLayout mMapLayout = viewFr.findViewById(R.id.layout_container_map);
+        final View viewFr = inflater.inflate(R.layout.fragment_a3tech_display_tech_in_map, container, false);
+        final RelativeLayout mMapLayout = viewFr.findViewById(R.id.layout_container_map);
         gps = new GPSTracker(getActivity());
         if (!PermissionsStuffs.canAccessLocation(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -131,21 +138,22 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     }
 
 
-    public void destroyMap(){
-            if (mMapFragment != null)
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .remove(mMapFragment).commit();
+    public void destroyMap() {
+        if (mMapFragment != null)
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .remove(mMapFragment).commit();
     }
-    public void refreshMap(){
+
+    public void refreshMap() {
         mMapFragment.getMapAsync(this);
     }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
-
 
 
     @Override
@@ -173,64 +181,118 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
             return;
         }
         map.setMyLocationEnabled(true);
-        zoomCamMapToUserLocation();
+        gpsGetLocation();
         addMArker();
+        addActionToMarkers();
+        doZoomItiniraire(positions);
     }
 
 
-    private void zoomCamMapToUserLocation(){
-        gpsGetLocation();
+    private void addActionToMarkers() {
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                User userClicked = (User) marker.getTag();
 
+                // Check if a click count was set, then display the click count.
+                if (userClicked != null) {
+
+                    if (getActivity() instanceof A3techAddMissionActivity) {
+                        DialogDisplayTechProfile.createProfileDialog(getActivity(), userClicked, mission, true);
+                    } else if (getActivity() instanceof A3techDisplayTechniciensListeActivity) {
+                        DialogDisplayTechProfile.createProfileDialog(getActivity(), userClicked, mission, false);
+                    }
+
+                }
+            }
+        });
     }
 
     private void gpsGetLocation() {
         if (gps.canGetLocation()) {
             userLatitude = gps.getLatitude();
             userLongetude = gps.getLongitude();
-            float zoomLevel = 12.0f; //This goes up to 21
-            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLatitude,userLongetude), zoomLevel));
+            /*float zoomLevel = 12.0f; //This goes up to 21
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLatitude, userLongetude), zoomLevel));*/
         } else {
             gps.showSettingsAlert();
         }
     }
+
     private List<Marker> markers = new ArrayList<>();
+    private List<LatLng> positions = new ArrayList<>();
 
- private void addMArker(){
-     for (Marker markerToRemove:markers
-          ) {
-         if(markerToRemove != null) markerToRemove.remove();
-     }
-     markers.clear();
-     if(listeOfTechToDisplay != null){
-         for (User userTmp:listeOfTechToDisplay
-              ) {
-             if(userTmp != null){
-                 addMarkerFotUSer(userTmp);
-             }
-         }
-     }
-     // Set a listener for marker click.
-     map.setOnMarkerClickListener(this);
+    private void addMArker() {
+        for (Marker markerToRemove : markers
+                ) {
+            if (markerToRemove != null) markerToRemove.remove();
+        }
+        markers.clear();
+        positions.clear();
+        if (listeOfTechToDisplay != null) {
+            for (User userTmp : listeOfTechToDisplay
+                    ) {
+                if (userTmp != null) {
+                    addMarkerFotUSer(userTmp);
+                }
+            }
+        }
 
- }
- private void addMarkerFotUSer(User user){
-     Marker markerUserTmp = map.addMarker(new MarkerOptions()
-             .position(new LatLng(Double.valueOf(user.getLatitude()), Double.valueOf(user.getLongitude())))
-             .title(user.getNom()+" "+user.getPrenom().substring(0,1)+"."));
-     markerUserTmp.setTag(user);
-     markerUserTmp.setSnippet(user.getNom());
-     markers.add(markerUserTmp);
- }
+
+        //user marker:
+        LatLng currentUserPosition = new LatLng(userLatitude, userLongetude);
+        Marker markerUserTmp = map.addMarker(new MarkerOptions()
+                .position(currentUserPosition)
+                .title("Your position")
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.a3tech_home_mission)));
+        markerUserTmp.setTag(null);
+        // markerUserTmp.setSnippet(user.getNom());
+        markers.add(markerUserTmp);
+        positions.add(currentUserPosition);
+        // Set a listener for marker click.
+        //map.setOnMarkerClickListener(this);
+
+    }
+
+    private void doZoomItiniraire(List<LatLng> latLngList) {
+        int padding = 30; // offset from edges of the map in pixels
+        List<Marker> markers = MapUtilities.getMarkersFromListLatLng(map, latLngList);
+        LatLngBounds bounds = MapUtilities.getBoundsFromMarkers(markers);
+        CameraUpdate mCameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+        map.animateCamera(mCameraUpdate);
+    }
+
+    private void addMarkerFotUSer(User user) {
+
+        final LetterTileProvider tileProvider = new LetterTileProvider(getActivity());
+        final Bitmap letterTile = tileProvider.getLetterTile(user.getNom(), user.getNom(), 88, 88);
+
+        LatLng currentPosition = new LatLng(Double.valueOf(user.getLatitude()), Double.valueOf(user.getLongitude()));
+        Marker markerUserTmp = map.addMarker(new MarkerOptions()
+                .position(currentPosition)
+                .title(user.getNom() + " " + user.getPrenom().substring(0, 1) + ".").
+                        icon(BitmapDescriptorFactory.fromBitmap(letterTile)));
+        markerUserTmp.setTag(user);
+        markerUserTmp.setSnippet(user.getNom());
+        markers.add(markerUserTmp);
+        positions.add(currentPosition);
+    }
 
     @Override
     public boolean onMarkerClick(Marker marker) {
         // Retrieve the data from the marker.
-        User userClicked = (User) marker.getTag();
+       /* User userClicked = (User) marker.getTag();
 
         // Check if a click count was set, then display the click count.
         if (userClicked != null) {
-            DialogDisplayTechProfile.createProfileDialog(getActivity(),userClicked);
-        }
+
+            if (getActivity() instanceof A3techAddMissionActivity) {
+                DialogDisplayTechProfile.createProfileDialog(getActivity(), userClicked, mission, true);
+            } else if (getActivity() instanceof A3techDisplayTechniciensListeActivity) {
+                DialogDisplayTechProfile.createProfileDialog(getActivity(), userClicked, mission, false);
+            }
+
+        }*/
 
         // Return false to indicate that we have not consumed the event and that we wish
         // for the default behavior to occur (which is for the camera to move such that the

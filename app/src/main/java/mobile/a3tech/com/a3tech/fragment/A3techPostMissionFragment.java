@@ -55,7 +55,7 @@ import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
  * Use the {@link A3techPostMissionFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class A3techPostMissionFragment extends Fragment implements SimpleDialog.OnDialogResultListener {
+public class A3techPostMissionFragment extends A3techBaseFragment implements SimpleDialog.OnDialogResultListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 
@@ -86,6 +86,7 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
     private Double longitude;
     private String cityName, stateName, countryName;
     private ImageView btnGetLocation;
+    private ImageView btnGetDate;
     private Button btnValidation;
     private RelativeLayout containerUserSelected;
     private ImageView avatareTechnicien;
@@ -145,14 +146,22 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
                              Bundle savedInstanceState) {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_post_mission, container, false);
         titleMission = viewFr.findViewById(R.id.title_mission);
+        titleMission.setOnFocusChangeListener(this);
+
         descriptionMission = viewFr.findViewById(R.id.description_mission);
+        descriptionMission.setOnFocusChangeListener(this);
+
         locationMission = viewFr.findViewById(R.id.location_mission);
+        locationMission.setOnFocusChangeListener(this);
+
+
         categorySelcted = viewFr.findViewById(R.id.category_mission_selected);
         containerUserSelected = viewFr.findViewById(R.id.user_selected);
         avatareTechnicien = viewFr.findViewById(R.id.avatare_technicien);
         nameTechnicien = viewFr.findViewById(R.id.name_tech);
         adresseTechnicien = viewFr.findViewById(R.id.adresse_alpha);
         btnValidation = viewFr.findViewById(R.id.validate_mission);
+        btnGetDate = viewFr.findViewById(R.id.add_date_act);
         String categorie  = "";
         if(categoryObject != null){
             categorie = categoryObject.getLibelle();
@@ -173,6 +182,7 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         dateIntervension.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
                 SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission);
                 cal.setCancelable(true);
                 cal.show(A3techPostMissionFragment.this, TAG_CALENDAR_MISSION);
@@ -184,7 +194,7 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
             @Override
             public void onClick(View v) {
                 // create class object
-
+                hideKeyboard();
                 gps = new GPSTracker(getActivity());
                 if (!PermissionsStuffs.canAccessLocation(getActivity())) {
                     requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
@@ -194,11 +204,20 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
             }
         });
 
-
+        btnGetDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                hideKeyboard();
+                SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission);
+                cal.setCancelable(true);
+                cal.show(A3techPostMissionFragment.this, TAG_CALENDAR_MISSION);
+            }
+        });
         btnValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (mListener != null) {
+                    hideKeyboard();
                    if(missionObject != null){
                        mListener.actionNext(ACTION_SAVE_MISSION_INFO_FROM_TECH, populateMission());
                    }else if(categoryObject != null){
@@ -210,6 +229,18 @@ public class A3techPostMissionFragment extends Fragment implements SimpleDialog.
         });
         return viewFr;
     }
+
+
+    public void hideKeyboard() {
+        if(titleMission != null) {
+            hideKeyboard(titleMission);
+        } else if(descriptionMission != null) {
+            hideKeyboard(descriptionMission);
+        }else if(locationMission !=null){
+            hideKeyboard(locationMission);
+        }
+    }
+
 
     private void gpsGetLocation() {
         // check if GPS enabled

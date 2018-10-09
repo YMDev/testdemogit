@@ -2,6 +2,7 @@ package mobile.a3tech.com.a3tech.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
@@ -28,6 +29,7 @@ import mobile.a3tech.com.a3tech.fragment.A3techReviewsFragment;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.view.CircleImageView;
 
 public class A3techViewEditProfilActivity extends AppCompatActivity  implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener, A3techReviewsFragment.OnFragmentInteractionListener {
@@ -147,6 +149,9 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
         viewPagerProfil = (ViewPager) findViewById(R.id.viewpager_profile_detail);
         tabLayouProfil = (TabLayout) findViewById(R.id.tabs_profil);
         circleImage = findViewById(R.id.avatare_user_cicle);
+        final LetterTileProvider tileProvider = new LetterTileProvider(A3techViewEditProfilActivity.this);
+        final Bitmap letterTile = tileProvider.getLetterTile(userToDisplay.getNom(), userToDisplay.getNom(), 88, 88);
+        circleImage.setImageBitmap(letterTile);
         userNamePname = findViewById(R.id.user_name_pname_detail);
         userNamePname.setText(userToDisplay.getNom()+" "+userToDisplay.getPrenom() );
         backBtn = findViewById(R.id.back_home_btn);

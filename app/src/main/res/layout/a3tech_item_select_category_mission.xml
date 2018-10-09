@@ -5,17 +5,18 @@
     android:id="@+id/container_item_category"
     android:layout_width="match_parent"
     android:layout_height="80dp"
-    android:background="@color/white"
     android:clickable="true"
     android:orientation="vertical"
-    app:paddingStart="8dp"
-    tools:background="@color/white">
+    android:background="@drawable/ripple_effect_btn">
 
     <RelativeLayout
         android:id="@+id/container_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true">
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+       >
 
         <TextView
             android:id="@+id/title_category"

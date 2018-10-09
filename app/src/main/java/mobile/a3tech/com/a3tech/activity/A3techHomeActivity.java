@@ -75,7 +75,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     private BottomBarAdapter pagerAdapter;
     private boolean notificationVisible = false;
     private Categorie categorieSelected;
-    AppBarLayout appBarHome ;
+    AppBarLayout appBarHome;
     Toolbar toolMission;
     Toolbar toolEchange;
     Toolbar toolAccount;
@@ -86,6 +86,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     public static final String ACTION_FROM_A3techHomeActivity = "A3techHomeActivity";
     public static final String TAG_CATEGORY_SELECTED_FROM_HOME_ACTIVITY = "TAG_RESULT_FROM_SELECT_TECH";
     public static final int REQUEST_START_DISPLAY_TECH_ACTIVITY = 255;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,8 +97,37 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     }
 
 
-    private void initiInterfaceActivity(){
+    GPSTracker gps;
+    public static final String TAG_CONNECTED_USER_LATITUDE = "UserConnectedLatitude";
+    public static final String TAG_CONNECTED_USER_LONGETUDE = "UserConnectedLongetude";
+
+    private void updateUserConnectedLocation() {
+        gps = new GPSTracker(A3techHomeActivity.this);
+        if (gps.canGetLocation()) {
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+            try {
+                //  mobile.a3tech.com.a3tech.manager.UserManager.getInstance().saveProfil(connectedUser, "", "", "", "", "", String.valueOf(latitude), String.valueOf(longitude), "", null, null, null, null, null, null,null,password, NavigationMain.this);
+                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                editor.putString(TAG_CONNECTED_USER_LATITUDE, String.valueOf(latitude));
+                editor.putString(TAG_CONNECTED_USER_LONGETUDE, String.valueOf(longitude));
+                editor.commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            gps.showSettingsAlert();
+        }
+    }
+
+    private void initiInterfaceActivity() {
         setupViewPager();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateUserConnectedLocation();
+            }
+        });
         toolMission = findViewById(R.id.toolbar_mission);
         toolEchange = findViewById(R.id.toolbar_echange);
         toolAccount = findViewById(R.id.toolbar_account);
@@ -112,7 +142,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
                 mobile.a3tech.com.a3tech.manager.UserManager.getInstance().getProfil(connectedUser, password, new DataLoadCallback() {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
-                        User user = (User)data;
+                        User user = (User) data;
                         Bundle bExtra = new Bundle();
                         bExtra.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, A3techHomeActivity.ACTION_FROM_A3techHomeActivity);
                         bExtra.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(user));
@@ -159,8 +189,8 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         });
     }
 
-    private void updateAppbarLayout(int position){
-        switch (position){
+    private void updateAppbarLayout(int position) {
+        switch (position) {
             case 0:
                 toolEchange.setVisibility(View.VISIBLE);
                 toolMission.setVisibility(View.GONE);
@@ -194,15 +224,16 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
                 setSupportActionBar(toolAccount);
                 break;
         }
-     }
+    }
+
     private void setupViewPager() {
         viewPager = (NoSwipePager) findViewById(R.id.home_view_pager_navigation);
         viewPager.setPagingEnabled(false);
         pagerAdapter = new BottomBarAdapter(getSupportFragmentManager());
         pagerAdapter.addFragments(createFragment(colors[0]));
-        pagerAdapter.addFragments(A3techMissionsHomeFragment.newInstance(null,null));
-        pagerAdapter.addFragments(A3techHomeBrowseTechFragment.newInstance(null,null));
-        pagerAdapter.addFragments(A3techHomeAccountFragment.newInstance(null,null));
+        pagerAdapter.addFragments(A3techMissionsHomeFragment.newInstance(null, null));
+        pagerAdapter.addFragments(A3techHomeBrowseTechFragment.newInstance(null, null));
+        pagerAdapter.addFragments(A3techHomeAccountFragment.newInstance(null, null));
         viewPager.setAdapter(pagerAdapter);
     }
 
@@ -293,7 +324,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     }
 
 
-    private void prepareElementToolbar(){
+    private void prepareElementToolbar() {
 
     }
 
@@ -314,9 +345,9 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         MenuItem searchItem = menu.findItem(R.id.action_search);
 
 
-        if(bottomNavigation.getCurrentItem() == 1  || bottomNavigation.getCurrentItem() == 3) {
+        if (bottomNavigation.getCurrentItem() == 1 || bottomNavigation.getCurrentItem() == 3) {
             searchItem.setVisible(false);
-        } else{
+        } else {
             searchItem.setVisible(true);
         }
         SearchManager searchManager = (SearchManager) A3techHomeActivity.this.getSystemService(Context.SEARCH_SERVICE);
@@ -347,10 +378,10 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     public void actionNext(Integer typeAction, Object data) {
         switch (typeAction) {
             case A3techHomeBrowseTechFragment.ACTION_SELECT_CATEGORY_BROWSE_TECH:
-                categorieSelected = (Categorie)data;
-                 Intent mainIntent = new Intent(this, A3techDisplayTechniciensListeActivity.class);
-                 mainIntent.putExtra(A3techHomeActivity.TAG_CATEGORY_SELECTED_FROM_HOME_ACTIVITY,new Gson().toJson(categorieSelected));
-                 startActivityForResult(mainIntent,REQUEST_START_DISPLAY_TECH_ACTIVITY );
+                categorieSelected = (Categorie) data;
+                Intent mainIntent = new Intent(this, A3techDisplayTechniciensListeActivity.class);
+                mainIntent.putExtra(A3techHomeActivity.TAG_CATEGORY_SELECTED_FROM_HOME_ACTIVITY, new Gson().toJson(categorieSelected));
+                startActivityForResult(mainIntent, REQUEST_START_DISPLAY_TECH_ACTIVITY);
                 break;
 
         }
@@ -387,15 +418,16 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
 
         @Override
         protected void onPreExecute() {
-           pd  = CustomProgressDialog.createProgressDialog(
-                   activity,
-                   "");
+            pd = CustomProgressDialog.createProgressDialog(
+                    activity,
+                    "");
             pd.show();
         }
 
         @Override
         protected Boolean doInBackground(Void... arg0) {
             initiInterfaceActivity();
+
             return true;
         }
 
@@ -404,12 +436,13 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
             pd.dismiss();
         }
     }
+
     @Override
     public void onBackPressed() {
-        if(bottomNavigation.getCurrentItem() == 0) {
+        if (bottomNavigation.getCurrentItem() == 0) {
             super.onBackPressed();
             this.finishAffinity();
-        } else{
+        } else {
             bottomNavigation.setCurrentItem(0);
         }
     }

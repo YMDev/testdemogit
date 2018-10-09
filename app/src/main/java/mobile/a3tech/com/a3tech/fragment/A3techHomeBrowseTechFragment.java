@@ -1,5 +1,6 @@
 package mobile.a3tech.com.a3tech.fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -23,6 +24,7 @@ import mobile.a3tech.com.a3tech.manager.CategorieManager;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -94,6 +96,7 @@ public class A3techHomeBrowseTechFragment extends Fragment {
         String connectedUser = prefs.getString("identifiant", "");
         String password = prefs.getString("password", "");
         String lang = prefs.getString("ApplicationLanguage", Constant.LANGUAGE_FRENSH);
+        final  ProgressDialog waitingDialogue =  CustomProgressDialog.createProgressDialog(getActivity(), "");
         CategorieManager.getInstance().listeCategories(null,null, null, null,lang,connectedUser,password, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
@@ -108,6 +111,7 @@ public class A3techHomeBrowseTechFragment extends Fragment {
                 recycleSelectCategory.setLayoutManager(mLayoutManager);
                 recycleSelectCategory.setItemAnimator(new DefaultItemAnimator());
                 recycleSelectCategory.setAdapter(mAdapter);
+                waitingDialogue.dismiss();
             }
 
             @Override
