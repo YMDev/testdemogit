@@ -37,6 +37,7 @@
 
 
     <ImageView
+        android:id="@+id/next_flag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/a3tech_show_next"

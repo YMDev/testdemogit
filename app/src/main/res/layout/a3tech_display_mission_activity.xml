@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.A3techDisplayMissionActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_display_mission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/toolbar_display_mission"
+                layout="@layout/a3tech_toolbar_display_mission"
+                android:visibility="visible" />
+
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/appbar_display_mission">
+
+        <RelativeLayout
+            android:id="@+id/container_detail_mission"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:id="@+id/container_title_mission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/title_mission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="TITRE MISSION"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/container_statut_demande_mission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/container_title_mission"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="25dp"
+                android:background="@color/azul_press">
+
+                <TextView
+                    android:id="@+id/dis_statut_mission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="CLOSED"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/container_description_mission"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/container_statut_demande_mission"
+                android:layout_marginTop="25dp">
+
+                <mobile.a3tech.com.a3tech.view.ExpandableTextView
+                    android:id="@+id/dis_description_mission"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-meduim"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20dp" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/devider_1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/container_description_mission"
+                android:layout_marginTop="25dp"
+                android:background="@color/semi_transparent" />
+
+            <RelativeLayout
+                android:id="@+id/container_temps_montant_mission"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/devider_1"
+                android:layout_marginTop="25dp"
+                android:alpha="0.70">
+
+                <RelativeLayout
+                    android:id="@+id/container_montant_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="20dp">
+
+                    <TextView
+                        android:id="@+id/dis_label_mantant_mission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-meduim"
+                        android:text="@string/valeur_cout_mission"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/dis_cout_mission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/dis_label_mantant_mission"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-meduim"
+                        android:text="2500 MAD"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:background="@color/semi_transparent" />
+
+                <RelativeLayout
+                    android:id="@+id/container_temps_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp">
+
+                    <TextView
+                        android:id="@+id/dis_label_temps_mission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-meduim"
+                        android:text="@string/valeur_temps_mission"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/dis_temps_mission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/dis_label_temps_mission"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-meduim"
+                        android:text="2 jours"
+                        android:textSize="18dp"
+                        android:textStyle="bold" />
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/devider_2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/container_temps_montant_mission"
+                android:layout_marginTop="25dp"
+                android:background="@color/semi_transparent" />
+
+            <RelativeLayout
+                android:id="@+id/container_technicien_mission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/devider_2"
+                android:layout_marginTop="25dp">
+
+                <include
+                    android:id="@+id/dis_technicien"
+                    layout="@layout/a3tech_item_technicien"
+                    android:visibility="visible" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/devider_3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/container_technicien_mission"
+                android:layout_marginTop="25dp"
+                android:background="@color/semi_transparent" />
+
+            <RelativeLayout
+                android:id="@+id/container_category_mission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/devider_3"
+                android:layout_marginTop="25dp">
+
+                <TextView
+                    android:id="@+id/dis_label_category_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="@string/category_mission"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/dis_value_category_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dis_label_category_mission"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="Climatisation"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/devider_4"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_below="@+id/container_category_mission"
+                android:layout_marginTop="25dp"
+                android:background="@color/semi_transparent" />
+
+            <RelativeLayout
+                android:id="@+id/container_commentaire_post_mission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/devider_4"
+                android:layout_marginTop="25dp">
+
+                <TextView
+                    android:id="@+id/dis_label_commentaire_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="@string/category_mission"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/dis_commentaire_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dis_label_commentaire_mission"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="Commentaire Commentaire"
+                    android:textSize="18dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

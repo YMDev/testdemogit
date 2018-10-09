@@ -111,6 +111,7 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_title)).setText(getResources().getString(R.string.save_mission));
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_sub_title)).setText(getResources().getString(R.string.complete_mission_informations));
                 }
+                actionToolbar(false);
                 break;
             case 3:
 

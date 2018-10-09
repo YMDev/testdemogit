@@ -273,7 +273,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
                 .title(user.getNom() + " " + user.getPrenom().substring(0, 1) + ".").
                         icon(BitmapDescriptorFactory.fromBitmap(letterTile)));
         markerUserTmp.setTag(user);
-        markerUserTmp.setSnippet(user.getNom());
+        markerUserTmp.setSnippet(MapUtilities.getAddressFromLatLng(getActivity(),currentPosition).get(0));
         markers.add(markerUserTmp);
         positions.add(currentPosition);
     }

@@ -4,16 +4,18 @@ package mobile.a3tech.com.a3tech.test;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-import com.google.android.gcm.GCMRegistrar;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -24,6 +26,7 @@ import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techLoginActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
+import mobile.a3tech.com.a3tech.images.Image;
 
 /**
  * Created by Suleiman on 03/02/17.
@@ -76,6 +79,15 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
 
         holder.txtTitle.setText(dessert.getName());
         holder.txtDesc.setText(dessert.getDescription());
+
+        if(dessert.getId() == 4  && dessert.getType() == 2){
+            holder.txtDesc.setVisibility(View.GONE);
+            holder.txtTitle.setGravity(Gravity.CENTER_HORIZONTAL);
+            holder.txtTitle.setTextColor(Color.RED);
+            holder.next.setVisibility(View.GONE);
+        }
+
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,12 +119,14 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
 
     protected static class SimpleItemVH extends RecyclerView.ViewHolder {
         TextView txtTitle, txtDesc;
+        ImageView next;
 
         public SimpleItemVH(View itemView) {
             super(itemView);
 
             txtTitle = (TextView) itemView.findViewById(R.id.item_simplevh_txttitle);
             txtDesc = (TextView) itemView.findViewById(R.id.item_simplevh_txtdescription);
+            next = itemView.findViewById(R.id.next_flag);
         }
     }
 }

@@ -659,6 +659,10 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="par_tech">Par </string>
     <string name="display_tech_tab_1">Map</string>
     <string name="display_tech_tab_2">Liste</string>
+    <string name="toolbar_display_mission_title">Details mission</string>
+    <string name="valeur_cout_mission">Montant mission</string>
+    <string name="valeur_temps_mission">Temps d\'intervention</string>
+    <string name="category_mission">Catégorie de la mission</string>
 
 
 </resources>

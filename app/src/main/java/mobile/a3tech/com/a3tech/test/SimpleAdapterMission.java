@@ -24,6 +24,7 @@ import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
+import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.model.Mission;
@@ -110,13 +111,13 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* Intent mainIntent = new Intent(parentActivity, A3techViewEditProfilActivity.class);
-                Bundle bundle = new Bundle();
+             Intent mainIntent = new Intent(parentActivity, A3techDisplayMissionActivity.class);
+  /*              Bundle bundle = new Bundle();
                 bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, "MISSION");
                 bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
                 bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
-                mainIntent.putExtras(bundle);
-                parentActivity.startActivityForResult(mainIntent, 545);*/
+                mainIntent.putExtras(bundle);*/
+                parentActivity.startActivityForResult(mainIntent, 545);
             }
 
         });

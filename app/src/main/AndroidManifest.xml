@@ -171,12 +171,15 @@
         <activity
             android:name=".activity.A3techDisplayTechniciensListeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="xxxxxxxxxxxxxxxxxxxxxxxxxxxx"/>
+            android:name="com.google.android.geo.API_KEY"
+            android:value="xxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
+        <activity android:name=".activity.A3techDisplayMissionActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
     </application>
 
 </manifest>

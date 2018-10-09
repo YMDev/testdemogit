@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -101,7 +102,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
         holder.ratingNumberValue.setText(technicien.getRating());
         holder.numberOfReviews.setText("(+ " + technicien.getNbrReviews() + " avis )");
         GradientDrawable backCheckPhone = (GradientDrawable) ((RelativeLayout)holder.checkPhone.getParent()).getBackground();
-        backCheckPhone.setColorFilter(context.getResources().getColor(R.color.red), PorterDuff.Mode.SRC_IN);
+        backCheckPhone.setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
         Double distance = SphericalUtil.computeDistanceBetween(new LatLng(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude())), new LatLng(Double.valueOf("52.736291655910925"), Double.valueOf("-8.261718750000002")));
         holder.distanceEnKm.setText(Math.round((distance/1000) * 100.0) / 100.0+ " Km de distance");
         holder.container.setOnClickListener(new View.OnClickListener() {
