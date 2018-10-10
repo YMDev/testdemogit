@@ -672,6 +672,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="tape_to_add_review">Taper pour ajouter votre avis de cette mission</string>
     <string name="hope_msg_header_rating_mission">Nous espérons que votre demande de mission a été traitée comme vous l\'avez souhaité</string>
     <string name="add_rating_mission_hint">Dites nous ce que vous penser du travail effectué</string>
+    <string name="close_mission">Clôturer</string>
 
 
 </resources>

@@ -102,6 +102,8 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     public static final String TAG_CONNECTED_USER_LONGETUDE = "UserConnectedLongetude";
 
     private void updateUserConnectedLocation() {
+
+        //TODO request permission
         gps = new GPSTracker(A3techHomeActivity.this);
         if (gps.canGetLocation()) {
             double latitude = gps.getLatitude();

@@ -37,7 +37,7 @@ public class A3techDialogAddReview {
 
     public static String SRC_FROM_DIALOGUE_DISPLAY_TECH = "SRC_FROM_DIALOGUE_DISPLAY_TECH";
     public static int REQUEST_DISPLAY_TECH_FROM_DIALOGUE = 3221;
-	public static Dialog createProfileDialog(final AddReviewParam param) {
+	public static Dialog createProfileDialog(final AddReviewParam param, Avis review) {
 		final  Dialog progressDialog = new Dialog(param.getContext());
         progressDialog.show();
 		LayoutInflater inflater =((Activity)param.getContext()).getLayoutInflater();
@@ -46,8 +46,6 @@ public class A3techDialogAddReview {
 		final TextView mRatingScale = (TextView) content.findViewById(R.id.rating_comment);
 		final  EditText mFeedback = (EditText) content.findViewById(R.id.comment_to_insert);
 		Button mSendFeedback = (Button) content.findViewById(R.id.btnSubmit);
-
-
 		mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 			@Override
 			public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
@@ -73,6 +71,11 @@ public class A3techDialogAddReview {
 				}
 			}
 		});
+		if(review != null){
+			mRatingBar.setRating(Float.valueOf(review.getNote()));
+			mFeedback.setText(review.getAvantage());
+		}
+
 
 		mSendFeedback.setOnClickListener(new View.OnClickListener() {
 			@Override

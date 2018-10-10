@@ -37,6 +37,8 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
     public static final String TAG_MISSION_SELECTED_FROM_HOME_ACTIVITY = "TAG_SELECTED_MISION";
     private Mission selectedMission;
+    private Avis missionReview;
+
     @BindView(R.id.toolbar_display_mission)
     android.support.v7.widget.Toolbar toolbarDisplayMission;
     @BindView(R.id.title_mission)
@@ -82,6 +84,8 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
     @BindView(R.id.container_rating_mission)
     RelativeLayout containerDisplayReview;
+    @BindView(R.id.edit_review_mission)
+    ImageView btnEditReview;
 
 
 
@@ -158,7 +162,16 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         containerAddReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                A3techDialogAddReview.createProfileDialog(A3techDisplayMissionActivity.this);
+                A3techDialogAddReview.createProfileDialog(A3techDisplayMissionActivity.this, null);
+            }
+        });
+
+        btnEditReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(missionReview != null){
+                    A3techDialogAddReview.createProfileDialog(A3techDisplayMissionActivity.this, missionReview);
+                }
             }
         });
         avatare.setImageBitmap(ImagesStuffs.getProfileDefaultPicture(A3techDisplayMissionActivity.this, selectedMission.getTechnicien().getNom()));
@@ -166,11 +179,14 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
     @Override
     public void actionsubmitt(Avis review) {
+        missionReview = review;
         selectedMission.setReviewMission(review);
         containerAddReview.setVisibility(View.GONE);
         containerDisplayReview.setVisibility(View.VISIBLE);
+        ratingMission.setVisibility(View.VISIBLE);
         ratingMission.setRating(Float.valueOf(review.getNote()));
         commentaire.setText(review.getAvantage());
+        btnEditReview.setVisibility(View.VISIBLE);
         A3techCustomToastDialog.createToastDialog(getContext(),"Merci",Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
     }
 

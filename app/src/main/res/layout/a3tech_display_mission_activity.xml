@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/white"
     tools:context=".activity.A3techDisplayMissionActivity">
 
@@ -113,7 +113,8 @@
                     android:id="@+id/container_montant_mission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true">
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="20dp">
 
                     <TextView
                         android:id="@+id/dis_label_mantant_mission"
@@ -149,7 +150,8 @@
                     android:id="@+id/container_temps_mission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true">
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp">
 
                     <TextView
                         android:id="@+id/dis_label_temps_mission"
@@ -265,6 +267,14 @@
                     android:text="@string/commentaire_post_mission"
                     android:textSize="12dp" />
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edit_review_mission"
+                    android:visibility="gone"
+                    android:src="@drawable/a3tech_review_technicien"
+                    android:layout_alignParentRight="true"/>
+
                 <RelativeLayout
                     android:id="@+id/container_action_add_rating_mission"
                     android:layout_width="wrap_content"
@@ -324,7 +334,8 @@
                         android:fontFamily="sans-serif-meduim"
                         android:text="Commentaire Commentaire"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="18dp"
+                        android:gravity="center"/>
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -402,7 +413,26 @@
                     android:textSize="18dp" />
             </RelativeLayout>
 
-
         </RelativeLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/container_actions_mission"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary">
+
+        <TextView
+            android:id="@+id/dis_close_mission"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-meduim"
+            android:text="@string/close_mission"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textSize="18dp"
+            android:textStyle="bold"/>
+    </RelativeLayout>
 </RelativeLayout>
