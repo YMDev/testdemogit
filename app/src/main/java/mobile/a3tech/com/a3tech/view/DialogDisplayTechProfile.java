@@ -77,7 +77,6 @@ public class DialogDisplayTechProfile {
                 bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
                 mainIntent.putExtras(bundle);
                 ((Activity)mContext).startActivityForResult(mainIntent, req);
-
                 progressDialog.dismiss();
             }
         });
@@ -85,12 +84,11 @@ public class DialogDisplayTechProfile {
             @Override
             public void onClick(View view) {
                 mission.setTechnicien(user);
-                int req = 0;
                 if(isFromAddmission){
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH,new Gson().toJson(mission));
-                    ((Activity)mContext).setResult(Activity.RESULT_OK, resultIntent);
-                    ((Activity)mContext).finish();
+                    ((A3techAddMissionActivity)mContext).setResult(Activity.RESULT_OK, resultIntent);
+                    ((A3techAddMissionActivity)mContext).finish();
                 }else{
                     ((A3techDisplayTechniciensListeActivity)mContext).nextStepAfterSelectTechnicien(mission);
                 }

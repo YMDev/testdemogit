@@ -3,6 +3,8 @@ package mobile.a3tech.com.a3tech.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 public class User implements  Parcelable {
@@ -35,6 +37,7 @@ public class User implements  Parcelable {
 
 
 	public String getRating() {
+		if(StringUtils.isBlank(rating)) rating = "0";
 		return rating;
 	}
 

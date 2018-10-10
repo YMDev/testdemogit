@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container_item_tech"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:padding="20dp"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     android:clickable="true"
     android:orientation="vertical"
     tools:background="@color/white">
@@ -13,9 +14,9 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/subContainer_tech"
         android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp">
+        android:layout_marginBottom="6dp"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="15dp"
+                android:layout_marginRight="15dp"
                 app:cardCornerRadius="7dp"
                 app:cardElevation="2dp">
 
@@ -50,7 +51,6 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_marginBottom="20dp"
                 android:layout_toRightOf="@id/avatare_technicien_card"
                 android:orientation="vertical">
 
@@ -58,7 +58,6 @@
                     android:id="@+id/name_tech"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:alpha="0.77"
                     android:fontFamily="sans-serif-meduim"
                     android:textColor="@color/black"
                     android:textSize="15dp" />
@@ -126,7 +125,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="10dp"
-                        android:alpha="0.77"
                         android:fontFamily="sans-serif-meduim"
                         android:text="@string/nbr_intervention"
                         android:textColor="@color/black"
@@ -156,126 +154,17 @@
                             android:textColor="@color/black"
                             android:textSize="13dp" />
                     </RelativeLayout>
-
-
-                </RelativeLayout>
-
-
-            </LinearLayout>
-            <RelativeLayout
-                android:id="@+id/container_tech_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginLeft="10dp"
-                android:layout_alignParentLeft="true"
-                >
-                <TextView
-                    android:id="@+id/category_tech"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-meduim"
-                    android:text="Informatique"
-                    android:textColor="@color/black"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    android:alpha="0.77"/>
-            </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/cotainer_indicators"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/disponibilite_container"
-                    android:layout_width="22dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/a3tech_back_circular_colored_layout">
-
-                    <ImageView
-                        android:id="@+id/disponibilite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/a3tech_dispo_white_indic" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/check_phone_container"
-                    android:layout_width="22dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/a3tech_back_circular_colored_layout">
-
-                    <ImageView
-                        android:id="@+id/check_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/a3tech_phone_white_indic" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/check_mail_container"
-                    android:layout_width="22dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/a3tech_back_circular_colored_layout">
-
-                    <ImageView
-                        android:id="@+id/check_mail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/a3tech_check_mail_white_indic" />
                 </RelativeLayout>
             </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/container_actions"
+            <ImageView
+                android:id="@+id/add_review"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/container_informations_user"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="10dp">
-
-                <Button
-                    android:id="@+id/select_tech"
-                    android:layout_width="90dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/a3tech_btn_create_account_back"
-                    android:text="Emboucher"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="12dp" />
-
-                <Button
-                    android:id="@+id/display_profile"
-                    android:layout_width="90dp"
-                    android:layout_height="20dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/a3tech_btn_create_account_back"
-                    android:text="Consulter profile"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="12dp" />
-
-            </RelativeLayout>
-
-
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/a3tech_review_technicien" />
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

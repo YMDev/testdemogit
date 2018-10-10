@@ -1,5 +1,6 @@
 package mobile.a3tech.com.a3tech.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -23,6 +24,12 @@ import java.util.NoSuchElementException;
 
 public class ImagesStuffs {
 
+
+    public static Bitmap getProfileDefaultPicture(Context context, String name){
+        final LetterTileProvider tileProvider = new LetterTileProvider(context);
+        final Bitmap letterTile = tileProvider.getLetterTile(name, name, 88, 88);
+        return letterTile;
+    }
     public static  byte[] bitMapToBytes(Bitmap photo){
         if(photo != null){
             ByteArrayOutputStream stream = new ByteArrayOutputStream();

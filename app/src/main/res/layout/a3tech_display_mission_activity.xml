@@ -42,7 +42,8 @@
             <RelativeLayout
                 android:id="@+id/container_title_mission"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
 
                 <TextView
                     android:id="@+id/title_mission"
@@ -60,15 +61,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/container_title_mission"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:background="@color/azul_press">
 
                 <TextView
                     android:id="@+id/dis_statut_mission"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="sans-serif-meduim"
                     android:text="CLOSED"
                     android:textAllCaps="true"
@@ -80,26 +80,25 @@
             <RelativeLayout
                 android:id="@+id/container_description_mission"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/container_statut_demande_mission"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="15dp">
 
                 <mobile.a3tech.com.a3tech.view.ExpandableTextView
                     android:id="@+id/dis_description_mission"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-meduim"
-                    android:textAllCaps="true"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="20dp" />
+                    android:textColor="@color/black"
+                    android:textSize="15dp" />
             </RelativeLayout>
 
             <View
                 android:id="@+id/devider_1"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_below="@+id/container_description_mission"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:background="@color/semi_transparent" />
 
             <RelativeLayout
@@ -107,15 +106,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_below="@+id/devider_1"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:alpha="0.70">
 
                 <RelativeLayout
                     android:id="@+id/container_montant_mission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="20dp">
+                    android:layout_alignParentLeft="true">
 
                     <TextView
                         android:id="@+id/dis_label_mantant_mission"
@@ -123,6 +121,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-meduim"
                         android:text="@string/valeur_cout_mission"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
@@ -130,16 +129,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dis_label_mantant_mission"
+                        android:layout_centerInParent="true"
                         android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-meduim"
                         android:text="2500 MAD"
-                        android:textSize="18dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
 
                 <View
-                    android:layout_width="2dp"
+                    android:layout_width="1dp"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:background="@color/semi_transparent" />
@@ -148,8 +149,7 @@
                     android:id="@+id/container_temps_mission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="20dp">
+                    android:layout_alignParentRight="true">
 
                     <TextView
                         android:id="@+id/dis_label_temps_mission"
@@ -157,6 +157,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-meduim"
                         android:text="@string/valeur_temps_mission"
+                        android:textColor="@color/black"
                         android:textSize="12dp" />
 
                     <TextView
@@ -164,10 +165,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dis_label_temps_mission"
+                        android:layout_centerInParent="true"
                         android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-meduim"
                         android:text="2 jours"
-                        android:textSize="18dp"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
 
                 </RelativeLayout>
@@ -176,30 +179,41 @@
             <View
                 android:id="@+id/devider_2"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_below="@+id/container_temps_montant_mission"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:background="@color/semi_transparent" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/container_technicien_mission"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/devider_2"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+
+                    android:id="@+id/dis_label_tech"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="6dp"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="@string/label_technicien"
+                    android:textSize="14dp" />
 
                 <include
                     android:id="@+id/dis_technicien"
-                    layout="@layout/a3tech_item_technicien"
+                    layout="@layout/a3tech_technicien_rubrique_display_mission"
                     android:visibility="visible" />
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:id="@+id/devider_3"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_below="@+id/container_technicien_mission"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:background="@color/semi_transparent" />
 
             <RelativeLayout
@@ -207,7 +221,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/devider_3"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:id="@+id/dis_label_category_mission"
@@ -224,17 +238,16 @@
                     android:layout_below="@id/dis_label_category_mission"
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-meduim"
-                    android:text="Climatisation"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
             </RelativeLayout>
 
             <View
                 android:id="@+id/devider_4"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"
+                android:layout_height="1dp"
                 android:layout_below="@+id/container_category_mission"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="15dp"
                 android:background="@color/semi_transparent" />
 
             <RelativeLayout
@@ -242,27 +255,153 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/devider_4"
-                android:layout_marginTop="25dp">
+                android:layout_marginTop="15dp">
 
                 <TextView
                     android:id="@+id/dis_label_commentaire_mission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-meduim"
-                    android:text="@string/category_mission"
+                    android:text="@string/commentaire_post_mission"
+                    android:textSize="12dp" />
+
+                <RelativeLayout
+                    android:id="@+id/container_action_add_rating_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_below="@id/dis_label_commentaire_mission"
+                    android:background="@drawable/ripple_effect_btn"
+                    android:visibility="visible">
+
+                    <ImageView
+                        android:id="@+id/add_review_for_mission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/a3tech_post_demande_mission" />
+
+                    <TextView
+                        android:id="@+id/label_demande_add_review_mission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerHorizontal="true"
+                        android:fontFamily="sans-serif-meduim"
+                        android:text="@string/tape_to_add_review"
+                        android:textColor="@color/black"
+                        android:textSize="16dp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/container_rating_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@id/dis_label_commentaire_mission"
+                    android:visibility="gone">
+
+                    <RatingBar
+                        android:id="@+id/rating_mission"
+                        style="?android:attr/ratingBarStyleIndicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="10dp"
+                        android:isIndicator="true"
+                        android:numStars="5"
+                        android:progressTint="@color/laranja_claro"
+                        android:stepSize="1" />
+
+                    <mobile.a3tech.com.a3tech.view.ExpandableTextView
+                        android:id="@+id/dis_commentaire_mission"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/rating_mission"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="sans-serif-meduim"
+                        android:text="Commentaire Commentaire"
+                        android:textColor="@color/black"
+                        android:textSize="18dp" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+            <View
+                android:id="@+id/devider_5"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/container_commentaire_post_mission"
+                android:layout_marginTop="15dp"
+                android:background="@color/semi_transparent" />
+
+            <RelativeLayout
+                android:id="@+id/container_date_mission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/devider_5"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/dis_label_date_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="@string/date_mission"
                     android:textSize="12dp" />
 
                 <TextView
-                    android:id="@+id/dis_commentaire_mission"
+                    android:id="@+id/dis_date_mission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/dis_label_commentaire_mission"
+                    android:layout_below="@id/dis_label_date_mission"
                     android:layout_marginTop="10dp"
                     android:fontFamily="sans-serif-meduim"
                     android:text="Commentaire Commentaire"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
             </RelativeLayout>
+
+
+            <View
+                android:id="@+id/devider_6"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/container_date_mission"
+                android:layout_marginTop="15dp"
+                android:background="@color/semi_transparent" />
+
+            <RelativeLayout
+                android:id="@+id/container_adresse_mission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/devider_6"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="40dp">
+
+                <TextView
+                    android:id="@+id/dis_label_adresse_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="@string/adresse_mission"
+                    android:textSize="12dp" />
+
+                <TextView
+                    android:id="@+id/dis_adresse_mission"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/dis_label_adresse_mission"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="Commentaire Commentaire"
+                    android:textColor="@color/black"
+                    android:textSize="18dp" />
+            </RelativeLayout>
+
 
         </RelativeLayout>
     </ScrollView>

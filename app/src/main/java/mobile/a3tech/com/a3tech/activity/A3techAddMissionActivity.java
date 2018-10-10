@@ -166,7 +166,13 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
                 break;
             case A3techPostMissionFragment.ACTION_SAVE_MISSION_INFO:
                 //Categorie Mission selectionnée
-                progressBarchangeSmouthly(100);
+               runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        progressBarchangeSmouthly(100);
+                    }
+                });
                 Mission mission = (Mission)data;
                 updateAppbarLayout(3);
                 ((TextView)toolbarAffecterTech.findViewById(R.id.big_title)).setText(mission.getCategoryMission().getLibelle());

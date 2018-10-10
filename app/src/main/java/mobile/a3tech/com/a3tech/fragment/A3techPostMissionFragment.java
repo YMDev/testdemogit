@@ -27,6 +27,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -304,13 +306,26 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         }
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             String connectedUser = prefs.getString("identifiant", "");
-            mission.setTitre(titleMission.getText().toString());
+            if(StringUtils.isBlank(titleMission.getText().toString())){
+                if(StringUtils.isNoneBlank(categoryLibelle)) {
+                    mission.setTitre(getString(R.string.mission_default_title)+ " "+categoryLibelle);
+                }else{
+                    mission.setTitre(getString(R.string.mission_default_title_without_cat));
+                }
+            }
+           else{
+                mission.setTitre(titleMission.getText().toString());
+            }
             mission.setDateCreation(DateStuffs.dateToString(DateStuffs.TIME_FORMAT, new Date()));
+            mission.setDateIntervention(dateIntervension.getText().toString());
             mission.setOriginator(connectedUser);
             mission.setLatitude(String.valueOf(latitude));
             mission.setLongitude(String.valueOf(longitude));
             mission.setAdresse(locationMission.getText().toString());
+            mission.setCatDescription(descriptionMission.getText().toString());
+            mission.setDiscreptionMission(descriptionMission.getText().toString());
         return mission;
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

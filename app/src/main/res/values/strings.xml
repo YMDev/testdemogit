@@ -663,6 +663,15 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="valeur_cout_mission">Montant mission</string>
     <string name="valeur_temps_mission">Temps d\'intervention</string>
     <string name="category_mission">Catégorie de la mission</string>
+    <string name="label_technicien">Technicien</string>
+    <string name="commentaire_post_mission">Commentaire post mission</string>
+    <string name="mission_default_title">Mission en</string>
+    <string name="mission_default_title_without_cat">Mission</string>
+    <string name="date_mission">Date d\'intervention</string>
+    <string name="adresse_mission">Lieu d\'intervention</string>
+    <string name="tape_to_add_review">Taper pour ajouter votre avis de cette mission</string>
+    <string name="hope_msg_header_rating_mission">Nous espérons que votre demande de mission a été traitée comme vous l\'avez souhaité</string>
+    <string name="add_rating_mission_hint">Dites nous ce que vous penser du travail effectué</string>
 
 
 </resources>

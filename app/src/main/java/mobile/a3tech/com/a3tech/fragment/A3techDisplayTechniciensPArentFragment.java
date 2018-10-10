@@ -60,7 +60,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
     private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
     private BottomBarAdapter pagerAdapter;
-
+    private ProgressDialog waitingDialogue;
     private OnFragmentInteractionListener mListener;
 
     public A3techDisplayTechniciensPArentFragment() {
@@ -123,6 +123,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_display_techniciens_parent, container, false);
+        waitingDialogue = CustomProgressDialog.createProgressDialog(getActivity(), "");
         setupViewPager(viewFr);
         bottomNavigation = (AHBottomNavigation) viewFr.findViewById(R.id.display_tech_bottom_navigation);
         bottomNavigation.setTranslucentNavigationEnabled(false);
@@ -136,34 +137,35 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
                 if (!wasSelected)
                     viewPager.setCurrentItem(position);
 
-                if(position == 1){
-                    if(mListener != null){
+                if (position == 1) {
+                    if (mListener != null) {
                         mListener.actionToolbar(true);
                     }
-                }else{
-                    if(mListener != null){
+                } else {
+                    if (mListener != null) {
                         mListener.actionToolbar(false);
                     }
                 }
                 return true;
             }
         });
+        getListOFTechToDisplay();
         return viewFr;
     }
 
     private void setupViewPager(View rootView) {
         viewPager = (NoSwipePager) rootView.findViewById(R.id.display_tech_view_pager_navigation);
         viewPager.setPagingEnabled(false);
-        getListOFTechToDisplay();
+
 
     }
 
-    public void deleteMapInFragment(){
+    public void deleteMapInFragment() {
         ((A3techDisplayTechInMapFragment) pagerAdapter.getItem(1)).destroyMap();
     }
 
     private void getListOFTechToDisplay() {
-        final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
+
         //TODO get location of connected user not mission
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
@@ -179,13 +181,25 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
                 pagerAdapter.addFragments(A3techDisplayTechInMapFragment.newInstance(mission, listeOfTechToDisplay));
 
                 viewPager.setAdapter(pagerAdapter);
-                dd.dismiss();
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        waitingDialogue.dismiss();
+                    }
+                });
                 return;
             }
 
             @Override
             public void dataLoadingError(int errorCode) {
-                dd.dismiss();
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        waitingDialogue.dismiss();
+                    }
+                });
             }
         });
     }
@@ -279,6 +293,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+
         void actionToolbar(boolean hide);
     }
 }

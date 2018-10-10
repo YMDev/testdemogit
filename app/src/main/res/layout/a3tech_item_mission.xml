@@ -5,8 +5,8 @@
     android:id="@+id/container_item_tech"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true"
     android:orientation="vertical"
+    android:foreground="?android:attr/selectableItemBackground"
     tools:background="@color/white">
 
     <View

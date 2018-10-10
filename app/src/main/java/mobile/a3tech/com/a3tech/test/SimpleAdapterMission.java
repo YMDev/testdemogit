@@ -74,44 +74,47 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         if (missionTmp == null) return;
 
 
-        Date dateIntervention = DateStuffs.stringToDate(missionTmp.getDateCreation(), DateStuffs.SIMPLE_DATE_FORMAT);
-        if (dateIntervention != null) {
-            String dateInterventionAlphaSimple = DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, dateIntervention);
-            String timeIntervention = DateStuffs.dateToString(DateStuffs.HOURS_MINUTES_FORMAT, dateIntervention);
-            holder.dateMission.setText(context.getText(R.string.intervention_prevue_le) + " " + dateInterventionAlphaSimple + " " + context.getString(R.string.a_date_time) + " " + timeIntervention);
-
-        }
-        else
+        if (missionTmp.getDateIntervention() != null) {
+            Date dateIntervention = DateStuffs.stringToDate(missionTmp.getDateIntervention(), DateStuffs.TIME_FORMAT);
+            if (dateIntervention != null) {
+                String dateInterventionAlphaSimple = DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, dateIntervention);
+                String timeIntervention = DateStuffs.dateToString(DateStuffs.HOURS_MINUTES_FORMAT, dateIntervention);
+                holder.dateMission.setText(context.getText(R.string.intervention_prevue_le) + " " + dateInterventionAlphaSimple + " " + context.getString(R.string.a_date_time) + " " + timeIntervention);
+                holder.dateMission.setVisibility(View.VISIBLE);
+            } else {
+                holder.dateMission.setVisibility(View.GONE);
+            }
+        } else
             holder.dateMission.setVisibility(View.GONE);
 
-        if(missionTmp.getTitre() != null){
+        if (missionTmp.getTitre() != null) {
             holder.titreMission.setText(missionTmp.getTitre());
 
-        }else
+        } else
             holder.titreMission.setVisibility(View.GONE);
 
-        if(missionTmp.getAdresse() != null){
+        if (missionTmp.getAdresse() != null) {
             holder.adresse.setText(missionTmp.getAdresse());
 
-        }else
+        } else
             holder.adresse.setVisibility(View.GONE);
 
-        if(missionTmp.getTechnicien() != null){
+        if (missionTmp.getTechnicien() != null) {
             String nameTech = "";
             String nameAbrTech = missionTmp.getTechnicien().getNom();
             String pnameAbrTech = missionTmp.getTechnicien().getPrenom();
 
-            if(pnameAbrTech != null && pnameAbrTech.length() != 0){
-                nameTech = nameAbrTech+" "+pnameAbrTech.substring(0,1).toUpperCase()+".";
+            if (pnameAbrTech != null && pnameAbrTech.length() != 0) {
+                nameTech = nameAbrTech + " " + pnameAbrTech.substring(0, 1).toUpperCase() + ".";
             }
-            holder.technicien.setText(context.getText(R.string.par_tech)+" "+ nameTech);
-        }else
+            holder.technicien.setText(context.getText(R.string.par_tech) + " " + nameTech);
+        } else
             holder.technicien.setVisibility(View.GONE);
 
         holder.container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-             Intent mainIntent = new Intent(parentActivity, A3techDisplayMissionActivity.class);
+                Intent mainIntent = new Intent(parentActivity, A3techDisplayMissionActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString(A3techDisplayMissionActivity.TAG_MISSION_SELECTED_FROM_HOME_ACTIVITY, new Gson().toJson(missionTmp));
                 mainIntent.putExtras(bundle);

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <TextView
+        android:id="@+id/header_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/hope_msg_header_rating_mission"
+        android:textSize="16dp"
+        android:textStyle="italic" />
+
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/header_label"
+        android:layout_marginTop="20dp"
+        android:numStars="5"
+        android:stepSize="1"
+        android:progressTint="@color/laranja_claro"/>
+
+    <TextView
+        android:id="@+id/rating_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/ratingBar"
+        android:layout_marginTop="10dp"
+        android:text="Awesome. I love it"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/comment_to_insert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rating_comment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:gravity="top"
+        android:hint="@string/add_rating_mission_hint"
+        android:inputType="textMultiLine"
+        android:lines="6" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/comment_to_insert"
+        android:layout_marginTop="10dp"
+        android:background="#e57373"
+        android:text="Send feedback"
+        android:textColor="@android:color/white" />
+
+</RelativeLayout>

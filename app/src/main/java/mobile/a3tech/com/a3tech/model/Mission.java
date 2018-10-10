@@ -65,6 +65,8 @@ public class Mission implements Parcelable {
 	private List<Offre> offres = new ArrayList<Offre>();
 	private String typeTransaction ;
 	private String titre ;
+	private String dateIntervention;
+	private Avis reviewMission;
 
 	public User getTechnicien() {
 		return technicien;
@@ -81,6 +83,7 @@ public class Mission implements Parcelable {
 	private String checkphone ;
 	private Categorie categoryMission;
 	private User technicien;
+	private String discreptionMission;
 
 	public Categorie getCategoryMission() {
 		return categoryMission;
@@ -374,6 +377,30 @@ public class Mission implements Parcelable {
 
 	public void setEtatarticle(String etatarticle) {
 		this.etatarticle = etatarticle;
+	}
+
+	public String getDiscreptionMission() {
+		return discreptionMission;
+	}
+
+	public void setDiscreptionMission(String discreptionMission) {
+		this.discreptionMission = discreptionMission;
+	}
+
+	public String getDateIntervention() {
+		return dateIntervention;
+	}
+
+	public void setDateIntervention(String dateIntervention) {
+		this.dateIntervention = dateIntervention;
+	}
+
+	public Avis getReviewMission() {
+		return reviewMission;
+	}
+
+	public void setReviewMission(Avis reviewMission) {
+		this.reviewMission = reviewMission;
 	}
 
 	@Override
