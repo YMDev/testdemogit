@@ -104,7 +104,7 @@ public class A3techDisplayTechniciensFragment extends Fragment {
         recyclerViewTechnicien.setLayoutManager(linearLayoutManager);
         Mission mission = new Mission();
         mission.setCategoryMission(categorieSelected);
-        SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),new ArrayList(), getActivity(), mission);
+        SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),new ArrayList(), getActivity(), mission, recyclerViewTechnicien);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
         recyclerViewTechnicien.setLayoutManager(mLayoutManager);
         recyclerViewTechnicien.setItemAnimator(new DefaultItemAnimator());
@@ -168,7 +168,7 @@ public class A3techDisplayTechniciensFragment extends Fragment {
                     List<User> listeRetour = (List<User>) data;
                     Mission mission = new Mission();
                     mission.setCategoryMission(categorieSelected);
-                    SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),listeRetour, getActivity(), mission);
+                    SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),listeRetour, getActivity(), mission, recyclerViewTechnicien);
                     RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
                     recyclerViewTechnicien.setLayoutManager(mLayoutManager);
                     recyclerViewTechnicien.setItemAnimator(new DefaultItemAnimator());

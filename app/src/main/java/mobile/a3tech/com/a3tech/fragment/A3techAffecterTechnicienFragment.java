@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -45,6 +46,7 @@ public class A3techAffecterTechnicienFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private static final String ARG_MISSION_OBJECT = "ARG_MISSION_OBJECT";
     private static final String ARG_LIST_TECH = "ARG_LIST_TECH";
+    private static final int PAGE_SIZE = 20;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -103,56 +105,49 @@ public class A3techAffecterTechnicienFragment extends Fragment {
     }
 
     int start = 0;
-    int end = 20;
-    private EndlessRecyclerViewScrollListener scrollListener;
+    int end = PAGE_SIZE - 1;
+    SimpleAdapterTechnicien adapter;
+    private LinearLayoutManager mLayoutManager;
+    protected Handler handler;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_affecter_technicien, container, false);
         recyclerViewTechnicien = viewFr.findViewById(R.id.recycle_techniciens);
-         getListOFTechToDisplay(start, end);
-
+        handler = new Handler();
         final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerViewTechnicien.setLayoutManager(mLayoutManager);
-        SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(), listeOfTechToDisplay, getActivity(), mission);
+        adapter = new SimpleAdapterTechnicien(getActivity(), listeOfTechToDisplay, getActivity(), mission,recyclerViewTechnicien);
         recyclerViewTechnicien.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTechnicien.setAdapter(adapter);
-        scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
-            @Override
-            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
-                loadNextDataFromApi(page);
-            }
-        };
         // Adds the scroll listener to RecyclerView
-        recyclerViewTechnicien.addOnScrollListener(scrollListener);
+        getListOFTechToDisplay(start, end, CustomProgressDialog.createProgressDialog(getActivity(), ""));
+        adapter.setOnLoadMoreListener(new SimpleAdapterTechnicien.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                //add null , so the adapter will check view_type and show progress bar at bottom
+                adapter.getListObject().add(null);
 
+                recyclerViewTechnicien.post(new Runnable() {
+                    public void run() {
+                        adapter.notifyItemInserted(adapter.getListObject().size() - 1);
+                    }
+                });
+                start = start + PAGE_SIZE;
+                end = start + PAGE_SIZE -1;
+                getListOFTechToDisplay(start, end, null);
+
+
+            }
+        });
         return viewFr;
     }
 
-
-    public void loadNextDataFromApi(int offset) {
-        // Send an API request to retrieve appropriate paginated data
-        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
-        //  --> Deserialize and construct new model objects from the API response
-        //  --> Append the new data objects to the existing set of items inside the array of items
-        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
-
-
-            start = start+20;
-            end = end+20;
-            getListOFTechToDisplay(start, end);
-
-
-    }
-
-    ProgressDialog waitingDialogue;
-
-    private void getListOFTechToDisplay(final int start, final int end) {
-        waitingDialogue = CustomProgressDialog.createProgressDialog(getActivity(), "");
+    private void getListOFTechToDisplay(final int start, final int end,final ProgressDialog dd) {
         //TODO get location of connected user not mission
+
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
         String latitudeUSer = prefs.getString(A3techHomeActivity.TAG_CONNECTED_USER_LATITUDE, "");
@@ -160,34 +155,52 @@ public class A3techAffecterTechnicienFragment extends Fragment {
         UserManager.getInstance().getTechnicienNearLocation(latitudeUSer, longetudeUSer, mission.getAdresse(), start, end, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
-                listeOfTechToDisplay = (List<User>) data;
-                if (listeOfTechToDisplay == null) listeOfTechToDisplay = new ArrayList<>();
-                ((SimpleAdapterTechnicien) recyclerViewTechnicien.getAdapter()).addListe(listeOfTechToDisplay);
-                recyclerViewTechnicien.getAdapter().notifyDataSetChanged();
-                getActivity().runOnUiThread(new Runnable() {
+                List<User> reslisteOfTechToDisplay = (List<User>) data;
+                if (start > 0) {
+                    adapter.getListObject().remove(adapter.getListObject().size() - 1);
+
+                    recyclerViewTechnicien.post(new Runnable() {
+                        public void run() {
+                            adapter.notifyItemRemoved(adapter.getListObject().size());
+                        }
+                    });
+                }
+
+                if(reslisteOfTechToDisplay != null && reslisteOfTechToDisplay.size() != 0) {
+                    for (User userTmp:reslisteOfTechToDisplay
+                         ) {
+                        adapter.getListObject().add(userTmp);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                adapter.notifyItemInserted(adapter.getListObject().size());
+
+
+                            }
+                        });
+                    }
+                }
+                adapter.setLoaded();
+
+               /* getActivity().runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
-                        waitingDialogue.dismiss();
+
                     }
-                });
+                });*/
+
+
+               if(dd != null) dd.dismiss();
                 return;
             }
 
             @Override
             public void dataLoadingError(int errorCode) {
-                getActivity().runOnUiThread(new Runnable() {
 
-                    @Override
-                    public void run() {
-                        waitingDialogue.dismiss();
-                    }
-                });
             }
         });
     }
-
-
 
 
     // TODO: Rename method, update argument and hook method into UI event

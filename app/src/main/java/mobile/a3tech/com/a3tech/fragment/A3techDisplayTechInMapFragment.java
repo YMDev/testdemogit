@@ -1,13 +1,16 @@
 package mobile.a3tech.com.a3tech.fragment;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -39,14 +42,18 @@ import java.util.List;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
+import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
+import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.utils.MapUtilities;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
+import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.DialogDisplayTechProfile;
 
 /**
@@ -62,7 +69,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_MISSION_SELECTED = "param1";
     private static final String ARG_LIST_TECH = "ARG_LIST_TECH";
-    private List<User> listeOfTechToDisplay;
+    private List<User> listeOfTechToDisplay = new ArrayList<>();
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -125,6 +132,9 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
                 requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
             }
         }
+
+        getListOFTechToDisplay(0,10, CustomProgressDialog.createProgressDialog(getActivity(), ""));
+
         FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
         mMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_tech);
         if (mMapFragment == null) {
@@ -132,9 +142,32 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
             fm.beginTransaction().replace(R.id.map_tech, mMapFragment).commit();
         }
         refreshMap();
-
-
         return viewFr;
+    }
+
+
+
+    private void getListOFTechToDisplay(final int start, final int end,final ProgressDialog dd) {
+        //TODO get location of connected user not mission
+        //TODO add filter
+
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
+        String latitudeUSer = prefs.getString(A3techHomeActivity.TAG_CONNECTED_USER_LATITUDE, "");
+        String longetudeUSer = prefs.getString(A3techHomeActivity.TAG_CONNECTED_USER_LONGETUDE, "");
+        UserManager.getInstance().getTechnicienNearLocation(latitudeUSer, longetudeUSer, mission.getAdresse(), start, end, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                listeOfTechToDisplay = (List<User>) data;
+                if(dd != null) dd.dismiss();
+                return;
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+
+            }
+        });
     }
 
 

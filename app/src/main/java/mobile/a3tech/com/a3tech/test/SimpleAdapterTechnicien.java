@@ -13,12 +13,14 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -44,8 +46,18 @@ import mobile.a3tech.com.a3tech.utils.StringStuffs;
  * Created by Suleiman on 03/02/17.
  */
 
-public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterTechnicien.SimpleItemVH> {
+public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
 
+    private final int VIEW_ITEM = 1;
+    private final int VIEW_PROG = 0;
+
+
+
+
+    private int visibleThreshold = 5;
+    private int lastVisibleItem, totalItemCount;
+    private boolean loading;
+    private OnLoadMoreListener onLoadMoreListener;
     //  Data
     private List<User> listeObjects = new ArrayList<>();
 
@@ -61,73 +73,134 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
         this.context = context;
     }
 
-    public SimpleAdapterTechnicien(Context context, List objectMenu, Activity parent, Mission vMission) {
+    public SimpleAdapterTechnicien(Context context, List objectMenu, Activity parent, Mission vMission, RecyclerView recyclerView) {
         this.context = context;
         listeObjects = objectMenu;
         parentActivity = parent;
         mission = vMission;
-    }
 
 
-    @Override
-    public SimpleItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.a3tech_item_technicien, parent, false);
+        if (recyclerView.getLayoutManager() instanceof LinearLayoutManager) {
 
-        return new SimpleItemVH(v);
-    }
+            final LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView
+                    .getLayoutManager();
 
-    @Override
-    public void onBindViewHolder(SimpleItemVH holder, int position) {
-        if(position == listeObjects.size()){
-            final float scale = context.getResources().getDisplayMetrics().density;
-            int pixels = (int) (70 * scale + 0.5f);
-            holder.container.getLayoutParams().height = pixels;
-            holder.container.setVisibility(View.INVISIBLE);
-            return;
+
+            recyclerView
+                    .addOnScrollListener(new RecyclerView.OnScrollListener() {
+                        @Override
+                        public void onScrolled(RecyclerView recyclerView,
+                                               int dx, int dy) {
+                            super.onScrolled(recyclerView, dx, dy);
+
+                            totalItemCount = linearLayoutManager.getItemCount();
+                            lastVisibleItem = linearLayoutManager
+                                    .findLastVisibleItemPosition();
+                            if (!loading
+                                    && totalItemCount <= (lastVisibleItem + visibleThreshold)) {
+                                // End has been reached
+                                // Do something
+                                if (onLoadMoreListener != null) {
+                                    onLoadMoreListener.onLoadMore();
+                                }
+                                loading = true;
+                            }
+                        }
+                    });
         }
-        final User technicien = listeObjects.get(position);
-        if (technicien == null) return;
+    }
+    public void setLoaded() {
+        loading = false;
+    }
+    public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
+        this.onLoadMoreListener = onLoadMoreListener;
+    }
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        holder.nameTech.setText(technicien.getNom() + " " + technicien.getPrenom().substring(0, 1) + ".");
-       /* String adresseFromGpsLocation = StringStuffs.getAdresseFromGpsLocation(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude()),context);
-      */
-        final LetterTileProvider tileProvider = new LetterTileProvider(context);
-        final Bitmap letterTile = tileProvider.getLetterTile(technicien.getNom(), technicien.getNom(), 88, 88);
+            RecyclerView.ViewHolder vh;
+            if (viewType == VIEW_ITEM) {
+                View v = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.a3tech_item_technicien, parent, false);
 
-        holder.adresse.setText(technicien.getAdresse());
-        holder.avatareTech.setImageBitmap(letterTile);
-        holder.ratingTech.setNumStars(5);
-        holder.ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
-        holder.ratingNumberValue.setText(technicien.getRating());
-        holder.numberOfReviews.setText("(+ " + technicien.getNbrReviews() + " avis )");
-        GradientDrawable backCheckPhone = (GradientDrawable) ((RelativeLayout)holder.checkPhone.getParent()).getBackground();
-        backCheckPhone.setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
-        Double distance = SphericalUtil.computeDistanceBetween(new LatLng(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude())), new LatLng(Double.valueOf("52.736291655910925"), Double.valueOf("-8.261718750000002")));
-        holder.distanceEnKm.setText(Math.round((distance/1000) * 100.0) / 100.0+ " Km de distance");
-        holder.container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent mainIntent = new Intent(parentActivity, A3techViewEditProfilActivity.class);
-                Bundle bundle = new Bundle();
-                if(parentActivity instanceof A3techAddMissionActivity){
-                    bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, SRC_FROM_HOME_ADD_MISSION);
-                    bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
-                    bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
-                    mainIntent.putExtras(bundle);
-                    parentActivity.startActivityForResult(mainIntent, REQUEST_DISPLAY_TECH_FROM_MISSION);
-                }else if(parentActivity instanceof A3techDisplayTechniciensListeActivity){
-                    bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, SRC_FROM_HOME_BROWSE_TECH);
-                    bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
-                    bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
-                    mainIntent.putExtras(bundle);
-                    parentActivity.startActivityForResult(mainIntent, REQUEST_DISPLAY_TECH_FROM_HOME);
+                vh = new SimpleItemVH(v);
+            } else {
+                View v = LayoutInflater.from(parent.getContext()).inflate(
+                        R.layout.a3tech_progress_loading_more, parent, false);
+
+                vh = new ProgressViewHolder(v);
+            }
+            return vh;
+    }
+
+
+    @Override
+    public int getItemViewType(int position) {
+        if (listeObjects.size() > position) {
+            return listeObjects.get(position) != null ? VIEW_ITEM : VIEW_PROG;
+        } else {
+            return -1;
+        }
+
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        if(holder instanceof SimpleItemVH){
+            if(position == listeObjects.size()){
+                final float scale = context.getResources().getDisplayMetrics().density;
+                int pixels = (int) (70 * scale + 0.5f);
+                ((SimpleItemVH)holder).container.getLayoutParams().height = pixels;
+                ((SimpleItemVH)holder).container.setVisibility(View.INVISIBLE);
+                return;
+            }
+            final User technicien = listeObjects.get(position);
+            if (technicien == null) return;
+
+            ((SimpleItemVH)holder).nameTech.setText(technicien.getNom() + " " + technicien.getPrenom().substring(0, 1) + ".");
+            /* String adresseFromGpsLocation = StringStuffs.getAdresseFromGpsLocation(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude()),context);
+             */
+            final LetterTileProvider tileProvider = new LetterTileProvider(context);
+            final Bitmap letterTile = tileProvider.getLetterTile(technicien.getNom(), technicien.getNom(), 88, 88);
+
+            ((SimpleItemVH)holder).adresse.setText(technicien.getAdresse());
+            ((SimpleItemVH)holder).avatareTech.setImageBitmap(letterTile);
+            ((SimpleItemVH)holder).ratingTech.setNumStars(5);
+            ((SimpleItemVH)holder).ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
+            ((SimpleItemVH)holder).ratingNumberValue.setText(technicien.getRating());
+            ((SimpleItemVH)holder).numberOfReviews.setText("(+ " + technicien.getNbrReviews() + " avis )");
+            GradientDrawable backCheckPhone = (GradientDrawable) ((RelativeLayout) ((SimpleItemVH)holder).checkPhone.getParent()).getBackground();
+            backCheckPhone.setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
+            Double distance = SphericalUtil.computeDistanceBetween(new LatLng(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude())), new LatLng(Double.valueOf("52.736291655910925"), Double.valueOf("-8.261718750000002")));
+            ((SimpleItemVH)holder).distanceEnKm.setText(Math.round((distance/1000) * 100.0) / 100.0+ " Km de distance");
+            ((SimpleItemVH)holder).container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent mainIntent = new Intent(parentActivity, A3techViewEditProfilActivity.class);
+                    Bundle bundle = new Bundle();
+                    if(parentActivity instanceof A3techAddMissionActivity){
+                        bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, SRC_FROM_HOME_ADD_MISSION);
+                        bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
+                        bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
+                        mainIntent.putExtras(bundle);
+                        parentActivity.startActivityForResult(mainIntent, REQUEST_DISPLAY_TECH_FROM_MISSION);
+                    }else if(parentActivity instanceof A3techDisplayTechniciensListeActivity){
+                        bundle.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, SRC_FROM_HOME_BROWSE_TECH);
+                        bundle.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(technicien));
+                        bundle.putString(A3techViewEditProfilActivity.ARG_MISSION_OBJECT, new Gson().toJson(mission));
+                        mainIntent.putExtras(bundle);
+                        parentActivity.startActivityForResult(mainIntent, REQUEST_DISPLAY_TECH_FROM_HOME);
+                    }
+
+
                 }
 
+            });
+        }else{
+            ((ProgressViewHolder) holder).progressBar.setIndeterminate(true);
+        }
 
-            }
-
-        });
 
     }
 
@@ -136,6 +209,16 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
         if(listeObjects == null) listeObjects = new ArrayList<>();
         listeObjects.addAll(users);
 
+    }
+
+    public void addOject(User usser){
+        listeObjects.add(usser);
+         notifyItemInserted(listeObjects.size() - 1);
+    }
+
+    public List getListObject(){
+        if(listeObjects == null) listeObjects = new ArrayList<>();
+        return  listeObjects;
     }
     @Override
     public int getItemCount() {
@@ -170,5 +253,18 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
 
             adresse = itemView.findViewById(R.id.adresse_alpha);
         }
+    }
+
+    public static class ProgressViewHolder extends RecyclerView.ViewHolder {
+        public ProgressBar progressBar;
+
+        public ProgressViewHolder(View v) {
+            super(v);
+            progressBar = (ProgressBar) v.findViewById(R.id.progressBar_load_more);
+        }
+    }
+
+    public interface OnLoadMoreListener{
+        void onLoadMore();
     }
 }

@@ -464,15 +464,17 @@
     <RelativeLayout
         android:id="@+id/container_two_action_mission"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="40dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp">
 
         <RelativeLayout
             android:id="@+id/container_actions_anuller_mission"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toLeftOf="@id/dev"
+            android:layout_marginLeft="20dp"
             android:background="@drawable/a3tech_back_two_corner_raduis_right">
 
             <TextView
@@ -500,6 +502,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_toRightOf="@id/dev"
+            android:layout_marginRight="20dp"
             android:background="@drawable/a3tech_back_two_corner_raduis_left">
 
             <TextView

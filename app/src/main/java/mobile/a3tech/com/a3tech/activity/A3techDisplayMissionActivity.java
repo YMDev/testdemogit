@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.Menu;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -45,6 +46,8 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
     @BindView(R.id.toolbar_display_mission)
     android.support.v7.widget.Toolbar toolbarDisplayMission;
+    @BindView(R.id.back_action)
+    ImageView backAction;
     @BindView(R.id.title_mission)
     TextView titreMission;
     @BindView(R.id.dis_statut_mission)
@@ -140,6 +143,15 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         if (selectedMission == null) {
             return;
         }
+
+        setSupportActionBar(toolbarDisplayMission);
+
+        backAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         titreMission.setText(selectedMission.getTitre());
         if (StringUtils.isBlank(selectedMission.getCatDescription())) {
             descriptionMission.setVisibility(View.GONE);
@@ -242,6 +254,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
                     }
                     selectedMission.setStatut(Mission.STATUT_CLOTUREE);
                     btnEditReview.setVisibility(View.GONE);
+                    containerActionsValider.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_to_right));
                 }
                 actionRefreshStatutMission();
             }
@@ -318,25 +331,19 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
         if (StringUtils.isBlank(selectedMission.getStatut())) {
             selectedMission.setStatut(Mission.STATUT_CREEE);
-            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
-        }
-
-        if (selectedMission.getStatut().equals(Mission.STATUT_CLOTUREE) || selectedMission.getStatut().equals(Mission.STATUT_ANNULEE)) {
-            containerActions.setVisibility(View.GONE);
-        } else {
-            containerActions.setVisibility(View.VISIBLE);
+            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
         }
 
         if (selectedMission.getStatut().equals(Mission.STATUT_CREEE)) {
-            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
         }
 
         if (selectedMission.getStatut().equals(Mission.STATUT_VALIDEE)) {
-            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
         }
 
         if (selectedMission.getStatut().equals(Mission.STATUT_ANNULEE)) {
-            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
         }
 
         statutMission.setText(selectedMission.getStatut());
@@ -373,4 +380,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
     public Context getContext() {
         return A3techDisplayMissionActivity.this;
     }
+
+
+
 }
