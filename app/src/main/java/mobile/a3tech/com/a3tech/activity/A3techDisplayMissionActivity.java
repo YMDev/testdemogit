@@ -204,7 +204,14 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         avatare.setImageBitmap(ImagesStuffs.getProfileDefaultPicture(A3techDisplayMissionActivity.this, selectedMission.getTechnicien().getNom()));
         actionRefreshStatutMission();
         actionMissionSetup();
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                doZoomEffect(statutMission);
+                doZoomEffect(tempsMission);
+                doZoomEffect(montantMission);
+            }
+        });
     }
 
 
@@ -249,6 +256,12 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
                 slidefromRightToLeft(containerActionAnnuler);
                 slidefromLeftToRight(containerActionsValider);
                 actionRefreshStatutMission();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        doZoomEffect(statutMission);
+                    }
+                });
             }
         });
 
@@ -270,6 +283,12 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
                     }
                     selectedMission.setStatut(Mission.STATUT_CLOTUREE);
                     btnEditReview.setVisibility(View.GONE);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            doZoomEffect(statutMission);
+                        }
+                    });
                 }
                 actionRefreshStatutMission();
             }
@@ -321,7 +340,8 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         }
 
         statutMission.setText(selectedMission.getStatut());
-        doZoomEffect(statutMission);
+
+
     }
 
 

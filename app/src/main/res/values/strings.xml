@@ -674,7 +674,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="add_rating_mission_hint">Dites nous ce que vous penser du travail effectué</string>
     <string name="close_mission">Clôturer</string>
     <string name="add_review">Ajouter un avis</string>
-    <string name="valider_mission">Valider la demande</string>
+    <string name="valider_mission">Valider</string>
     <string name="cloturer_mission">Clôturer</string>
     <string name="please_add_review">Ajouter un avis</string>
     <string name="please_add_review_content">Prière d\'ajouter un avis avant de clôturer cette mission</string>
