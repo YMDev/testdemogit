@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
@@ -97,6 +100,21 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
     @BindView(R.id.container_actions_mission)
     RelativeLayout containerActions;
 
+    @BindView(R.id.container_two_action_mission)
+    RelativeLayout containerTwoActions;
+
+
+    @BindView(R.id.container_actions_valider_mission)
+    RelativeLayout containerActionsValider;
+
+    @BindView(R.id.container_actions_anuller_mission)
+    RelativeLayout containerActionAnnuler;
+
+    @BindView(R.id.dis_action_annuler_mission)
+    TextView actionAnnulerMission;
+
+    @BindView(R.id.dis_action_valider_clo_mission)
+    TextView actionValiderMission;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +209,50 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
 
     private void actionMissionSetup() {
+        if(StringUtils.isBlank(selectedMission.getStatut()) || selectedMission.getStatut().equals(Mission.STATUT_CREEE) || selectedMission.getStatut().equals(Mission.STATUT_VALIDEE)){
+            containerTwoActions.setVisibility(View.VISIBLE);
+            containerActions.setVisibility(View.GONE);
+            actionAnnulerMission.setText(getString(R.string.annuler_mission));
+            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+        }else {
+            containerTwoActions.setVisibility(View.GONE);
+            containerActions.setVisibility(View.VISIBLE);
+        }
+        containerActionsValider.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedMission == null) return;
+                if (selectedMission.getStatut().equals(Mission.STATUT_CREEE)) {
+                    selectedMission.setStatut(Mission.STATUT_VALIDEE);
+                } else if (selectedMission.getStatut().equals(Mission.STATUT_VALIDEE)) {
+                    if(selectedMission.getReviewMission() == null || StringUtils.isBlank(selectedMission.getReviewMission().getNote())){
+                        //pas de review pour cette mission, demander d'ajouter un review
+                        SimpleDialog.build()
+                                .title(R.string.please_add_review)
+                                .msg(R.string.please_add_review_content)
+                                .show(A3techDisplayMissionActivity.this);
+                        return;
+                    }
+                    selectedMission.setStatut(Mission.STATUT_CLOTUREE);
+                    btnEditReview.setVisibility(View.GONE);
+                }
+                actionRefreshStatutMission();
+            }
+        });
+
+        containerActionAnnuler.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedMission == null) return;
+                selectedMission.setStatut(Mission.STATUT_ANNULEE);
+                btnEditReview.setVisibility(View.GONE);
+                slidefromRightToLeft(containerActionAnnuler);
+                slidefromLeftToRight(containerActionsValider);
+                actionRefreshStatutMission();
+            }
+        });
+
+
         containerActions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -214,6 +276,23 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         });
 
     }
+    public void slidefromRightToLeft(View view) {
+
+        view.startAnimation(AnimationUtils.loadAnimation(this.getContext(), R.anim.slide_to_left));
+        view.setVisibility(View.GONE);
+    }
+    public void slidefromLeftToRight(View view) {
+        view.startAnimation(AnimationUtils.loadAnimation(this.getContext(), R.anim.slide_to_right));
+        view.setVisibility(View.GONE);
+    }
+    private void doZoomEffect(View view)
+    {
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.zoom_scall);
+        a.reset();
+        view.clearAnimation();
+        view.startAnimation(a);
+    }
+
 
     private void actionRefreshStatutMission() {
         if (selectedMission == null) return;
@@ -242,6 +321,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         }
 
         statutMission.setText(selectedMission.getStatut());
+        doZoomEffect(statutMission);
     }
 
 

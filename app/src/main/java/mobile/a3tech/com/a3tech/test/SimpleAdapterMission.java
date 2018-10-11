@@ -18,6 +18,8 @@ import com.google.android.gms.maps.model.Dash;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -74,7 +76,7 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         if (missionTmp == null) return;
 
 
-        if (missionTmp.getDateIntervention() != null) {
+        if (StringUtils.isNoneBlank(missionTmp.getDateIntervention())) {
             Date dateIntervention = DateStuffs.stringToDate(missionTmp.getDateIntervention(), DateStuffs.TIME_FORMAT);
             if (dateIntervention != null) {
                 String dateInterventionAlphaSimple = DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, dateIntervention);
@@ -87,13 +89,13 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         } else
             holder.dateMission.setVisibility(View.GONE);
 
-        if (missionTmp.getTitre() != null) {
+        if (StringUtils.isNoneBlank(missionTmp.getTitre())) {
             holder.titreMission.setText(missionTmp.getTitre());
 
         } else
             holder.titreMission.setVisibility(View.GONE);
 
-        if (missionTmp.getAdresse() != null) {
+        if (StringUtils.isNoneBlank(missionTmp.getAdresse())) {
             holder.adresse.setText(missionTmp.getAdresse());
 
         } else
