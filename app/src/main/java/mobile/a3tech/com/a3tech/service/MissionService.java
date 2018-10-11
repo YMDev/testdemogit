@@ -101,7 +101,7 @@ public class MissionService extends AbstractService implements Constant {
 		mm1.setPseudo("mission pseudo");
 		mm1.setDistance("-1.0d");
 		mm1.setNbrVues("2");
-		mm1.setStatut("3");
+		mm1.setStatut(Mission.STATUT_CREEE);
 		mm1.setIdentifiant("928292");
 		mm1.setOriginator("kdaasa");
 		mm1.setAdresse("Hay Riad, Rabat Maroc P10200");
@@ -144,7 +144,7 @@ public class MissionService extends AbstractService implements Constant {
 		mm1.setPseudo("mission pseudo");
 		mm1.setDistance("-1.0d");
 		mm1.setNbrVues("2");
-		mm1.setStatut("3");
+		mm1.setStatut(Mission.STATUT_CREEE);
 		mm1.setIdentifiant("928292");
 		mm1.setOriginator("kdaasa");
 		return mm1;

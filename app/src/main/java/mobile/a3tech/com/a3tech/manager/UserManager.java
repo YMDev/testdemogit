@@ -582,8 +582,8 @@ public class UserManager implements Constant {
 	}
 
 
-	public void getTechnicienNearLocation(final String latitude,final String longitude,final String ville,
-						  final DataLoadCallback dataLoadCallback)   {
+	public void getTechnicienNearLocation(final String latitude, final String longitude, final String ville, final int start, final int end,
+										  final DataLoadCallback dataLoadCallback)   {
 
 		final Handler handler = new Handler() {
 
@@ -604,7 +604,7 @@ public class UserManager implements Constant {
 				try {
 
 					UserService service = new UserService();
-					List<User> user = service.getTechnicienNearLocation(latitude,longitude,ville);
+					List<User> user = service.getTechnicienNearLocation(latitude,longitude,ville, start, end);
 					if (user == null) {
 						Message message = handler.obtainMessage(0, 0);
 						handler.sendMessage(message);

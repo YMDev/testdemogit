@@ -9,6 +9,11 @@ import android.os.Parcelable;
 public class Mission implements Parcelable {
 
 
+
+	public static final String STATUT_CREEE = "CREEE";
+	public static final String STATUT_VALIDEE = "VALIDEE";
+	public static final String STATUT_ANNULEE = "ANNULEE";
+	public static final String STATUT_CLOTUREE = "CLOTUREE";
 	@Override
 	public int hashCode() {
 		final int prime = 31;

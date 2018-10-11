@@ -34,6 +34,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs.*;
 import eltos.simpledialogfragment.SimpleDateDialog;
 import eltos.simpledialogfragment.SimpleDialog;
@@ -60,7 +61,6 @@ import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 public class A3techPostMissionFragment extends A3techBaseFragment implements SimpleDialog.OnDialogResultListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
 
 
     private static final String ARG_PARAM1 = "param1";
@@ -118,6 +118,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         fragment.setArguments(args);
         return fragment;
     }
+
     public static A3techPostMissionFragment newInstance(Mission missionSelected) {
         A3techPostMissionFragment fragment = new A3techPostMissionFragment();
         Bundle args = new Bundle();
@@ -125,6 +126,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,7 +134,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             categoryLibelle = getArguments().getString(ARG_PARAM1);
             categoryDescription = getArguments().getString(ARG_PARAM2);
             categoryIdentifiant = getArguments().getString(ARG_CAT_ID);
-             String jsonCategory = getArguments().getString(ARG_CAT_OBJECT);
+            String jsonCategory = getArguments().getString(ARG_CAT_OBJECT);
             String jsonMission = getArguments().getString(ARG_MISS_OBJECT);
             if (jsonCategory != null) {
                 categoryObject = new Gson().fromJson(jsonCategory, Categorie.class);
@@ -164,17 +166,17 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         adresseTechnicien = viewFr.findViewById(R.id.adresse_alpha);
         btnValidation = viewFr.findViewById(R.id.validate_mission);
         btnGetDate = viewFr.findViewById(R.id.add_date_act);
-        String categorie  = "";
-        if(categoryObject != null){
+        String categorie = "";
+        if (categoryObject != null) {
             categorie = categoryObject.getLibelle();
             categorySelcted.setText(categorie);
             categorySelcted.setVisibility(View.VISIBLE);
             containerUserSelected.setVisibility(View.GONE);
             btnValidation.setText(getText(R.string.affecter_un_technicien));
-        }else if(missionObject != null){
+        } else if (missionObject != null) {
             categorySelcted.setVisibility(View.GONE);
             containerUserSelected.setVisibility(View.VISIBLE);
-            nameTechnicien.setText(missionObject.getTechnicien().getNom()+" "+missionObject.getTechnicien().getPrenom());
+            nameTechnicien.setText(missionObject.getTechnicien().getNom() + " " + missionObject.getTechnicien().getPrenom());
             adresseTechnicien.setText(missionObject.getTechnicien().getAdresse());
             avatareTechnicien.setImageDrawable(getResources().getDrawable(R.drawable.photo_login_1));
             btnValidation.setText(getText(R.string.valider_votre_demande));
@@ -201,7 +203,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
                 if (!PermissionsStuffs.canAccessLocation(getActivity())) {
                     requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
                 }
-               gpsGetLocation();
+                gpsGetLocation();
 
             }
         });
@@ -220,11 +222,11 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             public void onClick(View view) {
                 if (mListener != null) {
                     hideKeyboard();
-                   if(missionObject != null){
-                       mListener.actionNext(ACTION_SAVE_MISSION_INFO_FROM_TECH, populateMission());
-                   }else if(categoryObject != null){
-                       mListener.actionNext(ACTION_SAVE_MISSION_INFO, populateMission());
-                   }
+                    if (missionObject != null) {
+                        mListener.actionNext(ACTION_SAVE_MISSION_INFO_FROM_TECH, populateMission());
+                    } else if (categoryObject != null) {
+                        mListener.actionNext(ACTION_SAVE_MISSION_INFO, populateMission());
+                    }
 
                 }
             }
@@ -234,11 +236,11 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
 
 
     public void hideKeyboard() {
-        if(titleMission != null) {
+        if (titleMission != null) {
             hideKeyboard(titleMission);
-        } else if(descriptionMission != null) {
+        } else if (descriptionMission != null) {
             hideKeyboard(descriptionMission);
-        }else if(locationMission !=null){
+        } else if (locationMission != null) {
             hideKeyboard(locationMission);
         }
     }
@@ -246,7 +248,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
 
     private void gpsGetLocation() {
         // check if GPS enabled
-        final ProgressDialog waitingDialog = CustomProgressDialog.createProgressDialog(getActivity(),"");
+        final ProgressDialog waitingDialog = CustomProgressDialog.createProgressDialog(getActivity(), "");
         latitude = null;
         longitude = null;
 
@@ -264,7 +266,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
                         stateName = addresses.get(0).getFeatureName(); // city
                         countryName = addresses.get(0).getCountryName(); // country
 
-                        if(cityName != null){
+                        if (cityName != null) {
                             try {
                                 getActivity().runOnUiThread(new Runnable() {
 
@@ -298,32 +300,32 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
 
     private Mission populateMission() {
         Mission mission = null;
-        if(missionObject != null){
-              mission = missionObject;
-        }else {
+        if (missionObject != null) {
+            mission = missionObject;
+        } else {
             mission = new Mission();
             mission.setCategoryMission(categoryObject);
         }
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-            String connectedUser = prefs.getString("identifiant", "");
-            if(StringUtils.isBlank(titleMission.getText().toString())){
-                if(StringUtils.isNoneBlank(categoryLibelle)) {
-                    mission.setTitre(getString(R.string.mission_default_title)+ " "+categoryLibelle);
-                }else{
-                    mission.setTitre(getString(R.string.mission_default_title_without_cat));
-                }
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        String connectedUser = prefs.getString("identifiant", "");
+        if (StringUtils.isBlank(titleMission.getText().toString())) {
+            if (StringUtils.isNoneBlank(categoryLibelle)) {
+                mission.setTitre(getString(R.string.mission_default_title) + " " + categoryLibelle);
+            } else {
+                mission.setTitre(getString(R.string.mission_default_title_without_cat));
             }
-           else{
-                mission.setTitre(titleMission.getText().toString());
-            }
-            mission.setDateCreation(DateStuffs.dateToString(DateStuffs.TIME_FORMAT, new Date()));
-            mission.setDateIntervention(dateIntervension.getText().toString());
-            mission.setOriginator(connectedUser);
-            mission.setLatitude(String.valueOf(latitude));
-            mission.setLongitude(String.valueOf(longitude));
-            mission.setAdresse(locationMission.getText().toString());
-            mission.setCatDescription(descriptionMission.getText().toString());
-            mission.setDiscreptionMission(descriptionMission.getText().toString());
+        } else {
+            mission.setTitre(titleMission.getText().toString());
+        }
+        mission.setDateCreation(DateStuffs.dateToString(DateStuffs.TIME_FORMAT, new Date()));
+        mission.setDateIntervention(dateIntervension.getText().toString());
+        mission.setOriginator(connectedUser);
+        mission.setLatitude(String.valueOf(latitude));
+        mission.setLongitude(String.valueOf(longitude));
+        mission.setAdresse(locationMission.getText().toString());
+        mission.setCatDescription(descriptionMission.getText().toString());
+        mission.setDiscreptionMission(descriptionMission.getText().toString());
+        mission.setStatut(Mission.STATUT_CREEE);
         return mission;
 
     }
@@ -403,25 +405,22 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
     }
 
 
-
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 
-        switch(requestCode) {
+        switch (requestCode) {
             case PermissionsStuffs.CAMERA_REQUEST:
                 if (PermissionsStuffs.canAccessCamera(getActivity())) {
                     ///doCameraThing();
-                }
-                else {
-                   // bzzzt();
+                } else {
+                    // bzzzt();
                 }
                 break;
 
             case PermissionsStuffs.CONTACTS_REQUEST:
                 if (PermissionsStuffs.canAccessContacts(getActivity())) {
                     // doContactsThing();
-                }
-                else {
+                } else {
                     //  bzzzt();
                 }
                 break;
@@ -429,8 +428,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             case PermissionsStuffs.LOCATION_REQUEST:
                 if (PermissionsStuffs.canAccessLocation(getActivity())) {
                     //gpsGetLocation();
-                }
-                else {
+                } else {
                     // bzzzt();
                 }
                 break;

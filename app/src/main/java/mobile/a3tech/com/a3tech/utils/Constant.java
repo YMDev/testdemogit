@@ -1,8 +1,8 @@
 package mobile.a3tech.com.a3tech.utils;
 
 public interface Constant {
-	
-	
+
+	static final String CHECK_local = "http://192.168.1.11:8080/student/allstudent";
 	public static final String CGU_URL_FR="http://arakhod.com/cgu/cgu.html";
 	public static final String CGV_URL_FR="http://arakhod.com/cgu/cgv.html";
 	public static final String FAQ_URL_FR="http://arakhod.com/cgu/faq.html";

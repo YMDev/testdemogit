@@ -123,7 +123,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_display_techniciens_parent, container, false);
-        waitingDialogue = CustomProgressDialog.createProgressDialog(getActivity(), "");
+
         setupViewPager(viewFr);
         bottomNavigation = (AHBottomNavigation) viewFr.findViewById(R.id.display_tech_bottom_navigation);
         bottomNavigation.setTranslucentNavigationEnabled(false);
@@ -163,8 +163,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
     public void deleteMapInFragment() {
         ((A3techDisplayTechInMapFragment) pagerAdapter.getItem(1)).destroyMap();
     }
-
-    private void getListOFTechToDisplay() {
+    /*private void getListOFTechToDisplay() {
 
         //TODO get location of connected user not mission
         SharedPreferences prefs = PreferenceManager
@@ -202,6 +201,12 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
                 });
             }
         });
+    }*/
+    private void getListOFTechToDisplay() {
+        pagerAdapter = new BottomBarAdapter(getFragmentManager());
+        pagerAdapter.addFragments(A3techAffecterTechnicienFragment.newInstance(mission, listeOfTechToDisplay));
+        pagerAdapter.addFragments(A3techDisplayTechInMapFragment.newInstance(mission, listeOfTechToDisplay));
+        viewPager.setAdapter(pagerAdapter);
     }
 
     /**

@@ -12,7 +12,8 @@
         android:layout_marginTop="10dp"
         android:text="@string/hope_msg_header_rating_mission"
         android:textSize="16dp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:gravity="center"/>
 
 
     <RatingBar
@@ -44,10 +45,10 @@
         android:layout_below="@id/rating_comment"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:gravity="top"
+        android:gravity="top|center"
         android:hint="@string/add_rating_mission_hint"
         android:inputType="textMultiLine"
-        android:lines="6" />
+        android:lines="6"  />
 
     <Button
         android:id="@+id/btnSubmit"
@@ -55,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/comment_to_insert"
         android:layout_marginTop="10dp"
-        android:background="#e57373"
+        android:background="@drawable/a3tech_btn_facebook"
         android:text="Send feedback"
         android:textColor="@android:color/white" />
 

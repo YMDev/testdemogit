@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
@@ -27,6 +28,7 @@ import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
+import mobile.a3tech.com.a3tech.test.EndlessRecyclerViewScrollListener;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
@@ -92,13 +94,60 @@ public class A3techDisplayTechniciensFragment extends Fragment {
         displayTechniciens();
     }
     View viewFr;
+    private EndlessRecyclerViewScrollListener scrollListener;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
          if(viewFr == null) viewFr = inflater.inflate(R.layout.fragment_a3tech_display_techniciens, container, false);
         recyclerViewTechnicien = viewFr.findViewById(R.id.recycle_techniciens);
-        displayTechniciens();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerViewTechnicien.setLayoutManager(linearLayoutManager);
+        Mission mission = new Mission();
+        mission.setCategoryMission(categorieSelected);
+        SimpleAdapterTechnicien adapter = new SimpleAdapterTechnicien(getActivity(),new ArrayList(), getActivity(), mission);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        recyclerViewTechnicien.setLayoutManager(mLayoutManager);
+        recyclerViewTechnicien.setItemAnimator(new DefaultItemAnimator());
+        recyclerViewTechnicien.setAdapter(adapter);
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadNextDataFromApi(page);
+            }
+        };
+        // Adds the scroll listener to RecyclerView
+        recyclerViewTechnicien.addOnScrollListener(scrollListener);
+       // displayTechniciens();
         return viewFr;
+    }
+    public void loadNextDataFromApi(int offset) {
+        // Send an API request to retrieve appropriate paginated data
+        //  --> Send the request including an offset value (i.e `page`) as a query parameter.
+        //  --> Deserialize and construct new model objects from the API response
+        //  --> Append the new data objects to the existing set of items inside the array of items
+        //  --> Notify the adapter of the new items made with `notifyItemRangeInserted()`
+
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+        String connectedUser = prefs.getString("identifiant", "");
+        String password = prefs.getString("password", "");
+        final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
+        UserManager.getInstance().getTechnicienNearLocation(userLatitude+"", userLongetude+"", "", 0, 33,new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                List<User> listeRetour = (List<User>) data;
+
+
+                dd.dismiss();
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dd.dismiss();
+            }
+        });
     }
     private void displayTechniciens(){
         if(categorieSelected != null){
@@ -113,7 +162,7 @@ public class A3techDisplayTechniciensFragment extends Fragment {
             String connectedUser = prefs.getString("identifiant", "");
             String password = prefs.getString("password", "");
             final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
-            UserManager.getInstance().getTechnicienNearLocation(userLatitude+"", userLongetude+"", "", new DataLoadCallback() {
+            UserManager.getInstance().getTechnicienNearLocation(userLatitude+"", userLongetude+"", "", 0, 33,new DataLoadCallback() {
                 @Override
                 public void dataLoaded(Object data, int method, int typeOperation) {
                     List<User> listeRetour = (List<User>) data;

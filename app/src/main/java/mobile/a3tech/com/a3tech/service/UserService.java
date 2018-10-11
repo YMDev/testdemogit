@@ -256,39 +256,15 @@ public class UserService extends AbstractService implements Constant {
 
     }
 
-    public List<User> getTechnicienNearLocation(String latitude, String longitude, String ville) throws EducationException {
-        List<User> listeRetour = new ArrayList<>();
-        listeRetour.add(getUserMocked("BOUHJRA", "Mouad"));
-        listeRetour.add(getUserMocked("RAFIK", "HAKIM"));
-        listeRetour.add(getUserMocked("ADNANI", "AHMED"));
-        listeRetour.add(getUserMocked("DARIS", "Hassan"));
-        listeRetour.add(getUserMocked("SLIMANI", "Kamal"));
-        listeRetour.add(getUserMocked("BOUDIN", "Salim"));
-        listeRetour.add(getUserMocked("SAMALI", "Saad"));
-        listeRetour.add(getUserMocked("RAKI", "Mouhcine"));
-        listeRetour.add(getUserMocked("VIDOL", "Youssef"));
-        listeRetour.add(getUserMocked("GARICK", "Tarik"));
-        listeRetour.add(getUserMocked("MOPISN", "Najib"));
-        listeRetour.add(getUserMocked("EDROML", "Ismail"));
-        listeRetour.add(getUserMocked("BOUZIDI", "Badr"));
+    public List<User> getTechnicienNearLocation(String latitude, String longitude, String ville, int st, int en) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("start", st+"");
+        params.put("end", en+"");
+		List<User> result = getResult(CHECK_local, params,
+				new TypeReference<List<User>>() {
+				});
 
-        listeRetour.get(3).setLatitude("34.263927");
-        listeRetour.get(3).setLongitude("-6.569619");
-
-        listeRetour.get(4).setLatitude("34.263431");
-        listeRetour.get(4).setLongitude("-6.567302");
-
-        listeRetour.get(5).setLatitude("34.263928");
-        listeRetour.get(5).setLongitude("-6.569600");
-
-
-        listeRetour.get(6).setLatitude("34.263937");
-        listeRetour.get(6).setLongitude("-6.564619");
-
-
-        listeRetour.get(7).setLatitude("34.263727");
-        listeRetour.get(7).setLongitude("-6.565619");
-        return listeRetour;
+        return result;
     }
 
     private User getUserMocked(String name, String pname) {

@@ -21,6 +21,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.model.Avis;
 import mobile.a3tech.com.a3tech.model.Categorie;
@@ -87,6 +88,14 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
     @BindView(R.id.edit_review_mission)
     ImageView btnEditReview;
 
+    @BindView(R.id.action_demande_add_review_mission)
+    TextView actionAddReview;
+
+    @BindView(R.id.dis_action_mission)
+    TextView actionMission;
+
+    @BindView(R.id.container_actions_mission)
+    RelativeLayout containerActions;
 
 
     @Override
@@ -120,11 +129,11 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             descriptionMission.setVisibility(View.VISIBLE);
         }
         descriptionMission.setText(selectedMission.getCatDescription());
-        if(selectedMission.getCategoryMission() != null){
+        if (selectedMission.getCategoryMission() != null) {
             categoryMission.setText(selectedMission.getCategoryMission().getLibelle());
         }
 
-        if(selectedMission.getTechnicien() != null){
+        if (selectedMission.getTechnicien() != null) {
             nameTech.setText(selectedMission.getTechnicien().getNom());
             adresse.setText(selectedMission.getTechnicien().getAdresse());
             rating.setText(selectedMission.getTechnicien().getRating());
@@ -134,32 +143,32 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         }
 
 
-        if(StringUtils.isNoneBlank(selectedMission.getDateIntervention())){
+        if (StringUtils.isNoneBlank(selectedMission.getDateIntervention())) {
             String dateAdresseIntervention = "";
             Date dateIntervention = DateStuffs.stringToDate(selectedMission.getDateIntervention(), DateStuffs.TIME_FORMAT);
             if (dateIntervention != null) {
                 String dateInterventionAlphaSimple = DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, dateIntervention);
                 String timeIntervention = DateStuffs.dateToString(DateStuffs.HOURS_MINUTES_FORMAT, dateIntervention);
-                dateAdresseIntervention =  " " + dateInterventionAlphaSimple + " " + getString(R.string.a_date_time) + " " + timeIntervention;
+                dateAdresseIntervention = " " + dateInterventionAlphaSimple + " " + getString(R.string.a_date_time) + " " + timeIntervention;
                 dateLieuIntervention.setText(dateAdresseIntervention);
             }
         }
 
 
-        if(StringUtils.isNoneBlank(selectedMission.getAdresse())){
+        if (StringUtils.isNoneBlank(selectedMission.getAdresse())) {
             adresseIntervention.setText(selectedMission.getAdresse());
         }
 
-        if(selectedMission.getReviewMission() != null && StringUtils.isNoneBlank(selectedMission.getReviewMission().getNote())){
+        if (selectedMission.getReviewMission() != null && StringUtils.isNoneBlank(selectedMission.getReviewMission().getNote())) {
             ratingMission.setRating(Float.valueOf(selectedMission.getReviewMission().getNote()));
             commentaire.setText(selectedMission.getReviewMission().getAvantage());
-        }else{
+        } else {
             ratingMission.setVisibility(View.GONE);
             commentaire.setText("");
 
         }
 
-        containerAddReview.setOnClickListener(new View.OnClickListener() {
+        actionAddReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 A3techDialogAddReview.createProfileDialog(A3techDisplayMissionActivity.this, null);
@@ -169,12 +178,82 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         btnEditReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(missionReview != null){
+                if (missionReview != null) {
                     A3techDialogAddReview.createProfileDialog(A3techDisplayMissionActivity.this, missionReview);
                 }
             }
         });
         avatare.setImageBitmap(ImagesStuffs.getProfileDefaultPicture(A3techDisplayMissionActivity.this, selectedMission.getTechnicien().getNom()));
+        actionRefreshStatutMission();
+        actionMissionSetup();
+
+    }
+
+
+    private void actionMissionSetup() {
+        containerActions.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (selectedMission == null) return;
+                if (selectedMission.getStatut().equals(Mission.STATUT_CREEE)) {
+                    selectedMission.setStatut(Mission.STATUT_VALIDEE);
+                } else if (selectedMission.getStatut().equals(Mission.STATUT_VALIDEE)) {
+                    if(selectedMission.getReviewMission() == null || StringUtils.isBlank(selectedMission.getReviewMission().getNote())){
+                        //pas de review pour cette mission, demander d'ajouter un review
+                        SimpleDialog.build()
+                                .title(R.string.please_add_review)
+                                .msg(R.string.please_add_review_content)
+                                .show(A3techDisplayMissionActivity.this);
+                        return;
+                    }
+                    selectedMission.setStatut(Mission.STATUT_CLOTUREE);
+                    btnEditReview.setVisibility(View.GONE);
+                }
+                actionRefreshStatutMission();
+            }
+        });
+
+    }
+
+    private void actionRefreshStatutMission() {
+        if (selectedMission == null) return;
+
+        if (StringUtils.isBlank(selectedMission.getStatut())) {
+            selectedMission.setStatut(Mission.STATUT_CREEE);
+            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+        }
+
+        if (selectedMission.getStatut().equals(Mission.STATUT_CLOTUREE) || selectedMission.getStatut().equals(Mission.STATUT_ANNULEE)) {
+            containerActions.setVisibility(View.GONE);
+        } else {
+            containerActions.setVisibility(View.VISIBLE);
+        }
+
+        if (selectedMission.getStatut().equals(Mission.STATUT_CREEE)) {
+            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+        }
+
+        if (selectedMission.getStatut().equals(Mission.STATUT_VALIDEE)) {
+            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+        }
+
+        if (selectedMission.getStatut().equals(Mission.STATUT_ANNULEE)) {
+            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+        }
+
+        statutMission.setText(selectedMission.getStatut());
+    }
+
+
+    private String getActionLabelFromStatut(String statut) {
+        if (statut.equals(Mission.STATUT_CREEE)) {
+            return getString(R.string.valider_mission);
+        }
+        if (statut.equals(Mission.STATUT_VALIDEE)) {
+            return getString(R.string.cloturer_mission);
+        }
+
+        return Mission.STATUT_CREEE;
     }
 
     @Override
@@ -187,7 +266,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         ratingMission.setRating(Float.valueOf(review.getNote()));
         commentaire.setText(review.getAvantage());
         btnEditReview.setVisibility(View.VISIBLE);
-        A3techCustomToastDialog.createToastDialog(getContext(),"Merci",Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+        A3techCustomToastDialog.createToastDialog(getContext(), "Merci", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
     }
 
     @Override

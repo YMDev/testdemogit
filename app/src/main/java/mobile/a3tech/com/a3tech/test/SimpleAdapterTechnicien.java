@@ -131,6 +131,12 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter<SimpleAdapterT
 
     }
 
+
+    public void addListe(List users){
+        if(listeObjects == null) listeObjects = new ArrayList<>();
+        listeObjects.addAll(users);
+
+    }
     @Override
     public int getItemCount() {
         return listeObjects != null ? listeObjects.size()+1 : 0;
