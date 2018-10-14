@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 
 import java.util.HashMap;
@@ -29,7 +30,7 @@ public class A3techSignInEmailFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String ARG_PARAM1 = "param1";
     public static final String ARG_PARAM2 = "param2";
-    public static final int ACTION_CONNEXION = 4;
+    public static final int ACTION_CONNEXION = 933;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -78,6 +79,15 @@ public class A3techSignInEmailFragment extends Fragment {
 
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_sign_in_email, container, false);
         email = viewFr.findViewById(R.id.input_layout_username);
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                email.getEditText().requestFocus();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }
+        });
         pass = viewFr.findViewById(R.id.input_layout_password);
         btnConnexion = viewFr.findViewById(R.id.btn_start_connexion);
 

@@ -94,7 +94,8 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
                 if(dessert.getId() == 4  && dessert.getType() == 2){
                     deconnexion();
                     Intent mainIntent = new Intent(context, A3techLoginActivity.class);
-                    ((A3techHomeActivity) context).startActivityForResult(mainIntent, 5545);
+                    ((A3techHomeActivity) context).startActivity(mainIntent);
+                    ((A3techHomeActivity) context).finish();
                 }
             }
         });

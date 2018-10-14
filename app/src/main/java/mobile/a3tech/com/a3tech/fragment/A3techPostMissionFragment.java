@@ -1,23 +1,16 @@
 package mobile.a3tech.com.a3tech.fragment;
 
-import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,25 +22,23 @@ import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import mobile.a3tech.com.a3tech.utils.PermissionsStuffs.*;
 import eltos.simpledialogfragment.SimpleDateDialog;
 import eltos.simpledialogfragment.SimpleDialog;
 import eltos.simpledialogfragment.SimpleTimeDialog;
-import eltos.simpledialogfragment.list.SimpleListDialog;
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
+import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
 import mobile.a3tech.com.a3tech.model.Categorie;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
@@ -77,7 +68,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
     private String categoryLibelle;
     private String categoryDescription;
     private String categoryIdentifiant;
-    private Mission missionObject;
+    private A3techMission missionObject;
     private Categorie categoryObject;
     private TextView categorySelcted;
     private TextView dateIntervension;
@@ -119,7 +110,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         return fragment;
     }
 
-    public static A3techPostMissionFragment newInstance(Mission missionSelected) {
+    public static A3techPostMissionFragment newInstance(A3techMission missionSelected) {
         A3techPostMissionFragment fragment = new A3techPostMissionFragment();
         Bundle args = new Bundle();
         args.putString(ARG_MISS_OBJECT, new Gson().toJson(missionSelected));
@@ -140,7 +131,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
                 categoryObject = new Gson().fromJson(jsonCategory, Categorie.class);
             }
             if (jsonMission != null) {
-                missionObject = new Gson().fromJson(jsonMission, Mission.class);
+                missionObject = new Gson().fromJson(jsonMission, A3techMission.class);
             }
         }
     }
@@ -220,6 +211,10 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         btnValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(!verifyDataInserted()){
+                    A3techCustomToastDialog.createToastDialog(getActivity(),getString(R.string.donnee_obligatoires), A3techCustomToastDialog.TOAST_ERROR, Toast.LENGTH_SHORT);
+                    return;
+                }
                 if (mListener != null) {
                     hideKeyboard();
                     if (missionObject != null) {
@@ -298,16 +293,23 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
     }
 
 
-    private Mission populateMission() {
-        Mission mission = null;
+    private Boolean verifyDataInserted(){
+        if (StringUtils.isBlank(dateIntervension.getText().toString())) {
+            return Boolean.FALSE;
+        }
+        if (StringUtils.isBlank(locationMission.getText().toString())) {
+            return Boolean.FALSE;
+        }
+        return Boolean.TRUE;
+    }
+    private A3techMission populateMission() {
+        A3techMission mission = null;
         if (missionObject != null) {
             mission = missionObject;
         } else {
-            mission = new Mission();
+            mission = new A3techMission();
             mission.setCategoryMission(categoryObject);
         }
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        String connectedUser = prefs.getString("identifiant", "");
         if (StringUtils.isBlank(titleMission.getText().toString())) {
             if (StringUtils.isNoneBlank(categoryLibelle)) {
                 mission.setTitre(getString(R.string.mission_default_title) + " " + categoryLibelle);
@@ -317,15 +319,14 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         } else {
             mission.setTitre(titleMission.getText().toString());
         }
-        mission.setDateCreation(DateStuffs.dateToString(DateStuffs.TIME_FORMAT, new Date()));
-        mission.setDateIntervention(dateIntervension.getText().toString());
-        mission.setOriginator(connectedUser);
+        mission.setDateCreation(new Date().getTime());
+        mission.setDateIntervention(((Calendar)dateIntervension.getTag()).getTime().getTime());
+        mission.setClientMission(PreferencesValuesUtils.getConnectedUser(getActivity()));
         mission.setLatitude(String.valueOf(latitude));
         mission.setLongitude(String.valueOf(longitude));
         mission.setAdresse(locationMission.getText().toString());
-        mission.setCatDescription(descriptionMission.getText().toString());
-        mission.setDiscreptionMission(descriptionMission.getText().toString());
-        mission.setStatut(Mission.STATUT_CREEE);
+        mission.setDescriptionMission(descriptionMission.getText().toString());
+        mission.setStatut(A3techMissionStatut.CREE);
         return mission;
 
     }

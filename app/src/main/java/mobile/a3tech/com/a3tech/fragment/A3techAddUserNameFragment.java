@@ -77,8 +77,15 @@ public class A3techAddUserNameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_user_name, container, false);
         username = viewFr.findViewById(R.id.input_layout_username);
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(username.getEditText(), InputMethodManager.SHOW_FORCED);
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                username.getEditText().requestFocus();
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+            }
+        });
+
         next = viewFr.findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override

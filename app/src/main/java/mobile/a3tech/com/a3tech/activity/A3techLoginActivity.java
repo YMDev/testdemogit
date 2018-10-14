@@ -1,6 +1,5 @@
 package mobile.a3tech.com.a3tech.activity;
 
-import android.animation.ArgbEvaluator;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -9,15 +8,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
-import android.text.SpannableString;
-import android.text.style.UnderlineSpan;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -27,6 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
@@ -39,11 +37,11 @@ import java.util.regex.Pattern;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techLoginPagerviewerAdapter;
 import mobile.a3tech.com.a3tech.manager.UserManager;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
-import android.support.v4.view.ViewPager;
 public class A3techLoginActivity extends Activity implements DataLoadCallback {
 
 	AlertDialog alertDialog;
@@ -54,13 +52,15 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 	EditText idLoginDialog_editTextPassword;
 	TextView idLoginDialog_textViewPasswordForgot;
 	Button idLogin_buttonAddContact;
-	Button idLogin_buttonLogin;
+	Button btn_create_account;
 	LinearLayout idLogin_linearLayoutAnnuler;
 	LinearLayout idLogin_linearLayoutCreateAccount;
-	RelativeLayout idLogin_linearLayoutFacebook;
+	RelativeLayout createAccountContainer;
+
 	LinearLayout idLogin_linearLayoutLogin;
 	LinearLayout idLogin_linearLayoutValider;
 	EditText idPasswordForgetDialog_editTextEmail;
+	TextView signinAction;
 	LinearLayout idPasswordForget_linearLayoutAnnuler;
 	LinearLayout idPasswordForget_linearLayoutValider;
 	RelativeLayout idLogin_linearLayoutAnonyme;
@@ -103,7 +103,7 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 					InscriptionActivity.class));*/
 			A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
 					A3techCreateAccountActivity.class));
-			//A3techLoginActivity.this.finish();
+			A3techLoginActivity.this.finish();
 		}
 	};
 
@@ -148,7 +148,7 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 		public void onClick(View v) {
 			A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
                     A3techSignInActivity.class));
-
+			A3techLoginActivity.this.finish();
 		/*	new Handler().post(new Runnable() {
 
 				@Override
@@ -232,7 +232,11 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(1);
 		setContentView(R.layout.a3tech_login_activity);
-		this.idLogin_linearLayoutLogin = (LinearLayout) findViewById(R.id.idLogin_linearLayoutLogin);
+		btn_create_account = findViewById(R.id.btn_create_account);
+		btn_create_account.setOnClickListener(this.addContactListener);
+		signinAction = findViewById(R.id.signin_action_login);
+		signinAction.setOnClickListener(this.loginListener);
+		/*this.idLogin_linearLayoutLogin = (LinearLayout) findViewById(R.id.idLogin_linearLayoutLogin);
 		this.idLogin_linearLayoutCreateAccount = (LinearLayout) findViewById(R.id.idLogin_linearLayoutCreateAccount);
 		this.idLogin_linearLayoutFacebook = (RelativeLayout) findViewById(R.id.idLogin_linearLayoutFacebook);
 		this.idLogin_linearLayoutFacebook
@@ -251,7 +255,7 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 
 			}
 		});
-
+*/
 		iniPager();
 	}
 
@@ -373,18 +377,19 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 		switch (method) {
 		case Constant.KEY_USER_MANAGER_LOGIN /* 4 */:
 		case Constant.KEY_USER_MANAGER_LOGIN_FB /* 35 */:
-			User user = (User) data;
+			A3techUser user = (A3techUser) data;
 			Editor editor = PreferenceManager.getDefaultSharedPreferences(
 					getApplicationContext()).edit();
 			editor.putString("MyCredentials", user.getEmail());
 			editor.putString("pseudo", user.getPseudo());
-			editor.putString("identifiant", user.getIdentifiant());
+            editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_NAME, user.getNom());
+			editor.putString("identifiant", user.getId()+"");
 			editor.putString("password", password);
 			editor.putString("facebookId", user.getFacebookId());
-			 editor.putString("checkphone", user.getCheckphone());
-			editor.putString("mode", user.getMode());
+			editor.putString("checkphone", user.getTelephone());
 			editor.putString("conMode", method == 4 ? "application"
 					: "facebook");
+			editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(user));
 			editor.commit();
 			this.dialog.dismiss();
 			Intent mainIntent = new Intent(this, NavigationMain.class);
@@ -392,7 +397,8 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 					user.getPrenom()
 							+ MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR
 							+ user.getNom());
-			mainIntent.putExtra("nbr", user.getNbrServiceEmis());
+			mainIntent.putExtra("nbr", user.getNbrMission()+"");
+
 			startActivity(mainIntent);
 			finish();
 			break;
@@ -439,4 +445,9 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
 			});
 		}
 	}
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }

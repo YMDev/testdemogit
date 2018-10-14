@@ -6,26 +6,24 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
+import com.google.gson.Gson;
 
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.fragment.A3techChooseSignInOption;
 import mobile.a3tech.com.a3tech.fragment.A3techSignInEmailFragment;
 import mobile.a3tech.com.a3tech.manager.UserManager;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 public class A3techSignInActivity extends AppCompatActivity implements DataLoadCallback, A3techChooseSignInOption.OnFragmentInteractionListener, A3techSignInEmailFragment.OnFragmentInteractionListener {
@@ -58,8 +56,6 @@ public class A3techSignInActivity extends AppCompatActivity implements DataLoadC
 
 
     private void connecter(String login, String password) {
-        this.dialog = CustomProgressDialog.createProgressDialog(this,
-                getString(R.string.txtMenu_dialogChargement));
         UserManager.getInstance().login(login, password, this);
     }
 
@@ -77,11 +73,30 @@ String password;
             case A3techChooseSignInOption.ACTION_SIGN_IN_PAR_EMAIL:
             setFragment(new A3techSignInEmailFragment(),true,false);
             break;
+            case A3techChooseSignInOption.ACTION_SIGN_IN_PAR_FB:
+                Intent mainIntent = new Intent(A3techSignInActivity.this,
+                        FacebookActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putString(Constant.RESULT_ACTION_CODE_FACEBOOK_SRC,
+                        Constant.RESULT_ACTION_CODE_FACEBOOK_SRC_LOGIN);
+                mainIntent.putExtras(bundle);
+                A3techSignInActivity.this.startActivityForResult(mainIntent,
+                        A3techChooseSignInOption.REQUEST_KEY_CONNECT_BY_FACEBOOK);
+                break;
             case A3techSignInEmailFragment.ACTION_CONNEXION:
-                HashMap hashdata = (HashMap)data;
-                String username = String.valueOf(hashdata.get("EMAIL"));
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog = CustomProgressDialog.createProgressDialog(A3techSignInActivity.this,
+                                getString(R.string.txtMenu_dialogChargement));
+                    }
+                });
+                 HashMap hashdata = (HashMap)data;
+                 String username = String.valueOf(hashdata.get("EMAIL"));
                  password = String.valueOf(hashdata.get("PASS"));
                  connecter(username, password);
+                 break;
+            case A3techChooseSignInOption.ACTION_RESET_PASS:
         }
     }
     @Override
@@ -90,43 +105,45 @@ String password;
             getFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
+            startActivity(new Intent(A3techSignInActivity.this,
+                    A3techLoginActivity.class));
             finish();
         }
     }
     @Override
     public void dataLoaded(Object data, int method, int typeOperation) {
-        User user = (User) data;
+        A3techUser user = (A3techUser) data;
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext()).edit();
         Intent mainIntent = new Intent(this, A3techHomeActivity.class);
         switch (method) {
 
             case Constant.KEY_USER_MANAGER_LOGIN /* 4 */:
-                this.dialog.dismiss();
-                editor.putString("identifiant", user.getIdentifiant());
+                editor.putString("identifiant", user.getId()+"");
                 editor.putString("facebookId", user.getFacebookId());
                 editor.putString("password",password);
                 editor.putString("pseudo", user.getPseudo());
-                editor.putString("mode", user.getMode());
                 editor.putString("conMode", "application");
+                editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(user));
                 editor.commit();
                 dialog.dismiss();
                 mainIntent.putExtra("nomPrenom",user.getPrenom()
                         + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + user.getNom());
-                mainIntent.putExtra("nbr", user.getNbrServiceEmis());
+                mainIntent.putExtra("nbr", user.getNbrMission());
+
                 startActivity(mainIntent);
                 finish();
                 break;
             case Constant.KEY_USER_MANAGER_LOGIN_FB /* 35 */:
                 editor.putString("MyCredentials", user.getEmail());
                 editor.putString("pseudo", user.getPseudo());
-                editor.putString("identifiant", user.getIdentifiant());
+                editor.putString("identifiant", user.getId()+"");
                 editor.putString("password", password);
                 editor.putString("facebookId", user.getFacebookId());
-                editor.putString("checkphone", user.getCheckphone());
-                editor.putString("mode", user.getMode());
+                editor.putString("checkphone", user.getTelephone());
                 editor.putString("conMode", method == 4 ? "application"
                         : "facebook");
+                editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(user));
                 editor.commit();
                 this.dialog.dismiss();
 
@@ -134,7 +151,7 @@ String password;
                         user.getPrenom()
                                 + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR
                                 + user.getNom());
-                mainIntent.putExtra("nbr", user.getNbrServiceEmis());
+                mainIntent.putExtra("nbr", user.getNbrMission());
                 startActivity(mainIntent);
                 finish();
                 break;

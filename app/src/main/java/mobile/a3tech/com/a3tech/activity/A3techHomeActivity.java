@@ -6,35 +6,26 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.location.Address;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Handler;
-import android.os.UserManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatDelegate;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,27 +34,21 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.google.gson.Gson;
 
-import java.util.List;
-import java.util.Locale;
+import org.apache.commons.lang3.StringUtils;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
-import mobile.a3tech.com.a3tech.fragment.A3techAffecterTechnicienFragment;
-import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechniciensFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeBrowseTechFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
-import mobile.a3tech.com.a3tech.fragment.A3techPostMissionFragment;
-import mobile.a3tech.com.a3tech.fragment.A3techSelectCategoryMissionFragment;
-import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
+import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.Categorie;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
-import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
-import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
+import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
@@ -82,6 +67,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     Toolbar toolBrowse;
     TextView nomPrenomUser;
     ImageView userAvatar;
+    A3techUser connectedUser;
 
     public static final String ACTION_FROM_A3techHomeActivity = "A3techHomeActivity";
     public static final String TAG_CATEGORY_SELECTED_FROM_HOME_ACTIVITY = "TAG_RESULT_FROM_SELECT_TECH";
@@ -91,7 +77,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3tech_home_activity);
-
+        connectedUser = PreferencesValuesUtils.getConnectedUser(A3techHomeActivity.this);
         new InitActivityTask(A3techHomeActivity.this).execute();
 
     }
@@ -134,38 +120,10 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         toolEchange = findViewById(R.id.toolbar_echange);
         toolAccount = findViewById(R.id.toolbar_account);
         toolBrowse = findViewById(R.id.toolbar_browse);
-        toolAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                String connectedUser = prefs.getString("identifiant", "");
-                String password = prefs.getString("password", "");
 
-                mobile.a3tech.com.a3tech.manager.UserManager.getInstance().getProfil(connectedUser, password, new DataLoadCallback() {
-                    @Override
-                    public void dataLoaded(Object data, int method, int typeOperation) {
-                        User user = (User) data;
-                        Bundle bExtra = new Bundle();
-                        bExtra.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, A3techHomeActivity.ACTION_FROM_A3techHomeActivity);
-                        bExtra.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(user));
-                        Intent mainIntent = new Intent(A3techHomeActivity.this, A3techViewEditProfilActivity.class);
-                        mainIntent.putExtras(bExtra);
-                        startActivity(mainIntent);
-                    }
 
-                    @Override
-                    public void dataLoadingError(int errorCode) {
+        setupToolbarAccount();
 
-                    }
-                });
-
-            }
-        });
-
-        userAvatar = findViewById(R.id.photo_user);
-        nomPrenomUser = findViewById(R.id.user_name_pname);
-
-        nomPrenomUser.setText(getIntent().getStringExtra("nomPrenom"));
         appBarHome = findViewById(R.id.appbar_home);
         updateAppbarLayout(0);
 
@@ -237,6 +195,73 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         pagerAdapter.addFragments(A3techHomeBrowseTechFragment.newInstance(null, null));
         pagerAdapter.addFragments(A3techHomeAccountFragment.newInstance(null, null));
         viewPager.setAdapter(pagerAdapter);
+    }
+
+
+    /**
+     * Avatar + action clique toolbar to display user profil.
+     */
+    private void setupToolbarAccount() {
+        // Acount fragment toolbar init
+        toolAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                String connectedUser = prefs.getString("identifiant", "");
+                String password = prefs.getString("password", "");
+
+                mobile.a3tech.com.a3tech.manager.UserManager.getInstance().getProfil(connectedUser, password, new DataLoadCallback() {
+                    @Override
+                    public void dataLoaded(Object data, int method, int typeOperation) {
+                        A3techUser user = (A3techUser) data;
+                        Bundle bExtra = new Bundle();
+                        bExtra.putString(A3techViewEditProfilActivity.ARG_SRC_ACTION, A3techHomeActivity.ACTION_FROM_A3techHomeActivity);
+                        bExtra.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(user));
+                        Intent mainIntent = new Intent(A3techHomeActivity.this, A3techViewEditProfilActivity.class);
+                        mainIntent.putExtras(bExtra);
+                        startActivity(mainIntent);
+                    }
+
+                    @Override
+                    public void dataLoadingError(int errorCode) {
+
+                    }
+                });
+
+            }
+        });
+
+        userAvatar = findViewById(R.id.photo_user);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (connectedUser != null && StringUtils.isNoneBlank(connectedUser.getNom())) {
+                    final LetterTileProvider tileProvider = new LetterTileProvider(A3techHomeActivity.this);
+                    final Bitmap letterTile = tileProvider.getLetterTile(connectedUser.getNom(), connectedUser.getNom(), 155, 155);
+                    userAvatar.setImageBitmap(letterTile);
+                }
+
+            }
+        });
+
+        String jsonUSer = PreferencesValuesUtils.getPreferenceStringByParam(A3techHomeActivity.this, PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, "");
+        if (StringUtils.isNoneBlank(jsonUSer)) {
+            A3techUser connectedUSer = new Gson().fromJson(jsonUSer, A3techUser.class);
+            if (connectedUSer != null) {
+                if (StringUtils.isNoneBlank(connectedUSer.getId_photo_profil())) {
+                    //getUSer Avatare
+                    //TODO set avatare from user picture
+                    //ImageManager.getInstance().getString()
+                }
+            }
+        }
+        nomPrenomUser = findViewById(R.id.user_name_pname);
+        String nameConnectedUser  = "";
+        if(connectedUser != null && connectedUser.getNom() != null && connectedUser.getPrenom() != null){
+            nameConnectedUser = connectedUser.getNom()+" "+connectedUser.getPrenom().substring(0,1)+".";
+        }
+        nomPrenomUser.setText(nameConnectedUser);
+
     }
 
     @NonNull
@@ -397,7 +422,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
             case (REQUEST_START_DISPLAY_TECH_ACTIVITY): {
                 if (resultCode == Activity.RESULT_OK) {
                     String jsonMission = data.getStringExtra(A3techDisplayTechniciensListeActivity.TAG_MISSION_TO_SAVE_FROM_BROWS_TECH);
-                    Mission mission = new Gson().fromJson(jsonMission, Mission.class);
+                    A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
                     //TODO display progress bar, save mission,whene finish saving, dismiss progress bar
                     bottomNavigation.setCurrentItem(1);
                     ((A3techMissionsHomeFragment) pagerAdapter.getItem(1)).addMissionToLise(mission);
@@ -423,7 +448,6 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
             pd = CustomProgressDialog.createProgressDialog(
                     activity,
                     "");
-            pd.show();
         }
 
         @Override
@@ -435,7 +459,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
 
         @Override
         protected void onPostExecute(Boolean result) {
-            pd.dismiss();
+            if (pd != null) pd.dismiss();
         }
     }
 

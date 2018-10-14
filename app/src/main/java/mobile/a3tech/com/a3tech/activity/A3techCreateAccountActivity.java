@@ -8,13 +8,10 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 
@@ -29,7 +26,8 @@ import mobile.a3tech.com.a3tech.fragment.A3techAddUserNameFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techStep1CreatAccountFragment;
 import mobile.a3tech.com.a3tech.manager.UserManager;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techUser;
+import mobile.a3tech.com.a3tech.model.A3techUserType;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
@@ -42,12 +40,12 @@ public class A3techCreateAccountActivity extends Activity implements A3techSelec
 
     ProgressBar progressbarAccountCreation;
     FrameLayout frameView;
-    User account;
+    A3techUser account;
     ProgressDialog dialog = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        account = new User();
+        account = new A3techUser();
         setContentView(R.layout.a3tech_create_account_activity);
         frameView = findViewById(R.id.frame_create_account);
         progressbarAccountCreation = findViewById(R.id.progress_creation_account);
@@ -88,11 +86,13 @@ public class A3techCreateAccountActivity extends Activity implements A3techSelec
 
     @Override
     public void onBackPressed() {
-        if (getFragmentManager().getBackStackEntryCount() > 0) {
+        if (getFragmentManager().getBackStackEntryCount() > 1) {
             getFragmentManager().popBackStack();
             updateProgress();
         } else {
             super.onBackPressed();
+            startActivity(new Intent(A3techCreateAccountActivity.this,
+                    A3techLoginActivity.class));
             finish();
         }
     }
@@ -140,9 +140,9 @@ public class A3techCreateAccountActivity extends Activity implements A3techSelec
             case A3techSelecteAccountFragment.ACTION_SELECT_ACCOUNT:
                 progressBarchangeSmouthly(progressbarAccountCreation.getProgress() + 20);
                 if (((Integer) data) == A3techSelecteAccountFragment.ACCOUNT_HIRE) {
-                    account.setCategorie("HIRE");
-                } else if (((Integer) data) == A3techSelecteAccountFragment.ACCOUNT_HIRE) {
-                    account.setCategorie("WORK");
+                    account.setTypeUser(A3techUserType.CLIENT);
+                } else if (((Integer) data) == A3techSelecteAccountFragment.ACCOUNT_WORK) {
+                    account.setTypeUser(A3techUserType.TECHNICIEN);
                 }
                 setFragment(new A3techAddUserNameFragment(), true, false);
                 break;
@@ -200,21 +200,20 @@ public class A3techCreateAccountActivity extends Activity implements A3techSelec
 
     @Override
     public void dataLoaded(Object data, int method, int typeOperation) {
-        User user = (User) data;
+        A3techUser user = (A3techUser) data;
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext()).edit();
-        editor.putString("identifiant", user.getIdentifiant());
+        editor.putString("identifiant", user.getId()+"");
         editor.putString("facebookId", user.getFacebookId());
         editor.putString("password", account.getPassword());
         editor.putString("pseudo", user.getPseudo());
-        editor.putString("mode", user.getMode());
         editor.putString("conMode", "application");
         editor.commit();
         dialog.dismiss();
         Intent mainIntent = new Intent(this, A3techHomeActivity.class);
         mainIntent.putExtra("nomPrenom", this.account.getPrenom()
                 + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + this.account.getNom());
-        mainIntent.putExtra("nbr", user.getNbrServiceEmis());
+        mainIntent.putExtra("nbr", user.getNbrMission()+"");
         startActivity(mainIntent);
         finish();
     }

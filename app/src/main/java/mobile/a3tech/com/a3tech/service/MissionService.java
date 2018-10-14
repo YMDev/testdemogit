@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,10 @@ import java.util.Map;
 import org.codehaus.jackson.type.TypeReference;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
+import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
+import mobile.a3tech.com.a3tech.model.A3techUser;
+import mobile.a3tech.com.a3tech.model.A3techUserType;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.utils.Constant;
@@ -55,13 +60,13 @@ public class MissionService extends AbstractService implements Constant {
 	}
 	
     //filtrer missions
-    public List<Mission> filtreMission(String lang, String connectedUser, String keyWord, String distance, String services, String start, String limit, String key, String typeTransaction, String premium, String password,
-									   int order, int type) throws EducationException{
-/*		Map<String, String> params = new HashMap<String, String>();
+    public List<A3techMission> filtreMission(String lang, String connectedUser, String keyWord, String distance, String services, String start, String limit, String key, String typeTransaction, String premium, String password,
+											 int order, int type) throws EducationException{
+ 	Map<String, String> params = new HashMap<String, String>();
 		params.put("start", start);
         params.put("limit", limit);
-        params.put("idUser", connectedUser);
-        params.put("keyword", keyWord);
+        params.put("connectedUser", connectedUser);
+        params.put("keyWord", keyWord);
         params.put("distance", distance);
         params.put("services", services);
         params.put("premium", premium);
@@ -69,41 +74,31 @@ public class MissionService extends AbstractService implements Constant {
         params.put("password", password);
         params.put("order", String.valueOf(order));
         params.put("type", String.valueOf(type));
-        if (key != null) {
-            params.put("key", key);
-        }
-        if (typeTransaction != null) {
-            params.put("typeTransaction", typeTransaction);
-        }
-        HashMap<String,List<Mission>> result = getResult(CHECK_EDU_ALGO_MISSION_URL, params,
-		//HashMap<String,List<Mission>> result = getResult(CHECK_EDU_FILTER_MISSION_URL, params,
-				new TypeReference<HashMap<String,List<Mission>>>() {
+		params.put("key", key);
+		params.put("typeTransaction", typeTransaction);
+		List<A3techMission> result = getResult(CHECK_EDU_ALGO_MISSION_URL, params,
+				new TypeReference<List<A3techMission>>() {
 				});
-		List<Mission> missions = result.get("missions");*/
-		List<Mission> missions = new ArrayList<>();
-		Mission mm1 = new Mission();
-		mm1.setTechnicien(new User());
+
+		return  result;
+		/*List<A3techMission> missions = new ArrayList<>();
+		A3techMission mm1 = new A3techMission();
+        A3techUser tech =  new A3techUser();
+        tech.setNbrReview(33);
+        tech.setNbrMission(33);
+        tech.setTypeUser(A3techUserType.TECHNICIEN);
+        tech.setNom("BOUHJRA");
+        tech.setPrenom("Mouad");
+        tech.setRating(3f);
+        tech.setAdresse("adresse");
+        mm1.setTechnicien(tech);
 		mm1.getTechnicien().setNom("mouad");
 		mm1.getTechnicien().setPrenom("bouhjra");
 		mm1.setAdresse("adresse mission 1");
-		mm1.setArticle("article mission");
-		mm1.setCatDescription("cat description");
-		mm1.setCategorieId("cat1");
-		mm1.setCheckmail("mail.mail.cheked@gmail.com");
-		mm1.setCheckphone("02020202020");
-		mm1.setContre("contre");
-		mm1.setDateCreation("20/09/2018");
-		mm1.setDateFin("23/09/2018");
-		mm1.setNote("2");
-		mm1.setSponsorise(0);
-		mm1.setService("1");
-		mm1.setTypeTransaction("1");
-		mm1.setPseudo("mission pseudo");
-		mm1.setDistance("-1.0d");
-		mm1.setNbrVues("2");
-		mm1.setStatut(Mission.STATUT_CREEE);
-		mm1.setIdentifiant("928292");
-		mm1.setOriginator("kdaasa");
+		mm1.setDescriptionMission("cat description");
+		mm1.setDateCreation(new Date().getTime());
+		mm1.setDateIntervention(new Date().getTime());
+		mm1.setStatut(A3techMissionStatut.CREE);
 		mm1.setAdresse("Hay Riad, Rabat Maroc P10200");
 		mm1.setTitre("Installation Climatiseur");
 		missions.add(mm1);
@@ -113,7 +108,7 @@ public class MissionService extends AbstractService implements Constant {
 		missions.add(mm1);
 		missions.add(mm1);
 		missions.add(mm1);
-		return missions;
+		return missions;*/
     }
     
     //detail missions

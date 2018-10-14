@@ -4,18 +4,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -26,24 +28,23 @@ import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techProfilFragmentAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techProfilInformationFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techReviewsFragment;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
-import mobile.a3tech.com.a3tech.view.CircleImageView;
 
-public class A3techViewEditProfilActivity extends AppCompatActivity  implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener, A3techReviewsFragment.OnFragmentInteractionListener {
-    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR  = 0.72f;
-    private static final float PERCENTAGE_TO_SHOW_TOOLBAR  = 0.7f;
-    private static final float PERCENTAGE_TO_HIDE_CIRCLE_IMAGE  = 0.5f;
-    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS     = 0.3f;
-    private static final int ALPHA_ANIMATIONS_DURATION              = 200;
-    private static final int ALPHA_ANIMATIONS_DURATION_TOOL              = 400;
+public class A3techViewEditProfilActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener, A3techReviewsFragment.OnFragmentInteractionListener {
+    private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.72f;
+    private static final float PERCENTAGE_TO_SHOW_TOOLBAR = 0.7f;
+    private static final float PERCENTAGE_TO_HIDE_CIRCLE_IMAGE = 0.5f;
+    private static final float PERCENTAGE_TO_HIDE_TITLE_DETAILS = 0.3f;
+    private static final int ALPHA_ANIMATIONS_DURATION = 200;
+    private static final int ALPHA_ANIMATIONS_DURATION_TOOL = 400;
     public static final String ARG_USER_OBJECT = "ARG_USER_OBJECT";
     public static final String ARG_SRC_ACTION = "ARG_SRC_ACTION";
     public static final String ARG_MISSION_OBJECT = "ARG_MISSION_OBJECT";
 
-    private boolean mIsTheTitleVisible          = false;
+    private boolean mIsTheTitleVisible = false;
     private boolean mIsTheTitleContainerVisible = true;
     private boolean mIsTheToolbarVisible = false;
     private boolean mIsTheCircleVisible = true;
@@ -63,9 +64,11 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
     private Boolean isFromBrowseTech = false;
     private LinearLayout validationContainer;
     private Button btnValidationSelection;
-    User userToDisplay;
-    Mission mission;
+    A3techUser userToDisplay;
+    A3techMission mission;
     private de.hdodenhof.circleimageview.CircleImageView circleImage;
+    private LinearLayout frameViewLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,23 +81,23 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
             srcAction = b.getString(ARG_SRC_ACTION);
             jsonMyObjectMission = b.getString(ARG_MISSION_OBJECT);
         }
-        if(jsonMyObject != null){
-            userToDisplay = new Gson().fromJson(jsonMyObject, User.class);
+        if (jsonMyObject != null) {
+            userToDisplay = new Gson().fromJson(jsonMyObject, A3techUser.class);
         }
-        if(jsonMyObjectMission != null){
-            mission = new Gson().fromJson(jsonMyObjectMission, Mission.class);
-        }else{
-            mission = new Mission();
+        if (jsonMyObjectMission != null) {
+            mission = new Gson().fromJson(jsonMyObjectMission, A3techMission.class);
+        } else {
+            mission = new A3techMission();
         }
-        if(srcAction != null && srcAction.equalsIgnoreCase(A3techHomeActivity.ACTION_FROM_A3techHomeActivity)){
+        if (srcAction != null && srcAction.equalsIgnoreCase(A3techHomeActivity.ACTION_FROM_A3techHomeActivity)) {
             isFromHomeAccount = true;
             isFromBrowseTech = false;
             isFromAddMission = false;
-        }else  if(srcAction != null && srcAction.equalsIgnoreCase(SimpleAdapterTechnicien.SRC_FROM_HOME_ADD_MISSION)){
+        } else if (srcAction != null && srcAction.equalsIgnoreCase(SimpleAdapterTechnicien.SRC_FROM_HOME_ADD_MISSION)) {
             isFromAddMission = true;
             isFromHomeAccount = false;
             isFromBrowseTech = false;
-        } else if(srcAction != null && srcAction.equalsIgnoreCase(SimpleAdapterTechnicien.SRC_FROM_HOME_BROWSE_TECH)){
+        } else if (srcAction != null && srcAction.equalsIgnoreCase(SimpleAdapterTechnicien.SRC_FROM_HOME_BROWSE_TECH)) {
             isFromBrowseTech = true;
             isFromHomeAccount = false;
             isFromAddMission = false;
@@ -114,16 +117,15 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
             }
         });
         mAppBarLayout.addOnOffsetChangedListener(this);
-        setTabBG(R.drawable.tab_left_select,R.drawable.tab_right_unselect);
+        setTabBG(R.drawable.tab_left_select, R.drawable.tab_right_unselect);
         tabLayouProfil.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPagerProfil.setCurrentItem(tab.getPosition());
-                if(tabLayouProfil.getSelectedTabPosition()==0) {
-                    setTabBG(R.drawable.tab_left_select,R.drawable.tab_right_unselect);
-                }
-                else {
-                    setTabBG(R.drawable.tab_left_unselect,R.drawable.tab_right_select);
+                if (tabLayouProfil.getSelectedTabPosition() == 0) {
+                    setTabBG(R.drawable.tab_left_select, R.drawable.tab_right_unselect);
+                } else {
+                    setTabBG(R.drawable.tab_left_unselect, R.drawable.tab_right_select);
                 }
             }
 
@@ -142,31 +144,32 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
     }
 
     private void bindActivity() {
-        mToolbar        = (Toolbar) findViewById(R.id.main_toolbar);
-        mTitle          = (TextView) findViewById(R.id.main_textview_title);
+        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
+        mTitle = (TextView) findViewById(R.id.main_textview_title);
         mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
-        mAppBarLayout   = (AppBarLayout) findViewById(R.id.main_appbar);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.main_appbar);
         viewPagerProfil = (ViewPager) findViewById(R.id.viewpager_profile_detail);
         tabLayouProfil = (TabLayout) findViewById(R.id.tabs_profil);
         circleImage = findViewById(R.id.avatare_user_cicle);
+        frameViewLayout = findViewById(R.id.frame_view_account_detail);
         final LetterTileProvider tileProvider = new LetterTileProvider(A3techViewEditProfilActivity.this);
         final Bitmap letterTile = tileProvider.getLetterTile(userToDisplay.getNom(), userToDisplay.getNom(), 88, 88);
         circleImage.setImageBitmap(letterTile);
         userNamePname = findViewById(R.id.user_name_pname_detail);
-        userNamePname.setText(userToDisplay.getNom()+" "+userToDisplay.getPrenom() );
+        userNamePname.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom());
         backBtn = findViewById(R.id.back_home_btn);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               A3techViewEditProfilActivity.this.finish();
+                A3techViewEditProfilActivity.this.finish();
             }
         });
         validationContainer = findViewById(R.id.validation_selection_container);
         btnValidationSelection = findViewById(R.id.validate_selection);
-        if(isFromHomeAccount){
+        if (isFromHomeAccount) {
             validationContainer.setVisibility(View.GONE);
-        }else{
+        } else {
             validationContainer.setVisibility(View.VISIBLE);
         }
 
@@ -196,7 +199,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
     private void handleToolbarTitleVisibility(float percentage) {
         if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
 
-            if(!mIsTheTitleVisible) {
+            if (!mIsTheTitleVisible) {
                 startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
                 mIsTheTitleVisible = true;
             }
@@ -212,7 +215,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
 
     private void handleAlphaOnTitle(float percentage) {
         if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
-            if(mIsTheTitleContainerVisible) {
+            if (mIsTheTitleContainerVisible) {
                 startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
                 mIsTheTitleContainerVisible = false;
             }
@@ -228,7 +231,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
 
     private void handleAlphaOnToolbar(float percentage) {
         if (percentage >= PERCENTAGE_TO_SHOW_TOOLBAR) {
-            if(mIsTheToolbarVisible) {
+            if (mIsTheToolbarVisible) {
                 startAlphaAnimation(mToolbar, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
                 mIsTheToolbarVisible = false;
             }
@@ -245,20 +248,31 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
 
     private void handleAlphaOnCircleImage(float percentage) {
         if (percentage >= PERCENTAGE_TO_HIDE_CIRCLE_IMAGE) {
-            if(mIsTheCircleVisible) {
-                startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
-                mIsTheCircleVisible = false;
+            if (mIsTheCircleVisible) {
+              startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
+                        mIsTheCircleVisible = false;
             }
 
         } else {
 
             if (!mIsTheCircleVisible) {
-                startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
+                 startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
                 mIsTheCircleVisible = true;
             }
         }
     }
-    public static void startAlphaAnimation (View v, long duration, int visibility) {
+
+
+    private void adjusteMArginForFrameDetailAccount(int top) {
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+
+       int topDpx =  Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, top, getResources().getDisplayMetrics()));
+        layoutParams.setMargins(0, topDpx, 0, 50);
+        frameViewLayout.setLayoutParams(layoutParams);
+    }
+
+    public static void startAlphaAnimation(View v, long duration, int visibility) {
         AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
                 ? new AlphaAnimation(0f, 1f)
                 : new AlphaAnimation(1f, 0f);
@@ -269,7 +283,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity  implements 
 
     }
 
-    private void setTabBG(int tab1, int tab2){
+    private void setTabBG(int tab1, int tab2) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
             ViewGroup tabStrip = (ViewGroup) tabLayouProfil.getChildAt(0);
             View tabView1 = tabStrip.getChildAt(0);

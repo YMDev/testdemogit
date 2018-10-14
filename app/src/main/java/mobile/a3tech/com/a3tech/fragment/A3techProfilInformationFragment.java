@@ -16,18 +16,18 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
 import mobile.a3tech.com.a3tech.manager.UserManager;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.ObjectMenu;
 import mobile.a3tech.com.a3tech.utils.Constant;
-import mobile.a3tech.com.a3tech.view.ExpandableTextView;
+import mobile.a3tech.com.a3tech.utils.DateStuffs;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,7 +47,7 @@ public class A3techProfilInformationFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private User user;
+    private A3techUser user;
     private RecyclerView recycleProfil;
     private OnFragmentInteractionListener mListener;
 
@@ -62,7 +62,7 @@ public class A3techProfilInformationFragment extends Fragment {
      * @return A new instance of fragment A3techProfilInformationFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static A3techProfilInformationFragment newInstance(User user) {
+    public static A3techProfilInformationFragment newInstance(A3techUser user) {
         A3techProfilInformationFragment fragment = new A3techProfilInformationFragment();
         Bundle args = new Bundle();
         args.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(user));
@@ -79,7 +79,7 @@ public class A3techProfilInformationFragment extends Fragment {
             jsonMyObject = extras.getString(A3techViewEditProfilActivity.ARG_USER_OBJECT);
         }
         if (jsonMyObject != null) {
-            user = new Gson().fromJson(jsonMyObject, User.class);
+            user = new Gson().fromJson(jsonMyObject, A3techUser.class);
         }
     }
 
@@ -105,12 +105,12 @@ public class A3techProfilInformationFragment extends Fragment {
                 public void dataLoaded(Object data, int method, int typeOperation) {
                     switch (method) {
                         case Constant.KEY_USER_MANAGER_GET_PROFIL:
-                            User userV = (User) data;
+                            A3techUser userV = (A3techUser) data;
                             listeRetour.add(new ObjectMenu(userV.getEmail(), "Email", 1, 0));
                             listeRetour.add(new ObjectMenu(userV.getTelephone(), "Telephone", 2, 0));
                             listeRetour.add(new ObjectMenu(userV.getAdresse(), "Adresse", 3, 0));
-                            listeRetour.add(new ObjectMenu(user.getNbr() == null || user.getNbr() == "" ? "0" : user.getNbr(), "Nombre de missions", 4, 0));
-                            listeRetour.add(new ObjectMenu(userV.getDateNaissance(), "Date naissance", 4, 0));
+                            listeRetour.add(new ObjectMenu(user.getNbrMission() == null ? "0" : user.getNbrMission()+"", "Nombre de missions", 4, 0));
+                            listeRetour.add(new ObjectMenu(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(userV.getDateNaissance())), "Date naissance", 4, 0));
                             A3techProfileInformationAdapter mAdapter = new A3techProfileInformationAdapter(getActivity(), listeRetour, userV);
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
                             recycleProfil.setLayoutManager(mLayoutManager);
@@ -131,8 +131,8 @@ public class A3techProfilInformationFragment extends Fragment {
             listeRetour.add(new ObjectMenu(user.getEmail(), "Email", 1, 0));
             listeRetour.add(new ObjectMenu(user.getTelephone(), "Telephone", 2, 0));
             listeRetour.add(new ObjectMenu(user.getAdresse(), "Adresse", 3, 0));
-            listeRetour.add(new ObjectMenu(user.getNbr() == null || user.getNbr() == "" ? "0" : user.getNbr(), "Nombre de missions", 4, 0));
-            listeRetour.add(new ObjectMenu(user.getDateNaissance(), "Date naissance", 4, 0));
+            listeRetour.add(new ObjectMenu(user.getNbrMission() == null ? "0" : user.getNbrMission()+"", "Nombre de missions", 4, 0));
+            listeRetour.add(new ObjectMenu(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT,new Date(user.getDateNaissance())), "Date naissance", 4, 0));
             A3techProfileInformationAdapter mAdapter = new A3techProfileInformationAdapter(getActivity(), listeRetour, user);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
             recycleProfil.setLayoutManager(mLayoutManager);

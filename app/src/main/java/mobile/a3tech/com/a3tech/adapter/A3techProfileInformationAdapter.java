@@ -1,27 +1,24 @@
 package mobile.a3tech.com.a3tech.adapter;
 
 import android.content.Context;
-import android.graphics.Movie;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterCoordonnes;
-import mobile.a3tech.com.a3tech.test.SimpleAdapterTest;
 import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 
 public class A3techProfileInformationAdapter extends RecyclerView.Adapter<A3techProfileInformationAdapter.A3techPIViewHolder> {
    Context context;
    List objectMenu;
-   User user;
-   public A3techProfileInformationAdapter(Context con,List objectMenus, User vuser){
+   A3techUser user;
+   public A3techProfileInformationAdapter(Context con,List objectMenus, A3techUser vuser){
        context = con;
        objectMenu = objectMenus;
        user = vuser;

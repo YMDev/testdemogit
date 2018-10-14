@@ -4,14 +4,10 @@ package mobile.a3tech.com.a3tech.test;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -35,12 +31,10 @@ import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
-import mobile.a3tech.com.a3tech.model.Categorie;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.utils.SphericalUtil;
-import mobile.a3tech.com.a3tech.utils.StringStuffs;
 
 /**
  * Created by Suleiman on 03/02/17.
@@ -59,9 +53,9 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
     private boolean loading;
     private OnLoadMoreListener onLoadMoreListener;
     //  Data
-    private List<User> listeObjects = new ArrayList<>();
+    private List<A3techUser> listeObjects = new ArrayList<>();
 
-    private Mission mission;
+    private A3techMission mission;
     private Context context;
     private Activity parentActivity;
 
@@ -73,7 +67,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
         this.context = context;
     }
 
-    public SimpleAdapterTechnicien(Context context, List objectMenu, Activity parent, Mission vMission, RecyclerView recyclerView) {
+    public SimpleAdapterTechnicien(Context context, List objectMenu, Activity parent, A3techMission vMission, RecyclerView recyclerView) {
         this.context = context;
         listeObjects = objectMenu;
         parentActivity = parent;
@@ -155,21 +149,21 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
                 ((SimpleItemVH)holder).container.setVisibility(View.INVISIBLE);
                 return;
             }
-            final User technicien = listeObjects.get(position);
+            final A3techUser technicien = listeObjects.get(position);
             if (technicien == null) return;
 
             ((SimpleItemVH)holder).nameTech.setText(technicien.getNom() + " " + technicien.getPrenom().substring(0, 1) + ".");
             /* String adresseFromGpsLocation = StringStuffs.getAdresseFromGpsLocation(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude()),context);
              */
             final LetterTileProvider tileProvider = new LetterTileProvider(context);
-            final Bitmap letterTile = tileProvider.getLetterTile(technicien.getNom(), technicien.getNom(), 88, 88);
+            final Bitmap letterTile = tileProvider.getLetterTile(technicien.getNom(), technicien.getNom(), 129, 129);
 
             ((SimpleItemVH)holder).adresse.setText(technicien.getAdresse());
             ((SimpleItemVH)holder).avatareTech.setImageBitmap(letterTile);
             ((SimpleItemVH)holder).ratingTech.setNumStars(5);
             ((SimpleItemVH)holder).ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
-            ((SimpleItemVH)holder).ratingNumberValue.setText(technicien.getRating());
-            ((SimpleItemVH)holder).numberOfReviews.setText("(+ " + technicien.getNbrReviews() + " avis )");
+            ((SimpleItemVH)holder).ratingNumberValue.setText(technicien.getRating()+"");
+            ((SimpleItemVH)holder).numberOfReviews.setText("(+ " + technicien.getNbrReview() + " avis )");
             GradientDrawable backCheckPhone = (GradientDrawable) ((RelativeLayout) ((SimpleItemVH)holder).checkPhone.getParent()).getBackground();
             backCheckPhone.setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
             Double distance = SphericalUtil.computeDistanceBetween(new LatLng(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude())), new LatLng(Double.valueOf("52.736291655910925"), Double.valueOf("-8.261718750000002")));
@@ -211,7 +205,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
 
     }
 
-    public void addOject(User usser){
+    public void addOject(A3techUser usser){
         listeObjects.add(usser);
          notifyItemInserted(listeObjects.size() - 1);
     }

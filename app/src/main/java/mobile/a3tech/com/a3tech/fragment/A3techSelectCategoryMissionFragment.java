@@ -1,10 +1,8 @@
 package mobile.a3tech.com.a3tech.fragment;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -20,17 +18,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.activity.PostageActivityStep2;
-import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
 import mobile.a3tech.com.a3tech.adapter.A3techSelectMissionCategoryAdapter;
 import mobile.a3tech.com.a3tech.manager.CategorieManager;
-import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.Categorie;
-import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
-import mobile.a3tech.com.a3tech.test.ObjectMenu;
 import mobile.a3tech.com.a3tech.utils.Constant;
-import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
  * A simple {@link Fragment} subclass.

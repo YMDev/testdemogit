@@ -4,40 +4,27 @@ package mobile.a3tech.com.a3tech.view;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
-import org.apache.commons.lang3.ClassUtils;
-
-import java.util.Date;
+import java.util.Calendar;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
-import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
-import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
+import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.Avis;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
-import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
-import mobile.a3tech.com.a3tech.utils.DateStuffs;
 
 public class A3techDialogAddReview {
 
     public static String SRC_FROM_DIALOGUE_DISPLAY_TECH = "SRC_FROM_DIALOGUE_DISPLAY_TECH";
     public static int REQUEST_DISPLAY_TECH_FROM_DIALOGUE = 3221;
-	public static Dialog createProfileDialog(final AddReviewParam param, Avis review) {
+	public static Dialog createProfileDialog(final AddReviewParam param, A3techReviewMission review) {
 		final  Dialog progressDialog = new Dialog(param.getContext());
         progressDialog.show();
 		LayoutInflater inflater =((Activity)param.getContext()).getLayoutInflater();
@@ -72,18 +59,19 @@ public class A3techDialogAddReview {
 			}
 		});
 		if(review != null){
-			mRatingBar.setRating(Float.valueOf(review.getNote()));
-			mFeedback.setText(review.getAvantage());
+			mRatingBar.setRating(Float.valueOf(review.getRating()));
+			mFeedback.setText(review.getCommentaire());
 		}
 
 
 		mSendFeedback.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				Avis avis  = new Avis();
-				avis.setDate_creation(DateStuffs.dateToString(DateStuffs.HOURS_MINUTES_FORMAT, new Date()));
-				avis.setNote(String.valueOf(mRatingBar.getRating()));
-				avis.setAvantage(mFeedback.getText().toString());
+				A3techReviewMission avis  = new A3techReviewMission();
+				avis.setDateEdition(Calendar.getInstance().getTime().getTime());
+				avis.setDateEdition(Calendar.getInstance().getTime().getTime());
+				avis.setRating(mRatingBar.getRating());
+				avis.setCommentaire(mFeedback.getText().toString());
 				param.actionsubmitt(avis);
 				progressDialog.dismiss();
 			}
@@ -97,7 +85,7 @@ public class A3techDialogAddReview {
     }
 
 	public interface AddReviewParam {
-		void actionsubmitt(Avis review);
+		void actionsubmitt(A3techReviewMission review);
 		Context getContext();
 	}
 }

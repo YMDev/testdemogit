@@ -36,6 +36,7 @@ import mobile.a3tech.com.a3tech.fragment.A3techPostMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelectCategoryMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techStep1CreatAccountFragment;
+import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
@@ -173,7 +174,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
                         progressBarchangeSmouthly(100);
                     }
                 });
-                Mission mission = (Mission)data;
+                A3techMission mission = (A3techMission)data;
                 updateAppbarLayout(3);
                 ((TextView)toolbarAffecterTech.findViewById(R.id.big_title)).setText(mission.getCategoryMission().getLibelle());
                // avant d'introduire buttom tabs : setFragment(A3techAffecterTechnicienFragment.newInstance(mission), true, false);

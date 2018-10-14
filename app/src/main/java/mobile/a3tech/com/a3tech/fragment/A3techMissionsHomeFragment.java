@@ -25,15 +25,10 @@ import java.util.List;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
-import mobile.a3tech.com.a3tech.activity.A3techLoginActivity;
-import mobile.a3tech.com.a3tech.activity.ServicesFragment;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
-import mobile.a3tech.com.a3tech.manager.UserManager;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterMission;
-import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
@@ -122,7 +117,7 @@ public class A3techMissionsHomeFragment extends Fragment {
                 new DataLoadCallback() {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
-                        List<Mission> listeRetour = (List<Mission>) data;
+                        List<A3techMission> listeRetour = (List<A3techMission>) data;
                         SimpleAdapterMission adapter = new SimpleAdapterMission(getActivity(),listeRetour, (A3techHomeActivity) getActivity());
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
                         recycleMission.setLayoutManager(mLayoutManager);
@@ -194,7 +189,7 @@ public class A3techMissionsHomeFragment extends Fragment {
             case (REQ_ADD_MISSION): {
                 if (resultCode == Activity.RESULT_OK) {
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
-                    Mission mission = new Gson().fromJson(jsonMission, Mission.class);
+                    A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
                     ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
                      A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
 
@@ -205,7 +200,7 @@ public class A3techMissionsHomeFragment extends Fragment {
     }
 
 
-    public void addMissionToLise(Mission mission){
+    public void addMissionToLise(A3techMission mission){
         ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
     }
 }

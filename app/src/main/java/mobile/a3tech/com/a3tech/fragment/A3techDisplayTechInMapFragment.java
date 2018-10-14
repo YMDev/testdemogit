@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,12 +13,10 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -39,20 +36,19 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
-import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.manager.UserManager;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.utils.MapUtilities;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
-import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.DialogDisplayTechProfile;
 
@@ -69,11 +65,11 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_MISSION_SELECTED = "param1";
     private static final String ARG_LIST_TECH = "ARG_LIST_TECH";
-    private List<User> listeOfTechToDisplay = new ArrayList<>();
+    private List<A3techUser> listeOfTechToDisplay = new ArrayList<>();
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Mission mission;
+    private A3techMission mission;
     SupportMapFragment mMapFragment;
     GoogleMap map;
     GPSTracker gps;
@@ -95,7 +91,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
      * @return A new instance of fragment A3techDisplayTechInMapFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static A3techDisplayTechInMapFragment newInstance(Mission mission, List technicien) {
+    public static A3techDisplayTechInMapFragment newInstance(A3techMission mission, List technicien) {
         A3techDisplayTechInMapFragment fragment = new A3techDisplayTechInMapFragment();
         Bundle args = new Bundle();
         args.putString(ARG_MISSION_SELECTED, new Gson().toJson(mission));
@@ -110,11 +106,11 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         if (getArguments() != null) {
             String jsonMission = getArguments().getString(ARG_MISSION_SELECTED);
             if (StringUtils.isNoneBlank(jsonMission)) {
-                mission = new Gson().fromJson(jsonMission, Mission.class);
+                mission = new Gson().fromJson(jsonMission, A3techMission.class);
             }
             String jsonListTech = getArguments().getString(ARG_LIST_TECH);
             if (StringUtils.isNoneBlank(jsonListTech)) {
-                listeOfTechToDisplay = new Gson().fromJson(jsonListTech, new TypeToken<List<User>>() {
+                listeOfTechToDisplay = new Gson().fromJson(jsonListTech, new TypeToken<List<A3techUser>>() {
                 }.getType());
             }
         }
@@ -133,7 +129,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
             }
         }
 
-        getListOFTechToDisplay(0,10, CustomProgressDialog.createProgressDialog(getActivity(), ""));
+        getListOFTechToDisplay(0, 10, CustomProgressDialog.createProgressDialog(getActivity(), ""));
 
         FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
         mMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_tech);
@@ -141,13 +137,12 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
             mMapFragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map_tech, mMapFragment).commit();
         }
-        refreshMap();
+
         return viewFr;
     }
 
 
-
-    private void getListOFTechToDisplay(final int start, final int end,final ProgressDialog dd) {
+    private void getListOFTechToDisplay(final int start, final int end, final ProgressDialog dd) {
         //TODO get location of connected user not mission
         //TODO add filter
 
@@ -158,8 +153,9 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         UserManager.getInstance().getTechnicienNearLocation(latitudeUSer, longetudeUSer, mission.getAdresse(), start, end, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
-                listeOfTechToDisplay = (List<User>) data;
-                if(dd != null) dd.dismiss();
+                listeOfTechToDisplay = (List<A3techUser>) data;
+                refreshMap();
+                if (dd != null) dd.dismiss();
                 return;
             }
 
@@ -225,7 +221,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                User userClicked = (User) marker.getTag();
+                A3techUser userClicked = (A3techUser) marker.getTag();
 
                 // Check if a click count was set, then display the click count.
                 if (userClicked != null) {
@@ -263,7 +259,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         markers.clear();
         positions.clear();
         if (listeOfTechToDisplay != null) {
-            for (User userTmp : listeOfTechToDisplay
+            for (A3techUser userTmp : listeOfTechToDisplay
                     ) {
                 if (userTmp != null) {
                     addMarkerFotUSer(userTmp);
@@ -295,7 +291,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         map.animateCamera(mCameraUpdate);
     }
 
-    private void addMarkerFotUSer(User user) {
+    private void addMarkerFotUSer(A3techUser user) {
 
         final LetterTileProvider tileProvider = new LetterTileProvider(getActivity());
         final Bitmap letterTile = tileProvider.getLetterTile(user.getNom(), user.getNom(), 88, 88);
@@ -306,7 +302,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
                 .title(user.getNom() + " " + user.getPrenom().substring(0, 1) + ".").
                         icon(BitmapDescriptorFactory.fromBitmap(letterTile)));
         markerUserTmp.setTag(user);
-        markerUserTmp.setSnippet(MapUtilities.getAddressFromLatLng(getActivity(),currentPosition).get(0));
+        markerUserTmp.setSnippet(MapUtilities.getAddressFromLatLng(getActivity(), currentPosition).get(0));
         markers.add(markerUserTmp);
         positions.add(currentPosition);
     }
@@ -333,6 +329,24 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         return false;
 
     }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+            case PermissionsStuffs.INITIAL_REQUEST:
+                if (PermissionsStuffs.canAccessLocation(getActivity())) {
+                    ///doCameraThing();
+                } else {
+                    SimpleDialog.build().title("Autorisation location est nécessaire").msg("pour afficher la liste des techniciens sur Map, il faut autoriser l'app à accéder à votre position").show(getActivity());
+                }
+                break;
+
+
+        }
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

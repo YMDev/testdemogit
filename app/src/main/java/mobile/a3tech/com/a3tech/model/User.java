@@ -256,7 +256,7 @@ public class User implements  Parcelable {
 
 	
 
-	public String getId_photo_profil() {
+	public String getId_photo_profil()  {
 		return id_photo_profil;
 	}
 

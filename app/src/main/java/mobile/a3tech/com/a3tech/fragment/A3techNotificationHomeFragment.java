@@ -1,12 +1,11 @@
 package mobile.a3tech.com.a3tech.fragment;
 
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.preference.PreferenceManager;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,10 +17,9 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
-import mobile.a3tech.com.a3tech.model.Mission;
+import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterMission;
 import mobile.a3tech.com.a3tech.utils.Constant;
@@ -106,7 +104,7 @@ public class A3techNotificationHomeFragment extends Fragment {
                 new DataLoadCallback() {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
-                        List<Mission> listeRetour = (List<Mission>) data;
+                        List<A3techMission> listeRetour = (List<A3techMission>) data;
                         SimpleAdapterMission adapter = new SimpleAdapterMission(getActivity(),listeRetour, (A3techHomeActivity) getActivity());
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
                         recycleNotifications.setLayoutManager(mLayoutManager);

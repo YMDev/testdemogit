@@ -18,12 +18,10 @@ import com.google.gson.Gson;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
 import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.Avis;
-import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
-import mobile.a3tech.com.a3tech.test.ObjectMenu;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterReviews;
 import mobile.a3tech.com.a3tech.utils.Constant;
 
@@ -45,7 +43,7 @@ public class A3techReviewsFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private User userReviews;
+    private A3techUser userReviews;
 
     private RecyclerView recyclerViewReviews;
     private OnFragmentInteractionListener mListener;
@@ -61,7 +59,7 @@ public class A3techReviewsFragment extends Fragment {
      * @return A new instance of fragment A3techReviewsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static A3techReviewsFragment newInstance(User user) {
+    public static A3techReviewsFragment newInstance(A3techUser user) {
         A3techReviewsFragment fragment = new A3techReviewsFragment();
         Bundle args = new Bundle();
         args.putString(ARG_OBJECT_USER, new Gson().toJson(user));
@@ -75,7 +73,7 @@ public class A3techReviewsFragment extends Fragment {
         if (getArguments() != null) {
             String jsonUser = getArguments().getString(ARG_OBJECT_USER);
             if(jsonUser != null){
-                userReviews = new Gson().fromJson(jsonUser, User.class);
+                userReviews = new Gson().fromJson(jsonUser, A3techUser.class);
             }
         }
     }

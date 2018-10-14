@@ -1,21 +1,17 @@
 package mobile.a3tech.com.a3tech.activity;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.CardView;
-import android.view.Menu;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.gson.Gson;
 
@@ -27,12 +23,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.model.Avis;
-import mobile.a3tech.com.a3tech.model.Categorie;
-import mobile.a3tech.com.a3tech.model.Mission;
+import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
+import mobile.a3tech.com.a3tech.model.A3techReviewMission;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.ImagesStuffs;
-import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.A3techDialogAddReview;
 import mobile.a3tech.com.a3tech.view.ExpandableTextView;
@@ -41,8 +38,8 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
 
     public static final String TAG_MISSION_SELECTED_FROM_HOME_ACTIVITY = "TAG_SELECTED_MISION";
-    private Mission selectedMission;
-    private Avis missionReview;
+    private A3techMission selectedMission;
+    private A3techReviewMission missionReview;
 
     @BindView(R.id.toolbar_display_mission)
     android.support.v7.widget.Toolbar toolbarDisplayMission;
@@ -102,22 +99,8 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
     @BindView(R.id.container_actions_mission)
     RelativeLayout containerActions;
-
-    @BindView(R.id.container_two_action_mission)
-    RelativeLayout containerTwoActions;
-
-
-    @BindView(R.id.container_actions_valider_mission)
-    RelativeLayout containerActionsValider;
-
-    @BindView(R.id.container_actions_anuller_mission)
-    RelativeLayout containerActionAnnuler;
-
-    @BindView(R.id.dis_action_annuler_mission)
-    TextView actionAnnulerMission;
-
-    @BindView(R.id.dis_action_valider_clo_mission)
-    TextView actionValiderMission;
+    @BindView(R.id.cancel_mission_layout)
+    LinearLayout cancelMissionLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +118,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             jsonMyObject = b.getString(A3techDisplayMissionActivity.TAG_MISSION_SELECTED_FROM_HOME_ACTIVITY);
         }
         if (jsonMyObject != null) {
-            selectedMission = new Gson().fromJson(jsonMyObject, Mission.class);
+            selectedMission = new Gson().fromJson(jsonMyObject, A3techMission.class);
         }
     }
 
@@ -153,12 +136,12 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             }
         });
         titreMission.setText(selectedMission.getTitre());
-        if (StringUtils.isBlank(selectedMission.getCatDescription())) {
+        if (StringUtils.isBlank(selectedMission.getDescriptionMission())) {
             descriptionMission.setVisibility(View.GONE);
         } else {
             descriptionMission.setVisibility(View.VISIBLE);
         }
-        descriptionMission.setText(selectedMission.getCatDescription());
+        descriptionMission.setText(selectedMission.getDescriptionMission());
         if (selectedMission.getCategoryMission() != null) {
             categoryMission.setText(selectedMission.getCategoryMission().getLibelle());
         }
@@ -166,16 +149,16 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         if (selectedMission.getTechnicien() != null) {
             nameTech.setText(selectedMission.getTechnicien().getNom());
             adresse.setText(selectedMission.getTechnicien().getAdresse());
-            rating.setText(selectedMission.getTechnicien().getRating());
+            rating.setText(selectedMission.getTechnicien().getRating()+"");
             ratingbar.setNumStars(5);
             ratingbar.setRating(Float.valueOf(selectedMission.getTechnicien().getRating()));
-            nbrReviews.setText(selectedMission.getTechnicien().getNbr());
+            nbrReviews.setText(selectedMission.getTechnicien().getNbrReview()+"");
         }
 
 
-        if (StringUtils.isNoneBlank(selectedMission.getDateIntervention())) {
+        if (selectedMission.getDateIntervention() != null) {
+            Date dateIntervention = new Date(selectedMission.getDateIntervention());
             String dateAdresseIntervention = "";
-            Date dateIntervention = DateStuffs.stringToDate(selectedMission.getDateIntervention(), DateStuffs.TIME_FORMAT);
             if (dateIntervention != null) {
                 String dateInterventionAlphaSimple = DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, dateIntervention);
                 String timeIntervention = DateStuffs.dateToString(DateStuffs.HOURS_MINUTES_FORMAT, dateIntervention);
@@ -189,9 +172,9 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             adresseIntervention.setText(selectedMission.getAdresse());
         }
 
-        if (selectedMission.getReviewMission() != null && StringUtils.isNoneBlank(selectedMission.getReviewMission().getNote())) {
-            ratingMission.setRating(Float.valueOf(selectedMission.getReviewMission().getNote()));
-            commentaire.setText(selectedMission.getReviewMission().getAvantage());
+        if (selectedMission.getReviewMission() != null) {
+            ratingMission.setRating(Float.valueOf(selectedMission.getReviewMission().getRating()));
+            commentaire.setText(selectedMission.getReviewMission().getCommentaire());
         } else {
             ratingMission.setVisibility(View.GONE);
             commentaire.setText("");
@@ -228,46 +211,40 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
 
     private void actionMissionSetup() {
-        if(StringUtils.isBlank(selectedMission.getStatut()) || selectedMission.getStatut().equals(Mission.STATUT_CREEE) || selectedMission.getStatut().equals(Mission.STATUT_VALIDEE)){
-            containerTwoActions.setVisibility(View.VISIBLE);
-            containerActions.setVisibility(View.GONE);
-            actionAnnulerMission.setText(getString(R.string.annuler_mission));
-            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
-        }else {
-            containerTwoActions.setVisibility(View.GONE);
-            containerActions.setVisibility(View.VISIBLE);
-        }
-        containerActionsValider.setOnClickListener(new View.OnClickListener() {
+
+        containerActions.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (selectedMission == null) return;
-                if (selectedMission.getStatut().equals(Mission.STATUT_CREEE)) {
-                    selectedMission.setStatut(Mission.STATUT_VALIDEE);
-                } else if (selectedMission.getStatut().equals(Mission.STATUT_VALIDEE)) {
-                    if(selectedMission.getReviewMission() == null || StringUtils.isBlank(selectedMission.getReviewMission().getNote())){
+                if(selectedMission.getStatut() == null){
+                    selectedMission.setStatut(A3techMissionStatut.CREE);
+                }
+                if (selectedMission.getStatut().getId() == A3techMissionStatut.CREE.getId()) {
+                    selectedMission.setStatut(A3techMissionStatut.VALIDEE);
+                } else if (selectedMission.getStatut().getId() == A3techMissionStatut.VALIDEE.getId()) {
+                    if (selectedMission.getReviewMission() == null) {
                         //pas de review pour cette mission, demander d'ajouter un review
                         SimpleDialog.build()
                                 .title(R.string.please_add_review)
                                 .msg(R.string.please_add_review_content)
+                                .icon(R.drawable.a3tech_review_technicien)
                                 .show(A3techDisplayMissionActivity.this);
                         return;
                     }
-                    selectedMission.setStatut(Mission.STATUT_CLOTUREE);
+                    selectedMission.setStatut(A3techMissionStatut.CLOTUREE);
                     btnEditReview.setVisibility(View.GONE);
-                    containerActionsValider.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_to_right));
                 }
                 actionRefreshStatutMission();
             }
         });
 
-        containerActionAnnuler.setOnClickListener(new View.OnClickListener() {
+        cancelMissionLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (selectedMission == null) return;
-                selectedMission.setStatut(Mission.STATUT_ANNULEE);
+                SimpleDialog.build().title(R.string.please_add_review).cancelable(true).pos("ok").neg("no").msg("confirm cancel mission").icon(R.drawable.a3tech_cancel_mission).show(A3techDisplayMissionActivity.this);
+                selectedMission.setStatut(A3techMissionStatut.ANNULEE);
                 btnEditReview.setVisibility(View.GONE);
-                slidefromRightToLeft(containerActionAnnuler);
-                slidefromLeftToRight(containerActionsValider);
                 actionRefreshStatutMission();
                 runOnUiThread(new Runnable() {
                     @Override
@@ -283,10 +260,10 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             @Override
             public void onClick(View view) {
                 if (selectedMission == null) return;
-                if (selectedMission.getStatut().equals(Mission.STATUT_CREEE)) {
-                    selectedMission.setStatut(Mission.STATUT_VALIDEE);
-                } else if (selectedMission.getStatut().equals(Mission.STATUT_VALIDEE)) {
-                    if(selectedMission.getReviewMission() == null || StringUtils.isBlank(selectedMission.getReviewMission().getNote())){
+                if (selectedMission.getStatut().getId() == A3techMissionStatut.CREE.getId()) {
+                    selectedMission.setStatut(A3techMissionStatut.VALIDEE);
+                } else  if (selectedMission.getStatut().getId() == A3techMissionStatut.VALIDEE.getId()) {
+                    if (selectedMission.getReviewMission() == null) {
                         //pas de review pour cette mission, demander d'ajouter un review
                         SimpleDialog.build()
                                 .title(R.string.please_add_review)
@@ -294,7 +271,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
                                 .show(A3techDisplayMissionActivity.this);
                         return;
                     }
-                    selectedMission.setStatut(Mission.STATUT_CLOTUREE);
+                    selectedMission.setStatut(A3techMissionStatut.CLOTUREE);
                     btnEditReview.setVisibility(View.GONE);
                     runOnUiThread(new Runnable() {
                         @Override
@@ -308,17 +285,19 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         });
 
     }
+
     public void slidefromRightToLeft(View view) {
 
         view.startAnimation(AnimationUtils.loadAnimation(this.getContext(), R.anim.slide_to_left));
         view.setVisibility(View.GONE);
     }
+
     public void slidefromLeftToRight(View view) {
         view.startAnimation(AnimationUtils.loadAnimation(this.getContext(), R.anim.slide_to_right));
         view.setVisibility(View.GONE);
     }
-    private void doZoomEffect(View view)
-    {
+
+    private void doZoomEffect(View view) {
         Animation a = AnimationUtils.loadAnimation(this, R.anim.zoom_scall);
         a.reset();
         view.clearAnimation();
@@ -329,49 +308,52 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
     private void actionRefreshStatutMission() {
         if (selectedMission == null) return;
 
-        if (StringUtils.isBlank(selectedMission.getStatut())) {
-            selectedMission.setStatut(Mission.STATUT_CREEE);
-            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+        if (selectedMission.getStatut() == null) {
+            selectedMission.setStatut(A3techMissionStatut.CREE);
+            actionMission.setText(selectedMission.getStatut().getDiscreptionEnum());
         }
 
-        if (selectedMission.getStatut().equals(Mission.STATUT_CREEE)) {
-            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+        if (selectedMission.getStatut().getId() == A3techMissionStatut.CREE.getId()) {
+            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
         }
 
-        if (selectedMission.getStatut().equals(Mission.STATUT_VALIDEE)) {
-            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+        if (selectedMission.getStatut().getId() == A3techMissionStatut.VALIDEE.getId()) {
+            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
         }
 
-        if (selectedMission.getStatut().equals(Mission.STATUT_ANNULEE)) {
-            actionValiderMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
+        if (selectedMission.getStatut().getId() == A3techMissionStatut.ANNULEE.getId()) {
+            actionMission.setText(getActionLabelFromStatut(selectedMission.getStatut()));
         }
 
-        statutMission.setText(selectedMission.getStatut());
+        statutMission.setText(selectedMission.getStatut().getDiscreptionEnum());
 
 
     }
 
 
-    private String getActionLabelFromStatut(String statut) {
-        if (statut.equals(Mission.STATUT_CREEE)) {
+    private String getActionLabelFromStatut(A3techMissionStatut statut) {
+        if (statut.getId() == A3techMissionStatut.CREE.getId()) {
             return getString(R.string.valider_mission);
         }
-        if (statut.equals(Mission.STATUT_VALIDEE)) {
+        if (statut.getId() == A3techMissionStatut.VALIDEE.getId()) {
             return getString(R.string.cloturer_mission);
         }
 
-        return Mission.STATUT_CREEE;
+        return "";
     }
 
     @Override
-    public void actionsubmitt(Avis review) {
+    public void actionsubmitt(A3techReviewMission review) {
         missionReview = review;
+        missionReview.setMission(selectedMission);
+        missionReview.setUserTechnicien(selectedMission.getTechnicien());
+        missionReview.setUserClient(PreferencesValuesUtils.getConnectedUser(A3techDisplayMissionActivity.this));
         selectedMission.setReviewMission(review);
         containerAddReview.setVisibility(View.GONE);
         containerDisplayReview.setVisibility(View.VISIBLE);
         ratingMission.setVisibility(View.VISIBLE);
-        ratingMission.setRating(Float.valueOf(review.getNote()));
-        commentaire.setText(review.getAvantage());
+        ratingMission.setRating(Float.valueOf(review.getRating()));
+        commentaire.setText(review.getCommentaire());
         btnEditReview.setVisibility(View.VISIBLE);
         A3techCustomToastDialog.createToastDialog(getContext(), "Merci", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
     }
@@ -380,7 +362,6 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
     public Context getContext() {
         return A3techDisplayMissionActivity.this;
     }
-
 
 
 }

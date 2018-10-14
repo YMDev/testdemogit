@@ -2,40 +2,27 @@ package mobile.a3tech.com.a3tech.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.annotation.ColorRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.google.gson.Gson;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
-import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.Categorie;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
-import mobile.a3tech.com.a3tech.service.DataLoadCallback;
-import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
-import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
 /**
@@ -54,7 +41,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private Mission mission;
+    private A3techMission mission;
     private Categorie categorie;
 
     private NoSwipePager viewPager;
@@ -68,7 +55,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
     }
 
 
-    List<User> listeOfTechToDisplay;
+    List<A3techUser> listeOfTechToDisplay;
 
     /**
      * Use this factory method to create a new instance of
@@ -77,7 +64,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
      * @return A new instance of fragment A3techDisplayTechniciensPArentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static A3techDisplayTechniciensPArentFragment newInstance(Mission missionSelcted) {
+    public static A3techDisplayTechniciensPArentFragment newInstance(A3techMission missionSelcted) {
         A3techDisplayTechniciensPArentFragment fragment = new A3techDisplayTechniciensPArentFragment();
         Bundle args = new Bundle();
         args.putString(ARG_SELECTED_MISSION, new Gson().toJson(missionSelcted));
@@ -100,7 +87,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             String jsonMission = getArguments().getString(ARG_SELECTED_MISSION);
-            if (jsonMission != null) mission = new Gson().fromJson(jsonMission, Mission.class);
+            if (jsonMission != null) mission = new Gson().fromJson(jsonMission, A3techMission.class);
 
 
             String jsonCat = getArguments().getString(ARG_SELECTED_CAT);
@@ -108,7 +95,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
 
 
             if (mission == null) {
-                mission = new Mission();
+                mission = new A3techMission();
             }
 
             if (categorie != null) {

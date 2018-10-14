@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
+import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.MissionService;
@@ -120,7 +121,7 @@ private static MissionManager uniqueInstance = null;
 				
 					
 					MissionService service = new MissionService();
-					List<Mission> result = service.filtreMission(lang, connectedUser, keyWord, distance, services, start, limit, key,typeTransaction,premium,password,order,type);
+					List<A3techMission> result = service.filtreMission(lang, connectedUser, keyWord, distance, services, start, limit, key,typeTransaction,premium,password,order,type);
 					
 					if(result==null){
 						Message message = handler.obtainMessage(0, 0);

@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -11,6 +12,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techLoginActivity;
+import mobile.a3tech.com.a3tech.activity.FacebookActivity;
+import mobile.a3tech.com.a3tech.utils.Constant;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +32,8 @@ public class A3techChooseSignInOption extends Fragment {
     public static final int ACTION_SIGN_IN_PAR_EMAIL = 1;
     public static final int ACTION_SIGN_IN_PAR_FB = 2;
     public static final int ACTION_SIGN_UP = 3;
-    public static final int ACTION_RESET_PASS = 4;
+    public static final int ACTION_RESET_PASS = 4555;
+    public static final int REQUEST_KEY_CONNECT_BY_FACEBOOK = 45325;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -37,7 +42,10 @@ public class A3techChooseSignInOption extends Fragment {
     Button emailLogIn;
     TextView signin;
 
+
+
     private OnFragmentInteractionListener mListener;
+
 
     public A3techChooseSignInOption() {
         // Required empty public constructor

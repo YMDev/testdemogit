@@ -1,9 +1,9 @@
 package mobile.a3tech.com.a3tech.fragment;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.design.widget.TextInputLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.model.User;
 
 /**
  * A simple {@link Fragment} subclass.

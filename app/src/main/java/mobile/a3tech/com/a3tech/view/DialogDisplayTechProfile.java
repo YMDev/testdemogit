@@ -3,10 +3,8 @@ package mobile.a3tech.com.a3tech.view;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.gesture.GestureUtils;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,19 +21,17 @@ import com.google.gson.Gson;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
-import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
-import mobile.a3tech.com.a3tech.utils.SphericalUtil;
 
 public class DialogDisplayTechProfile {
 
     public static String SRC_FROM_DIALOGUE_DISPLAY_TECH = "SRC_FROM_DIALOGUE_DISPLAY_TECH";
     public static int REQUEST_DISPLAY_TECH_FROM_DIALOGUE = 3221;
 	
-	public static Dialog createProfileDialog(final Context mContext, final User user, final Mission mission, final boolean isFromAddmission) {
+	public static Dialog createProfileDialog(final Context mContext, final A3techUser user, final A3techMission mission, final boolean isFromAddmission) {
 		final  Dialog progressDialog = new Dialog(mContext);
         progressDialog.show();
 		LayoutInflater inflater =((Activity)mContext).getLayoutInflater();
@@ -45,7 +41,7 @@ public class DialogDisplayTechProfile {
 		TextView username =  content.findViewById(R.id.name_tech);
 		username.setText(user.getNom()+" "+user.getPrenom().substring(0,1).toUpperCase()+".");
 		TextView ratingValue =  content.findViewById(R.id.rating_nbr);
-		ratingValue.setText(user.getRating());
+		ratingValue.setText(user.getRating()+"");
 		RatingBar ratingBar =  content.findViewById(R.id.rating_tech);
 		ratingBar.setNumStars(5);
 		ratingBar.setRating(Float.valueOf(user.getRating()));

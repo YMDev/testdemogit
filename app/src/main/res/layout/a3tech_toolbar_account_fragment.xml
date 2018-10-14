@@ -5,7 +5,8 @@
     android:layout_height="70dp"
     android:elevation="0dp"
     android:fitsSystemWindows="true"
-    android:minHeight="?attr/actionBarSize">
+    android:minHeight="?attr/actionBarSize"
+    android:background="@drawable/ripple_effect_btn">
 
     <RelativeLayout
         android:layout_width="match_parent"

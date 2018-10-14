@@ -11,7 +11,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="22dp">
 
             <Button
                 android:id="@+id/reset_password"
@@ -20,23 +21,23 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/transparent"
+                android:background="@drawable/ripple_effect_btn"
                 android:text="@string/header_log_in_reset"
                 android:textAllCaps="true"
                 android:textColor="@color/colorPrimary"
-                android:textSize="13dp" />
+                android:textStyle="bold"
+                android:textSize="14dp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="90dp"
                 android:orientation="vertical">
 
                 <!--  create account libelle-->
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="333dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
                     android:text="@string/header_log_in"
@@ -48,8 +49,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginLeft="25dp"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/a3tech_btn_facebook">
 
@@ -70,8 +70,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginLeft="25dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/a3tech_btn_create_account_back">
 
@@ -83,7 +81,7 @@
                         android:layout_centerVertical="true"
                         android:layout_gravity="center_vertical|center_horizontal|center"
                         android:layout_margin="2dp"
-                        android:background="@color/transparent"
+                        android:background="@drawable/back_selector_btn_inscription"
                         android:text="@string/header_log_in_email"
                         android:textAllCaps="true"
                         android:textColor="@color/colorPrimary"
@@ -94,9 +92,10 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:layout_margin="30dp"
                 android:orientation="horizontal">
 
@@ -112,10 +111,10 @@
                     android:id="@+id/signin_action"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginLeft="10dp"
+                    android:clickable="true"
                     android:text="@string/a3tech_no_account_signin_2"
                     android:textColor="@color/colorPrimary"
-                    android:clickable="true"
                     android:textSize="14dp"
                     android:textStyle="bold" />
             </LinearLayout>

@@ -1,7 +1,5 @@
 package mobile.a3tech.com.a3tech.activity;
 
-import android.animation.ArgbEvaluator;
-import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,33 +8,19 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
-import android.graphics.Typeface;
 import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.text.Html;
 import android.util.Base64;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
@@ -46,12 +30,11 @@ import java.util.Locale;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.manager.UserManager;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
-import mobile.a3tech.com.a3tech.view.A3techCustomViewPager;
-import mobile.a3tech.com.a3tech.view.PagerContainer;
 
 public class A3techSplashActivity extends AppCompatActivity implements DataLoadCallback {
     ImageView animationLoginImage;
@@ -64,7 +47,7 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
     String userIdNotif;
     String isMessageNotif;
     String versionname;
-    User usern;
+    A3techUser usern;
 
     static int requExce = 34232;
 
@@ -166,7 +149,7 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
         switch (method) {
             case Constant.KEY_USER_MANAGER_LOGIN_FB:
             case Constant.KEY_USER_MANAGER_GET_PROFIL:
-                usern = (User) data;
+                usern = (A3techUser) data;
                 UserManager.getInstance().getVersion(A3techSplashActivity.this);
                 break;
             case Constant.KEY_USER_GET_VERSION:
@@ -177,20 +160,21 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
                 finish();
                 if (versionname.equals(version)) {
                     mainIntent.putExtra("nomPrenom", usern.getPrenom() + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + usern.getNom());
-                    mainIntent.putExtra("nbr", usern.getNbrServiceEmis());
+                    mainIntent.putExtra("nbr", usern.getNbrMission());
                     mainIntent.putExtra("idMissionNotif", this.idMissionNotif);
                     mainIntent.putExtra("userIdNotif", this.userIdNotif);
                     mainIntent.putExtra("idOffreNotif", this.idOffreNotif);
                     mainIntent.putExtra("isMessageNotif", this.isMessageNotif);
 
                     Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                    editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_NAME, usern.getPrenom() + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + usern.getNom());
                     editor.putString("MyCredentials", usern.getEmail());
                     editor.putString("pseudo", usern.getPseudo());
-                    editor.putString("identifiant", usern.getIdentifiant());
+                    editor.putString("identifiant", usern.getId()+"");
                     editor.putString("password", password);
                     editor.putString("facebookId", usern.getFacebookId());
-                    editor.putString("checkphone", usern.getCheckphone());
-                    editor.putString("mode", usern.getMode());
+                    editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(usern));
+                    editor.putString("checkphone", usern.getTelephone());
                     editor.commit();
                     startActivity(mainIntent);
                     finish();

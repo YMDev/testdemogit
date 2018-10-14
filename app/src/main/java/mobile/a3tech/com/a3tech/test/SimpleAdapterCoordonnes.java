@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 
 /**
  * Created by Suleiman on 03/02/17.
@@ -31,13 +30,13 @@ public class SimpleAdapterCoordonnes extends RecyclerView.Adapter<SimpleAdapterC
     private List<ObjectMenu> listeObjects = new ArrayList<>();
 
     private Context context;
-    private User user;
+    private A3techUser user;
 
     public SimpleAdapterCoordonnes(Context context) {
         this.context = context;
     }
 
-    public SimpleAdapterCoordonnes(Context context, List objectMenu, User vUser) {
+    public SimpleAdapterCoordonnes(Context context, List objectMenu, A3techUser vUser) {
         this.context = context;
         listeObjects = objectMenu;
         user = vUser;

@@ -5,7 +5,9 @@ import android.os.Message;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.service.A3techUserService;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.UserService;
 import mobile.a3tech.com.a3tech.utils.Constant;
@@ -46,8 +48,8 @@ public class UserManager implements Constant {
 				public void run() {
 					try {
 
-						UserService service = new UserService();
-						User user = service.loginfb(nom, prenom, facebookId, email);
+						A3techUserService service = new A3techUserService();
+						A3techUser user = service.loginfb(nom, prenom, facebookId, email);
 						if (user == null) {
 							Message message = handler.obtainMessage(0, 0);
 							handler.sendMessage(message);
@@ -86,15 +88,15 @@ public class UserManager implements Constant {
 			public void run() {
 				try {
 
-					UserService service = new UserService();
+                    A3techUserService service = new A3techUserService();
 					
-					User user = service.createAccount(nom, prenom, email,
+					A3techUser user = service.createAccount(nom, prenom, email,
 							password, image, regId, pseudo);
 					if (user == null) {
 						Message message = handler.obtainMessage(0, 0);
 						handler.sendMessage(message);
 					} else {
-						if (user.getIsNew().equals("0")) {
+						if (!user.getNew()) {
 							Message message = handler.obtainMessage(0, 10);
 							handler.sendMessage(message);
 						} else {
@@ -130,8 +132,9 @@ public class UserManager implements Constant {
 			@Override
 			public void run() {
 				try {
-					UserService service = new UserService();
-					User user = service.getUser(email, password);
+                    A3techUserService service = new A3techUserService();
+
+					A3techUser user = service.getUser(email, password);
 					if (user == null) {
 						Message message = handler.obtainMessage(0, 0);
 						handler.sendMessage(message);
@@ -167,7 +170,7 @@ public class UserManager implements Constant {
 			@Override
 			public void run() {
 				try {
-					UserService service = new UserService();
+                    A3techUserService service = new A3techUserService();
 					String result = service.initPassword(email, newPassword);
 					if (result.equals("NOK")) {
 						Message message = handler.obtainMessage(0, 0);
@@ -205,7 +208,7 @@ public class UserManager implements Constant {
 				@Override
 				public void run() {
 					try {
-						UserService service = new UserService();
+                        A3techUserService service = new A3techUserService();
 						String result = service.getVersion();
 						if (result.equals("NOK")) {
 							Message message = handler.obtainMessage(0, 0);
@@ -244,7 +247,7 @@ public class UserManager implements Constant {
 				@Override
 				public void run() {
 					try {
-						UserService service = new UserService();
+                        A3techUserService service = new A3techUserService();
 						String result = service.desabonnerUser(idUser,password);
 						if (result.equals("NOK")) {
 							Message message = handler.obtainMessage(0, 0);
@@ -283,7 +286,7 @@ public class UserManager implements Constant {
 			@Override
 			public void run() {
 				try {
-					UserService service = new UserService();
+                    A3techUserService service = new A3techUserService();
 					List reviews = service.getUserReviews(idUser,password);
 					if (reviews == null) {
 						Message message = handler.obtainMessage(0, 0);
@@ -321,8 +324,8 @@ public class UserManager implements Constant {
 			@Override
 			public void run() {
 				try {
-					UserService service = new UserService();
-					User user = service.getProfil(idUser,password);
+                    A3techUserService service = new A3techUserService();
+					A3techUser user = service.getProfil(idUser,password);
 					if (user == null) {
 						Message message = handler.obtainMessage(0, 0);
 						handler.sendMessage(message);
@@ -360,7 +363,7 @@ public class UserManager implements Constant {
 			@Override
 			public void run() {
 				try {
-					UserService service = new UserService();
+                    A3techUserService service = new A3techUserService();
 					String result = service.checkMail(mail,idUser,password);
 					if (result == null) {
 						Message message = handler.obtainMessage(0, 0);
@@ -397,7 +400,7 @@ public class UserManager implements Constant {
 				@Override
 				public void run() {
 					try {
-						UserService service = new UserService();
+                        A3techUserService service = new A3techUserService();
 						String result = service.checkMobile(tel,idUser,password);
 						if (result == null) {
 							Message message = handler.obtainMessage(0, 0);
@@ -435,7 +438,7 @@ public class UserManager implements Constant {
 						@Override
 						public void run() {
 							try {
-								UserService service = new UserService();
+                                A3techUserService service = new A3techUserService();
 								String result = service.validerMobile(idUser,password);
 								if (result == null) {
 									Message message = handler.obtainMessage(0, 0);
@@ -476,7 +479,7 @@ public class UserManager implements Constant {
 			@Override
 			public void run() {
 				try {
-					UserService service = new UserService();
+                    A3techUserService service = new A3techUserService();
 					String result = service.updateProfil(identifiant, nom, prenom, tel, pseudo, categorie, latitude, longitude, regId, image, mode, distance, srvc, dateNaissance, ville,adresse,password);
 					if (result == null) {
 						Message message = handler.obtainMessage(0, 0);
@@ -516,7 +519,7 @@ public class UserManager implements Constant {
 			@Override
 			public void run() {
 				try {
-					UserService service = new UserService();
+                    A3techUserService service = new A3techUserService();
 					String result = service.contactSupport(idUser, message,password);
 					if (result == null) {
 						Message message = handler.obtainMessage(0, 0);
@@ -553,7 +556,7 @@ public class UserManager implements Constant {
 			@Override
 			public void run() {
 				try {
-					UserService service = new UserService();
+                    A3techUserService service = new A3techUserService();
 					Integer result = service.changePassword(oldPassword,
 							newPassword, identifiant);
 					Message message = null;
@@ -603,8 +606,8 @@ public class UserManager implements Constant {
 			public void run() {
 				try {
 
-					UserService service = new UserService();
-					List<User> user = service.getTechnicienNearLocation(latitude,longitude,ville, start, end);
+                    A3techUserService service = new A3techUserService();
+					List<A3techUser> user = service.getTechnicienNearLocation(latitude,longitude,ville, start, end);
 					if (user == null) {
 						Message message = handler.obtainMessage(0, 0);
 						handler.sendMessage(message);

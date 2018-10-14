@@ -2,22 +2,15 @@ package mobile.a3tech.com.a3tech.activity;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
-import android.preference.PreferenceManager;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -25,24 +18,15 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
-import java.util.List;
-
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.fragment.A3techAffecterTechnicienFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechInMapFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechniciensFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechniciensPArentFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techPostMissionFragment;
-import mobile.a3tech.com.a3tech.fragment.A3techSelectCategoryMissionFragment;
-import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.Categorie;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
-import mobile.a3tech.com.a3tech.service.DataLoadCallback;
-import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
-import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
-import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 public class A3techDisplayTechniciensListeActivity extends AppCompatActivity implements A3techDisplayTechniciensFragment.OnFragmentInteractionListener, A3techPostMissionFragment.OnFragmentInteractionListener, A3techDisplayTechniciensPArentFragment.OnFragmentInteractionListener, A3techDisplayTechInMapFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener {
 
@@ -53,7 +37,7 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
     private RecyclerView recyclerViewTechnicien;
     private Toolbar toolbarSelectTechnicien;
     private Categorie categorieSelected;
-    private Mission missionSelected;
+    private A3techMission missionSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -172,7 +156,7 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
 
     }
 
-    public void nextStepAfterSelectTechnicien(Mission mission){
+    public void nextStepAfterSelectTechnicien(A3techMission mission){
         missionSelected = mission;
         // next step add mission informations
         progressBarchangeSmouthly(100);
@@ -187,7 +171,7 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
             case (SimpleAdapterTechnicien.REQUEST_DISPLAY_TECH_FROM_HOME): {
                 if (resultCode == Activity.RESULT_OK) {
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
-                    missionSelected = new Gson().fromJson(jsonMission, Mission.class);
+                    missionSelected = new Gson().fromJson(jsonMission, A3techMission.class);
                     nextStepAfterSelectTechnicien(missionSelected);
                 }
                 break;
@@ -218,7 +202,7 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
     public void actionNext(Integer typeAction, Object data) {
         switch (typeAction) {
             case A3techPostMissionFragment.ACTION_SAVE_MISSION_INFO_FROM_TECH:
-                Mission mission = (Mission) data;
+                A3techMission mission = (A3techMission) data;
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(TAG_MISSION_TO_SAVE_FROM_BROWS_TECH, new Gson().toJson(mission));
                 setResult(Activity.RESULT_OK, resultIntent);

@@ -8,14 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.model.Dash;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
@@ -25,14 +21,10 @@ import java.util.Date;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
-import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
-import mobile.a3tech.com.a3tech.model.Mission;
-import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
-import mobile.a3tech.com.a3tech.utils.SphericalUtil;
 
 /**
  * Created by Suleiman on 03/02/17.
@@ -41,7 +33,7 @@ import mobile.a3tech.com.a3tech.utils.SphericalUtil;
 public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMission.SimpleItemVH> {
 
     //  Data
-    private List<Mission> listeObjects = new ArrayList<>();
+    private List<A3techMission> listeObjects = new ArrayList<>();
 
     private Context context;
     private A3techHomeActivity parentActivity;
@@ -56,7 +48,7 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         parentActivity = parent;
     }
 
-    public void addMissionb(Mission missionV) {
+    public void addMissionb(A3techMission missionV) {
         this.listeObjects.add(missionV);
         this.notifyDataSetChanged();
     }
@@ -72,12 +64,12 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
 
     @Override
     public void onBindViewHolder(SimpleItemVH holder, int position) {
-        final Mission missionTmp = listeObjects.get(position);
+        final A3techMission missionTmp = listeObjects.get(position);
         if (missionTmp == null) return;
 
 
-        if (StringUtils.isNoneBlank(missionTmp.getDateIntervention())) {
-            Date dateIntervention = DateStuffs.stringToDate(missionTmp.getDateIntervention(), DateStuffs.TIME_FORMAT);
+        if (missionTmp.getDateIntervention() != null) {
+            Date dateIntervention = new Date(missionTmp.getDateIntervention());
             if (dateIntervention != null) {
                 String dateInterventionAlphaSimple = DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, dateIntervention);
                 String timeIntervention = DateStuffs.dateToString(DateStuffs.HOURS_MINUTES_FORMAT, dateIntervention);
