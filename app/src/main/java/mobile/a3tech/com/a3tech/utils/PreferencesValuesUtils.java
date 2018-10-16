@@ -20,6 +20,8 @@ public class PreferencesValuesUtils {
     public static final String KEY_CONNECTED_USER_EMAIL = "MyCredentials";
     public static final String KEY_CONNECTED_USER_NAME = "nomPrenom";
     public static final String KEY_CONNECTED_USER_GSON = "gsonuser";
+    public static final String KEY_USER_ENGAGED_FOR_CLIENT = "listeClientTech";
+
 
     public static String getPreferenceStringByParam(Activity context, String paramKey, String defaultVal) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());

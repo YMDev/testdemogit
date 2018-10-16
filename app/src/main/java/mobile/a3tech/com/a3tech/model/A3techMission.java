@@ -19,6 +19,10 @@ public class A3techMission {
     private Categorie categoryMission;
     private A3techUser technicien;
     private String descriptionMission;
+    private Long dateCloture;
+    private Double montantFacture;
+    private List<A3techEvenementiMission> evenement;
+
 
     public A3techMission() {
     }
@@ -129,6 +133,29 @@ public class A3techMission {
         this.descriptionMission = descriptionMission;
     }
 
+    public Long getDateCloture() {
+        return dateCloture;
+    }
+
+    public void setDateCloture(Long dateCloture) {
+        this.dateCloture = dateCloture;
+    }
+
+    public Double getMontantFacture() {
+        return montantFacture;
+    }
+
+    public void setMontantFacture(Double montantFacture) {
+        this.montantFacture = montantFacture;
+    }
+
+    public List<A3techEvenementiMission> getEvenement() {
+        return evenement;
+    }
+
+    public void setEvenement(List<A3techEvenementiMission> evenement) {
+        this.evenement = evenement;
+    }
 
     @Override
     public int hashCode() {

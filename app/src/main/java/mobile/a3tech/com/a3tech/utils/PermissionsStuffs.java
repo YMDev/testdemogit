@@ -9,6 +9,9 @@ public class PermissionsStuffs {
     public static final String[] INITIAL_PERMS={
             Manifest.permission.ACCESS_FINE_LOCATION
     };
+    public static final String[] CALL_PHONE={
+            Manifest.permission.CALL_PHONE
+    };
     public static final String[] CAMERA_PERMS={
             Manifest.permission.CAMERA
     };
@@ -20,6 +23,7 @@ public class PermissionsStuffs {
     };
 
     public static final int INITIAL_REQUEST=1337;
+    public static final int ICALL_PHONE_REQUEST=13327;
     public static final int CAMERA_REQUEST=INITIAL_REQUEST+1;
     public static final int CONTACTS_REQUEST=INITIAL_REQUEST+2;
     public static final int LOCATION_REQUEST=INITIAL_REQUEST+3;

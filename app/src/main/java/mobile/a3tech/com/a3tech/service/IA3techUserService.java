@@ -48,4 +48,7 @@ public interface IA3techUserService {
     List<A3techUser> getTechnicienNearLocation(String latitude, String longitude, String ville, int st, int en) throws EducationException;
 
 
+    List<Long> getListeUserToEnabledForClient(Long clientId) throws EducationException;
+
+    Boolean isTechnicienEnabledForClient(Long clientId, Long TechId) throws EducationException;
 }

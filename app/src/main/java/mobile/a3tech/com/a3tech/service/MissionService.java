@@ -1,5 +1,7 @@
 package mobile.a3tech.com.a3tech.service;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -208,8 +210,16 @@ public class MissionService extends AbstractService implements Constant {
   				String s = result.get("result");
   				return s;
   		    }
-      
-  	
-    
 
+
+    public A3techMission updateMission(A3techMission mission) throws EducationException{
+
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("mission", new Gson().toJson(mission));
+		A3techMission s = getResult(
+				A3TECH_UPDATE_MISSION, params,
+				new TypeReference<A3techMission>() {
+				});
+		return s;
+    }
 }

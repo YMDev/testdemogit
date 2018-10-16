@@ -48,7 +48,8 @@
         android:gravity="top|center"
         android:hint="@string/add_rating_mission_hint"
         android:inputType="textMultiLine"
-        android:lines="6"  />
+        android:lines="6"
+        android:textSize="17dp" />
 
     <Button
         android:id="@+id/btnSubmit"

@@ -1,7 +1,9 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.animation.Animation;
@@ -22,22 +24,31 @@ import java.util.Date;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import eltos.simpledialogfragment.SimpleDialog;
+import eltos.simpledialogfragment.form.Input;
+import eltos.simpledialogfragment.form.SimpleFormDialog;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.manager.MissionManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
 import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.ImagesStuffs;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.A3techDialogAddReview;
+import mobile.a3tech.com.a3tech.view.A3techDialogChooseMissionCancelORReport;
+import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 
-public class A3techDisplayMissionActivity extends AppCompatActivity implements A3techDialogAddReview.AddReviewParam {
+public class A3techDisplayMissionActivity extends AppCompatActivity implements A3techDialogAddReview.AddReviewParam, SimpleDialog.OnDialogResultListener {
 
 
     public static final String TAG_MISSION_SELECTED_FROM_HOME_ACTIVITY = "TAG_SELECTED_MISION";
+    public static final String CONFIRMATION_VALIDATION_DIALOG = "CONFIRMATION_VALIDATION_DIALOG";
+    public static final String CONFIRMATION_VALIDATION_CANCEL_DIALOG = "CONFIRMATION_VALIDATION_CANCEL_DIALOG";
+    public static final String CONFIRMATION_VALIDATION_REPORT_DIALOG = "CONFIRMATION_VALIDATION_REPORT_DIALOG";
     private A3techMission selectedMission;
     private A3techReviewMission missionReview;
 
@@ -149,10 +160,10 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         if (selectedMission.getTechnicien() != null) {
             nameTech.setText(selectedMission.getTechnicien().getNom());
             adresse.setText(selectedMission.getTechnicien().getAdresse());
-            rating.setText(selectedMission.getTechnicien().getRating()+"");
+            rating.setText(selectedMission.getTechnicien().getRating() + "");
             ratingbar.setNumStars(5);
             ratingbar.setRating(Float.valueOf(selectedMission.getTechnicien().getRating()));
-            nbrReviews.setText(selectedMission.getTechnicien().getNbrReview()+"");
+            nbrReviews.setText(selectedMission.getTechnicien().getNbrReview() + "");
         }
 
 
@@ -216,7 +227,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             @Override
             public void onClick(View view) {
                 if (selectedMission == null) return;
-                if(selectedMission.getStatut() == null){
+                if (selectedMission.getStatut() == null) {
                     selectedMission.setStatut(A3techMissionStatut.CREE);
                 }
                 if (selectedMission.getStatut().getId() == A3techMissionStatut.CREE.getId()) {
@@ -242,7 +253,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             @Override
             public void onClick(View view) {
                 if (selectedMission == null) return;
-                SimpleDialog.build().title(R.string.please_add_review).cancelable(true).pos("ok").neg("no").msg("confirm cancel mission").icon(R.drawable.a3tech_cancel_mission).show(A3techDisplayMissionActivity.this);
+               /* SimpleDialog.build().title(R.string.please_add_review).cancelable(true).pos("ok").neg("no").msg("confirm cancel mission").icon(R.drawable.a3tech_cancel_mission).show(A3techDisplayMissionActivity.this);
                 selectedMission.setStatut(A3techMissionStatut.ANNULEE);
                 btnEditReview.setVisibility(View.GONE);
                 actionRefreshStatutMission();
@@ -251,7 +262,9 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
                     public void run() {
                         doZoomEffect(statutMission);
                     }
-                });
+                });*/
+
+                cancelOrReportMissionDialogue();
             }
         });
 
@@ -261,8 +274,8 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             public void onClick(View view) {
                 if (selectedMission == null) return;
                 if (selectedMission.getStatut().getId() == A3techMissionStatut.CREE.getId()) {
-                    selectedMission.setStatut(A3techMissionStatut.VALIDEE);
-                } else  if (selectedMission.getStatut().getId() == A3techMissionStatut.VALIDEE.getId()) {
+                    validateMission();
+                } else if (selectedMission.getStatut().getId() == A3techMissionStatut.VALIDEE.getId()) {
                     if (selectedMission.getReviewMission() == null) {
                         //pas de review pour cette mission, demander d'ajouter un review
                         SimpleDialog.build()
@@ -280,10 +293,56 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
                         }
                     });
                 }
-                actionRefreshStatutMission();
+                /*actionRefreshStatutMission();*/
             }
         });
 
+    }
+
+
+    private void validateMission() {
+        if (selectedMission != null) {
+            SimpleDialog.build().title(getString(R.string.valider_mission_title_dialogue)).msg(R.string.valider_mission_msg_dialog).neg(R.string.cancel).pos(R.string.oui_valider).show(A3techDisplayMissionActivity.this, CONFIRMATION_VALIDATION_DIALOG);
+        }
+    }
+
+
+    private void cancelMission() {
+        if (selectedMission != null) {
+            SimpleDialog.build().title(getString(R.string.valider__cancel_mission_title_dialogue)).msg(R.string.valider_cancel_mission_msg_dialog).neg(R.string.cancel).pos(R.string.oui_valider).show(A3techDisplayMissionActivity.this, CONFIRMATION_VALIDATION_CANCEL_DIALOG);
+        }
+    }
+
+    private void reporterMission() {
+        if (selectedMission != null) {
+            SimpleDialog.build().title(getString(R.string.valider_report_mission_title_dialogue)).msg(R.string.valider_reporter_mission_msg_dialog).neg(R.string.cancel).pos(R.string.oui_valider).show(A3techDisplayMissionActivity.this, CONFIRMATION_VALIDATION_REPORT_DIALOG);
+        }
+    }
+
+
+    private void cancelOrReportMissionDialogue() {
+
+        A3techDialogChooseMissionCancelORReport.createProfileDialog(new A3techDialogChooseMissionCancelORReport.InteractionActivityInterface() {
+
+            @Override
+            public void actionsubmitt(int typeAction) {
+                switch (typeAction){
+                    case A3techDialogChooseMissionCancelORReport.ACTION_CANCEL:
+                        //cancel mission
+                        cancelMission();
+                        break;
+                    case A3techDialogChooseMissionCancelORReport.ACTION_REPORT:
+                        //report
+                        reporterMission();
+                        break;
+                }
+            }
+
+            @Override
+            public Context getContext() {
+                return A3techDisplayMissionActivity.this;
+            }
+        });
     }
 
     public void slidefromRightToLeft(View view) {
@@ -348,7 +407,8 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         missionReview.setMission(selectedMission);
         missionReview.setUserTechnicien(selectedMission.getTechnicien());
         missionReview.setUserClient(PreferencesValuesUtils.getConnectedUser(A3techDisplayMissionActivity.this));
-        selectedMission.setReviewMission(review);
+       // TODO SAVE Review
+        // selectedMission.setReviewMission(review);
         containerAddReview.setVisibility(View.GONE);
         containerDisplayReview.setVisibility(View.VISIBLE);
         ratingMission.setVisibility(View.VISIBLE);
@@ -364,4 +424,107 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
     }
 
 
+    @Override
+    public boolean onResult(@NonNull String dialogTag, int which, @NonNull Bundle extras) {
+
+        if (CONFIRMATION_VALIDATION_DIALOG.equals(dialogTag)){
+            switch(which){
+                case BUTTON_POSITIVE:
+                    // validation
+                    validationDemande();
+                    break;
+                case BUTTON_NEGATIVE:
+                    // nothing to do
+                    break;
+                // ...
+            }
+            return true;
+        }
+
+
+        if (CONFIRMATION_VALIDATION_CANCEL_DIALOG.equals(dialogTag)){
+            switch(which){
+                case BUTTON_POSITIVE:
+                    // validation
+                    validationCancelDemande();
+                    break;
+                case BUTTON_NEGATIVE:
+                    // nothing to do
+                    break;
+                // ...
+            }
+            return true;
+        }
+
+        if (CONFIRMATION_VALIDATION_REPORT_DIALOG.equals(dialogTag)){
+            switch(which){
+                case BUTTON_POSITIVE:
+                    // validation
+                    validationReportDemande();
+                    break;
+                case BUTTON_NEGATIVE:
+                    // nothing to do
+                    break;
+                // ...
+            }
+            return true;
+        }
+        return false;
+    }
+    private void validationDemande(){
+      final  ProgressDialog dialogueWaiting = CustomProgressDialog.createProgressDialog(A3techDisplayMissionActivity.this,"");
+        selectedMission.setStatut(A3techMissionStatut.VALIDEE);
+        //Save Mission
+        MissionManager.getInstance().updateMission(selectedMission, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                dialogueWaiting.dismiss();
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+            }
+        });
+        actionRefreshStatutMission();
+    }
+
+    private void validationReportDemande(){
+        final  ProgressDialog dialogueWaiting = CustomProgressDialog.createProgressDialog(A3techDisplayMissionActivity.this,"");
+        selectedMission.setStatut(A3techMissionStatut.REPORTEE);
+        //Save Mission
+        MissionManager.getInstance().updateMission(selectedMission, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                dialogueWaiting.dismiss();
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+            }
+        });
+        actionRefreshStatutMission();
+    }
+
+    private void validationCancelDemande(){
+        final  ProgressDialog dialogueWaiting = CustomProgressDialog.createProgressDialog(A3techDisplayMissionActivity.this,"");
+        selectedMission.setStatut(A3techMissionStatut.ANNULEE);
+        //Save Mission
+        MissionManager.getInstance().updateMission(selectedMission, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                dialogueWaiting.dismiss();
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+            }
+        });
+        actionRefreshStatutMission();
+    }
+
 }
+
+

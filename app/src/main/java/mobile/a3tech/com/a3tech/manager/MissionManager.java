@@ -302,5 +302,45 @@ private static MissionManager uniqueInstance = null;
 				}
 			}.start();
 		}
-	
+
+
+
+	public void updateMission(final A3techMission mission,final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer)message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,KEY_USER_MANAGER_UPDATE_MISSION,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try{
+					MissionService service = new MissionService();
+					A3techMission result = service.updateMission(mission);
+
+					if(result==null){
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					}else{
+						Message message = handler.obtainMessage(0, result);
+						handler.sendMessage(message);
+					}
+
+
+
+				}catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
 }

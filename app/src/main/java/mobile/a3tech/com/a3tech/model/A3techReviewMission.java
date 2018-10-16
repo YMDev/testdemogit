@@ -1,5 +1,7 @@
 package mobile.a3tech.com.a3tech.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 public class A3techReviewMission {
 
     private Long id;
@@ -7,6 +9,7 @@ public class A3techReviewMission {
     private Float rating;
     private A3techUser userTechnicien;
     private A3techUser userClient;
+    @JsonIgnore
     private A3techMission mission;
     private Long dateEvaluation;
     private Long dateEdition;

@@ -697,6 +697,17 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
         completions."
     </string>
     <string name="donnee_obligatoires">Prière de saisir la date d\'intervention ainsi que le lieu de cette mission</string>
+    <string name="choose_report_cancel">Reporter/Annuler</string>
+    <string name="please_choose_cancel_or_annuller_mission">Annuler pour supprimer cette mission et Reporter pour rechoisir une autre date d\'intervention</string>
+    <string name="report_mission">Reporter</string>
+    <string name="valider_mission_title_dialogue">Valider la Mission</string>
+    <string name="valider_mission_msg_dialog">Voulez-vous vraiment valider cette Mission</string>
+    <string name="oui_valider">Oui, Valider</string>
+    <string name="cancel_report_mission_header">Annuler ou Reporter</string>
+    <string name="valider__cancel_mission_title_dialogue">Annuler la Mission</string>
+    <string name="valider_cancel_mission_msg_dialog">Voulez-vous Annuler cette Mission ? une notification sera envoyé au technicien chargé pour être informé</string>
+    <string name="valider_report_mission_title_dialogue">Reporter la Mission</string>
+    <string name="valider_reporter_mission_msg_dialog">Voulez-vous reporter cette Mission ?  une notification sera envoyé au technicien</string>
 
 
 </resources>

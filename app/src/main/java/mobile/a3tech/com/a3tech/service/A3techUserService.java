@@ -227,6 +227,29 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
         return result;
     }
 
+    @Override
+    public List<Long> getListeUserToEnabledForClient(Long clientId) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("clientId", clientId+"");
+        List<Long> result = getResult(A3TECH_GET_TECH_ENABLED_FOR_CLIENT, params,
+                new TypeReference<List<Long>>() {
+                });
+
+        return result;
+    }
+
+    @Override
+    public Boolean isTechnicienEnabledForClient(Long clientId, Long TechId) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+		params.put("clientId", clientId+"");
+		params.put("TechId", TechId+"");
+        Boolean s = getResult(
+                A3TECH_IS_TECH_ENABLED_FOR_CLIENT, params,
+                new TypeReference<Boolean>() {
+                });
+        return s;
+    }
+
     private User getUserMocked(String name, String pname) {
         User userMocked = new User();
         userMocked.setEmail("hahhsas@mail.com");

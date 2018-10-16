@@ -16,6 +16,8 @@ public class Categorie implements Parcelable {
 	private String parentId;
 	private String ordre;
 	private String description;
+	private Double coutHoriaireArret;
+	private Double coutHoraireTravail;
 
 
 	public Categorie(String identifiant, String libelle, String description,String type, String ordre) {
@@ -105,6 +107,22 @@ public class Categorie implements Parcelable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Double getCoutHoriaireArret() {
+		return coutHoriaireArret;
+	}
+
+	public void setCoutHoriaireArret(Double coutHoriaireArret) {
+		this.coutHoriaireArret = coutHoriaireArret;
+	}
+
+	public Double getCoutHoraireTravail() {
+		return coutHoraireTravail;
+	}
+
+	public void setCoutHoraireTravail(Double coutHoraireTravail) {
+		this.coutHoraireTravail = coutHoraireTravail;
 	}
 
 	@Override

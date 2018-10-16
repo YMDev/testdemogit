@@ -27,6 +27,11 @@
 
     <uses-permission android:name=".permission.C2D_MESSAGE" />
 
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".MeducationApplication"
         android:allowBackup="true"
@@ -151,7 +156,8 @@
 
         <activity
             android:name=".activity.A3techCreateAccountActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            />
         <activity
             android:name=".activity.A3techHomeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
@@ -177,9 +183,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="xxxxxxxxxxxxxxxxxxxxxxxxxxxx" />
 
-        <activity android:name=".activity.A3techDisplayMissionActivity"
+        <activity
+            android:name=".activity.A3techDisplayMissionActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
     </application>
 
 </manifest>

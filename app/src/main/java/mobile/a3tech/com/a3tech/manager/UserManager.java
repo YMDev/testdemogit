@@ -624,4 +624,83 @@ public class UserManager implements Constant {
 		}.start();
 	}
 
+	public void getListeUserToEnabledForClient(final Long clientId,
+											   final DataLoadCallback dataLoadCallback)   {
+
+		final Handler handler = new Handler() {
+
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer) message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,
+							KEY_USER_MANAGER_GET_TECH_ENABLED,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+
+					A3techUserService service = new A3techUserService();
+					List<Long> user = service.getListeUserToEnabledForClient(clientId);
+					if (user == null) {
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					} else {
+						Message message = handler.obtainMessage(0, user);
+						handler.sendMessage(message);
+					}
+				} catch (Exception e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
+
+	public void isTechEnabledForClient(final Long clientId, final Long techId,
+										   final DataLoadCallback dataLoadCallback)   {
+
+		final Handler handler = new Handler() {
+
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer) message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,
+							KEY_USER_MANAGER_IS_TECH_ENABLED,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+
+					A3techUserService service = new A3techUserService();
+					Boolean isEnabled = service.isTechnicienEnabledForClient(clientId, techId);
+					if (isEnabled == null) {
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					} else {
+						Message message = handler.obtainMessage(0, isEnabled);
+						handler.sendMessage(message);
+					}
+				} catch (Exception e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
 }

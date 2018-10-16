@@ -31,8 +31,10 @@
             android:layout_toRightOf="@id/back_action"
             android:text="@string/toolbar_display_mission_title"
             android:textColor="@color/black"
-            android:textSize="25dp"
+            android:textSize="22dp"
             android:textStyle="bold" />
+
+
 
         <LinearLayout
             android:id="@+id/cancel_mission_layout"

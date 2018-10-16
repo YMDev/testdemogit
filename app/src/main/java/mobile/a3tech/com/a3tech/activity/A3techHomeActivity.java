@@ -108,6 +108,10 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         }
     }
 
+
+    private void getListeOFTechToDisplayPhone(){
+
+    }
     private void initiInterfaceActivity() {
         setupViewPager();
         runOnUiThread(new Runnable() {
