@@ -24,6 +24,7 @@ import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 
 /**
@@ -93,6 +94,13 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         } else
             holder.adresse.setVisibility(View.GONE);
 
+        if (missionTmp.getStatut() != null) {
+            holder.statutMission.setText(missionTmp.getStatut().getDiscreptionEnum());
+
+        } else
+            holder.statutMission.setText(A3techMissionStatut.CREE.getDiscreptionEnum());
+
+
         if (missionTmp.getTechnicien() != null) {
             String nameTech = "";
             String nameAbrTech = missionTmp.getTechnicien().getNom();
@@ -131,6 +139,7 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         TextView adresse;
         TextView dateMission;
         TextView technicien;
+        TextView statutMission;
         RelativeLayout container;
 
         public SimpleItemVH(View itemView) {
@@ -141,6 +150,7 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
             adresse = itemView.findViewById(R.id.adresse_alpha);
             dateMission = itemView.findViewById(R.id.date_mission);
             technicien = itemView.findViewById(R.id.technicien_selected);
+            statutMission = itemView.findViewById(R.id.statut_mission);
         }
     }
 

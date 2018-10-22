@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/a3tech_back_dialogue_report_annuler_mission"
-    android:padding="3dp">
+    android:padding="2dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -127,9 +127,7 @@
             android:layout_width="match_parent"
             android:layout_height="6dp"
             android:layout_below="@+id/container_report_mission"
-            android:layout_marginTop="5dp"
-            android:alpha="0.33"
-            android:background="@color/black" />
+            android:background="@color/colorPrimary" />
     </RelativeLayout>
 
 

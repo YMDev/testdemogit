@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.activity;
 
 import android.app.AlertDialog.Builder;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -35,6 +36,7 @@ import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
+import mobile.a3tech.com.a3tech.view.A3techWaitingDialog;
 
 public class A3techSplashActivity extends AppCompatActivity implements DataLoadCallback {
     ImageView animationLoginImage;
@@ -48,6 +50,7 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
     String isMessageNotif;
     String versionname;
     A3techUser usern;
+    ProgressDialog waitingDialg;
 
     static int requExce = 34232;
 
@@ -57,8 +60,6 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
         this.userIdNotif = "";
         this.isMessageNotif = "";
     }
-
-
 
 
     public void onCreate(Bundle savedInstanceState) {
@@ -89,12 +90,9 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
         this.connectedUser = prefs.getString("identifiant", "");
         this.password = prefs.getString("password", "");
         if (!isConnected()) {
-            A3techCustomToastDialog.createToastDialog(A3techSplashActivity.this,getApplicationContext().getString(R.string.txtSplash_messageCheckConnexion), Toast.LENGTH_SHORT,A3techCustomToastDialog.TOAST_INFO);
-            //finish();
-        }
-
-         //else
-            if (this.conMode.equals("facebook")) {
+            A3techCustomToastDialog.createToastDialog(A3techSplashActivity.this, getApplicationContext().getString(R.string.txtSplash_messageCheckConnexion), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);
+            finish();
+        } else if (this.conMode.equals("facebook")) {
             Intent mainIntent = new Intent(this, FacebookActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString(Constant.RESULT_ACTION_CODE_FACEBOOK_SRC, Constant.RESULT_ACTION_CODE_FACEBOOK_SRC_SPLASH);
@@ -104,7 +102,9 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
             startActivity(new Intent(this, A3techLoginActivity.class));
             finish();
         } else {
-            UserManager.getInstance().getProfil(this.connectedUser,password, this);
+            //Todo display dialogue
+             waitingDialg =  A3techWaitingDialog.createProgressDialog(A3techSplashActivity.this, "");
+            UserManager.getInstance().getProfil(this.connectedUser, password, this);
         }
     }
 
@@ -170,13 +170,15 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
                     editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_NAME, usern.getPrenom() + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + usern.getNom());
                     editor.putString("MyCredentials", usern.getEmail());
                     editor.putString("pseudo", usern.getPseudo());
-                    editor.putString("identifiant", usern.getId()+"");
+                    editor.putString("identifiant", usern.getId() + "");
                     editor.putString("password", password);
                     editor.putString("facebookId", usern.getFacebookId());
                     editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(usern));
                     editor.putString("checkphone", usern.getTelephone());
                     editor.commit();
                     startActivity(mainIntent);
+                    if(waitingDialg != null)
+                        waitingDialg.dismiss();
                     finish();
                 } else {
                     Toast.makeText(A3techSplashActivity.this, "Veuillez proceder � la mise � jour de votre application", Toast.LENGTH_LONG).show();
@@ -205,6 +207,7 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
 
     public void dataLoadingError(String error) {
     }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();

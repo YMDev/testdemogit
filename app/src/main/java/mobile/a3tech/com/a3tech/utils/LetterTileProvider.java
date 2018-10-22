@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.CornerPathEffect;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
@@ -70,7 +71,9 @@ public class LetterTileProvider {
         final Canvas c = mCanvas;
         c.setBitmap(bitmap);
         c.drawColor(pickColor(key));
-
+        float radius = 50.0f;
+        CornerPathEffect corEffect = new CornerPathEffect(radius);
+        mPaint.setPathEffect(corEffect);
         if (isEnglishLetterOrDigit(firstChar)) {
             mFirstChar[0] = Character.toUpperCase(firstChar);
             mPaint.setTextSize(mTileLetterFontSize);
@@ -82,6 +85,9 @@ public class LetterTileProvider {
         }
         return bitmap;
     }
+
+
+
 
     /**
      * @param c The char to check

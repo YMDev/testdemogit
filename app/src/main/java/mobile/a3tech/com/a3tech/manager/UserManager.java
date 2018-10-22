@@ -703,4 +703,43 @@ public class UserManager implements Constant {
 		}.start();
 	}
 
+	public void fetchSoldeDisponible(final Long userID,
+									   final DataLoadCallback dataLoadCallback)   {
+
+		final Handler handler = new Handler() {
+
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer) message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,
+							KEY_USER_MANAGER_IS_TECH_ENABLED,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+
+					A3techUserService service = new A3techUserService();
+					Double solde = service.fetchSoldeDisponible(userID);
+					if (solde == null) {
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					} else {
+						Message message = handler.obtainMessage(0, solde);
+						handler.sendMessage(message);
+					}
+				} catch (Exception e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
 }

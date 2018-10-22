@@ -108,9 +108,11 @@
             android:id="@+id/frame_view_account_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="50dp"
-            android:orientation="vertical">
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:orientation="vertical"
+           >
 
             <android.support.design.widget.TabLayout
                 android:id="@+id/tabs_profil"
@@ -121,7 +123,8 @@
                 app:tabIndicatorColor="#00000000"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/colorPrimary" />
+                app:tabTextColor="@color/colorPrimary"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/viewpager_profile_detail"

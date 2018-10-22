@@ -343,4 +343,118 @@ private static MissionManager uniqueInstance = null;
 		}.start();
 	}
 
+
+	public void calculeMontantMission(final A3techMission mission,final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer)message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,KEY_USER_MANAGER_UPDATE_MISSION,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try{
+					MissionService service = new MissionService();
+					Double result = service.calculeMontantMission(mission);
+
+					if(result==null){
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					}else{
+						Message message = handler.obtainMessage(0, result);
+						handler.sendMessage(message);
+					}
+
+
+
+				}catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
+    public void calculeDureeMission(final A3techMission selectedMission, final DataLoadCallback dataLoadCallback) {
+        final Handler handler = new Handler() {
+            // @Override
+            public void handleMessage(Message message) {
+                if (message.obj instanceof Integer) {
+                    dataLoadCallback.dataLoadingError((Integer)message.obj);
+                } else {
+                    dataLoadCallback.dataLoaded(message.obj,KEY_USER_MANAGER_UPDATE_MISSION,0);
+                }
+            }
+        };
+
+        new Thread() {
+            @Override
+            public void run() {
+                try{
+                    MissionService service = new MissionService();
+                    String  result = service.calculeDureeMission(selectedMission);
+
+                    if(result==null){
+                        Message message = handler.obtainMessage(0, 0);
+                        handler.sendMessage(message);
+                    }else{
+                        Message message = handler.obtainMessage(0, result);
+                        handler.sendMessage(message);
+                    }
+
+
+
+                }catch (EducationException e) {
+                    Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+                    handler.sendMessage(message);
+                }
+
+            }
+        }.start();
+    }
+
+    public void missionCanBeReportedOrCanceled(final A3techMission selectedMission, final DataLoadCallback dataLoadCallback) {
+        final Handler handler = new Handler() {
+            // @Override
+            public void handleMessage(Message message) {
+                if (message.obj instanceof Integer) {
+                    dataLoadCallback.dataLoadingError((Integer)message.obj);
+                } else {
+                    dataLoadCallback.dataLoaded(message.obj,KEY_USER_MANAGER_UPDATE_MISSION,0);
+                }
+            }
+        };
+
+        new Thread() {
+            @Override
+            public void run() {
+                try{
+                    MissionService service = new MissionService();
+                    Boolean  result = service.missionCanBeReportedOrCanceled(selectedMission);
+
+                    if(result==null){
+                        Message message = handler.obtainMessage(0, 0);
+                        handler.sendMessage(message);
+                    }else{
+                        Message message = handler.obtainMessage(0, result);
+                        handler.sendMessage(message);
+                    }
+
+
+
+                }catch (EducationException e) {
+                    Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+                    handler.sendMessage(message);
+                }
+
+            }
+        }.start();
+    }
 }

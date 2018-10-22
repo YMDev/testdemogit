@@ -33,21 +33,38 @@
                     android:textColor="@color/black"
                     android:textSize="15dp" />
 
-                <TextView
-                    android:id="@+id/solde_valable"
+                <LinearLayout
+                    android:id="@+id/container_solde"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/label_solde"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="2dp">
+                <TextView
+                    android:id="@+id/solde_valable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/solde_par_default"
                     android:textColor="@color/colorPrimary"
                     android:textSize="25dp" />
 
+                <ProgressBar
+                    android:id="@+id/progress_solde_valable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminate="true"
+                    android:indeterminateTint="@color/colorPrimary"
+                    android:progressTint="@color/colorPrimary"
+                    android:secondaryProgressTint="@color/colorPrimary"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:visibility="gone"
+                     />
+                </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@id/solde_valable"
+                    android:layout_below="@id/container_solde"
                     android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp"
                     android:background="@color/colorPrimary"></View>

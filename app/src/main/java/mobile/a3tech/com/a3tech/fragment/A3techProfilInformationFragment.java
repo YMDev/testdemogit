@@ -131,7 +131,9 @@ public class A3techProfilInformationFragment extends Fragment {
             listeRetour.add(new ObjectMenu(user.getEmail(), "Email", 1, 1));
             listeRetour.add(new ObjectMenu(user.getAdresse(), "Adresse", 1, 2));
             listeRetour.add(new ObjectMenu(user.getNbrMission() == null ? "0" : user.getNbrMission()+"", "Nombre de missions", 1, 3));
-            listeRetour.add(new ObjectMenu(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT,new Date(user.getDateNaissance())), "Date naissance", 1, 4));
+            if(user.getDateNaissance()!= null) {
+                listeRetour.add(new ObjectMenu(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT,new Date(user.getDateNaissance())), "Date naissance", 1, 4));
+            }
             listeRetour.add(new ObjectMenu(user.getTelephone(), "Telephone", 2, 5));
             A3techProfileInformationAdapter mAdapter = new A3techProfileInformationAdapter(getActivity(), listeRetour, user);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());

@@ -1,5 +1,7 @@
 package mobile.a3tech.com.a3tech.service;
 
+import com.google.gson.Gson;
+
 import org.codehaus.jackson.type.TypeReference;
 
 import java.util.ArrayList;
@@ -247,6 +249,19 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
                 A3TECH_IS_TECH_ENABLED_FOR_CLIENT, params,
                 new TypeReference<Boolean>() {
                 });
+        return s;
+    }
+
+    @Override
+    public Double fetchSoldeDisponible(Long userID) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("userID", userID+"");
+
+        HashMap<String, Double> result = getResult(
+                A3TECH_FETCH_USER_SOLDE_DISPO, params,
+                new TypeReference<HashMap<String, Double>>() {
+                });
+        Double s = result.get("result");
         return s;
     }
 

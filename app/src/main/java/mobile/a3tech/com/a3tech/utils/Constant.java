@@ -2,10 +2,16 @@ package mobile.a3tech.com.a3tech.utils;
 
 public interface Constant {
 
-	static final String CHECK_local = "http://192.168.1.11:8080/student/allstudent";
-	static final String A3TECH_GET_TECH_ENABLED_FOR_CLIENT = "http://192.168.1.11:8080/user/techEnabled";
-	static final String A3TECH_IS_TECH_ENABLED_FOR_CLIENT = "http://192.168.1.11:8080/user/isTechnicienEnabledForClient";
-	static final String A3TECH_UPDATE_MISSION = "http://192.168.1.11:8080/mission/updateMission";
+    static String IP = "http://192.168.1.23:8080";
+	static final String CHECK_local = IP+"/student/allstudent";
+	static final String A3TECH_GET_TECH_ENABLED_FOR_CLIENT = IP+"/user/techEnabled";
+	static final String A3TECH_IS_TECH_ENABLED_FOR_CLIENT = IP+"/user/isTechnicienEnabledForClient";
+	static final String A3TECH_FETCH_USER_SOLDE_DISPO = IP+"/user/fetchSoldeDisponible";
+	static final String A3TECH_UPDATE_MISSION = IP+"/mission/updateMission";
+	static final String A3TECH_CALCULE_MONTAT_MISSION = IP+"/mission/calculeMontantMission";
+	static final String A3TECH_CALCULE_DUREE_MISSION = IP+"/mission/calculeDureeMission";
+	static final String A3TECH_MISSION_CAN_BE_CANCELED = IP+"/mission/missionCanBeReportedOrCanceled";
+
 
 
 	public static final String CGU_URL_FR="http://arakhod.com/cgu/cgu.html";
@@ -13,14 +19,14 @@ public interface Constant {
 	public static final String FAQ_URL_FR="http://arakhod.com/cgu/faq.html";
 	public static final String PAIEMENT_URL_FR="http://arakhod.com/cgu/paiement.html";
 	static final String CHECK_EDU_CREATE_ACCOUNT_URL = "http://arakhod.com/frontend_dev.php/user/createAccount.json";
-	static final String CHECK_EDU_LOGIN_URL = "http://192.168.1.11:8080/user/getUser";
+	static final String CHECK_EDU_LOGIN_URL = IP+"/user/getUser";
 	static final String CHECK_EDU_NEW_PASSWORD_URL ="http://arakhod.com/frontend_dev.php/user/initPassword.json";
-	static final String CHECK_EDU_PROFIL_URL = "http://192.168.1.11:8080/user/getProfil";
+	static final String CHECK_EDU_PROFIL_URL = IP+"/user/getProfil";
 	static final String CHECK_EDU_UPDATE_PROFIL_URL = "http://arakhod.com/frontend_dev.php/user/updateProfil.json";
 	static final String CHECK_EDU_LISTE_CATEGORIE_URL = "http://arakhod.com/frontend_dev.php/categorie/listeCategories.json";
 	static final String CHECK_EDU_CREATE_MISSION_URL = "http://arakhod.com/frontend_dev.php/mission/createMission.json";
 	static final String CHECK_EDU_FILTER_MISSION_URL = "http://arakhod.com/frontend_dev.php/mission/filtreMission.json";
-	static final String CHECK_EDU_ALGO_MISSION_URL = "http://192.168.1.11:8080/mission/filtreMission";
+	static final String CHECK_EDU_ALGO_MISSION_URL = IP+"/mission/filtreMission";
 	static final String CHECK_EDU_MISSIONS_EMISES_URL = "http://arakhod.com/frontend_dev.php/mission/missionsEmises.json";
 	static final String CHECK_EDU_MISSIONS_SUIVIES_URL = "http://arakhod.com/frontend_dev.php/mission/missionsSuivies.json";
 	static final String CHECK_EDU_MISSIONS_SUIVIES_CHAT_URL = "http://arakhod.com/frontend_dev.php/mission/missionsSuiviesChat.json";

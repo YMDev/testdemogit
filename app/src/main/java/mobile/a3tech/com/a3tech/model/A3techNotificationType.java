@@ -1,20 +1,19 @@
 package mobile.a3tech.com.a3tech.model;
 
-public enum A3techEvenementMissionType {
+public enum A3techNotificationType {
 
-    CREATION("Création", 1, "USER"),
-    MODIFICATION("Modification", 2, "USER"),
-    ARRET("Arrêt", 3, "USER"),
-    REPRISE("Reprise", 4, "USER"),
-    FIN("Fin", 5, "USER"),
-    DEBUT("Début", 6, "USER"),
-    VALIDATION("Validation", 6, "USER");
+    CREATION_MISSION("Mission créée", 1, "USER"),
+    VALIDATION_MISSION("Mission validée", 2, "USER"),
+    ACCEPTATION_MISSION("Mission Acceptée", 3, "USER"),
+    ANNULATION_MISSION("Mission Annulée", 4, "USER"),
+    REPORTATION_MISSION("Mission Reportée", 5, "USER"),
+    REJET_MISSION("Mission Rjetée", 6, "SYSTEM");
 
 
     private String discreptionEnum;
     private String typeEnum;
     private int id;
-    A3techEvenementMissionType(String discreption, int identifiant, String typeStatut) {
+    A3techNotificationType(String discreption, int identifiant, String typeStatut) {
         discreptionEnum = discreption;
         typeEnum = typeStatut;
         id = identifiant;

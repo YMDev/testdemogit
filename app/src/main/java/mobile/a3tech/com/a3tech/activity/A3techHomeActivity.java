@@ -41,6 +41,7 @@ import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeBrowseTechFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techNotificationHomeFragment;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.Categorie;
@@ -53,7 +54,7 @@ import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
-public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener, A3techHomeBrowseTechFragment.OnFragmentInteractionListener {
+public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener, A3techHomeBrowseTechFragment.OnFragmentInteractionListener, A3techNotificationHomeFragment.OnFragmentInteractionListener {
     private final int[] colors = {R.color.white, R.color.white, R.color.white, R.color.white};
     private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
@@ -194,7 +195,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         viewPager = (NoSwipePager) findViewById(R.id.home_view_pager_navigation);
         viewPager.setPagingEnabled(false);
         pagerAdapter = new BottomBarAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragments(createFragment(colors[0]));
+        pagerAdapter.addFragments(A3techNotificationHomeFragment.newInstance(null,null));
         pagerAdapter.addFragments(A3techMissionsHomeFragment.newInstance(null, null));
         pagerAdapter.addFragments(A3techHomeBrowseTechFragment.newInstance(null, null));
         pagerAdapter.addFragments(A3techHomeAccountFragment.newInstance(null, null));

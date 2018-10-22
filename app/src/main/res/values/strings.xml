@@ -708,6 +708,8 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="valider_cancel_mission_msg_dialog">Voulez-vous Annuler cette Mission ? une notification sera envoyé au technicien chargé pour être informé</string>
     <string name="valider_report_mission_title_dialogue">Reporter la Mission</string>
     <string name="valider_reporter_mission_msg_dialog">Voulez-vous reporter cette Mission ?  une notification sera envoyé au technicien</string>
+    <string name="valider_cloture_mission_title_dialogue">Clôturer la Mission</string>
+    <string name="valider_cloturer_mission_msg_dialog">Voulez-vous clôturer cette Mission ?</string>
 
 
 </resources>

@@ -10,13 +10,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.User;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.ObjectMenu;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTest;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +32,10 @@ import mobile.a3tech.com.a3tech.test.SimpleAdapterTest;
  * to handle interaction events.
  * Use the {@link A3techHomeAccountFragment#newInstance} factory method to
  * create an instance of this fragment.
+ */
+
+/**
+ * Fragment pour afficher le compte de l'utilisateur connecté
  */
 public class A3techHomeAccountFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
@@ -35,11 +46,15 @@ public class A3techHomeAccountFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    boolean isAccountDisplayed = false;
 
     private RecyclerView recycyleInformation;
     private RecyclerView recycyleAccountSetting;
+
+    private TextView soldeDisponibleForConnectedUser;
+    private ProgressBar progresseSoldeDispo;
     private OnFragmentInteractionListener mListener;
+    View viewFr;
 
     public A3techHomeAccountFragment() {
         // Required empty public constructor
@@ -76,7 +91,13 @@ public class A3techHomeAccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View viewFr =  inflater.inflate(R.layout.fragment_a3tech_home_account, container, false);
+         viewFr = inflater.inflate(R.layout.fragment_a3tech_home_account, container, false);
+        initAccountInfoFragment();
+         return viewFr;
+    }
+
+
+    private void initAccountInfoFragment(){
         recycyleInformation = viewFr.findViewById(R.id.recycle_informtaions);
         recycyleInformation.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         SimpleAdapterTest adapter = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(1));
@@ -87,24 +108,48 @@ public class A3techHomeAccountFragment extends Fragment {
         SimpleAdapterTest adapterrecycyleAccountSetting = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(2));
         recycyleAccountSetting.setAdapter(adapterrecycyleAccountSetting);
 
-        return viewFr;
-    }
 
-    private List<ObjectMenu> prepareListeObjectToshow(int typeRecycle){
-      List<ObjectMenu> listeRetour = new ArrayList<>();
-        switch (typeRecycle){
-            case 1 :
+        soldeDisponibleForConnectedUser = viewFr.findViewById(R.id.solde_valable);
+        soldeDisponibleForConnectedUser.setVisibility(View.GONE);
+        progresseSoldeDispo = viewFr.findViewById(R.id.progress_solde_valable);
+        progresseSoldeDispo.setVisibility(View.VISIBLE);
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // get solde disponible
+                UserManager.getInstance().fetchSoldeDisponible(PreferencesValuesUtils.getConnectedUser(getActivity()).getId(), new DataLoadCallback() {
+                    @Override
+                    public void dataLoaded(Object data, int method, int typeOperation) {
+                        Double solde = (Double) data;
+                        soldeDisponibleForConnectedUser.setText(solde + "");
+                        progresseSoldeDispo.setVisibility(View.GONE);
+                        soldeDisponibleForConnectedUser.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void dataLoadingError(int errorCode) {
+
+                    }
+                });
+            }
+        });
+    }
+    private List<ObjectMenu> prepareListeObjectToshow(int typeRecycle) {
+        List<ObjectMenu> listeRetour = new ArrayList<>();
+        switch (typeRecycle) {
+            case 1:
                 //Information
-                listeRetour.add(new ObjectMenu("Notification","Les notification du jour",1, 1));
-                listeRetour.add(new ObjectMenu("Demander une mission","chercher parmi nos meilleurs techniciens", 1, 2));
-                listeRetour.add(new ObjectMenu("Recever un crédit gratuit","Inviter vos amis est gagner 200 MAD", 1, 3));
+                listeRetour.add(new ObjectMenu("Notification", "Les notification du jour", 1, 1));
+                listeRetour.add(new ObjectMenu("Demander une mission", "chercher parmi nos meilleurs techniciens", 1, 2));
+                listeRetour.add(new ObjectMenu("Recever un crédit gratuit", "Inviter vos amis est gagner 200 MAD", 1, 3));
                 break;
-            case 2 :
+            case 2:
                 //Information
-                listeRetour.add(new ObjectMenu("Notification","Les notification du jour", 2, 1));
-                listeRetour.add(new ObjectMenu("Demander une mission","chercher parmi nos meilleurs techniciens", 2, 2));
-                listeRetour.add(new ObjectMenu("Recever un crédit gratuit","Inviter vos amis est gagner 200 MAD", 2, 3));
-                listeRetour.add(new ObjectMenu("Deconnexion","", 2, 4));
+                listeRetour.add(new ObjectMenu("Notification", "Les notification du jour", 2, 1));
+                listeRetour.add(new ObjectMenu("Demander une mission", "chercher parmi nos meilleurs techniciens", 2, 2));
+                listeRetour.add(new ObjectMenu("Recever un crédit gratuit", "Inviter vos amis est gagner 200 MAD", 2, 3));
+                listeRetour.add(new ObjectMenu("Deconnexion", "", 2, 4));
         }
         return listeRetour;
     }
@@ -146,5 +191,17 @@ public class A3techHomeAccountFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser && !isAccountDisplayed ) {
+            if(getActivity() != null){
+                initAccountInfoFragment();
+                isAccountDisplayed = true;
+            }
+
+        }
     }
 }

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 
-
 import org.codehaus.jackson.type.TypeReference;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
@@ -23,49 +22,49 @@ import mobile.a3tech.com.a3tech.utils.Constant;
 
 public class MissionService extends AbstractService implements Constant {
 
-	// creer une nouvelle mission
-	public String createMission(String connectedUser,String typeTransaction,String categorie,String sousCategorie,String idTypeTroc ,String titre,
-			String article,String idEtatArticle,String  contre,String objetRechercheTitre,String objetRecherche,String lieu,String latitude,String longitude,String idVille,
-			String[] bitmaps,String echeance,
-			String typeSponsoring,String typePaiement,String dateDebut,String dateFin,String password) throws EducationException {
-		Map<String, String> params = new HashMap<String, String>();
-		if(connectedUser!=null) params.put("idUser", connectedUser);
-		if(categorie!=null) params.put("typeTransaction", typeTransaction);
-		if(categorie!=null) params.put("service", categorie);
-		if(sousCategorie!=null) params.put("type_mission_id", sousCategorie);
-		if(idTypeTroc!=null) params.put("typetroc", idTypeTroc);
-		if(article!=null) params.put("article", article);
-		if(idEtatArticle!=null) params.put("etatarticle", idEtatArticle);
-		if(objetRecherche!=null) params.put("objetrecherche", objetRecherche);
-		if(contre!=null) params.put("contre", contre);
-		if(lieu!=null) params.put("adresse", lieu);
-		if(idVille!=null && !idVille.equals("")) params.put("idVille", idVille);
-		if(latitude!=null) params.put("latitude", latitude);
-		if(longitude!=null) params.put("longitude", longitude);
-		if(objetRechercheTitre!=null) params.put("titreobjetrecherche", objetRechercheTitre);
-		if(titre!=null) params.put("titre", titre);
-		if(echeance!=null) params.put("echeance", echeance);
-		if (!(bitmaps == null || bitmaps[0].equals("")))  params.put("bitmap0", bitmaps[0]);
-	    if (!(bitmaps == null || bitmaps[1].equals("")))  params.put("bitmap1", bitmaps[1]);
-	    if (!(bitmaps == null || bitmaps[2].equals("")))  params.put("bitmap2", bitmaps[2]);
-	    if(typeSponsoring!=null) params.put("typeSponsoring", typeSponsoring);
-	    if(typePaiement!=null) params.put("typePaiement", typePaiement);
-	    if(dateDebut!=null) params.put("dateDebut", dateDebut);
-	    if(dateFin!=null) params.put("dateFin", dateFin);
-	    params.put("password", password);
-		HashMap<String, String> result = getResult(
-				CHECK_EDU_CREATE_MISSION_URL, params,
-				new TypeReference<HashMap<String, String>>() {
-				});
-		String s = result.get("result");
-		return s;
-	}
-	
+    // creer une nouvelle mission
+    public String createMission(String connectedUser, String typeTransaction, String categorie, String sousCategorie, String idTypeTroc, String titre,
+                                String article, String idEtatArticle, String contre, String objetRechercheTitre, String objetRecherche, String lieu, String latitude, String longitude, String idVille,
+                                String[] bitmaps, String echeance,
+                                String typeSponsoring, String typePaiement, String dateDebut, String dateFin, String password) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        if (connectedUser != null) params.put("idUser", connectedUser);
+        if (categorie != null) params.put("typeTransaction", typeTransaction);
+        if (categorie != null) params.put("service", categorie);
+        if (sousCategorie != null) params.put("type_mission_id", sousCategorie);
+        if (idTypeTroc != null) params.put("typetroc", idTypeTroc);
+        if (article != null) params.put("article", article);
+        if (idEtatArticle != null) params.put("etatarticle", idEtatArticle);
+        if (objetRecherche != null) params.put("objetrecherche", objetRecherche);
+        if (contre != null) params.put("contre", contre);
+        if (lieu != null) params.put("adresse", lieu);
+        if (idVille != null && !idVille.equals("")) params.put("idVille", idVille);
+        if (latitude != null) params.put("latitude", latitude);
+        if (longitude != null) params.put("longitude", longitude);
+        if (objetRechercheTitre != null) params.put("titreobjetrecherche", objetRechercheTitre);
+        if (titre != null) params.put("titre", titre);
+        if (echeance != null) params.put("echeance", echeance);
+        if (!(bitmaps == null || bitmaps[0].equals(""))) params.put("bitmap0", bitmaps[0]);
+        if (!(bitmaps == null || bitmaps[1].equals(""))) params.put("bitmap1", bitmaps[1]);
+        if (!(bitmaps == null || bitmaps[2].equals(""))) params.put("bitmap2", bitmaps[2]);
+        if (typeSponsoring != null) params.put("typeSponsoring", typeSponsoring);
+        if (typePaiement != null) params.put("typePaiement", typePaiement);
+        if (dateDebut != null) params.put("dateDebut", dateDebut);
+        if (dateFin != null) params.put("dateFin", dateFin);
+        params.put("password", password);
+        HashMap<String, String> result = getResult(
+                CHECK_EDU_CREATE_MISSION_URL, params,
+                new TypeReference<HashMap<String, String>>() {
+                });
+        String s = result.get("result");
+        return s;
+    }
+
     //filtrer missions
     public List<A3techMission> filtreMission(String lang, String connectedUser, String keyWord, String distance, String services, String start, String limit, String key, String typeTransaction, String premium, String password,
-											 int order, int type) throws EducationException{
- 	Map<String, String> params = new HashMap<String, String>();
-		params.put("start", start);
+                                             int order, int type) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("start", start);
         params.put("limit", limit);
         params.put("connectedUser", connectedUser);
         params.put("keyWord", keyWord);
@@ -76,13 +75,13 @@ public class MissionService extends AbstractService implements Constant {
         params.put("password", password);
         params.put("order", String.valueOf(order));
         params.put("type", String.valueOf(type));
-		params.put("key", key);
-		params.put("typeTransaction", typeTransaction);
-		List<A3techMission> result = getResult(CHECK_EDU_ALGO_MISSION_URL, params,
-				new TypeReference<List<A3techMission>>() {
-				});
+        params.put("key", key);
+        params.put("typeTransaction", typeTransaction);
+        List<A3techMission> result = getResult(CHECK_EDU_ALGO_MISSION_URL, params,
+                new TypeReference<List<A3techMission>>() {
+                });
 
-		return  result;
+        return result;
 		/*List<A3techMission> missions = new ArrayList<>();
 		A3techMission mm1 = new A3techMission();
         A3techUser tech =  new A3techUser();
@@ -112,9 +111,9 @@ public class MissionService extends AbstractService implements Constant {
 		missions.add(mm1);
 		return missions;*/
     }
-    
+
     //detail missions
-    public Mission detailMission(String idMission, String userId,String password) throws EducationException{
+    public Mission detailMission(String idMission, String userId, String password) throws EducationException {
 	/*	Map<String, String> params = new HashMap<String, String>();
 		 params.put("idMission", idMission);
 	     params.put("idUser", userId);
@@ -124,102 +123,138 @@ public class MissionService extends AbstractService implements Constant {
 				});
 		*/
 
-		Mission mm1 = new Mission();
-		mm1.setAdresse("adresse mission 1");
-		mm1.setArticle("article mission");
-		mm1.setCatDescription("cat description");
-		mm1.setCategorieId("cat1");
-		mm1.setCheckmail("mail.mail.cheked@gmail.com");
-		mm1.setCheckphone("02020202020");
-		mm1.setContre("contre");
-		mm1.setDateCreation("2018-09-20 00:00:00");
-		mm1.setDateFin("2018-09-22 00:00:00");
-		mm1.setNote("2");
-		mm1.setSponsorise(0);
-		mm1.setService("1");
-		mm1.setTypeTransaction("1");
-		mm1.setPseudo("mission pseudo");
-		mm1.setDistance("-1.0d");
-		mm1.setNbrVues("2");
-		mm1.setStatut(Mission.STATUT_CREEE);
-		mm1.setIdentifiant("928292");
-		mm1.setOriginator("kdaasa");
-		return mm1;
-	}
-    
+        Mission mm1 = new Mission();
+        mm1.setAdresse("adresse mission 1");
+        mm1.setArticle("article mission");
+        mm1.setCatDescription("cat description");
+        mm1.setCategorieId("cat1");
+        mm1.setCheckmail("mail.mail.cheked@gmail.com");
+        mm1.setCheckphone("02020202020");
+        mm1.setContre("contre");
+        mm1.setDateCreation("2018-09-20 00:00:00");
+        mm1.setDateFin("2018-09-22 00:00:00");
+        mm1.setNote("2");
+        mm1.setSponsorise(0);
+        mm1.setService("1");
+        mm1.setTypeTransaction("1");
+        mm1.setPseudo("mission pseudo");
+        mm1.setDistance("-1.0d");
+        mm1.setNbrVues("2");
+        mm1.setStatut(Mission.STATUT_CREEE);
+        mm1.setIdentifiant("928292");
+        mm1.setOriginator("kdaasa");
+        return mm1;
+    }
+
     //missions emises
-      public List<Mission> missionsEmises(String lang, String idUser,String start,String limit,String password) throws EducationException{
-  		Map<String, String> params = new HashMap<String, String>();
-  		params.put("idUser", idUser);
-  		params.put("start", start);
-  		params.put("limit", limit);
-  		params.put("lang", lang);
-  		params.put("password", password);
-  		HashMap<String,List<Mission>> result = getResult(CHECK_EDU_MISSIONS_EMISES_URL, params,
-  				new TypeReference<HashMap<String,List<Mission>>>() {
-  				});
-  		
-  		List<Mission> missions = result.get("missions");
-  		return missions;
-  		
-  		
-  	}
-      
-      //missions suivies
-      public List<Mission> missionsSuivies(String idUser,String start,String limit,String password) throws EducationException{
-  		Map<String, String> params = new HashMap<String, String>();
-  		params.put("idUser", idUser);
-  		params.put("start", start);
-  		params.put("limit", limit);
-  		params.put("password", password);
-  		HashMap<String,List<Mission>> result = getResult(CHECK_EDU_MISSIONS_SUIVIES_URL, params,
-  				new TypeReference<HashMap<String,List<Mission>>>() {
-  				});
-  		
-  		List<Mission> missions = result.get("missions");
-  		return missions;
-  	}
-      
-      
+    public List<Mission> missionsEmises(String lang, String idUser, String start, String limit, String password) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("idUser", idUser);
+        params.put("start", start);
+        params.put("limit", limit);
+        params.put("lang", lang);
+        params.put("password", password);
+        HashMap<String, List<Mission>> result = getResult(CHECK_EDU_MISSIONS_EMISES_URL, params,
+                new TypeReference<HashMap<String, List<Mission>>>() {
+                });
+
+        List<Mission> missions = result.get("missions");
+        return missions;
+
+
+    }
+
+    //missions suivies
+    public List<Mission> missionsSuivies(String idUser, String start, String limit, String password) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("idUser", idUser);
+        params.put("start", start);
+        params.put("limit", limit);
+        params.put("password", password);
+        HashMap<String, List<Mission>> result = getResult(CHECK_EDU_MISSIONS_SUIVIES_URL, params,
+                new TypeReference<HashMap<String, List<Mission>>>() {
+                });
+
+        List<Mission> missions = result.get("missions");
+        return missions;
+    }
+
+
     //missions suivies chat
-      public List<Mission> missionsSuiviesChat(String lang, String idUser,String start,String limit,String password) throws EducationException{
-  		Map<String, String> params = new HashMap<String, String>();
-  		params.put("idUser", idUser);
-  		params.put("start", start);
-  		params.put("limit", limit);
-  		params.put("lang", lang);
-  		params.put("password", password);
-  		HashMap<String,List<Mission>> result = getResult(CHECK_EDU_MISSIONS_SUIVIES_CHAT_URL, params,
-  				new TypeReference<HashMap<String,List<Mission>>>() {
-  				});
-  		
-  		List<Mission> missions = result.get("missions");
-  		return missions;
-  	}
-      
+    public List<Mission> missionsSuiviesChat(String lang, String idUser, String start, String limit, String password) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("idUser", idUser);
+        params.put("start", start);
+        params.put("limit", limit);
+        params.put("lang", lang);
+        params.put("password", password);
+        HashMap<String, List<Mission>> result = getResult(CHECK_EDU_MISSIONS_SUIVIES_CHAT_URL, params,
+                new TypeReference<HashMap<String, List<Mission>>>() {
+                });
+
+        List<Mission> missions = result.get("missions");
+        return missions;
+    }
+
     //delete mission
-  	public String deleteMission(String identifiant,  String idUser,String password) throws EducationException{
-  				Map<String, String> params = new HashMap<String, String>();
-  				params.put("idMission", identifiant);
-  				
-  				params.put("idUser", idUser);
-  				params.put("password", password);
-  				HashMap<String,String> result = getResult(CHECK_EDU_DELETE_MISSION_URL, params,
-  						new TypeReference<HashMap<String,String>>() {
-  						});
-  				String s = result.get("result");
-  				return s;
-  		    }
+    public String deleteMission(String identifiant, String idUser, String password) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("idMission", identifiant);
+
+        params.put("idUser", idUser);
+        params.put("password", password);
+        HashMap<String, String> result = getResult(CHECK_EDU_DELETE_MISSION_URL, params,
+                new TypeReference<HashMap<String, String>>() {
+                });
+        String s = result.get("result");
+        return s;
+    }
 
 
-    public A3techMission updateMission(A3techMission mission) throws EducationException{
+    public A3techMission updateMission(A3techMission mission) throws EducationException {
 
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("mission", new Gson().toJson(mission));
-		A3techMission s = getResult(
-				A3TECH_UPDATE_MISSION, params,
-				new TypeReference<A3techMission>() {
-				});
-		return s;
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mission", new Gson().toJson(mission));
+        A3techMission s = getResult(
+                A3TECH_UPDATE_MISSION, params,
+                new TypeReference<A3techMission>() {
+                });
+        return s;
+    }
+
+    public Double calculeMontantMission(A3techMission mission) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mission", new Gson().toJson(mission));
+        Double s = getResult(
+                A3TECH_CALCULE_MONTAT_MISSION, params,
+                new TypeReference<Double>() {
+                });
+        return s;
+    }
+
+    public String calculeDureeMission(A3techMission selectedMission) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mission", new Gson().toJson(selectedMission));
+
+        HashMap<String, String> result = getResult(
+                A3TECH_CALCULE_DUREE_MISSION, params,
+                new TypeReference<HashMap<String, String>>() {
+                });
+        String s = result.get("result");
+        return s;
+
+
+    }
+
+    public Boolean missionCanBeReportedOrCanceled(A3techMission selectedMission) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mission", new Gson().toJson(selectedMission));
+
+        HashMap<String, Boolean> result = getResult(
+                A3TECH_MISSION_CAN_BE_CANCELED, params,
+                new TypeReference<HashMap<String, Boolean>>() {
+                });
+        Boolean s = result.get("result");
+        return s;
     }
 }

@@ -164,7 +164,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/a3tech_review_technicien" />
+                android:src="@drawable/a3tech_review_technicien"
+                android:visibility="gone"/>
         </RelativeLayout>
     </RelativeLayout>
 </RelativeLayout>

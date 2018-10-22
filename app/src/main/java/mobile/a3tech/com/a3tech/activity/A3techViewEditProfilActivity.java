@@ -62,6 +62,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     private Boolean isFromHomeAccount = false;
     private Boolean isFromAddMission = false;
     private Boolean isFromBrowseTech = false;
+    private Boolean isFromDisplayMission = false;
     private LinearLayout validationContainer;
     private Button btnValidationSelection;
     A3techUser userToDisplay;
@@ -93,14 +94,22 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
             isFromHomeAccount = true;
             isFromBrowseTech = false;
             isFromAddMission = false;
+            isFromDisplayMission = false;
         } else if (srcAction != null && srcAction.equalsIgnoreCase(SimpleAdapterTechnicien.SRC_FROM_HOME_ADD_MISSION)) {
             isFromAddMission = true;
             isFromHomeAccount = false;
             isFromBrowseTech = false;
+            isFromDisplayMission = false;
         } else if (srcAction != null && srcAction.equalsIgnoreCase(SimpleAdapterTechnicien.SRC_FROM_HOME_BROWSE_TECH)) {
             isFromBrowseTech = true;
             isFromHomeAccount = false;
             isFromAddMission = false;
+            isFromDisplayMission = false;
+        } else if (srcAction != null && srcAction.equalsIgnoreCase(A3techDisplayMissionActivity.SRC_FROM_DISPLAY_MISSION)) {
+            isFromBrowseTech = false;
+            isFromHomeAccount = false;
+            isFromAddMission = false;
+            isFromDisplayMission = true;
         }
 
 
@@ -167,7 +176,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         });
         validationContainer = findViewById(R.id.validation_selection_container);
         btnValidationSelection = findViewById(R.id.validate_selection);
-        if (isFromHomeAccount) {
+        if (isFromHomeAccount || isFromDisplayMission) {
             validationContainer.setVisibility(View.GONE);
         } else {
             validationContainer.setVisibility(View.VISIBLE);
@@ -249,14 +258,14 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     private void handleAlphaOnCircleImage(float percentage) {
         if (percentage >= PERCENTAGE_TO_HIDE_CIRCLE_IMAGE) {
             if (mIsTheCircleVisible) {
-              startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
-                        mIsTheCircleVisible = false;
+                startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
+                mIsTheCircleVisible = false;
             }
 
         } else {
 
             if (!mIsTheCircleVisible) {
-                 startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
+                startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
                 mIsTheCircleVisible = true;
             }
         }
@@ -267,7 +276,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
-       int topDpx =  Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, top, getResources().getDisplayMetrics()));
+        int topDpx = Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, top, getResources().getDisplayMetrics()));
         layoutParams.setMargins(0, topDpx, 0, 50);
         frameViewLayout.setLayoutParams(layoutParams);
     }

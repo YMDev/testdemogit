@@ -102,20 +102,22 @@
                 android:layout_marginTop="15dp"
                 android:background="@color/semi_transparent" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/container_temps_montant_mission"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@+id/devider_1"
+                android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
-                android:alpha="0.70">
+                android:alpha="0.70"
+                android:orientation="horizontal">
 
                 <RelativeLayout
                     android:id="@+id/container_montant_mission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="20dp">
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
 
                     <TextView
                         android:id="@+id/dis_label_mantant_mission"
@@ -126,58 +128,96 @@
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
-                    <TextView
-                        android:id="@+id/dis_cout_mission"
+                    <LinearLayout
+                        android:id="@+id/cotainer_montant_mission_waiting_progress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dis_label_mantant_mission"
                         android:layout_centerInParent="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="2500 MAD"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/dis_cout_mission"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-meduim"
+                            android:text="N/A MAD"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_montant_mission"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:indeterminate="true"
+                            android:indeterminateTint="@color/colorPrimary"
+                            android:progressTint="@color/colorPrimary"
+                            android:secondaryProgressTint="@color/colorPrimary"
+                            android:visibility="gone" />
+                    </LinearLayout>
 
                 </RelativeLayout>
 
                 <View
                     android:layout_width="1dp"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:background="@color/semi_transparent" />
+                    android:layout_height="match_parent"
+                    android:background="@color/semi_transparent"
+                    android:gravity="center" />
 
                 <RelativeLayout
                     android:id="@+id/container_temps_mission"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginRight="20dp">
 
                     <TextView
                         android:id="@+id/dis_label_temps_mission"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
                         android:fontFamily="sans-serif-meduim"
                         android:text="@string/valeur_temps_mission"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
-                    <TextView
-                        android:id="@+id/dis_temps_mission"
+                    <LinearLayout
+                        android:id="@+id/cotainer_temps_mission_waiting_progress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/dis_label_temps_mission"
                         android:layout_centerInParent="true"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="2 jours"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="20dp"
-                        android:textStyle="bold" />
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/dis_temps_mission"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-meduim"
+                            android:gravity="center"
+                            android:text="N/A"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <ProgressBar
+                            android:id="@+id/progress_time_mission"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:backgroundTint="@color/colorPrimary"
+                            android:indeterminate="true"
+                            android:indeterminateTint="@color/colorPrimary"
+                            android:progressTint="@color/colorPrimary"
+                            android:secondaryProgressTint="@color/colorPrimary"
+                            android:visibility="gone" />
+                    </LinearLayout>
 
                 </RelativeLayout>
-            </RelativeLayout>
+            </LinearLayout>
 
             <View
                 android:id="@+id/devider_2"
@@ -206,7 +246,6 @@
                     android:textSize="14dp" />
 
                 <include
-                    android:id="@+id/dis_technicien"
                     layout="@layout/a3tech_technicien_rubrique_display_mission"
                     android:visibility="visible" />
             </LinearLayout>
@@ -413,8 +452,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/devider_6"
-                android:layout_marginBottom="70dp"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="70dp">
 
                 <TextView
                     android:id="@+id/dis_label_adresse_mission"
@@ -445,8 +484,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-         >
+        android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/dis_action_mission"
