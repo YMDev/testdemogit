@@ -31,11 +31,9 @@ public class ConnexionService {
 		HttpConnectionParams.setConnectionTimeout(this.httpParameters, timeoutConnection);
 		// Set the default socket timeout (SO_TIMEOUT) 
 		// in milliseconds which is the timeout for waiting for data.
-		int timeoutSocket = 30000;
+		int timeoutSocket = 10000;
 		HttpConnectionParams.setSoTimeout(this.httpParameters, timeoutSocket);
 //		HttpProtocolParams.setContentCharset(this.httpParameters, "UTF-8");
-		
-
 		SchemeRegistry registry = new SchemeRegistry();
 		registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
 		registry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));

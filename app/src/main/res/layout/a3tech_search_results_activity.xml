@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container_parent_activity">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_display_search_results"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/toolbar_display_search_results"
+                layout="@layout/a3tech_toolbar_display_search_results"
+                android:visibility="visible" />
+
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/appbar_display_search_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycle_evenets_results_container"
+        android:visibility="gone">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_results_revents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_below="@+id/appbar_display_search_results"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recycle_techniciens_results_container"
+        android:visibility="gone">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_results_techniciens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+
+
+</RelativeLayout>

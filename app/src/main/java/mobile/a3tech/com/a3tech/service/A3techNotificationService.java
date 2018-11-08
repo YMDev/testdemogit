@@ -1,5 +1,7 @@
 package mobile.a3tech.com.a3tech.service;
 
+import com.google.gson.Gson;
+
 import org.codehaus.jackson.type.TypeReference;
 
 import java.util.HashMap;
@@ -15,14 +17,14 @@ public class A3techNotificationService extends AbstractService implements Consta
 
 
 
-	public String createNotification(A3techNotification notification) throws EducationException{
+	public A3techNotification createNotification(A3techNotification notification) throws EducationException{
 		Map<String, String> params = new HashMap<String, String>();
 		params.put("notification", notification.to_Json());
-		HashMap<String, String> result = getResult(CHECK_EDU_DELETE_MISSION_URL, params,
+		HashMap<String, String> result = getResult(A3TECH_CREATE_NOTIFICATION, params,
 				new TypeReference<HashMap<String, String>>() {
 				});
 		String s = result.get("result");
-		return s;
+		return new Gson().fromJson(s, A3techNotification.class);
 	}
 
 	public List<A3techNotification> filtreNotification(String lang, Long connectedUser, String keyWord, String start, String limit, String key, final Long missionID,final Long userTechID, String password, int order, int type) throws EducationException {

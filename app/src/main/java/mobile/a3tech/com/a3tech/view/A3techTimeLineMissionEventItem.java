@@ -1,5 +1,6 @@
 package mobile.a3tech.com.a3tech.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -99,7 +100,7 @@ public class A3techTimeLineMissionEventItem extends RelativeLayout {
             adresseMission.setText(currentMission.getAdresse());
             statutMission.setText(currentMission.getStatut().getDiscreptionEnum());
             evenementiMission = currentMission.getEvenement();
-            SimpleAdapterTimeLine adapter = new SimpleAdapterTimeLine(pContext,evenementiMission,(A3techHomeActivity)pContext);
+            SimpleAdapterTimeLine adapter = new SimpleAdapterTimeLine(pContext,evenementiMission,(Activity)pContext);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(pContext.getApplicationContext());
             recyclerViewEvents.setLayoutManager(mLayoutManager);
             recyclerViewEvents.setItemAnimator(new DefaultItemAnimator());

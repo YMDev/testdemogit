@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container_item_tech"
     android:layout_width="match_parent"
-    android:layout_height="130dp"
-    android:layout_marginLeft="5dp"
-    android:layout_marginRight="5dp"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:orientation="vertical"
     tools:background="@color/white">
@@ -14,40 +12,109 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        app:cardCornerRadius="6dp"
-        app:cardElevation="2dp"
-
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:foreground="?android:attr/selectableItemBackground"
-        >
+        app:cardCornerRadius="6dp"
+
+        app:cardElevation="2dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/avatare_technicien_card"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+            <LinearLayout
+                android:id="@+id/avatare_technicien_card_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_margin="15dp"
-                app:cardCornerRadius="7dp"
-                app:cardElevation="2dp">
+                android:layout_margin="10dp"
+                android:orientation="vertical">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                <android.support.v7.widget.CardView
+                    android:id="@+id/avatare_technicien_card"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_gravity="center"
+                    app:cardCornerRadius="7dp"
+                    app:cardElevation="2dp">
 
-                    <ImageView
-                        android:id="@+id/avatare_technicien"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY" />
-                </RelativeLayout>
-            </android.support.v7.widget.CardView>
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/avatare_technicien"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitXY" />
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <LinearLayout
+                    android:id="@+id/cotainer_indicators"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/avatare_technicien_card"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="3dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <RelativeLayout
+                        android:id="@+id/disponibilite_container"
+                        android:layout_width="18dp"
+                        android:layout_height="15dp"
+                        android:background="@drawable/a3tech_back_circular_colored_layout">
+
+                        <ImageView
+                            android:id="@+id/disponibilite"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/a3tech_dispo_white_indic" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/check_phone_container"
+                        android:layout_width="18dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/a3tech_back_circular_colored_layout">
+
+                        <ImageView
+                            android:id="@+id/check_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/a3tech_phone_white_indic" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/check_mail_container"
+                        android:layout_width="18dp"
+                        android:layout_height="15dp"
+                        android:layout_marginLeft="5dp"
+                        android:background="@drawable/a3tech_back_circular_colored_layout">
+
+                        <ImageView
+                            android:id="@+id/check_mail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/a3tech_check_mail_white_indic" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/container_informations_user"
@@ -55,16 +122,18 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/avatare_technicien_card"
+                android:layout_toRightOf="@id/avatare_technicien_card_container"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/name_tech"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
                     android:fontFamily="sans-serif-meduim"
                     android:textColor="@color/black"
-                    android:textSize="15dp" />
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -132,7 +201,7 @@
                         android:fontFamily="sans-serif-meduim"
                         android:text="@string/nbr_intervention"
                         android:textColor="@color/black"
-                        android:textSize="15dp" />
+                        android:textSize="13dp" />
 
                 </RelativeLayout>
 
@@ -142,22 +211,38 @@
                     android:layout_height="wrap_content">
 
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:id="@+id/distance_container"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <ProgressBar
+                            android:id="@+id/distance"
+                            style="?android:attr/progressBarStyleHorizontal"
+                            android:layout_width="0dp"
+                            android:layout_height="5dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginTop="4dp"
+                            android:layout_weight=".70"
+                            android:background="@drawable/a3tech_back_distance_bar"
+                            android:max="100"
+                            android:progress="0"
+                            android:progressDrawable="@drawable/progress_bar_color_back" />
 
                         <TextView
-                            android:id="@+id/distance"
-                            android:layout_width="wrap_content"
+                            android:id="@+id/distance_value"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:layout_centerHorizontal="true"
-                            android:layout_centerVertical="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="14dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_weight=".30"
                             android:fontFamily="sans-serif-meduim"
                             android:textColor="@color/black"
-                            android:textSize="13dp" />
-                    </RelativeLayout>
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
 
 
                 </RelativeLayout>
@@ -165,64 +250,6 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/cotainer_indicators"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/avatare_technicien_card"
-                android:layout_marginLeft="20dp"
-                android:orientation="horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/disponibilite_container"
-                    android:layout_width="18dp"
-                    android:layout_height="15dp"
-                    android:background="@drawable/a3tech_back_circular_colored_layout">
-
-                    <ImageView
-                        android:id="@+id/disponibilite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/a3tech_dispo_white_indic" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/check_phone_container"
-                    android:layout_width="18dp"
-                    android:layout_height="15dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/a3tech_back_circular_colored_layout">
-
-                    <ImageView
-                        android:id="@+id/check_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/a3tech_phone_white_indic" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/check_mail_container"
-                    android:layout_width="18dp"
-                    android:layout_height="15dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/a3tech_back_circular_colored_layout">
-
-                    <ImageView
-                        android:id="@+id/check_mail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/a3tech_check_mail_white_indic" />
-                </RelativeLayout>
-            </LinearLayout>
 
             <ImageView
                 android:layout_width="wrap_content"

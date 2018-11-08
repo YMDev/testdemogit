@@ -2,6 +2,7 @@ package mobile.a3tech.com.a3tech.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
+import mobile.a3tech.com.a3tech.activity.A3techSearchMissionsResultsActivity;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
 import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
@@ -45,7 +47,7 @@ public class A3techNotificationHomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    public static final String THIS_FRAGMENT = "A3techNotificationHomeFragment";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -123,7 +125,7 @@ public class A3techNotificationHomeFragment extends Fragment {
 
                     @Override
                     public void dataLoadingError(int errorCode) {
-
+                        dd.dismiss();
                     }
                 });
 
@@ -154,6 +156,9 @@ public class A3techNotificationHomeFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+
+
 
     /**
      * This interface must be implemented by activities that contain this

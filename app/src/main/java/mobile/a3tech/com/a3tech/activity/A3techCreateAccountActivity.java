@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
@@ -29,6 +30,7 @@ import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.A3techUserType;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 public class A3techCreateAccountActivity extends Activity implements A3techSelecteAccountFragment.OnFragmentInteractionListener, A3techStep1CreatAccountFragment.OnFragmentInteractionListener, A3techAddUserNameFragment.OnFragmentInteractionListener, A3techAddEmailFragment.OnFragmentInteractionListener, A3techAddPasswordFragment.OnFragmentInteractionListener, DataLoadCallback {
@@ -220,6 +222,7 @@ public class A3techCreateAccountActivity extends Activity implements A3techSelec
 
     @Override
     public void dataLoadingError(int errorCode) {
-
+        A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this,getString(R.string.probleme_technique),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+        this.dialog.dismiss();
     }
 }

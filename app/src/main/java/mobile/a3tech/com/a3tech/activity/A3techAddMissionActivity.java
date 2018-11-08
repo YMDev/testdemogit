@@ -250,7 +250,7 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
             case (SimpleAdapterTechnicien.REQUEST_DISPLAY_TECH_FROM_MISSION): {
                 if (resultCode == Activity.RESULT_OK) {
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
-                    Mission mission = new Gson().fromJson(jsonMission, Mission.class);
+                    A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH,jsonMission);
                     setResult(Activity.RESULT_OK, resultIntent);

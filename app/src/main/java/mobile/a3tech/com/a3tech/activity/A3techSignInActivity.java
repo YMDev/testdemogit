@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.exception.EducationException;
 import mobile.a3tech.com.a3tech.fragment.A3techChooseSignInOption;
 import mobile.a3tech.com.a3tech.fragment.A3techSignInEmailFragment;
 import mobile.a3tech.com.a3tech.manager.UserManager;
@@ -24,6 +25,7 @@ import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 public class A3techSignInActivity extends AppCompatActivity implements DataLoadCallback, A3techChooseSignInOption.OnFragmentInteractionListener, A3techSignInEmailFragment.OnFragmentInteractionListener {
@@ -84,13 +86,8 @@ String password;
                         A3techChooseSignInOption.REQUEST_KEY_CONNECT_BY_FACEBOOK);
                 break;
             case A3techSignInEmailFragment.ACTION_CONNEXION:
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        dialog = CustomProgressDialog.createProgressDialog(A3techSignInActivity.this,
-                                getString(R.string.txtMenu_dialogChargement));
-                    }
-                });
+                dialog = CustomProgressDialog.createProgressDialog(A3techSignInActivity.this,
+                        getString(R.string.txtMenu_dialogChargement));
                  HashMap hashdata = (HashMap)data;
                  String username = String.valueOf(hashdata.get("EMAIL"));
                  password = String.valueOf(hashdata.get("PASS"));
@@ -126,13 +123,15 @@ String password;
                 editor.putString("conMode", "application");
                 editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(user));
                 editor.commit();
-                dialog.dismiss();
+
                 mainIntent.putExtra("nomPrenom",user.getPrenom()
                         + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + user.getNom());
                 mainIntent.putExtra("nbr", user.getNbrMission());
 
                 startActivity(mainIntent);
+                dialog.dismiss();
                 finish();
+
                 break;
             case Constant.KEY_USER_MANAGER_LOGIN_FB /* 35 */:
                 editor.putString("MyCredentials", user.getEmail());
@@ -145,7 +144,6 @@ String password;
                         : "facebook");
                 editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(user));
                 editor.commit();
-                this.dialog.dismiss();
 
                 mainIntent.putExtra("nomPrenom",
                         user.getPrenom()
@@ -153,6 +151,7 @@ String password;
                                 + user.getNom());
                 mainIntent.putExtra("nbr", user.getNbrMission());
                 startActivity(mainIntent);
+                dialog.dismiss();
                 finish();
                 break;
             case Constant.KEY_USER_MANAGER_INIT_PASSWORD /* 6 */:
@@ -167,6 +166,7 @@ String password;
 
     @Override
     public void dataLoadingError(int errorCode) {
-
+        A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this,getString(R.string.probleme_technique),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+        this.dialog.dismiss();
     }
 }

@@ -23,6 +23,19 @@ import mobile.a3tech.com.a3tech.utils.Constant;
 public class MissionService extends AbstractService implements Constant {
 
     // creer une nouvelle mission
+
+    public String createMission(A3techMission mission) throws  EducationException{
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mission", new Gson().toJson(mission));
+
+        HashMap<String, String> result = getResult(
+                A3TECH_CREATE_MISSION, params,
+                new TypeReference<HashMap<String, String>>() {
+                });
+        String s = result.get("result");
+        return s;
+
+    }
     public String createMission(String connectedUser, String typeTransaction, String categorie, String sousCategorie, String idTypeTroc, String titre,
                                 String article, String idEtatArticle, String contre, String objetRechercheTitre, String objetRecherche, String lieu, String latitude, String longitude, String idVille,
                                 String[] bitmaps, String echeance,

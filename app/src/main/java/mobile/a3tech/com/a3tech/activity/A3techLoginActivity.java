@@ -449,5 +449,6 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        finish();
     }
 }

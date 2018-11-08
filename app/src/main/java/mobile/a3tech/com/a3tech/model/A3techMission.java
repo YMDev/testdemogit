@@ -22,6 +22,8 @@ public class A3techMission {
     private Long dateCloture;
     private Double montantFacture;
     private List<A3techEvenementiMission> evenement;
+    private String motifRejet;
+    private String motifReport;
 
 
     public A3techMission() {
@@ -155,6 +157,22 @@ public class A3techMission {
 
     public void setEvenement(List<A3techEvenementiMission> evenement) {
         this.evenement = evenement;
+    }
+
+    public String getMotifRejet() {
+        return motifRejet;
+    }
+
+    public void setMotifRejet(String motifRejet) {
+        this.motifRejet = motifRejet;
+    }
+
+    public String getMotifReport() {
+        return motifReport;
+    }
+
+    public void setMotifReport(String motifReport) {
+        this.motifReport = motifReport;
     }
 
     @Override

@@ -3,6 +3,7 @@ package mobile.a3tech.com.a3tech.fragment;
 import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -77,6 +78,12 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     Double userLongetude;
     MarkerOptions currentPositionMarker;
     Marker currentLocationMarker;
+
+    private static final int PAGE_SIZE = 200000;
+    int start = 0;
+    int end = PAGE_SIZE - 1;
+
+
     private OnFragmentInteractionListener mListener;
 
 
@@ -123,20 +130,15 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         final View viewFr = inflater.inflate(R.layout.fragment_a3tech_display_tech_in_map, container, false);
         final RelativeLayout mMapLayout = viewFr.findViewById(R.id.layout_container_map);
         gps = new GPSTracker(getActivity());
-        if (!PermissionsStuffs.canAccessLocation(getActivity())) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
-            }
-        }
 
-        getListOFTechToDisplay(0, 10, CustomProgressDialog.createProgressDialog(getActivity(), ""));
+        getListOFTechToDisplay(start, end, CustomProgressDialog.createProgressDialog(getActivity(), ""));
 
         FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
         mMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_tech);
-        if (mMapFragment == null) {
+       // if (mMapFragment == null) {
             mMapFragment = SupportMapFragment.newInstance();
             fm.beginTransaction().replace(R.id.map_tech, mMapFragment).commit();
-        }
+        //}
 
         return viewFr;
     }
@@ -146,24 +148,22 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         //TODO get location of connected user not mission
         //TODO add filter
 
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-        String latitudeUSer = prefs.getString(A3techHomeActivity.TAG_CONNECTED_USER_LATITUDE, "");
-        String longetudeUSer = prefs.getString(A3techHomeActivity.TAG_CONNECTED_USER_LONGETUDE, "");
-        UserManager.getInstance().getTechnicienNearLocation(latitudeUSer, longetudeUSer, mission.getAdresse(), start, end, new DataLoadCallback() {
-            @Override
-            public void dataLoaded(Object data, int method, int typeOperation) {
-                listeOfTechToDisplay = (List<A3techUser>) data;
-                refreshMap();
-                if (dd != null) dd.dismiss();
-                return;
-            }
+            gpsGetLocation();
+            UserManager.getInstance().getTechnicienNearLocation(userLatitude != null ? userLatitude+"" :"", userLongetude != null ? userLongetude+"" :"", mission.getAdresse(), start, end, new DataLoadCallback() {
+                @Override
+                public void dataLoaded(Object data, int method, int typeOperation) {
+                    listeOfTechToDisplay = (List<A3techUser>) data;
+                    refreshMap();
+                    if (dd != null) dd.dismiss();
+                    return;
+                }
 
-            @Override
-            public void dataLoadingError(int errorCode) {
+                @Override
+                public void dataLoadingError(int errorCode) {
 
-            }
-        });
+                }
+            });
+
     }
 
 
@@ -173,6 +173,15 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
                     .remove(mMapFragment).commit();
     }
 
+    public void reladMap(){
+        FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
+        mMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_tech);
+        if (mMapFragment == null) {
+            mMapFragment = SupportMapFragment.newInstance();
+            fm.beginTransaction().replace(R.id.map_tech, mMapFragment).commit();
+        }
+
+    }
     public void refreshMap() {
         mMapFragment.getMapAsync(this);
     }
@@ -331,21 +340,6 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-
-        switch (requestCode) {
-            case PermissionsStuffs.INITIAL_REQUEST:
-                if (PermissionsStuffs.canAccessLocation(getActivity())) {
-                    ///doCameraThing();
-                } else {
-                    SimpleDialog.build().title("Autorisation location est nécessaire").msg("pour afficher la liste des techniciens sur Map, il faut autoriser l'app à accéder à votre position").show(getActivity());
-                }
-                break;
-
-
-        }
-    }
 
 
     /**

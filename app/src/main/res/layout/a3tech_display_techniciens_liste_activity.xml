@@ -24,6 +24,16 @@
                 layout="@layout/a3tech_toolbar_select_category_mission_fragment"
                 android:visibility="visible" />
 
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/filter_techniciens"
+                android:src="@drawable/a3tech_filter_liste"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"/>
+
         </FrameLayout>
     </android.support.design.widget.AppBarLayout>
     <ProgressBar

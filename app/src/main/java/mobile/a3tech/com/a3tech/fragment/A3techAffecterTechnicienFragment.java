@@ -26,7 +26,9 @@ import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
+import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.view.A3techDistanceBarView;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
@@ -45,8 +47,6 @@ public class A3techAffecterTechnicienFragment extends Fragment {
     int end = PAGE_SIZE - 1;
     private boolean loading = true;
     int pastVisiblesItems, visibleItemCount, totalItemCount;
-    private String latitudeUSer;
-    private  String longetudeUSer;
 
     private A3techMission mission;
     private List<A3techUser> listeOfTechToDisplay;
@@ -98,13 +98,21 @@ public class A3techAffecterTechnicienFragment extends Fragment {
 
     }
 
-
-    private void getUserConnectedLocation(){
-        //get user location
-        SharedPreferences prefs = PreferenceManager
-                .getDefaultSharedPreferences(getActivity());
-          latitudeUSer = prefs.getString(A3techHomeActivity.TAG_CONNECTED_USER_LATITUDE, "");
-          longetudeUSer = prefs.getString(A3techHomeActivity.TAG_CONNECTED_USER_LONGETUDE, "");
+    GPSTracker gps;
+    Double userLatitude;
+    Double userLongetude;
+    private void gpsGetLocation() {
+        gps = new GPSTracker(getActivity());
+        if (gps.canGetLocation()) {
+            userLatitude = gps.getLatitude();
+            userLongetude = gps.getLongitude();
+            /*float zoomLevel = 12.0f; //This goes up to 21
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(userLatitude, userLongetude), zoomLevel));*/
+        } else {
+            gps.showSettingsAlert();
+            userLatitude = 0d;
+            userLongetude = 0d;
+        }
     }
 
     @Override
@@ -112,35 +120,34 @@ public class A3techAffecterTechnicienFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         handler = new Handler();
-        getUserConnectedLocation();
+        gpsGetLocation();
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_affecter_technicien, container, false);
         recyclerViewTechnicien = viewFr.findViewById(R.id.recycle_techniciens);
         final LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
         recyclerViewTechnicien.setLayoutManager(mLayoutManager);
         adapter = new SimpleAdapterTechnicien(getActivity(), listeOfTechToDisplay, getActivity(), mission, recyclerViewTechnicien);
+        adapter.setLatitude(userLatitude);
+        adapter.setLongitude(userLongetude);
         recyclerViewTechnicien.setItemAnimator(new DefaultItemAnimator());
         recyclerViewTechnicien.setAdapter(adapter);
 
         // load the first page of users (PAGE_SIZE to controle number of users to load)
-        getListOFTechToDisplay(start, end, CustomProgressDialog.createProgressDialog(getActivity(), ""));
+        getListOFTechToDisplayFirstInit(start, end, CustomProgressDialog.createProgressDialog(getActivity(), ""));
         adapter.setOnLoadMoreListener(new SimpleAdapterTechnicien.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 //add null , so the adapter will check view_type and show progress bar at bottom
-                adapter.getListObject().add(null);
-                adapter.notifyItemInserted(adapter.getListObject().size() - 1);
-                // notify adapter to display progress bar
-         /*       recyclerViewTechnicien.post(new Runnable() {
+                recyclerViewTechnicien.post(new Runnable() {
                     public void run() {
+                        adapter.getListObject().add(null);
                         adapter.notifyItemInserted(adapter.getListObject().size() - 1);
+                        // load the next page
+                        getListOFTechToDisplay( start, end, null);
+                        start = start + PAGE_SIZE;
+                        end = start + PAGE_SIZE - 1;
+
                     }
                 });
-*/
-                // load the next page
-                start = start + PAGE_SIZE;
-                end = start + PAGE_SIZE - 1;
-                getListOFTechToDisplay(start, end, null);
-
 
             }
         });
@@ -150,7 +157,7 @@ public class A3techAffecterTechnicienFragment extends Fragment {
     private void getListOFTechToDisplay(final int start, final int end, final ProgressDialog dd) {
 
 
-        UserManager.getInstance().getTechnicienNearLocation(latitudeUSer, longetudeUSer, mission.getAdresse(), start, end, new DataLoadCallback() {
+        UserManager.getInstance().getTechnicienNearLocation(userLatitude!= null ? userLatitude+"" : "", userLongetude != null ? userLongetude+"": "", mission.getAdresse(), start, end, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 List<A3techUser> reslisteOfTechToDisplay = (List<A3techUser>) data;
@@ -208,7 +215,38 @@ public class A3techAffecterTechnicienFragment extends Fragment {
         });
     }
 
+    private void getListOFTechToDisplayFirstInit(final int start, final int end, final ProgressDialog dd) {
 
+
+        UserManager.getInstance().getTechnicienNearLocation(userLatitude != null ? userLatitude+"":"", userLongetude != null ? userLongetude+"":"", mission.getAdresse(), start, end, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                List<A3techUser> reslisteOfTechToDisplay = (List<A3techUser>) data;
+                // adding each element to recycle
+                if (reslisteOfTechToDisplay != null && reslisteOfTechToDisplay.size() != 0) {
+                    adapter.getListObject().addAll(reslisteOfTechToDisplay);
+                    adapter.notifyDataSetChanged();
+                }
+                adapter.setLoaded();
+                if (dd != null) dd.dismiss();
+                return;
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+
+                if (dd == null) {
+                    adapter.getListObject().remove(adapter.getListObject().size() - 1);
+                    adapter.notifyItemRemoved(adapter.getListObject().size());
+               /*     recyclerViewTechnicien.post(new Runnable() {
+                        public void run() {
+                            adapter.notifyItemRemoved(adapter.getListObject().size());
+                        }
+                    });*/
+                }
+            }
+        });
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -246,5 +284,14 @@ public class A3techAffecterTechnicienFragment extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+
+    public SimpleAdapterTechnicien getAdapter() {
+        return adapter;
+    }
+
+    public void setAdapter(SimpleAdapterTechnicien adapter) {
+        this.adapter = adapter;
     }
 }

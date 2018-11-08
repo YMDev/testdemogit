@@ -10,4 +10,6 @@ public interface IA3techMissionService {
     public List<A3techMission> filtreMission(String lang, String connectedUser, String keyWord, String distance, String services, String start, String limit, String key, String typeTransaction, String premium, String password,
                                              int order, int type);
     String deleteMission(String identifiant,  String idUser,String password);
+
+    public String createMission(A3techMission mission);
 }

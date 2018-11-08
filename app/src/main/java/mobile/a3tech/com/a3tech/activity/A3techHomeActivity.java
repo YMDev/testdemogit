@@ -42,19 +42,24 @@ import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeBrowseTechFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techNotificationHomeFragment;
+import mobile.a3tech.com.a3tech.manager.MissionManager;
+import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techNotification;
+import mobile.a3tech.com.a3tech.model.A3techNotificationType;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterTest;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
-public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener, A3techHomeBrowseTechFragment.OnFragmentInteractionListener, A3techNotificationHomeFragment.OnFragmentInteractionListener {
+public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener, A3techHomeBrowseTechFragment.OnFragmentInteractionListener, A3techNotificationHomeFragment.OnFragmentInteractionListener, SimpleAdapterTest.OnDeconnexion {
     private final int[] colors = {R.color.white, R.color.white, R.color.white, R.color.white};
     private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
@@ -73,6 +78,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     public static final String ACTION_FROM_A3techHomeActivity = "A3techHomeActivity";
     public static final String TAG_CATEGORY_SELECTED_FROM_HOME_ACTIVITY = "TAG_RESULT_FROM_SELECT_TECH";
     public static final int REQUEST_START_DISPLAY_TECH_ACTIVITY = 255;
+    public static final int REQ_SEARCH = 897;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -154,6 +160,59 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         });
     }
 
+
+    A3techMission selectedMission;
+    Boolean isFromSearch = Boolean.FALSE;
+    private void getSelectedMission() {
+        String jsonMyObject = null;
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            jsonMyObject = b.getString(A3techDisplayTechniciensListeActivity.TAG_MISSION_TO_SAVE_FROM_BROWS_TECH);
+            isFromSearch = b.getBoolean(A3techSearchMissionsResultsActivity.TAG_FROM_SEARCH);
+        }
+        if (jsonMyObject != null) {
+            selectedMission = new Gson().fromJson(jsonMyObject, A3techMission.class);
+            traitementDisplayMissionCreated();
+        }
+    }
+
+
+    private void traitementDisplayMissionCreated(){
+        //TODO display progress bar, save mission,whene finish saving, dismiss progress bar
+        bottomNavigation.setCurrentItem(1);
+        ((A3techMissionsHomeFragment) pagerAdapter.getItem(1)).addMissionToLise(selectedMission);
+        A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+        //TODO create mission
+        final ProgressDialog dialogWaiting = CustomProgressDialog.createProgressDialog(getActivity(),"");
+        MissionManager.getInstance().createMission(selectedMission, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                //TODO commentaire a reconstituer.
+                String commentaire = "Demande créée pour une Mission en  "+selectedMission.getCategoryMission().getLibelle()+"";
+                A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
+                        null,selectedMission,A3techNotificationType.CREATION_MISSION,commentaire,getString(R.string.libelle_creatio_mission));
+                NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+                    @Override
+                    public void dataLoaded(Object data, int method, int typeOperation) {
+                        A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                        dialogWaiting.dismiss();
+                    }
+
+                    @Override
+                    public void dataLoadingError(int errorCode) {
+                        dialogWaiting.dismiss();
+                        A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                    }
+                });
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogWaiting.dismiss();
+                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+            }
+        });
+    }
     private void updateAppbarLayout(int position) {
         switch (position) {
             case 0:
@@ -202,7 +261,26 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         viewPager.setAdapter(pagerAdapter);
     }
 
+   /* @Override
+    public void startActivity(Intent intent) {
+        // check if search intent
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            if (bottomNavigation.getCurrentItem() == 0) {
+                intent.putExtra(A3techSearchMissionsResultsActivity.TYPE_SRC_PARAM, A3techNotificationHomeFragment.THIS_FRAGMENT);
+            } else if (bottomNavigation.getCurrentItem() == 2)  {
+                intent.putExtra(A3techSearchMissionsResultsActivity.TYPE_SRC_PARAM, A3techHomeBrowseTechFragment.THIS_FRAGMENT_2);
+            }
 
+        }
+        super.startActivity(intent);
+    }*/
+    @Override
+    protected void onNewIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            // handles a search query
+           handleIntent(intent);
+        }
+    }
     /**
      * Avatar + action clique toolbar to display user profil.
      */
@@ -395,7 +473,24 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         // look at https://stackoverflow.com/questions/27378981/how-to-use-searchview-in-toolbar-android
         return super.onCreateOptionsMenu(menu);
     }
-
+    private void handleIntent(Intent intent) {
+        // Get the intent, verify the action and get the query
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            // manually launch the real search activity
+            final Intent searchIntent = new Intent(getApplicationContext(),
+                    A3techSearchMissionsResultsActivity.class);
+            // add query to the Intent Extras
+            searchIntent.putExtra(SearchManager.QUERY, query);
+            searchIntent.setAction(Intent.ACTION_SEARCH);
+            if (bottomNavigation.getCurrentItem() == 0) {
+                searchIntent.putExtra(A3techSearchMissionsResultsActivity.TYPE_SRC_PARAM, A3techNotificationHomeFragment.THIS_FRAGMENT);
+            } else if (bottomNavigation.getCurrentItem() == 2) {
+                searchIntent.putExtra(A3techSearchMissionsResultsActivity.TYPE_SRC_PARAM, A3techHomeBrowseTechFragment.THIS_FRAGMENT_2);
+            }
+            startActivityForResult(searchIntent, REQ_SEARCH);
+        }
+    }
     @Override
     public void onFragmentInteraction(Uri uri) {
 
@@ -424,20 +519,77 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case (REQUEST_START_DISPLAY_TECH_ACTIVITY): {
+            case (REQ_SEARCH):
+            case (REQUEST_START_DISPLAY_TECH_ACTIVITY ): {
+                if (resultCode == A3techDisplayTechniciensListeActivity.RESULT_RELOAD) {
+                    //Reload
+                    String cateSelected =  data.getStringExtra(A3techDisplayTechniciensListeActivity.TAG_CATEGORY_FOR_RELOADING);
+                    if(cateSelected != null){
+                        Categorie category = new Gson().fromJson(cateSelected, Categorie.class);
+                        if(category != null){
+                            categorieSelected = category;
+                            Intent mainIntent = new Intent(this, A3techDisplayTechniciensListeActivity.class);
+                            mainIntent.putExtra(A3techHomeActivity.TAG_CATEGORY_SELECTED_FROM_HOME_ACTIVITY, new Gson().toJson(category));
+                            startActivityForResult(mainIntent, REQUEST_START_DISPLAY_TECH_ACTIVITY);
+                        }
+                    }
+
+                }
                 if (resultCode == Activity.RESULT_OK) {
                     String jsonMission = data.getStringExtra(A3techDisplayTechniciensListeActivity.TAG_MISSION_TO_SAVE_FROM_BROWS_TECH);
-                    A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
+                   final A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
                     //TODO display progress bar, save mission,whene finish saving, dismiss progress bar
                     bottomNavigation.setCurrentItem(1);
                     ((A3techMissionsHomeFragment) pagerAdapter.getItem(1)).addMissionToLise(mission);
                     A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                    //TODO create mission
+                    final ProgressDialog dialogWaiting = CustomProgressDialog.createProgressDialog(getActivity(),"");
+                    MissionManager.getInstance().createMission(mission, new DataLoadCallback() {
+                        @Override
+                        public void dataLoaded(Object data, int method, int typeOperation) {
+                            //TODO commentaire a reconstituer.
+                            String commentaire = "";
+                            if(mission.getCategoryMission() != null) {
+                                commentaire  = "Demande créée pour une Mission en  "+mission.getCategoryMission().getLibelle()+"";
+                            }else if(mission.getTechnicien().getCategorie() != null){
+                                commentaire  = "Demande créée pour une Mission en  "+mission.getTechnicien().getCategorie().getLibelle()+"";
+                            }
+                            A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
+                                    null,mission,A3techNotificationType.CREATION_MISSION,commentaire,getString(R.string.libelle_creatio_mission));
+                            NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+                                @Override
+                                public void dataLoaded(Object data, int method, int typeOperation) {
+                                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                                    dialogWaiting.dismiss();
+                                }
+
+                                @Override
+                                public void dataLoadingError(int errorCode) {
+                                    dialogWaiting.dismiss();
+                                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void dataLoadingError(int errorCode) {
+                            dialogWaiting.dismiss();
+                            A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                        }
+                    });
                     //A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, "Mission created with success", Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_WARNING);
                     //A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, "Mission created with success", Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
                 }
                 break;
             }
         }
+    }
+
+    @Override
+    public void deconnexion() {
+        Intent mainIntent = new Intent(A3techHomeActivity.this, A3techLoginActivity.class);
+         startActivity(mainIntent);
+          finish();
     }
 
     private class InitActivityTask extends AsyncTask<Void, Void, Boolean> {
@@ -458,7 +610,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         @Override
         protected Boolean doInBackground(Void... arg0) {
             initiInterfaceActivity();
-
+            /*getSelectedMission();*/
             return true;
         }
 
@@ -481,6 +633,10 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    private Activity getActivity(){
+        return  A3techHomeActivity.this;
     }
 
 }

@@ -31,6 +31,7 @@ import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 public class A3techDisplayTechniciensListeActivity extends AppCompatActivity implements A3techDisplayTechniciensFragment.OnFragmentInteractionListener, A3techPostMissionFragment.OnFragmentInteractionListener, A3techDisplayTechniciensPArentFragment.OnFragmentInteractionListener, A3techDisplayTechInMapFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener {
 
     public static final String TAG_MISSION_TO_SAVE_FROM_BROWS_TECH = "TAG_MISSION_TO_SAVE_FROM_BROWS_TECH";
+    public static final String TAG_CATEGORY_FOR_RELOADING = "TAG_CATEGORY_FOR_RELOADING";
     private FrameLayout framePostMission;
     private ProgressBar progressPostMission;
     private ImageView backAction;
@@ -39,12 +40,19 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
     private Categorie categorieSelected;
     private A3techMission missionSelected;
 
+    private Boolean isFromSearchActivity = Boolean.FALSE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3tech_display_techniciens_liste_activity);
-        getSelectedCategory();
-        initiInterfaceActivity();
+        if(!getSelectedMissionTechFromRecherche()){
+            getSelectedCategory();
+            initiInterfaceActivity();
+        }else{
+            isFromSearchActivity = Boolean.TRUE;
+        }
+
     }
 
     private void initiInterfaceActivity() {
@@ -88,6 +96,7 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_title)).setText(categorieSelected.getLibelle());
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_sub_title)).setText(getResources().getString(R.string.find_best_tech));
                 }
+                 findViewById(R.id.filter_techniciens).setVisibility(View.VISIBLE);
                 setSupportActionBar(toolbarSelectTechnicien);
                 break;
             case 1:
@@ -95,6 +104,7 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_title)).setText(getResources().getString(R.string.save_mission));
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_sub_title)).setText(getResources().getString(R.string.complete_mission_informations));
                 }
+                 findViewById(R.id.filter_techniciens).setVisibility(View.GONE);
                 actionToolbar(false);
                 break;
             case 3:
@@ -127,7 +137,7 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
             }
         }
         t.replace(R.id.frame_add_mission, fragment);
-        if(fragment instanceof A3techPostMissionFragment) {
+        if (fragment instanceof A3techPostMissionFragment) {
             t.addToBackStack(fragment.getClass().getName());
         }
         t.commit();
@@ -156,11 +166,35 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
 
     }
 
-    public void nextStepAfterSelectTechnicien(A3techMission mission){
+
+    public static final int RESULT_RELOAD = 3213;
+    public void finishActivityToBeReloaded(){
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(TAG_CATEGORY_FOR_RELOADING, new Gson().toJson(categorieSelected));
+        setResult(RESULT_RELOAD, resultIntent);
+        finish();
+    }
+    private Boolean getSelectedMissionTechFromRecherche() {
+        String jsonMyObject = null;
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            jsonMyObject = b.getString(A3techSearchMissionsResultsActivity.ARG_MISSION_TECH_SELECTED_FROM_SEARCH);
+        }
+        if (jsonMyObject != null) {
+            missionSelected = new Gson().fromJson(jsonMyObject, A3techMission.class);
+            if (missionSelected != null && missionSelected.getTechnicien() != null) {
+                bindComponents();
+                nextStepAfterSelectTechnicien(missionSelected);
+                return Boolean.TRUE;
+            }
+        }
+        return Boolean.FALSE;
+    }
+
+    public void nextStepAfterSelectTechnicien(A3techMission mission) {
         missionSelected = mission;
         // next step add mission informations
         progressBarchangeSmouthly(100);
-        updateAppbarLayout(1);
         setFragment(A3techPostMissionFragment.newInstance(missionSelected), true, false);
     }
 
@@ -170,9 +204,9 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
         switch (requestCode) {
             case (SimpleAdapterTechnicien.REQUEST_DISPLAY_TECH_FROM_HOME): {
                 if (resultCode == Activity.RESULT_OK) {
-                    String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
-                    missionSelected = new Gson().fromJson(jsonMission, A3techMission.class);
-                    nextStepAfterSelectTechnicien(missionSelected);
+                        String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
+                        missionSelected = new Gson().fromJson(jsonMission, A3techMission.class);
+                        nextStepAfterSelectTechnicien(missionSelected);
                 }
                 break;
             }
@@ -188,8 +222,10 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
     public void actionToolbar(boolean hide) {
         if (hide) {
             getSupportActionBar().hide();
+            findViewById(R.id.filter_techniciens).setVisibility(View.GONE);
         } else {
             getSupportActionBar().show();
+            findViewById(R.id.filter_techniciens).setVisibility(View.VISIBLE);
         }
     }
 
@@ -202,12 +238,22 @@ public class A3techDisplayTechniciensListeActivity extends AppCompatActivity imp
     public void actionNext(Integer typeAction, Object data) {
         switch (typeAction) {
             case A3techPostMissionFragment.ACTION_SAVE_MISSION_INFO_FROM_TECH:
-                A3techMission mission = (A3techMission) data;
-                Intent resultIntent = new Intent();
-                resultIntent.putExtra(TAG_MISSION_TO_SAVE_FROM_BROWS_TECH, new Gson().toJson(mission));
-                setResult(Activity.RESULT_OK, resultIntent);
-                finish();
-                break;
+                if(isFromSearchActivity){
+                    A3techMission mission = (A3techMission) data;
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(TAG_MISSION_TO_SAVE_FROM_BROWS_TECH, new Gson().toJson(mission));
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    finish();
+                    break;
+                }else{
+                    A3techMission mission = (A3techMission) data;
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(TAG_MISSION_TO_SAVE_FROM_BROWS_TECH, new Gson().toJson(mission));
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    finish();
+                    break;
+                }
+
         }
     }
 }

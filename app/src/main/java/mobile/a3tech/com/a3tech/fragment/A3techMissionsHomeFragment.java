@@ -26,10 +26,14 @@ import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
+import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techNotification;
+import mobile.a3tech.com.a3tech.model.A3techNotificationType;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterMission;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
@@ -189,9 +193,40 @@ public class A3techMissionsHomeFragment extends Fragment {
             case (REQ_ADD_MISSION): {
                 if (resultCode == Activity.RESULT_OK) {
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
-                    A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
+                    final A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
                     ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
-                     A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+
+                    //TODO create mission
+                    final ProgressDialog dialogWaiting = CustomProgressDialog.createProgressDialog(getActivity(),"");
+                    MissionManager.getInstance().createMission(mission, new DataLoadCallback() {
+                        @Override
+                        public void dataLoaded(Object data, int method, int typeOperation) {
+                           //TODO commentaire a reconstituer.
+                            String commentaire = "Demande créée pour une Mission en  "+mission.getCategoryMission().getLibelle()+"";
+                            A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
+                                    null,mission,A3techNotificationType.CREATION_MISSION,commentaire,getString(R.string.libelle_creatio_mission));
+                            NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+                                @Override
+                                public void dataLoaded(Object data, int method, int typeOperation) {
+                                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                                    dialogWaiting.dismiss();
+                                }
+
+                                @Override
+                                public void dataLoadingError(int errorCode) {
+                                    dialogWaiting.dismiss();
+                                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void dataLoadingError(int errorCode) {
+                            dialogWaiting.dismiss();
+                            A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                        }
+                    });
+
 
                 }
                 break;

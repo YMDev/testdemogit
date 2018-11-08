@@ -38,6 +38,12 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
     private List<ObjectMenu> listeObjects = new ArrayList<>();
 
     private Context context;
+    private OnDeconnexion mDecListener;
+
+
+    public void setmDecListener(OnDeconnexion mDecListener) {
+        this.mDecListener = mDecListener;
+    }
 
     public SimpleAdapterTest(Context context) {
         this.context = context;
@@ -93,9 +99,8 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
             public void onClick(View view) {
                 if(dessert.getId() == 4  && dessert.getType() == 2){
                     deconnexion();
-                    Intent mainIntent = new Intent(context, A3techLoginActivity.class);
-                    ((A3techHomeActivity) context).startActivity(mainIntent);
-                    ((A3techHomeActivity) context).finish();
+
+                    if(mDecListener != null) mDecListener.deconnexion();
                 }
             }
         });
@@ -129,5 +134,9 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
             txtDesc = (TextView) itemView.findViewById(R.id.item_simplevh_txtdescription);
             next = itemView.findViewById(R.id.next_flag);
         }
+    }
+
+    public  interface OnDeconnexion{
+        void deconnexion();
     }
 }

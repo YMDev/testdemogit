@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.test;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -45,13 +46,13 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
     private List<A3techEvenementiMission> listeObjects = new ArrayList<>();
 
     private Context context;
-    private A3techHomeActivity parentActivity;
+    private Activity parentActivity;
 
     public SimpleAdapterTimeLine(Context context) {
         this.context = context;
     }
 
-    public SimpleAdapterTimeLine(Context context, List objectMenu, A3techHomeActivity parent) {
+    public SimpleAdapterTimeLine(Context context, List objectMenu, Activity parent) {
         this.context = context;
         listeObjects = objectMenu;
         parentActivity = parent;

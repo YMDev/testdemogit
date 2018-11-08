@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="15dp"
+    android:background="@drawable/a3tech_back_distance_bar">
+
+    <LinearLayout
+        android:id="@+id/bar_distance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/space_distance"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".20"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="20 km"
+            android:textColor="@color/white"
+            android:textSize="10dp"></Button>
+
+        <Button
+            android:id="@+id/space_blank"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".80"
+            android:background="@color/transparent"></Button>
+    </LinearLayout>
+</RelativeLayout>

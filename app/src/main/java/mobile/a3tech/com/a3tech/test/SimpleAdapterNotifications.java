@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.test;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,13 +38,13 @@ public class SimpleAdapterNotifications extends RecyclerView.Adapter<SimpleAdapt
     private List<A3techMission> listeObjects = new ArrayList<>();
 
     private Context context;
-    private A3techHomeActivity parentActivity;
+    private Activity parentActivity;
 
     public SimpleAdapterNotifications(Context context) {
         this.context = context;
     }
 
-    public SimpleAdapterNotifications(Context context, List objectMenu, A3techHomeActivity parent) {
+    public SimpleAdapterNotifications(Context context, List objectMenu, Activity parent) {
         this.context = context;
         listeObjects = objectMenu;
         parentActivity = parent;

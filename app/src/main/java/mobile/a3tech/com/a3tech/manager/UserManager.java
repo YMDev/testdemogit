@@ -742,4 +742,44 @@ public class UserManager implements Constant {
 		}.start();
 	}
 
+
+	public void fetchTechnicien(final String keyword, final int start, final int end,
+										  final DataLoadCallback dataLoadCallback)   {
+
+		final Handler handler = new Handler() {
+
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer) message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,
+							KEY_USER_MANAGER_GET_PROFIL,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+
+					A3techUserService service = new A3techUserService();
+					List<A3techUser> user = service.fetchTechnicien(keyword, start, end);
+					if (user == null) {
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					} else {
+						Message message = handler.obtainMessage(0, user);
+						handler.sendMessage(message);
+					}
+				} catch (Exception e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
 }

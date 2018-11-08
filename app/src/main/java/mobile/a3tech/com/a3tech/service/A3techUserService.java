@@ -119,7 +119,7 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
 		params.put("gcm_regid", regId);
 		params.put("pseudo", pseudo);
         A3techUser result = getResult(
-				CHECK_EDU_CREATE_ACCOUNT_URL, params,
+                A3TECH_CREATE_ACCOUNT, params,
 				new TypeReference<A3techUser>() {
 				});
 
@@ -264,6 +264,21 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
         Double s = result.get("result");
         return s;
     }
+
+    @Override
+    public List<A3techUser> fetchTechnicien(String keyword, int start, int end) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("keyword", keyword+"");
+        params.put("start", start+"");
+        params.put("end", end+"");
+
+        List<A3techUser> result = getResult(A3TECH_FETCH_TECHNICIEN, params,
+                new TypeReference<List<A3techUser>>() {
+                });
+        return result;
+    }
+
+
 
     private User getUserMocked(String name, String pname) {
         User userMocked = new User();

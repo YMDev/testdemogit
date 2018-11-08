@@ -26,6 +26,38 @@ private static MissionManager uniqueInstance = null;
 		return uniqueInstance;
 	}
 
+	public void createMission(final A3techMission missionToCreate, final DataLoadCallback dataLoadCallback) {
+
+
+		final Handler handler = new Handler() {
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer)message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,KEY_MISSION_MANAGER_CREATE_MISSION,0);
+				}
+			}
+		};
+		new Thread() {
+			@Override
+			public void run() {
+				try{
+					MissionService service = new MissionService();
+					String result = service.createMission(missionToCreate);
+					Message message = handler.obtainMessage(0, result);
+					handler.sendMessage(message);
+
+				}catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
+
+
 	public void createMission(final String connectedUser,final String typeTransaction,final String categorie,final String sousCategorie,final String idTypeTroc ,final String titre,
 			final String article,final String idEtatArticle, final String contre,final String objetRechercheTitre,final String objetRecherche,final String lieu,final String latitude,final String longitude,final String idVille,
 			final String[] bitmap,final String echeance, final String typeSponsoring,final String typePaiement,final String dateDebut,final String dateFin,final String password, final DataLoadCallback dataLoadCallback) {

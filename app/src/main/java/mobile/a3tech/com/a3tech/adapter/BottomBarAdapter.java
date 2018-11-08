@@ -37,7 +37,9 @@ public class BottomBarAdapter extends SmartFragmentStatePagerAdapter {
         return fragments.size();
     }
 
-
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         super.setPrimaryItem(container, position, object);

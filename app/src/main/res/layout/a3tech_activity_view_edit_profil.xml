@@ -58,7 +58,7 @@
                         android:gravity="bottom|center"
                         android:text="Mouad BOUHJRA"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="25dp"
+                        android:textSize="20dp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -92,6 +92,30 @@
 
 
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/edit_action_container"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|top"
+                    android:orientation="horizontal"
+                    android:background="@drawable/a3tech_btn_create_account_back"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:textSize="8dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:paddingBottom="3dp"
+                    android:paddingTop="3dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="5dp">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        android:text="Modifier profil"
+                        android:textSize="12dp"
+                        android:textColor="@color/colorPrimary"/>
+                </LinearLayout>
+
             </FrameLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

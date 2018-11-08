@@ -254,8 +254,8 @@
     <string name="txtLogin_textViewLogin">Login</string>
     <string name="txtLogin_textViewlogan">"Ara ce que je veux et <font color="#c21613">khod</font> ce que tu veux"</string>
     <string name="txtSplash_messageCheckConnexion">Veuillez vérifier votre connexion Internet !</string>
-    <string name="search_hint">Search Places</string>
-    <string name="search_settings">Search Places</string>
+    <string name="search_hint">Rechercher</string>
+    <string name="search_settings">Rechercher</string>
     <string name="txtItitenary_brDriving">En voiture</string>
     <string name="txtItitenary_brWalking">A pied</string>
     <string name="txtItitenary_textAucunItineraireTrouve">Aucun itinéraire trouvé !</string>
@@ -596,15 +596,15 @@
     <string name="home_tab_2">Missions</string>
     <string name="home_tab_3">Parcourir</string>
     <string name="home_tab_4">Compte</string>
-    <string name="toolbar_echange_title">Echanges</string>
-    <string name="toolbar_echange_sub_title">Historique des echanges</string>
+    <string name="toolbar_echange_title">Evenements</string>
+    <string name="toolbar_echange_sub_title">Historique des évenements</string>
     <string name="toolbar_mission_title">Mes Missions</string>
     <string name="header_log_in">Se connecter</string>
     <string name="header_log_in_email">Continuer avec mon email</string>
     <string name="header_log_in_reset">Mot de passe oublié</string>
     <string name="a3tech_no_account_signin">vous n\'avez pas de compte?</string>
     <string name="a3tech_no_account_signin_2"><u>s\'inscrire</u></string>
-    <string name="header_log_in_title">Log in</string>
+    <string name="header_log_in_title">Authentification</string>
     <string name="connexion">Connexion</string>
     <string name="hint_passwor_log_in">Mot de passe</string>
     <string name="hint_username_log">Email</string>
@@ -710,6 +710,18 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="valider_reporter_mission_msg_dialog">Voulez-vous reporter cette Mission ?  une notification sera envoyé au technicien</string>
     <string name="valider_cloture_mission_title_dialogue">Clôturer la Mission</string>
     <string name="valider_cloturer_mission_msg_dialog">Voulez-vous clôturer cette Mission ?</string>
+    <string name="error_create_mission">Erreur technique lors de la création de cette Mission, veuillez réessayer ultérieurement.</string>
+    <string name="libelle_creatio_mission">Demande de Mission lancée</string>
+    <string name="error_validation_mission">Problème réseau lors de la validation de la Mission, veuillez réessayer ultérieurement</string>
+    <string name="mission_validee">Mission validée avec succée</string>
+    <string name="libelle_annulation_mission">Demande de Mission annulée</string>
+    <string name="libelle_report_mission">Mission reportée</string>
+    <string name="libelle_cloture_mission">Mission clôturée</string>
+    <string name="toolbar_display_results_search_title">Résultats Recherche</string>
+    <string name="probleme_technique">Problème technique, veuillez patientez</string>
+    <string name="stop_mission">Pause</string>
+    <string name="add_remarque_mission">Nouveau Evenenement</string>
+    <string name="hint_add_more_details_event">Ajouter plus de détails</string>
 
 
 </resources>

@@ -53,4 +53,5 @@ public interface IA3techUserService {
     Boolean isTechnicienEnabledForClient(Long clientId, Long TechId) throws EducationException;
 
         Double fetchSoldeDisponible(Long userID) throws EducationException;
+    public List<A3techUser> fetchTechnicien(String keyword, int start, int end) throws EducationException;
 }

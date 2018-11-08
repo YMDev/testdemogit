@@ -2,6 +2,7 @@ package mobile.a3tech.com.a3tech.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techSearchMissionsResultsActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techSelectMissionCategoryAdapter;
 import mobile.a3tech.com.a3tech.manager.CategorieManager;
 import mobile.a3tech.com.a3tech.model.Categorie;
@@ -40,7 +42,7 @@ public class A3techHomeBrowseTechFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     public static final int ACTION_SELECT_CATEGORY_BROWSE_TECH = 2;
-
+    public static final String THIS_FRAGMENT_2 = "A3techHomeBrowseTechFragment";
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;

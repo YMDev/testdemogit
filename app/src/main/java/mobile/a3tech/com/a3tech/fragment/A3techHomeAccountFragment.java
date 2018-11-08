@@ -18,6 +18,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
@@ -101,11 +102,13 @@ public class A3techHomeAccountFragment extends Fragment {
         recycyleInformation = viewFr.findViewById(R.id.recycle_informtaions);
         recycyleInformation.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         SimpleAdapterTest adapter = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(1));
+        adapter.setmDecListener((A3techHomeActivity)getActivity());
         recycyleInformation.setAdapter(adapter);
 
         recycyleAccountSetting = viewFr.findViewById(R.id.recycle_account_setting);
         recycyleAccountSetting.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         SimpleAdapterTest adapterrecycyleAccountSetting = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(2));
+        adapterrecycyleAccountSetting.setmDecListener((A3techHomeActivity)getActivity());
         recycyleAccountSetting.setAdapter(adapterrecycyleAccountSetting);
 
 

@@ -45,11 +45,14 @@
                 android:textSize="14dp" />
 
             <ImageView
+                android:id="@+id/filter_missions_action"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginRight="9dp"
                 android:layout_weight="0.08"
-                android:src="@drawable/a3tech_filter_liste" />
+                android:src="@drawable/a3tech_filter_liste"
+                android:tint="@color/white"
+                android:backgroundTint="@color/white"/>
         </LinearLayout>
 
     </RelativeLayout>

@@ -7,6 +7,7 @@ public enum A3techNotificationType {
     ACCEPTATION_MISSION("Mission Acceptée", 3, "USER"),
     ANNULATION_MISSION("Mission Annulée", 4, "USER"),
     REPORTATION_MISSION("Mission Reportée", 5, "USER"),
+    CLOTURE_MISSION("Mission Cloturée", 5, "USER"),
     REJET_MISSION("Mission Rjetée", 6, "SYSTEM");
 
 

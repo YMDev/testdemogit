@@ -1,11 +1,14 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,10 +21,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
+import com.wangjie.rapidfloatingactionbutton.util.RFABShape;
+import com.wangjie.rapidfloatingactionbutton.util.RFABTextUtil;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,11 +42,12 @@ import eltos.simpledialogfragment.form.Input;
 import eltos.simpledialogfragment.form.SimpleFormDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
+import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
+import mobile.a3tech.com.a3tech.model.A3techNotification;
+import mobile.a3tech.com.a3tech.model.A3techNotificationType;
 import mobile.a3tech.com.a3tech.model.A3techReviewMission;
-import mobile.a3tech.com.a3tech.model.A3techUser;
-import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.ImagesStuffs;
@@ -45,7 +58,7 @@ import mobile.a3tech.com.a3tech.view.A3techDialogChooseMissionCancelORReport;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 
-public class A3techDisplayMissionActivity extends AppCompatActivity implements A3techDialogAddReview.AddReviewParam, SimpleDialog.OnDialogResultListener {
+public class A3techDisplayMissionActivity extends AppCompatActivity implements A3techDialogAddReview.AddReviewParam, SimpleDialog.OnDialogResultListener, RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
 
     public static final String TAG_MISSION_SELECTED_FROM_HOME_ACTIVITY = "TAG_SELECTED_MISION";
@@ -132,6 +145,14 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
     @BindView(R.id.progress_time_mission)
     ProgressBar progresstimeMission;
 
+
+    @BindView(R.id.activity_main_rfal)
+    RapidFloatingActionLayout rfaLayout;
+    @BindView(R.id.activity_main_rfab)
+    RapidFloatingActionButton rfaBtn;
+    RapidFloatingActionHelper rfabHelper;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +161,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         getSelectedMission();
         initCompo();
         initMontantDureeMissionCloturee();
+        initFabEventsAction();
     }
 
     private void getSelectedMission() {
@@ -254,8 +276,8 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
         });
     }
 
-    private void initMontantDureeMissionCloturee(){
-        if(selectedMission != null && selectedMission.getStatut() != null && selectedMission.getStatut().equals(A3techMissionStatut.CLOTUREE)){
+    private void initMontantDureeMissionCloturee() {
+        if (selectedMission != null && selectedMission.getStatut() != null && selectedMission.getStatut().equals(A3techMissionStatut.CLOTUREE)) {
             doCalculeDureeMission();
             doCalculeMontantMission();
         }
@@ -304,17 +326,17 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
                         doZoomEffect(statutMission);
                     }
                 });*/
-               //TODO verify if mission not expired
+                //TODO verify if mission not expired
                 final ProgressDialog dialogWaitingCancel = CustomProgressDialog.createProgressDialog(A3techDisplayMissionActivity.this, "");
                 MissionManager.getInstance().missionCanBeReportedOrCanceled(selectedMission, new DataLoadCallback() {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
 
-                        Boolean canBe = (Boolean)data;
-                        if(canBe != null && canBe){
+                        Boolean canBe = (Boolean) data;
+                        if (canBe != null && canBe) {
                             cancelOrReportMissionDialogue();
-                        }else{
-                            A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this,"Cannot be canceled or reported", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                        } else {
+                            A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this, "Cannot be canceled or reported", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                         }
 
                         dialogWaitingCancel.dismiss();
@@ -546,7 +568,26 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             return true;
         }
 
+        if (TAG_ADD_DESC_DIALOG.equals(dialogTag)) {
+            switch (which) {
+                case BUTTON_POSITIVE:
+                    // validation
+                    validationAjoutDescriptionDemande(extras.getString(TAG_ADD_DESC_INPUT));
+                    break;
+                case BUTTON_NEGATIVE:
+                    // nothing to do
+                    break;
+                // ...
+            }
+            return true;
+        }
+
         return false;
+    }
+
+    private void validationAjoutDescriptionDemande(String value) {
+        //
+        A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this,value, Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
     }
 
     private void validationDemande() {
@@ -557,15 +598,155 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this, "Mission Validée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
-                dialogueWaiting.dismiss();
+                notificiationValidationDemande(dialogueWaiting);
+
             }
 
             @Override
             public void dataLoadingError(int errorCode) {
                 dialogueWaiting.dismiss();
+                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_validation_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
             }
         });
         actionRefreshStatutMission();
+    }
+
+
+    // todo same as validation for cancel or report, cloture, ...
+
+    /**
+     * Permet d'enregistrer un Evenement de Validation de la Mission.
+     *
+     * @param dialogueWaiting
+     */
+    private void notificiationValidationDemande(final ProgressDialog dialogueWaiting) {
+        //TODO builder un commenaire + discreption
+        String commentaire = "";
+        if (selectedMission.getCategoryMission() != null) {
+            commentaire = "Demande validée pour une Mission en  " + selectedMission.getCategoryMission().getLibelle() + "";
+        } else {
+            commentaire = "Demande validée";
+        }
+
+        A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
+                null, selectedMission, A3techNotificationType.VALIDATION_MISSION, commentaire, getString(R.string.libelle_creatio_mission));
+        NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                dialogueWaiting.dismiss();
+                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_validee), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+                // A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+            }
+        });
+    }
+
+    /**
+     * Permet d'enregistrer un Evenement d'Annulation de la Mission.
+     *
+     * @param dialogueWaiting
+     */
+    private void notificiationAnnulationDemande(final ProgressDialog dialogueWaiting) {
+        //TODO builder un commenaire + discreption
+        String commentaire = "Demande Annulée pour motif :   " + selectedMission.getMotifRejet() + "";
+        A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
+                null, selectedMission, A3techNotificationType.ANNULATION_MISSION, commentaire, getString(R.string.libelle_annulation_mission));
+        NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                dialogueWaiting.dismiss();
+                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.libelle_annulation_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+                // A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+            }
+        });
+    }
+
+
+    /**
+     * Permet d'enregistrer un Evenement d'Annulation de la Mission.
+     *
+     * @param dialogueWaiting
+     */
+    private void notificiationReportDemande(final ProgressDialog dialogueWaiting) {
+        //TODO builder un commenaire + discreption
+        String commentaire = "Demande Reportée pour motif :   " + selectedMission.getMotifReport() + "";
+        A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
+                null, selectedMission, A3techNotificationType.REPORTATION_MISSION, commentaire, getString(R.string.libelle_report_mission));
+        NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                dialogueWaiting.dismiss();
+                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.libelle_report_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+                // A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+            }
+        });
+    }
+
+
+    /**
+     * Permet d'enregistrer un Evenement d'Annulation de la Mission.
+     *
+     * @param dialogueWaiting
+     */
+    private void notificiationClotureDemande(final ProgressDialog dialogueWaiting) {
+        //TODO builder un commenaire + discreption
+        String commentaire = "Demande Achevée et clôturée";
+        if (selectedMission.getReviewMission() != null) {
+            if (selectedMission.getReviewMission().getCommentaire() != null) {
+                commentaire = commentaire + " ,le Client est " + getRatingClientMood(selectedMission.getReviewMission().getRating());
+                commentaire = commentaire + " \n ..." + selectedMission.getReviewMission().getCommentaire();
+            }
+        }
+        A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
+                null, selectedMission, A3techNotificationType.CLOTURE_MISSION, commentaire, getString(R.string.libelle_cloture_mission));
+        NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                dialogueWaiting.dismiss();
+                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.libelle_cloture_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+                // A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+            }
+        });
+    }
+
+    private String getRatingClientMood(Float rating) {
+        switch (Math.round(rating)) {
+            case 1:
+                return " est très décu du travail effectué";
+            case 2:
+                return " n'est pas satisfait du travail effectué";
+            case 3:
+                return " pense que le travail a besoin d'amélioration";
+            case 4:
+                return " a aimé le travail effectué";
+            case 5:
+                return " est très content du travail";
+        }
+        return "";
+    }
+
+
+    private Activity getActivity() {
+        return this;
     }
 
     private void validationReportDemande() {
@@ -576,7 +757,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this, "Mission Reportée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
-                dialogueWaiting.dismiss();
+                notificiationReportDemande(dialogueWaiting);
             }
 
             @Override
@@ -595,7 +776,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this, "Mission Annulée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
-                dialogueWaiting.dismiss();
+                notificiationAnnulationDemande(dialogueWaiting);
             }
 
             @Override
@@ -624,7 +805,7 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
                 containerActions.setVisibility(View.GONE);
 
                 A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this, "Mission Cloturée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
-                dialogueWaiting.dismiss();
+                notificiationClotureDemande(dialogueWaiting);
             }
 
             @Override
@@ -684,6 +865,81 @@ public class A3techDisplayMissionActivity extends AppCompatActivity implements A
 
             }
         });
+    }
+
+
+    private void initFabEventsAction() {
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(A3techDisplayMissionActivity.this);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel(getString(R.string.cancel))
+                .setResId(R.drawable.a3tech_annuler_mission_action)
+                .setIconNormalColor(getResources().getColor(R.color.colorPrimary))
+                .setIconPressedColor(getResources().getColor(R.color.colorPrimaryDark))
+                .setLabelColor(getResources().getColor(R.color.colorPrimary))
+                .setWrapper(0)
+        );
+
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel(getString(R.string.report_mission))
+                .setResId(R.drawable.a3tech_report_mission_action)
+                .setIconNormalColor(getResources().getColor(R.color.colorPrimary))
+                .setIconPressedColor(getResources().getColor(R.color.colorPrimaryDark))
+                .setLabelColor(getResources().getColor(R.color.colorPrimary))
+                .setWrapper(1)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel(getString(R.string.stop_mission))
+                .setResId(R.drawable.a3tech_stop_mission_action)
+                .setIconNormalColor(getResources().getColor(R.color.colorPrimary))
+                .setIconPressedColor(getResources().getColor(R.color.colorPrimaryDark))
+                .setLabelColor(getResources().getColor(R.color.colorPrimary))
+                .setLabelSizeSp(14)
+                .setWrapper(2)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel(getString(R.string.add_remarque_mission))
+                .setResId(R.drawable.a3tech_event_mission_action)
+                .setIconNormalColor(getResources().getColor(R.color.colorPrimary))
+                .setIconPressedColor(getResources().getColor(R.color.colorPrimaryDark))
+                .setLabelColor(getResources().getColor(R.color.colorPrimary))
+                .setWrapper(3)
+        );
+        rfaContent
+                .setItems(items)
+                .setIconShadowRadius(RFABTextUtil.dip2px(A3techDisplayMissionActivity.this, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(RFABTextUtil.dip2px(A3techDisplayMissionActivity.this, 5))
+        ;
+        rfabHelper = new RapidFloatingActionHelper(
+                A3techDisplayMissionActivity.this,
+                rfaLayout,
+                rfaBtn,
+                rfaContent
+        ).build();
+    }
+
+    private static final String TAG_ADD_DESC_DIALOG = "TADD";
+    private static final String TAG_ADD_DESC_INPUT = "DESC";
+    @Override
+    public void onRFACItemLabelClick(int position, RFACLabelItem item) {
+        SimpleFormDialog.build().title(item.getLabel()).cancelable(true)
+                .fields(Input.plain(TAG_ADD_DESC_INPUT).required(true)
+                        .hint(R.string.hint_add_more_details_event)
+                        .inputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE))
+                .show(getSupportFragmentManager(), TAG_ADD_DESC_DIALOG);
+        rfabHelper.toggleContent();
+    }
+
+    @Override
+    public void onRFACItemIconClick(int position, RFACLabelItem item) {
+        SimpleFormDialog.build().title(item.getLabel()).cancelable(true)
+                .fields(Input.plain(TAG_ADD_DESC_INPUT).required(true)
+                        .hint(R.string.hint_add_more_details_event)
+                        .inputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE))
+                .show(getSupportFragmentManager(), TAG_ADD_DESC_DIALOG);
+        rfabHelper.toggleContent();
     }
 }
 

@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -12,6 +13,7 @@ import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -66,6 +68,11 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.a3tech_splash_activity);
+
+        //android O fix bug orientation
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         try {
             PackageInfo info = getPackageManager().getPackageInfo("mobile.a3tech.com.a3tech", PackageManager.GET_SIGNATURES);
             for (android.content.pm.Signature signature : info.signatures) {
@@ -103,7 +110,7 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
             finish();
         } else {
             //Todo display dialogue
-             waitingDialg =  A3techWaitingDialog.createProgressDialog(A3techSplashActivity.this, "");
+            // waitingDialg =  A3techWaitingDialog.createProgressDialog(A3techSplashActivity.this, "");
             UserManager.getInstance().getProfil(this.connectedUser, password, this);
         }
     }

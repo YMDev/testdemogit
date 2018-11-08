@@ -2,8 +2,10 @@ package mobile.a3tech.com.a3tech.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
 import android.support.v4.app.Fragment;
@@ -18,11 +20,14 @@ import com.google.gson.Gson;
 
 import java.util.List;
 
+import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.Categorie;
+import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
 /**
@@ -190,6 +195,13 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
         });
     }*/
     private void getListOFTechToDisplay() {
+
+        if (!PermissionsStuffs.canAccessLocation(getActivity())) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
+            }
+        }
+
         pagerAdapter = new BottomBarAdapter(getFragmentManager());
         pagerAdapter.addFragments(A3techAffecterTechnicienFragment.newInstance(mission, listeOfTechToDisplay));
         pagerAdapter.addFragments(A3techDisplayTechInMapFragment.newInstance(mission, listeOfTechToDisplay));
@@ -288,4 +300,24 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
 
         void actionToolbar(boolean hide);
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+            case PermissionsStuffs.INITIAL_REQUEST:
+                if (PermissionsStuffs.canAccessLocation(getActivity())) {
+                    ///doCameraThing();
+                   // ((A3techDisplayTechniciensListeActivity)getActivity()).finishActivityToBeReloaded();
+                    pagerAdapter.notifyDataSetChanged();
+                   // viewPager.setAdapter(pagerAdapter);
+                } else {
+                    SimpleDialog.build().title("Autorisation location est nécessaire").msg("pour afficher la liste des techniciens sur Map, il faut autoriser l'app à accéder à votre position").show(getActivity());
+                }
+                break;
+
+
+        }
+    }
+
 }

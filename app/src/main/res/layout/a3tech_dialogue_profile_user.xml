@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container_item_tech"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:clickable="true"
     android:orientation="vertical"
-    android:padding="2dp"
     tools:background="@color/white">
 
     <RelativeLayout
         android:id="@+id/subContainer_tech"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="6dp"
-        android:layout_marginTop="6dp">
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="6dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -72,8 +71,8 @@
                         android:layout_width="30dp"
                         android:layout_height="20dp"
                         android:layout_alignParentLeft="true"
-                        android:layout_centerHorizontal="true"
                         android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="10dp"
                         android:background="@drawable/style_layout_raduis">
@@ -106,8 +105,8 @@
                         android:id="@+id/rating_nbr_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:layout_toRightOf="@id/rating_tech"
                         android:fontFamily="sans-serif-light"
@@ -149,8 +148,8 @@
                             android:id="@+id/distance"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_centerHorizontal="true"
                             android:layout_centerInParent="true"
+                            android:layout_centerHorizontal="true"
                             android:layout_centerVertical="true"
                             android:fontFamily="sans-serif-meduim"
                             android:textColor="@color/black"
@@ -188,8 +187,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginRight="10dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
@@ -202,8 +201,8 @@
                         android:id="@+id/disponibilite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/a3tech_dispo_white_indic" />
                 </RelativeLayout>
@@ -219,8 +218,8 @@
                         android:id="@+id/check_phone"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/a3tech_phone_white_indic" />
                 </RelativeLayout>
@@ -236,8 +235,8 @@
                         android:id="@+id/check_mail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
                         android:layout_centerInParent="true"
+                        android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/a3tech_check_mail_white_indic" />
                 </RelativeLayout>
@@ -247,10 +246,10 @@
                 android:id="@+id/container_actions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_below="@+id/container_informations_user"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="30dp">
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="10dp">
 
                 <Button
                     android:id="@+id/select_tech"

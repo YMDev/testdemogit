@@ -24,6 +24,8 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import org.apache.commons.lang3.StringUtils;
+
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techProfilFragmentAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techProfilInformationFragment;
@@ -58,7 +60,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     private ViewPager viewPagerProfil;
 
     private ImageView backBtn;
-    private TextView userNamePname;
+    private TextView userNamePname, categoryUser;
     private Boolean isFromHomeAccount = false;
     private Boolean isFromAddMission = false;
     private Boolean isFromBrowseTech = false;
@@ -166,6 +168,9 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         circleImage.setImageBitmap(letterTile);
         userNamePname = findViewById(R.id.user_name_pname_detail);
         userNamePname.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom());
+        categoryUser = findViewById(R.id.user_description_detail);
+        mTitle.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom().substring(0,1)+".");
+        if(userToDisplay.getCategorie() != null)   categoryUser.setText(userToDisplay.getCategorie().getDescription());
         backBtn = findViewById(R.id.back_home_btn);
 
         backBtn.setOnClickListener(new View.OnClickListener() {

@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
 import mobile.a3tech.com.a3tech.model.A3techUser;
+import mobile.a3tech.com.a3tech.model.A3techUserType;
 
 public class PreferencesValuesUtils {
 
@@ -33,6 +34,11 @@ public class PreferencesValuesUtils {
         return new Gson().fromJson(jsonuserConnected, A3techUser.class);
     }
 
+    public static Boolean isTechnicien(Activity context){
+        String jsonuserConnected = PreferencesValuesUtils.getPreferenceStringByParam(context, PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, "");
+        A3techUser connected =  new Gson().fromJson(jsonuserConnected, A3techUser.class);
+        return connected.getTypeUser().getId() == A3techUserType.TECHNICIEN.getId();
+    }
     public static Long getPreferenceLongByParam(Activity context, String paramKey, Long defaultVal) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         return prefs.getLong(paramKey, defaultVal);
