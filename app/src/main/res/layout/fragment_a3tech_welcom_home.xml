@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.A3techWelcomHomeFragment">
+
+    <RelativeLayout
+        android:id="@+id/container_home_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/back_techniciens_6">
+        <TextView
+            android:id="@+id/welcom_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-meduim"
+            android:text="Bienvenue"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tech_stats_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/welcom_title"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-meduim"
+            android:text="Plus de 1530 Technicien hautement qualifié"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tech_stats_label"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-meduim"
+            android:text="3TECH"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+
+        <com.gauravbhola.ripplepulsebackground.RipplePulseLayout
+            android:id="@+id/layout_ripplepulse"
+            android:layout_width="270dp"
+            android:layout_height="270dp"
+            android:layout_centerInParent="true"
+            android:clipChildren="false"
+            app:duration="2000"
+            app:endRadius="120dp"
+            app:rippleColor="@color/colorPrimary"
+            app:rippleType="fill"
+            app:startRadius="42dp"
+            app:strokeWidth="0dp">
+
+            <RelativeLayout
+                android:id="@+id/container_image_pulsed"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/circle_layout">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/a3tech_add_mission_home_icon" />
+            </RelativeLayout>
+
+        </com.gauravbhola.ripplepulsebackground.RipplePulseLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/layout_ripplepulse"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="sans-serif-meduim"
+            android:text="Besoin d'un Technicien ?"
+            android:textColor="@color/white"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/container_image_setting"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:clickable="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/a3tech_ripple_circle_layout_home">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_action_settings"
+                    android:tint="@color/white" />
+            </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/container_image_setting"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="Paramétrage"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            <RelativeLayout
+                android:id="@+id/container_image_account"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:clickable="true"
+                android:background="@drawable/a3tech_ripple_circle_layout_home">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/a3tech_account_icon"
+                    android:tint="@color/white" />
+            </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/container_image_account"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="Compte"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/container_image_browse"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:clickable="true"
+                    android:background="@drawable/a3tech_ripple_circle_layout_home">
+
+                    <ImageView
+                        android:id="@+id/icon_browse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/a3tech_search_icon"
+                        android:tint="@color/white"
+                        android:background="@color/transparent"/>
+
+                </RelativeLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/container_image_browse"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="Rechercher"
+                    android:textColor="@color/white"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</FrameLayout>

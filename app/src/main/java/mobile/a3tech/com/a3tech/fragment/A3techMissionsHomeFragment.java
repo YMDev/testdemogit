@@ -236,6 +236,10 @@ public class A3techMissionsHomeFragment extends Fragment {
 
 
     public void addMissionToLise(A3techMission mission){
-        ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
+        if(recycleMission != null){
+            ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
+        }else{
+
+        }
     }
 }

@@ -722,6 +722,16 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="stop_mission">Pause</string>
     <string name="add_remarque_mission">Nouveau Evenenement</string>
     <string name="hint_add_more_details_event">Ajouter plus de détails</string>
+    <string name="title_activity_a3tech_home_navigation_drawer">A3techHomeNavigationDrawer</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+    <string name="home_tab_0">Home</string>
 
 
 </resources>

@@ -24,6 +24,8 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import org.apache.commons.lang3.BooleanUtils;
+
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techSelectMissionCategoryAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techAddEmailFragment;
@@ -55,7 +57,8 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
     private ImageView backAction;
 
     public static final String TAG_RESULT_FROM_SELECT_TECH ="TAG_RESULT_FROM_SELECT_TECH";
-
+    public static final String TAG_RESULT_FROM_ADD_MISSION_WELCOM ="TAG_RESULT_FROM_ADD_MISSION_WELCOM";
+    public static final String TAG_RESULT_OBJECT_ADD_MISSION_WELCOM ="TAG_RESULT_OBJECT_ADD_MISSION_WELCOM";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +72,19 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
         updateAppbarLayout(0);
         getSupportActionBar().setElevation(0);
         setFragment(A3techSelectCategoryMissionFragment.newInstance(null, null), false, false);
+        getExtratData();
+    }
+    Boolean isFromWelcom = Boolean.FALSE;
+    private void getExtratData(){
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            Boolean isFromWelcoms = b.getBoolean(A3techWelcomPageActivity.TAG_ADD_MISSION_FROM_WELCOM);
+            if(BooleanUtils.isTrue(isFromWelcoms)){
+                isFromWelcom = Boolean.TRUE;
+            }else{
+                isFromWelcom = Boolean.FALSE;
+            }
+        }
     }
 
 
@@ -249,12 +265,24 @@ public class A3techAddMissionActivity extends AppCompatActivity implements A3tec
         switch (requestCode) {
             case (SimpleAdapterTechnicien.REQUEST_DISPLAY_TECH_FROM_MISSION): {
                 if (resultCode == Activity.RESULT_OK) {
-                    String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
-                    A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH,jsonMission);
-                    setResult(Activity.RESULT_OK, resultIntent);
-                    finish();
+                   if (isFromWelcom){
+                       Intent intentAddMissionn  = new Intent(A3techAddMissionActivity.this, A3techHomeActivity.class);
+                       String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
+                       A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
+                       intentAddMissionn.putExtra(A3techAddMissionActivity.TAG_RESULT_OBJECT_ADD_MISSION_WELCOM,jsonMission);
+                       intentAddMissionn.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_ADD_MISSION_WELCOM,true);
+                       startActivityForResult(intentAddMissionn,A3techWelcomPageActivity.REQ_ADD_MISSION_FROM_WELCOM);
+                       Log.i("KKKKKKKKKKKKKKKKKKKKKK", "Recupération resultat add mission activity");
+                       finish();
+                   }else{
+                       String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
+                       A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
+                       Intent resultIntent = new Intent();
+                       resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH,jsonMission);
+                       setResult(Activity.RESULT_OK, resultIntent);
+                       finish();
+                   }
+
                 }
                 break;
             }

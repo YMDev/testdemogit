@@ -97,6 +97,7 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
         this.connectedUser = prefs.getString("identifiant", "");
         this.password = prefs.getString("password", "");
         if (!isConnected()) {
+           // startActivity(new Intent(this, A3techWelcomPageActivity.class));
             A3techCustomToastDialog.createToastDialog(A3techSplashActivity.this, getApplicationContext().getString(R.string.txtSplash_messageCheckConnexion), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);
             finish();
         } else if (this.conMode.equals("facebook")) {
@@ -162,9 +163,7 @@ public class A3techSplashActivity extends AppCompatActivity implements DataLoadC
             case Constant.KEY_USER_GET_VERSION:
                 String version = (String) data;
                 /*Intent mainIntent = new Intent(this, NavigationMain.class);*/
-                Intent mainIntent = new Intent(this, A3techHomeActivity.class);
-                startActivity(mainIntent);
-                finish();
+                Intent mainIntent = new Intent(this, A3techWelcomPageActivity.class);
                 if (versionname.equals(version)) {
                     mainIntent.putExtra("nomPrenom", usern.getPrenom() + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + usern.getNom());
                     mainIntent.putExtra("nbr", usern.getNbrMission());
