@@ -2,12 +2,12 @@ package mobile.a3tech.com.a3tech.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,23 +15,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.android.gms.games.multiplayer.ParticipantRef;
-
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
-import mobile.a3tech.com.a3tech.activity.A3techSearchMissionsResultsActivity;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
-import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
-import mobile.a3tech.com.a3tech.model.A3techUser;
-import mobile.a3tech.com.a3tech.model.A3techUserType;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
-import mobile.a3tech.com.a3tech.test.SimpleAdapterMission;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterNotifications;
 import mobile.a3tech.com.a3tech.utils.Constant;
-import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
@@ -105,7 +97,7 @@ public class A3techNotificationHomeFragment extends Fragment {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_notification_home, container, false);
         recycleNotifications = viewFr.findViewById(R.id.recycle_notifications);
 
-        final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
+        final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivityContext(), "");
 
         MissionManager.getInstance().filtreMission(lang, connectedUser,
                 keyWord, String.valueOf(distance), "",
@@ -115,8 +107,8 @@ public class A3techNotificationHomeFragment extends Fragment {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
                         List<A3techMission> listeRetour = (List<A3techMission>) data;
-                        SimpleAdapterNotifications adapter = new SimpleAdapterNotifications(getActivity(), listeRetour, (A3techHomeActivity) getActivity());
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+                        SimpleAdapterNotifications adapter = new SimpleAdapterNotifications(getActivityContext(), listeRetour, (A3techHomeActivity) getActivity());
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
                         recycleNotifications.setLayoutManager(mLayoutManager);
                         recycleNotifications.setItemAnimator(new DefaultItemAnimator());
                         recycleNotifications.setAdapter(adapter);
@@ -140,9 +132,11 @@ public class A3techNotificationHomeFragment extends Fragment {
         }
     }
 
+    Context activityContext;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        activityContext = context;
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -155,10 +149,13 @@ public class A3techNotificationHomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        activityContext = null;
     }
 
 
-
+    public Context getActivityContext() {
+        return activityContext;
+    }
 
     /**
      * This interface must be implemented by activities that contain this

@@ -122,8 +122,8 @@ public class A3techMissionsHomeFragment extends Fragment {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
                         List<A3techMission> listeRetour = (List<A3techMission>) data;
-                        SimpleAdapterMission adapter = new SimpleAdapterMission(getActivity(),listeRetour, (A3techHomeActivity) getActivity());
-                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+                        SimpleAdapterMission adapter = new SimpleAdapterMission(getActivityContext(),listeRetour, (A3techHomeActivity) getActivityContext());
+                        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
                         recycleMission.setLayoutManager(mLayoutManager);
                         recycleMission.setItemAnimator(new DefaultItemAnimator());
                         recycleMission.setAdapter(adapter);
@@ -154,9 +154,11 @@ public class A3techMissionsHomeFragment extends Fragment {
         }
     }
 
+    Context activityContext;
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        activityContext = context;
         if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
@@ -169,6 +171,11 @@ public class A3techMissionsHomeFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        activityContext = null;
+    }
+
+    public Context getActivityContext() {
+        return activityContext;
     }
 
     /**

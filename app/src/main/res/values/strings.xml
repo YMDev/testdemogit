@@ -732,6 +732,8 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
 
     <string name="action_example">Example action</string>
     <string name="home_tab_0">Home</string>
+    <string name="edit_about_profil">A propos</string>
+    <string name="hint_edit_add_about_profil">Présentez-vous en quelques lignes pour valoriser votre profil</string>
 
 
 </resources>

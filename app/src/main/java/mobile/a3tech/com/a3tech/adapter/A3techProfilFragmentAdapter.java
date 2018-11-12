@@ -38,7 +38,7 @@ public class A3techProfilFragmentAdapter extends FragmentPagerAdapter {
                 fragmntToShow = A3techReviewsFragment.newInstance(user);
                 break;
             default:
-                fragmntToShow = new DummyFragment();
+                fragmntToShow = new A3techProfilInformationFragment();
                 break;
         }
         return fragmntToShow;

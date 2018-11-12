@@ -12,6 +12,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,14 +21,18 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
 
+import eltos.simpledialogfragment.form.Input;
+import eltos.simpledialogfragment.form.SimpleFormDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techProfilFragmentAdapter;
+import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techProfilInformationFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techReviewsFragment;
 import mobile.a3tech.com.a3tech.model.A3techMission;
@@ -35,7 +40,7 @@ import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 
-public class A3techViewEditProfilActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener, A3techReviewsFragment.OnFragmentInteractionListener {
+public class A3techViewEditProfilActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener, A3techReviewsFragment.OnFragmentInteractionListener, A3techProfileInformationAdapter.onEditActionsLinster {
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.72f;
     private static final float PERCENTAGE_TO_SHOW_TOOLBAR = 0.7f;
     private static final float PERCENTAGE_TO_HIDE_CIRCLE_IMAGE = 0.5f;
@@ -66,6 +71,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     private Boolean isFromBrowseTech = false;
     private Boolean isFromDisplayMission = false;
     private LinearLayout validationContainer;
+    private LinearLayout containerEditProfil;
     private Button btnValidationSelection;
     A3techUser userToDisplay;
     A3techMission mission;
@@ -172,7 +178,6 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         mTitle.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom().substring(0,1)+".");
         if(userToDisplay.getCategorie() != null)   categoryUser.setText(userToDisplay.getCategorie().getDescription());
         backBtn = findViewById(R.id.back_home_btn);
-
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -195,6 +200,15 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
                 resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH, new Gson().toJson(mission));
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();
+            }
+        });
+
+        containerEditProfil = findViewById(R.id.edit_action_container);
+        containerEditProfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // action Edit, Display Edit actions icons
+
             }
         });
     }
@@ -325,5 +339,26 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+
+    @Override
+    public void enableEditMode(Boolean enable) {
+
+    }
+
+    @Override
+    public void editAboutActionEnabled(String oldVal) {
+        displayAboutEditDialogue(oldVal);
+    }
+
+    private  static final String TAG_EDIT_ABOUT_INPUT = "TAG_EDIT_ABOUT_INPUT";
+    private static final String TAG_EDIT_ABOUT_DIALOG = "TAG_EDIT_ABOUT_DIALOG";
+    private void displayAboutEditDialogue(String aboutOld){
+        SimpleFormDialog.build().title(getResources().getString(R.string.edit_about_profil)).cancelable(true)
+                .fields(Input.plain(TAG_EDIT_ABOUT_INPUT).required(true).text(aboutOld)
+                        .hint(R.string.hint_edit_add_about_profil)
+                        .inputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE))
+                .show(A3techViewEditProfilActivity.this, TAG_EDIT_ABOUT_DIALOG);
     }
 }

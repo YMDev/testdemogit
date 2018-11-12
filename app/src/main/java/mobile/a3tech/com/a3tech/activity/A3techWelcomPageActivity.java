@@ -6,6 +6,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.gauravbhola.ripplepulsebackground.RipplePulseLayout;
+
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.fragment.A3techWelcomHomeFragment;
 
@@ -30,6 +32,13 @@ public class A3techWelcomPageActivity extends AppCompatActivity implements A3tec
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+         RipplePulseLayout mPulsator = (RipplePulseLayout ) findViewById(R.id.layout_ripplepulse);
+        mPulsator.startRippleAnimation();
+    }
+
+    @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
@@ -38,7 +47,7 @@ public class A3techWelcomPageActivity extends AppCompatActivity implements A3tec
     public void startAddMission() {
         Intent intentAddMissionn  = new Intent(A3techWelcomPageActivity.this, A3techAddMissionActivity.class);
         intentAddMissionn.putExtra(TAG_ADD_MISSION_FROM_WELCOM,Boolean.TRUE);
-        startActivityForResult(intentAddMissionn,REQ_ADD_MISSION_FROM_WELCOM);
+        startActivity(intentAddMissionn);
     }
 
     @Override
@@ -46,7 +55,7 @@ public class A3techWelcomPageActivity extends AppCompatActivity implements A3tec
         Intent intentAddMissionn  = new Intent(A3techWelcomPageActivity.this, A3techHomeActivity.class);
         intentAddMissionn.putExtra(TAG_ADD_MISSION_FROM_WELCOM,Boolean.TRUE);
         intentAddMissionn.putExtra(KEY_WELCOM_BROWSE_OR_ACCOUNT,TAG_WELCOM_BROWSE);
-        startActivityForResult(intentAddMissionn,REQ_ADD_MISSION_FROM_WELCOM);
+        startActivity(intentAddMissionn);
     }
 
     @Override

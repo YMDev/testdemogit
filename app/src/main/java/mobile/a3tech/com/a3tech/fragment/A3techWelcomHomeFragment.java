@@ -70,7 +70,7 @@ public class A3techWelcomHomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_welcom_home, container, false);
-        RipplePulseLayout mPulsator = (RipplePulseLayout ) viewFr.findViewById(R.id.layout_ripplepulse);
+        final RipplePulseLayout mPulsator = (RipplePulseLayout ) viewFr.findViewById(R.id.layout_ripplepulse);
         RelativeLayout containerPulse = viewFr.findViewById(R.id.container_image_pulsed);
 
         RelativeLayout containerAccount = viewFr.findViewById(R.id.container_image_account);
@@ -81,6 +81,7 @@ public class A3techWelcomHomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(mListener != null){
+                    mPulsator.stopRippleAnimation();
                     mListener.startAddMission();
                 }
             }
@@ -90,6 +91,7 @@ public class A3techWelcomHomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(mListener != null){
+                    mPulsator.stopRippleAnimation();
                     mListener.startAccount();
                 }
             }
@@ -100,6 +102,7 @@ public class A3techWelcomHomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(mListener != null){
+                    mPulsator.stopRippleAnimation();
                     mListener.startBrowse();
                 }
             }
@@ -110,6 +113,8 @@ public class A3techWelcomHomeFragment extends Fragment {
         mPulsator.startRippleAnimation();
         return viewFr;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

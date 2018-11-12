@@ -212,7 +212,7 @@ public class A3techCreateAccountActivity extends Activity implements A3techSelec
         editor.putString("conMode", "application");
         editor.commit();
         dialog.dismiss();
-        Intent mainIntent = new Intent(this, A3techHomeActivity.class);
+        Intent mainIntent = new Intent(this, A3techWelcomPageActivity.class);
         mainIntent.putExtra("nomPrenom", this.account.getPrenom()
                 + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + this.account.getNom());
         mainIntent.putExtra("nbr", user.getNbrMission()+"");

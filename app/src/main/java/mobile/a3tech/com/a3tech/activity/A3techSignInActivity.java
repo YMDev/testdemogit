@@ -112,7 +112,7 @@ String password;
         A3techUser user = (A3techUser) data;
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
                 getApplicationContext()).edit();
-        Intent mainIntent = new Intent(this, A3techHomeActivity.class);
+        Intent mainIntent = new Intent(this, A3techWelcomPageActivity.class);
         switch (method) {
 
             case Constant.KEY_USER_MANAGER_LOGIN /* 4 */:

@@ -38,15 +38,16 @@
             android:textStyle="bold" />
 
         <TextView
+            android:id="@+id/label_company"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tech_stats_label"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:fontFamily="sans-serif-meduim"
             android:text="3TECH"
             android:textColor="@color/white"
-            android:textSize="30dp"
+            android:textSize="40dp"
             android:textStyle="bold" />
 
 
@@ -77,18 +78,20 @@
                     android:src="@drawable/a3tech_add_mission_home_icon" />
             </RelativeLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/container_image_pulsed"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:fontFamily="sans-serif-meduim"
+                android:text="Besoin d'un Technicien ?"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                android:textStyle="bold" />
+
         </com.gauravbhola.ripplepulsebackground.RipplePulseLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/layout_ripplepulse"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif-meduim"
-            android:text="Besoin d'un Technicien ?"
-            android:textColor="@color/white"
-            android:textSize="18dp"
-            android:textStyle="bold" />
 
 
         <LinearLayout

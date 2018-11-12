@@ -516,7 +516,7 @@
         android:layout_above="@+id/container_actions_mission"
         android:layout_alignParentRight="true"
         rfal:rfal_frame_alpha="0.7"
-        rfal:rfal_frame_color="@color/colorPrimary">
+        rfal:rfal_frame_color="@color/semi_transparent">
 
         <com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton xmlns:rfab="http://schemas.android.com/apk/res-auto"
             android:id="@+id/activity_main_rfab"
