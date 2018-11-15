@@ -20,17 +20,19 @@ import mobile.a3tech.com.a3tech.test.SimpleAdapterCoordonnes;
 import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 
 public class A3techProfileInformationAdapter extends RecyclerView.Adapter<A3techProfileInformationAdapter.A3techPIViewHolder> {
-   Context context;
-   List objectMenu;
-   A3techUser user;
-   public A3techProfileInformationAdapter(Context con,List objectMenus, A3techUser vuser){
-       context = con;
-       objectMenu = objectMenus;
-       user = vuser;
-       if(context instanceof onEditActionsLinster){
-           mEditListener = (onEditActionsLinster) context;
-       }
-   }
+    Context context;
+    List objectMenu;
+    A3techUser user;
+    private Boolean editMode = Boolean.FALSE;
+
+    public A3techProfileInformationAdapter(Context con, List objectMenus, A3techUser vuser) {
+        context = con;
+        objectMenu = objectMenus;
+        user = vuser;
+        if (context instanceof onEditActionsLinster) {
+            mEditListener = (onEditActionsLinster) context;
+        }
+    }
 
     public class A3techPIViewHolder extends RecyclerView.ViewHolder {
         private ExpandableTextView about;
@@ -41,7 +43,7 @@ public class A3techProfileInformationAdapter extends RecyclerView.Adapter<A3tech
         public A3techPIViewHolder(View view) {
             super(view);
             about = (ExpandableTextView) view.findViewById(R.id.detail_about_user);
-            recycyleCoordonnees = view.findViewById(R.id.recycle_coordonnees);
+            /*recycyleCoordonnees = view.findViewById(R.id.recycle_coordonnees);*/
             editAbout = view.findViewById(R.id.edit_action_about);
             editCoordonnees = view.findViewById(R.id.edit_action_coordonnees);
         }
@@ -67,12 +69,28 @@ public class A3techProfileInformationAdapter extends RecyclerView.Adapter<A3tech
         holder.editCoordonnees.setVisibility(View.GONE);
         //holder.editAbout.setVisibility(View.GONE);
         // hundle edit action of about
-        holder.editAbout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               if(mEditListener != null) mEditListener.editAboutActionEnabled(holder.about.getText().toString());
-            }
-        });
+        if (editMode) {
+            holder.editAbout.setVisibility(View.VISIBLE);
+            holder.editAbout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mEditListener != null)
+                        mEditListener.editAboutActionEnabled(holder.about.getText().toString());
+                }
+            });
+            holder.editCoordonnees.setVisibility(View.VISIBLE);
+            holder.editCoordonnees.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mEditListener != null)
+                        mEditListener.editAboutActionEnabled(holder.about.getText().toString());
+                }
+            });
+        } else {
+            holder.editAbout.setVisibility(View.GONE);
+            holder.editCoordonnees.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -81,12 +99,11 @@ public class A3techProfileInformationAdapter extends RecyclerView.Adapter<A3tech
     }
 
 
-
-
-
     private onEditActionsLinster mEditListener;
-    public  interface onEditActionsLinster{
+
+    public interface onEditActionsLinster {
         void enableEditMode(Boolean enable);
+
         void editAboutActionEnabled(String oldValtype);
     }
 
@@ -96,6 +113,10 @@ public class A3techProfileInformationAdapter extends RecyclerView.Adapter<A3tech
 
     public void setmEditListener(onEditActionsLinster mEditListener) {
         this.mEditListener = mEditListener;
+    }
+
+    public void setEditMode(Boolean editMode) {
+        this.editMode = editMode;
     }
 }
 

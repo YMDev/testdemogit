@@ -167,6 +167,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     Boolean isFromWelcom = Boolean.FALSE;
 
     private void getSelectedMission() {
+
         String jsonMyObject = null;
         Bundle b = getIntent().getExtras();
         if (b != null) {
@@ -179,12 +180,24 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    traitementDisplayMissionCreated();
+                    final Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            traitementDisplayMissionCreated();
+                        }
+                    }, 200);
                 }
             });
         } else {
-            hundleMessageFromWelcomPage();
 
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    hundleMessageFromWelcomPage();
+                }
+            }, 200);
         }
 
 

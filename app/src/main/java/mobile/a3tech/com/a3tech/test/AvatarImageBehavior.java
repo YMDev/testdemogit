@@ -1,14 +1,13 @@
 package mobile.a3tech.com.a3tech.test;
-
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.View;
-import mobile.a3tech.com.a3tech.R;
+
 import de.hdodenhof.circleimageview.CircleImageView;
+import mobile.a3tech.com.a3tech.R;
 
 @SuppressWarnings("unused")
 public class AvatarImageBehavior extends CoordinatorLayout.Behavior<CircleImageView> {

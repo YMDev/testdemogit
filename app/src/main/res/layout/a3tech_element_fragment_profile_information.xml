@@ -31,77 +31,153 @@
             android:tint="@color/colorPrimary"
             android:backgroundTint="@color/colorPrimary"/>
     </RelativeLayout>
-
+<ScrollView
+    android:id="@+id/sc_ex"
+    android:layout_below="@+id/title_about_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginRight="16dp"
+    android:fillViewport="true">
     <mobile.a3tech.com.a3tech.view.ExpandableTextView
         android:id="@+id/detail_about_user"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/title_about_container"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/black"
         android:textSize="14dp"
         android:textStyle="normal" />
-
+</ScrollView>
     <LinearLayout
         android:id="@+id/space_under_about"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@id/detail_about_user"
+        android:layout_below="@id/sc_ex"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/semi_transparent"
         android:orientation="horizontal" />
 
-    <!--   <RelativeLayout
-           android:id="@+id/layout_nbr_mission"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_below="@id/space_under_about"
-           android:layout_marginLeft="16dp">
-           &lt;!&ndash;TODO to add stats&ndash;&gt;
-           <TextView
-               android:id="@+id/title_nbr_mission"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_alignParentLeft="true"
-               android:layout_centerVertical="true"
-               android:fontFamily="sans-serif-medium"
-               android:text="@string/nbr_mission"
-               android:textColor="@color/black"
-               android:textSize="20dp"
-               android:textStyle="bold" />
+    <RelativeLayout
+        android:id="@+id/layout_rating_mission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/space_under_about"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp">
 
-           <TextView
-               android:id="@+id/nbr_mission"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_centerHorizontal="true"
-               android:layout_centerVertical="true"
-               android:fontFamily="sans-serif-medium"
-               android:text="33"
-               android:textColor="@color/colorPrimary"
-               android:textSize="25dp"
-               android:textStyle="bold" />
-       </RelativeLayout>-->
-    <!--
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp">
+
+            <RelativeLayout
+                android:id="@+id/container_rating"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/style_layout_raduis">
+
+                <TextView
+                    android:id="@+id/rating_nbr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="sans-serif-meduim"
+                    android:text="4.5"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+            </RelativeLayout>
+
+            <RatingBar
+                android:id="@+id/rating_tech"
+                style="?android:attr/ratingBarStyleIndicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/container_rating"
+                android:isIndicator="true"
+                android:numStars="5"
+                android:progressTint="@color/laranja_claro"
+                android:stepSize="0.1" />
+
+            <TextView
+                android:id="@+id/rating_nbr_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/rating_tech"
+                android:fontFamily="sans-serif-light"
+                android:text="(58 avis )"
+                android:textColor="@color/black"
+                android:textSize="14dp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+   <!-- <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/container_nbr_mission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_rating_mission"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nbr_mission_value"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.87"
+            android:fontFamily="sans-serif-meduim"
+            android:textColor="@android:color/black"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:text="56" />
+
+        <TextView
+            android:id="@+id/nbr_mission_label"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nbr_mission_value"
+            android:alpha="0.54"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-meduim"
+            android:maxLines="3"
+            android:textColor="@android:color/black"
+            android:textSize="12dp"
+            android:text="@string/nbr_mission" />
+
+
+    </RelativeLayout>-->
         <LinearLayout
             android:id="@+id/space_under_nbr_mision"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_below="@id/space_under_about"
+            android:layout_below="@id/layout_rating_mission"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:background="@color/semi_transparent"
-            android:orientation="horizontal" />-->
+            android:orientation="horizontal" />
 
     <RelativeLayout
         android:id="@+id/title_coordonnes_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/space_under_about"
+        android:layout_below="@+id/space_under_nbr_mision"
         android:layout_marginLeft="16dp">
         <TextView
             android:id="@+id/title_coordonnes"
@@ -125,21 +201,294 @@
     </RelativeLayout>
 
 
-    <android.support.v7.widget.RecyclerView
+    <!--<android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_coordonnees"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title_coordonnes_container"
-        android:nestedScrollingEnabled="false"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp" />
+        android:layout_marginRight="16dp"
+        android:nestedScrollingEnabled="false" />-->
 
     <LinearLayout
+        android:id="@+id/container_coordonnees"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@+id/recycle_coordonnees"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/title_coordonnes_container">
 
+        <!--Email-->
+        <RelativeLayout
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/email_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            tools:background="@color/white">
+
+            <TextView
+                android:id="@+id/email_value"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.87"
+                android:textColor="@android:color/black"
+                android:text="Dessert Name"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/email_label"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_below="@+id/email_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.54"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="12dp"
+                android:textColor="@android:color/black"
+                android:text="@string/email_address" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_below="@+id/email_label"
+                android:background="@color/gray" />
+
+
+        </RelativeLayout>
+
+        <!--Adresse-->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/container_adresse"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            tools:background="@color/white">
+
+            <TextView
+                android:id="@+id/adresse_value"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.87"
+                android:textColor="@android:color/black"
+                android:text="Dessert Name"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/adresse_label"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_below="@+id/adresse_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.54"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="12dp"
+                android:textColor="@android:color/black"
+                android:text="@string/adresse_label" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_below="@+id/adresse_label"
+                android:background="@color/gray" />
+
+        </RelativeLayout>
+
+        <!--telephone-->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/phone_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            tools:background="@color/white">
+
+            <TextView
+                android:id="@+id/phone_value"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.87"
+                android:textColor="@android:color/black"
+                android:text="Dessert Name"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/phone_label"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_below="@+id/phone_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.54"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="12dp"
+                android:textColor="@android:color/black"
+                android:text="@string/numero_tel" />
+
+            <LinearLayout
+                android:id="@+id/layout_actions_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/call_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill_horizontal"
+                    android:src="@drawable/a3tech_call" />
+
+                <Space
+                    android:layout_width="30dp"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/send_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/a3tech_send_sms" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_below="@+id/phone_label"
+                android:background="@color/gray" />
+
+
+        </RelativeLayout>
+
+        <!--Date naissance-->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/container_date_naissance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            tools:background="@color/white">
+
+            <TextView
+                android:id="@+id/date_naissance_value"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.87"
+                android:textColor="@android:color/black"
+                android:text="Dessert Name"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/date_naissance_label"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_below="@+id/date_naissance_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.54"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="12dp"
+                android:textColor="@android:color/black"
+                android:text="@string/txtProfil_editTextDateNaissance" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_below="@+id/date_naissance_label"
+                android:background="@color/gray" />
+
+        </RelativeLayout>
+
+        <!--Date inscription-->
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/container_date_inscription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:orientation="vertical"
+            android:paddingTop="8dp"
+            tools:background="@color/white">
+
+            <TextView
+                android:id="@+id/date_inscription_value"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.87"
+                android:textColor="@android:color/black"
+                android:text="Dessert Name"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="15dp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/date_inscription_label"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_below="@+id/date_inscription_value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.54"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:fontFamily="sans-serif-meduim"
+                android:textSize="12dp"
+                android:textColor="@android:color/black"
+                android:text="@string/date_inscription_label" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
+                android:layout_below="@+id/date_inscription_label"
+                android:background="@color/gray" />
+
+        </RelativeLayout>
     </LinearLayout>
+
 
 </RelativeLayout>

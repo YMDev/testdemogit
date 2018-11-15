@@ -4,13 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".fragment.A3techProfilInformationFragment"
-    android:orientation="vertical">
+    android:isScrollContainer="true"
+    android:orientation="vertical"
+    tools:context=".fragment.A3techProfilInformationFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyle_profile_informations"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroller_profile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"></android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:scrollbars="none">
+
+        <include layout="@layout/a3tech_element_fragment_profile_information"></include>
+
+    </android.support.v4.widget.NestedScrollView>
+
 
 </LinearLayout>

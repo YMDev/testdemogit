@@ -9,11 +9,13 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.content.res.AppCompatResources;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.util.TypedValue;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
@@ -63,6 +65,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
 
     private TabLayout tabLayouProfil;
     private ViewPager viewPagerProfil;
+    private A3techProfilFragmentAdapter adaoter;
 
     private ImageView backBtn;
     private TextView userNamePname, categoryUser;
@@ -76,7 +79,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     A3techUser userToDisplay;
     A3techMission mission;
     private de.hdodenhof.circleimageview.CircleImageView circleImage;
-    private LinearLayout frameViewLayout;
+    private RelativeLayout frameViewLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,8 +127,10 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         setContentView(R.layout.a3tech_activity_view_edit_profil);
 
         bindActivity();
-        viewPagerProfil.setAdapter(new A3techProfilFragmentAdapter(getSupportFragmentManager(),
-                A3techViewEditProfilActivity.this, userToDisplay));
+        mToolbar.inflateMenu(R.menu.menu_view_profil);
+        adaoter = new A3techProfilFragmentAdapter(getSupportFragmentManager(),
+                A3techViewEditProfilActivity.this, userToDisplay);
+        viewPagerProfil.setAdapter(adaoter);
 
         tabLayouProfil.post(new Runnable() {
             @Override
@@ -175,8 +180,9 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         userNamePname = findViewById(R.id.user_name_pname_detail);
         userNamePname.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom());
         categoryUser = findViewById(R.id.user_description_detail);
-        mTitle.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom().substring(0,1)+".");
-        if(userToDisplay.getCategorie() != null)   categoryUser.setText(userToDisplay.getCategorie().getDescription());
+        mTitle.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom().substring(0, 1) + ".");
+        if (userToDisplay.getCategorie() != null)
+            categoryUser.setText(userToDisplay.getCategorie().getDescription());
         backBtn = findViewById(R.id.back_home_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,14 +209,8 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
             }
         });
 
-        containerEditProfil = findViewById(R.id.edit_action_container);
-        containerEditProfil.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // action Edit, Display Edit actions icons
 
-            }
-        });
+
     }
 
     @Override
@@ -220,7 +220,7 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
 
         handleAlphaOnTitle(percentage);
         handleToolbarTitleVisibility(percentage);
-        handleAlphaOnToolbar(percentage);
+       // handleAlphaOnToolbar(percentage);
         handleAlphaOnCircleImage(percentage);
     }
 
@@ -335,7 +335,11 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
             }
         }
     }
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_view_profil, menu);
+        return true;
+    }
     @Override
     public void onFragmentInteraction(Uri uri) {
 
@@ -352,9 +356,10 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         displayAboutEditDialogue(oldVal);
     }
 
-    private  static final String TAG_EDIT_ABOUT_INPUT = "TAG_EDIT_ABOUT_INPUT";
+    private static final String TAG_EDIT_ABOUT_INPUT = "TAG_EDIT_ABOUT_INPUT";
     private static final String TAG_EDIT_ABOUT_DIALOG = "TAG_EDIT_ABOUT_DIALOG";
-    private void displayAboutEditDialogue(String aboutOld){
+
+    private void displayAboutEditDialogue(String aboutOld) {
         SimpleFormDialog.build().title(getResources().getString(R.string.edit_about_profil)).cancelable(true)
                 .fields(Input.plain(TAG_EDIT_ABOUT_INPUT).required(true).text(aboutOld)
                         .hint(R.string.hint_edit_add_about_profil)

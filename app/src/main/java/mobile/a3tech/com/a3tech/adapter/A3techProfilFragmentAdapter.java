@@ -15,6 +15,7 @@ public class A3techProfilFragmentAdapter extends FragmentPagerAdapter {
     private String tabTitles[] = new String[]{"Profile", "Avis"};
     private Context context;
     private A3techUser user;
+    private Boolean editMode = Boolean.FALSE;
 
     public A3techProfilFragmentAdapter(FragmentManager fm, Context context, A3techUser userV) {
         super(fm);
@@ -48,5 +49,15 @@ public class A3techProfilFragmentAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         // Generate title based on item position
         return tabTitles[position];
+    }
+
+
+
+    public Boolean getEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(Boolean editMode) {
+        this.editMode = editMode;
     }
 }

@@ -734,6 +734,9 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="home_tab_0">Home</string>
     <string name="edit_about_profil">A propos</string>
     <string name="hint_edit_add_about_profil">Présentez-vous en quelques lignes pour valoriser votre profil</string>
+    <string name="adresse_label">Adresse</string>
+    <string name="numero_tel">N° Téléphone</string>
+    <string name="date_inscription_label">Date inscription</string>
 
 
 </resources>

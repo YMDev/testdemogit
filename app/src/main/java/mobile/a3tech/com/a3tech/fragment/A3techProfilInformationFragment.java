@@ -12,6 +12,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 
@@ -19,6 +22,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
@@ -28,6 +33,7 @@ import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.ObjectMenu;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
+import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,8 +53,49 @@ public class A3techProfilInformationFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+
+    @BindView(R.id.detail_about_user)
+    ExpandableTextView aboutUser;
+
+    @BindView(R.id.rating_nbr)
+    TextView ratingNumber;
+
+    @BindView(R.id.rating_tech)
+    RatingBar ratingUser;
+    @BindView(R.id.rating_nbr_text)
+    TextView numberOvReviews;
+
+    @BindView(R.id.edit_action_about)
+    ImageView editAboutAction;
+
+    @BindView(R.id.edit_action_coordonnees)
+    ImageView editCoordonneesAction;
+
+    @BindView(R.id.email_value)
+    TextView emailValue;
+
+    @BindView(R.id.adresse_value)
+    TextView adresseValue;
+
+
+    @BindView(R.id.phone_value)
+    TextView phoneValue;
+
+    @BindView(R.id.call_user)
+    ImageView callPhoneAction;
+
+    @BindView(R.id.send_msg)
+    ImageView sendMsgAction;
+
+
+    @BindView(R.id.date_naissance_value)
+    TextView dateNaissanceValue;
+
+
+    @BindView(R.id.date_inscription_value)
+    TextView dateInscriptionValue;
+
     private A3techUser user;
-    private RecyclerView recycleProfil;
     private OnFragmentInteractionListener mListener;
 
     public A3techProfilInformationFragment() {
@@ -87,7 +134,7 @@ public class A3techProfilInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_profil_information, container, false);
-        recycleProfil = viewFr.findViewById(R.id.recyle_profile_informations);
+        ButterKnife.bind(this, viewFr);
         prepareListeCoordonne();
         return viewFr;
     }
@@ -106,16 +153,12 @@ public class A3techProfilInformationFragment extends Fragment {
                     switch (method) {
                         case Constant.KEY_USER_MANAGER_GET_PROFIL:
                             A3techUser userV = (A3techUser) data;
-                            listeRetour.add(new ObjectMenu(userV.getEmail(), "Email", 1, 0));
-                            listeRetour.add(new ObjectMenu(userV.getTelephone(), "Telephone", 2, 0));
-                            listeRetour.add(new ObjectMenu(userV.getAdresse(), "Adresse", 3, 0));
-                            listeRetour.add(new ObjectMenu(user.getNbrMission() == null ? "0" : user.getNbrMission()+"", "Nombre de missions", 4, 0));
-                            listeRetour.add(new ObjectMenu(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(userV.getDateNaissance())), "Date naissance", 4, 0));
-                            A3techProfileInformationAdapter mAdapter = new A3techProfileInformationAdapter(getActivity(), listeRetour, userV);
-                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-                            recycleProfil.setLayoutManager(mLayoutManager);
-                            recycleProfil.setItemAnimator(new DefaultItemAnimator());
-                            recycleProfil.setAdapter(mAdapter);
+                            aboutUser.setText(getString(R.string.lorem));
+                            emailValue.setText(userV.getEmail());
+                            phoneValue.setText(userV.getTelephone());
+                            adresseValue.setText(userV.getAdresse());
+                            dateNaissanceValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(userV.getDateNaissance())));
+                            dateInscriptionValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(userV.getDateCreation())));
                             break;
                     }
 
@@ -128,22 +171,20 @@ public class A3techProfilInformationFragment extends Fragment {
                 }
             });
         } else {
-            listeRetour.add(new ObjectMenu(user.getEmail(), "Email", 1, 1));
-            listeRetour.add(new ObjectMenu(user.getAdresse(), "Adresse", 1, 2));
-            listeRetour.add(new ObjectMenu(user.getNbrMission() == null ? "0" : user.getNbrMission()+"", "Nombre de missions", 1, 3));
-            if(user.getDateNaissance()!= null) {
-                listeRetour.add(new ObjectMenu(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT,new Date(user.getDateNaissance())), "Date naissance", 1, 4));
-            }
-            listeRetour.add(new ObjectMenu(user.getTelephone(), "Telephone", 2, 5));
-            A3techProfileInformationAdapter mAdapter = new A3techProfileInformationAdapter(getActivity(), listeRetour, user);
-            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-            recycleProfil.setLayoutManager(mLayoutManager);
-            recycleProfil.setItemAnimator(new DefaultItemAnimator());
-            recycleProfil.setAdapter(mAdapter);
+            aboutUser.setText(getString(R.string.lorem));
+            emailValue.setText(user.getEmail());
+            phoneValue.setText(user.getTelephone());
+            adresseValue.setText(user.getAdresse());
+            if (user.getDateNaissance() != null)
+                dateNaissanceValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(user.getDateNaissance())));
+            if (user.getDateCreation() != null)
+                dateInscriptionValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(user.getDateCreation())));
+
         }
 
         return listeRetour;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -185,8 +226,4 @@ public class A3techProfilInformationFragment extends Fragment {
     }
 
 
-
-    public void enableEditMode(){
-
-    }
 }
