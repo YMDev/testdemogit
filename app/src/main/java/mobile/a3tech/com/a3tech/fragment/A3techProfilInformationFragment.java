@@ -9,9 +9,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -24,6 +28,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import eltos.simpledialogfragment.form.Input;
+import eltos.simpledialogfragment.form.SimpleFormDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
@@ -43,7 +49,7 @@ import mobile.a3tech.com.a3tech.view.ExpandableTextView;
  * Use the {@link A3techProfilInformationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class A3techProfilInformationFragment extends Fragment {
+public class A3techProfilInformationFragment extends Fragment implements A3techViewEditProfilActivity.DataUpdateListener {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -96,6 +102,7 @@ public class A3techProfilInformationFragment extends Fragment {
     TextView dateInscriptionValue;
 
     private A3techUser user;
+    private A3techViewEditProfilActivity activity;
     private OnFragmentInteractionListener mListener;
 
     public A3techProfilInformationFragment() {
@@ -120,6 +127,7 @@ public class A3techProfilInformationFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         String jsonMyObject = null;
         Bundle extras = getArguments();
         if (extras != null) {
@@ -130,13 +138,79 @@ public class A3techProfilInformationFragment extends Fragment {
         }
     }
 
+    public void startAlphaAnimation(View v, long duration, int visibility) {
+        Animation alphaAnimation = (visibility == View.VISIBLE)
+                ? AnimationUtils.loadAnimation(activity, R.anim.scale_up)
+                : AnimationUtils.loadAnimation(activity, R.anim.scale_down);
+
+        alphaAnimation.setDuration(duration);
+        alphaAnimation.setFillAfter(true);
+        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        v.startAnimation(alphaAnimation);
+        v.setVisibility(visibility);
+
+    }
+
+    public void enablEditMode(Boolean mode) {
+        editAboutAction.setVisibility(mode ? View.VISIBLE : View.GONE);
+        editCoordonneesAction.setVisibility(mode ? View.VISIBLE : View.GONE);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_profil_information, container, false);
         ButterKnife.bind(this, viewFr);
         prepareListeCoordonne();
+        activity = (A3techViewEditProfilActivity) getActivity();  // <--- add this line here
+        setRetainInstance(true);
+        actionsEdition();
         return viewFr;
+    }
+
+    private void actionsEdition() {
+        editAboutAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayAboutEditDialogue(aboutUser.getText().toString());
+            }
+        });
+
+        editCoordonneesAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayCoordonneeEditDialogue(user);
+            }
+        });
+    }
+
+    private static final String TAG_EDIT_ABOUT_INPUT = "TAG_EDIT_ABOUT_INPUT";
+    private static final String TAG_EDIT_EMAIL_INPUT = "TAG_EDIT_EMAIL_INPUT";
+    private static final String TAG_EDIT_PHONE_INPUT = "TAG_EDIT_PHONE_INPUT";
+    private static final String TAG_EDIT_ADRESSE_INPUT = "TAG_EDIT_ADRESSE_INPUT";
+    private static final String TAG_EDIT_DATE_NAISSANCE_INPUT = "TAG_EDIT_DATE_NAISSANCE_INPUT";
+    private static final String TAG_EDIT_ABOUT_DIALOG = "TAG_EDIT_ABOUT_DIALOG";
+
+    private void displayAboutEditDialogue(String aboutOld) {
+        SimpleFormDialog.build().title(getResources().getString(R.string.edit_about_profil)).cancelable(true).neg(R.string.cancel).pos(R.string.save)
+                .fields(Input.plain(TAG_EDIT_ABOUT_INPUT).required(true).text(aboutOld)
+                        .hint(R.string.hint_edit_add_about_profil)
+                        .inputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE)).theme(R.style.SimpleDialogThemeProfile)
+                .show(getActivity(), TAG_EDIT_ABOUT_DIALOG);
+    }
+
+    private void displayCoordonneeEditDialogue(A3techUser user) {
+        SimpleFormDialog.build().title(getResources().getString(R.string.coordonnees)).cancelable(true).neg(R.string.cancel).pos(R.string.save)
+                .fields(Input.phone(TAG_EDIT_PHONE_INPUT).required(true).text(user.getTelephone())
+                                .hint(R.string.hint_edit_add_phone_profil)
+                                .inputType(InputType.TYPE_CLASS_PHONE), Input.phone(TAG_EDIT_ADRESSE_INPUT).required(true).text(user.getAdresse())
+                                .hint(R.string.hint_edit_add_adresse_profile)
+                                .inputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE),
+                        Input.phone(TAG_EDIT_DATE_NAISSANCE_INPUT).required(true).text(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(user.getDateNaissance())))
+                                .hint(R.string.hint_edit_add_date_naissance)
+                                .inputType(InputType.TYPE_CLASS_DATETIME)).theme(R.style.SimpleDialogThemeProfile)
+                .show(getActivity(), TAG_EDIT_ABOUT_DIALOG);
     }
 
 
@@ -196,18 +270,18 @@ public class A3techProfilInformationFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+        ((A3techViewEditProfilActivity) context).setmDataUpdateListener(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onDataUpdate(Boolean modeEdit) {
+        enablEditMode(modeEdit);
     }
 
     /**

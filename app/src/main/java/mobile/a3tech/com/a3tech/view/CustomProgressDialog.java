@@ -24,7 +24,7 @@ public class CustomProgressDialog {
     	myTitle.setText(text);*/
     	progressDialog.setContentView(content);
     	progressDialog.setIndeterminate(true);
-		progressDialog.setCancelable(false);
+		progressDialog.setCancelable(true);
         return progressDialog;
     }
 

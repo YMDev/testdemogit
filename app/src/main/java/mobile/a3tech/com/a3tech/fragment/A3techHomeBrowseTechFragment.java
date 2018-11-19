@@ -15,6 +15,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ import mobile.a3tech.com.a3tech.manager.CategorieManager;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.utils.NetworkUtils;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 /**
@@ -49,7 +52,8 @@ public class A3techHomeBrowseTechFragment extends Fragment {
 
     private RecyclerView recycleSelectCategory;
     private OnFragmentInteractionListener mListener;
-
+    private RelativeLayout networkOn, networkDown;
+    private TextView tapToRetry;
     public A3techHomeBrowseTechFragment() {
         // Required empty public constructor
     }
@@ -87,6 +91,23 @@ public class A3techHomeBrowseTechFragment extends Fragment {
         // Inflate the layout for this fragment
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_home_browse_tech, container, false);
         recycleSelectCategory = viewFr.findViewById(R.id.recycle_select_category_browse_tech);
+
+        networkDown = viewFr.findViewById(R.id.network_down);
+        networkOn = viewFr.findViewById(R.id.network_on);
+        networkOn.setVisibility(View.VISIBLE);
+        networkDown.setVisibility(View.GONE);
+
+
+      /*  tapToRetry = viewFr.findViewById(R.id.tap_to_refresh_label);
+
+        tapToRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                prepareListeCategories();
+            }
+        });*/
+
+
         prepareListeCategories();
         viewFr.setFocusableInTouchMode(true);
         viewFr.requestFocus();
@@ -118,7 +139,7 @@ public class A3techHomeBrowseTechFragment extends Fragment {
 
             @Override
             public void dataLoadingError(int errorCode) {
-
+                waitingDialogue.dismiss();
             }
         });
         return listeRetour;
@@ -164,7 +185,27 @@ public class A3techHomeBrowseTechFragment extends Fragment {
         void actionNext(Integer typeAction, Object data);
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(NetworkUtils.isNetworkAvailable(getActivity())){
+            onNetworkUp();
+        }
+    }
+
     public OnFragmentInteractionListener getmListener() {
         return mListener;
+    }
+
+    public void onNetworkDown() {
+        networkOn.setVisibility(View.GONE);
+        networkDown.setVisibility(View.VISIBLE);
+    }
+
+    public void onNetworkUp() {
+        networkOn.setVisibility(View.VISIBLE);
+        networkDown.setVisibility(View.GONE);
+        prepareListeCategories();
     }
 }

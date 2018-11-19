@@ -41,7 +41,7 @@ import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
-public class A3techSearchMissionsResultsActivity extends Activity {
+public class A3techSearchMissionsResultsActivity extends BaseActivity {
 
 
     public static final String TYPE_SRC_PARAM = "SRC_ACTION_SEARCH";

@@ -58,7 +58,7 @@ import mobile.a3tech.com.a3tech.view.A3techDialogChooseMissionCancelORReport;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 
-public class A3techDisplayMissionActivity extends AppCompatActivity implements A3techDialogAddReview.AddReviewParam, SimpleDialog.OnDialogResultListener, RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class A3techDisplayMissionActivity extends BaseActivity implements A3techDialogAddReview.AddReviewParam, SimpleDialog.OnDialogResultListener, RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
 
 
     public static final String TAG_MISSION_SELECTED_FROM_HOME_ACTIVITY = "TAG_SELECTED_MISION";

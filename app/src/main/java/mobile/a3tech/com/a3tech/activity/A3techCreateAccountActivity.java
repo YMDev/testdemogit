@@ -33,7 +33,7 @@ import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
-public class A3techCreateAccountActivity extends Activity implements A3techSelecteAccountFragment.OnFragmentInteractionListener, A3techStep1CreatAccountFragment.OnFragmentInteractionListener, A3techAddUserNameFragment.OnFragmentInteractionListener, A3techAddEmailFragment.OnFragmentInteractionListener, A3techAddPasswordFragment.OnFragmentInteractionListener, DataLoadCallback {
+public class A3techCreateAccountActivity extends BaseActivity implements A3techSelecteAccountFragment.OnFragmentInteractionListener, A3techStep1CreatAccountFragment.OnFragmentInteractionListener, A3techAddUserNameFragment.OnFragmentInteractionListener, A3techAddEmailFragment.OnFragmentInteractionListener, A3techAddPasswordFragment.OnFragmentInteractionListener, DataLoadCallback {
     public static final int DEST_HOME = 0;
     public static final int DEST_SELECT_ACCOUNT = 1;
     public static final int DEST_TYPE_USERNAME = 2;

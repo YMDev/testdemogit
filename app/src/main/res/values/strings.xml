@@ -737,6 +737,20 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="adresse_label">Adresse</string>
     <string name="numero_tel">N° Téléphone</string>
     <string name="date_inscription_label">Date inscription</string>
+    <string name="save">Sauvegarder</string>
+    <string name="hint_edit_add_phone_profil">Ajouter un N° de Téléphone</string>
+    <string name="hint_edit_add_adresse_profile">Ajouter une Adresse valide</string>
+    <string name="hint_edit_add_date_naissance">Ajouter votre date de naissance</string>
+    <string name="network_error_text">"Vous devez disposer d'une connexion de données pour utiliser les services de l'application."</string>
+    <string name="no_connection">Pas de connection</string>
+    <string name="tap_to_refresh">Taper pour réssayer</string>
+    <string name="connexion_retablie">connexion rétablie</string>
+    <string name="deconnexion">Oui, Quitter</string>
+    <string name="deconnexion_label">Deconnexion</string>
+    <string name="msg_deconnexion">Voulez-vous vraiment quitter l\'application ?</string>
+    <string name="edit">Modifier</string>
+    <string name="ignore_modifications_label">Annuler les modifications</string>
+    <string name="ignore_modifications_msg">Voulez-vous annuler les modifications ?</string>
 
 
 </resources>

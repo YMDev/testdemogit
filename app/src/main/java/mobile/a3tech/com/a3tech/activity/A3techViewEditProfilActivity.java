@@ -1,12 +1,23 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
@@ -18,18 +29,25 @@ import android.util.TypedValue;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.File;
+
+import eltos.simpledialogfragment.SimpleDialog;
 import eltos.simpledialogfragment.form.Input;
 import eltos.simpledialogfragment.form.SimpleFormDialog;
 import mobile.a3tech.com.a3tech.R;
@@ -37,12 +55,17 @@ import mobile.a3tech.com.a3tech.adapter.A3techProfilFragmentAdapter;
 import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techProfilInformationFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techReviewsFragment;
+import mobile.a3tech.com.a3tech.images.Util;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.ImageCompression;
+import mobile.a3tech.com.a3tech.utils.ImageManager;
+import mobile.a3tech.com.a3tech.utils.ImagesStuffs;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
+import mobile.a3tech.com.a3tech.view.CircleImageView;
 
-public class A3techViewEditProfilActivity extends AppCompatActivity implements AppBarLayout.OnOffsetChangedListener, A3techProfilInformationFragment.OnFragmentInteractionListener, A3techReviewsFragment.OnFragmentInteractionListener, A3techProfileInformationAdapter.onEditActionsLinster {
+public class A3techViewEditProfilActivity extends BaseActivity implements AppBarLayout.OnOffsetChangedListener, A3techReviewsFragment.OnFragmentInteractionListener, SimpleDialog.OnDialogResultListener {
     private static final float PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR = 0.72f;
     private static final float PERCENTAGE_TO_SHOW_TOOLBAR = 0.7f;
     private static final float PERCENTAGE_TO_HIDE_CIRCLE_IMAGE = 0.5f;
@@ -52,13 +75,16 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     public static final String ARG_USER_OBJECT = "ARG_USER_OBJECT";
     public static final String ARG_SRC_ACTION = "ARG_SRC_ACTION";
     public static final String ARG_MISSION_OBJECT = "ARG_MISSION_OBJECT";
-
+    public static final String TAG_IGNORE_MODIFICATION_DIALOGUE  = "TAG_IGNORE_MODIFICATION_DIALOGUE";
+    private static final int PICK_FROM_CAMERA = 31;
+    private static final int PICK_FROM_GALLERY = 32;
     private boolean mIsTheTitleVisible = false;
     private boolean mIsTheTitleContainerVisible = true;
     private boolean mIsTheToolbarVisible = false;
     private boolean mIsTheCircleVisible = true;
 
     private LinearLayout mTitleContainer;
+    private LinearLayout layoutEditImageUser;
     private TextView mTitle;
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
@@ -67,19 +93,22 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     private ViewPager viewPagerProfil;
     private A3techProfilFragmentAdapter adaoter;
 
-    private ImageView backBtn;
+    private ImageView editAbout, editCoordonnees;
     private TextView userNamePname, categoryUser;
     private Boolean isFromHomeAccount = false;
     private Boolean isFromAddMission = false;
     private Boolean isFromBrowseTech = false;
     private Boolean isFromDisplayMission = false;
+    private Boolean isModeEdition = false;
     private LinearLayout validationContainer;
-    private LinearLayout containerEditProfil;
+    private LinearLayout containerNameUSer;
     private Button btnValidationSelection;
     A3techUser userToDisplay;
     A3techMission mission;
-    private de.hdodenhof.circleimageview.CircleImageView circleImage;
+    private CircleImageView circleImage;
+    private FloatingActionButton fabEdit, fabHire, fabSave;
     private RelativeLayout frameViewLayout;
+    private TextView titleToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,10 +153,9 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         }
 
 
-        setContentView(R.layout.a3tech_activity_view_edit_profil);
+        setContentView(R.layout.a3tech_actvity_view_edit_profile_v2);
 
         bindActivity();
-        mToolbar.inflateMenu(R.menu.menu_view_profil);
         adaoter = new A3techProfilFragmentAdapter(getSupportFragmentManager(),
                 A3techViewEditProfilActivity.this, userToDisplay);
         viewPagerProfil.setAdapter(adaoter);
@@ -161,44 +189,61 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
 
             }
         });
-        startAlphaAnimation(mTitle, 0, View.INVISIBLE);
+        startAlphaAnimation(titleToolbar, 0, View.INVISIBLE);
 
     }
 
     private void bindActivity() {
-        mToolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        mTitle = (TextView) findViewById(R.id.main_textview_title);
-        mTitleContainer = (LinearLayout) findViewById(R.id.main_linearlayout_title);
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.main_appbar);
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         viewPagerProfil = (ViewPager) findViewById(R.id.viewpager_profile_detail);
         tabLayouProfil = (TabLayout) findViewById(R.id.tabs_profil);
-        circleImage = findViewById(R.id.avatare_user_cicle);
+        circleImage = findViewById(R.id.img_profile_pic);
+        fabEdit = findViewById(R.id.fabEdit);
+        fabHire = findViewById(R.id.fabhire);
+        fabSave = findViewById(R.id.fabSave);
         frameViewLayout = findViewById(R.id.frame_view_account_detail);
+        editAbout = findViewById(R.id.edit_action_about);
+        editCoordonnees = findViewById(R.id.edit_action_coordonnees);
+        containerNameUSer = findViewById(R.id.container_name_user);
         final LetterTileProvider tileProvider = new LetterTileProvider(A3techViewEditProfilActivity.this);
         final Bitmap letterTile = tileProvider.getLetterTile(userToDisplay.getNom(), userToDisplay.getNom(), 88, 88);
         circleImage.setImageBitmap(letterTile);
-        userNamePname = findViewById(R.id.user_name_pname_detail);
+        titleToolbar = findViewById(R.id.user_name_toolbar);
+        titleToolbar.setText(userToDisplay.getNom());
+        userNamePname = findViewById(R.id.txt_name_p);
         userNamePname.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom());
-        categoryUser = findViewById(R.id.user_description_detail);
-        mTitle.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom().substring(0, 1) + ".");
+        categoryUser = findViewById(R.id.txt_category);
         if (userToDisplay.getCategorie() != null)
             categoryUser.setText(userToDisplay.getCategorie().getDescription());
-        backBtn = findViewById(R.id.back_home_btn);
+
+        layoutEditImageUser = findViewById(R.id.edit_user_image_layout);
+        layoutEditImageUser.setVisibility(View.GONE);
+
+        layoutEditImageUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectImage();
+            }
+        });
+        /*backBtn = findViewById(R.id.back_home_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 A3techViewEditProfilActivity.this.finish();
             }
-        });
-        validationContainer = findViewById(R.id.validation_selection_container);
-        btnValidationSelection = findViewById(R.id.validate_selection);
-        if (isFromHomeAccount || isFromDisplayMission) {
-            validationContainer.setVisibility(View.GONE);
+        });*/
+        if (isFromHomeAccount) {
+            fabHire.setVisibility(View.GONE);
+            fabSave.setVisibility(View.GONE);
+            fabEdit.setVisibility(View.VISIBLE);
         } else {
-            validationContainer.setVisibility(View.VISIBLE);
+            fabHire.setVisibility(View.VISIBLE);
+            fabSave.setVisibility(View.GONE);
+            fabEdit.setVisibility(View.GONE);
         }
 
-        btnValidationSelection.setOnClickListener(new View.OnClickListener() {
+        fabHire.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mission.setTechnicien(userToDisplay);
@@ -210,6 +255,38 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         });
 
 
+        fabSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //TODO save profile change
+                enableEditionMode(Boolean.FALSE);
+            }
+        });
+
+        fabEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                enableEditionMode(Boolean.TRUE);
+            }
+        });
+    }
+
+    private void enableEditionMode(Boolean isModeEditionV) {
+        if (isModeEditionV) {
+            startAlphaAnimation(fabEdit, 200, View.INVISIBLE);
+            startAlphaAnimation(fabSave, 200, View.VISIBLE);
+            startAlphaAnimation(layoutEditImageUser, 200, View.VISIBLE);
+            //pour lancer le mode edition dy fragment "PROFIL"
+            if (mDataUpdateListener != null) mDataUpdateListener.onDataUpdate(true);
+            isModeEdition = Boolean.TRUE;
+        } else {
+            startAlphaAnimation(fabEdit, 200, View.VISIBLE);
+            startAlphaAnimation(fabSave, 200, View.INVISIBLE);
+            startAlphaAnimation(layoutEditImageUser, 200, View.INVISIBLE);
+            //pour lancer le mode edition dy fragment "PROFIL"
+            if (mDataUpdateListener != null) mDataUpdateListener.onDataUpdate(false);
+            isModeEdition = Boolean.FALSE;
+        }
 
     }
 
@@ -217,10 +294,9 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     public void onOffsetChanged(AppBarLayout appBarLayout, int offset) {
         int maxScroll = appBarLayout.getTotalScrollRange();
         float percentage = (float) Math.abs(offset) / (float) maxScroll;
-
-        handleAlphaOnTitle(percentage);
         handleToolbarTitleVisibility(percentage);
-       // handleAlphaOnToolbar(percentage);
+        /*handleToolbarTitleVisibility(percentage);
+       // handleAlphaOnToolbar(percentage);*/
         handleAlphaOnCircleImage(percentage);
     }
 
@@ -228,14 +304,14 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         if (percentage >= PERCENTAGE_TO_SHOW_TITLE_AT_TOOLBAR) {
 
             if (!mIsTheTitleVisible) {
-                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                startAlphaAnimation(titleToolbar, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
                 mIsTheTitleVisible = true;
             }
 
         } else {
 
             if (mIsTheTitleVisible) {
-                startAlphaAnimation(mTitle, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                startAlphaAnimation(titleToolbar, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
                 mIsTheTitleVisible = false;
             }
         }
@@ -244,14 +320,14 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
     private void handleAlphaOnTitle(float percentage) {
         if (percentage >= PERCENTAGE_TO_HIDE_TITLE_DETAILS) {
             if (mIsTheTitleContainerVisible) {
-                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
+                startAlphaAnimation(titleToolbar, ALPHA_ANIMATIONS_DURATION, View.INVISIBLE);
                 mIsTheTitleContainerVisible = false;
             }
 
         } else {
 
             if (!mIsTheTitleContainerVisible) {
-                startAlphaAnimation(mTitleContainer, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
+                startAlphaAnimation(titleToolbar, ALPHA_ANIMATIONS_DURATION, View.VISIBLE);
                 mIsTheTitleContainerVisible = true;
             }
         }
@@ -278,6 +354,18 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         if (percentage >= PERCENTAGE_TO_HIDE_CIRCLE_IMAGE) {
             if (mIsTheCircleVisible) {
                 startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
+                startAlphaAnimation(containerNameUSer, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
+                if (isFromHomeAccount) {
+                    if (!isModeEdition) {
+                        startAlphaAnimation(fabEdit, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
+                    } else {
+                        startAlphaAnimation(layoutEditImageUser, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
+                        /*startAlphaAnimation(fabSave, ALPHA_ANIMATIONS_DURATION_TOOL, View.GONE);*/
+                    }
+                } else {
+                    startAlphaAnimation(fabHire, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
+                }
+
                 mIsTheCircleVisible = false;
             }
 
@@ -285,6 +373,17 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
 
             if (!mIsTheCircleVisible) {
                 startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
+                startAlphaAnimation(containerNameUSer, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
+                if (isFromHomeAccount) {
+                    if (!isModeEdition) {
+                        startAlphaAnimation(fabEdit, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
+                    } else {
+                        startAlphaAnimation(layoutEditImageUser, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
+                        /*startAlphaAnimation(fabSave, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);*/
+                    }
+                } else {
+                    startAlphaAnimation(fabHire, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
+                }
                 mIsTheCircleVisible = true;
             }
         }
@@ -300,15 +399,16 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
         frameViewLayout.setLayoutParams(layoutParams);
     }
 
-    public static void startAlphaAnimation(View v, long duration, int visibility) {
-        AlphaAnimation alphaAnimation = (visibility == View.VISIBLE)
-                ? new AlphaAnimation(0f, 1f)
-                : new AlphaAnimation(1f, 0f);
+    public void startAlphaAnimation(View v, long duration, int visibility) {
+        Animation alphaAnimation = (visibility == View.VISIBLE)
+                ? AnimationUtils.loadAnimation(A3techViewEditProfilActivity.this, R.anim.scale_up)
+                : AnimationUtils.loadAnimation(A3techViewEditProfilActivity.this, R.anim.scale_down);
 
         alphaAnimation.setDuration(duration);
         alphaAnimation.setFillAfter(true);
+        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
         v.startAnimation(alphaAnimation);
-
+        v.setVisibility(visibility);
     }
 
     private void setTabBG(int tab1, int tab2) {
@@ -335,26 +435,25 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
             }
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_view_profil, menu);
+        /*getMenuInflater().inflate(R.menu.menu_view_profil, menu);*/
         return true;
     }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
     }
 
 
-    @Override
-    public void enableEditMode(Boolean enable) {
 
-    }
 
-    @Override
+   /* @Override
     public void editAboutActionEnabled(String oldVal) {
         displayAboutEditDialogue(oldVal);
-    }
+    }*/
 
     private static final String TAG_EDIT_ABOUT_INPUT = "TAG_EDIT_ABOUT_INPUT";
     private static final String TAG_EDIT_ABOUT_DIALOG = "TAG_EDIT_ABOUT_DIALOG";
@@ -365,5 +464,166 @@ public class A3techViewEditProfilActivity extends AppCompatActivity implements A
                         .hint(R.string.hint_edit_add_about_profil)
                         .inputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE))
                 .show(A3techViewEditProfilActivity.this, TAG_EDIT_ABOUT_DIALOG);
+    }
+
+    DataUpdateListener mDataUpdateListener;
+
+    @Override
+    public boolean onResult(@NonNull String dialogTag, int which, @NonNull Bundle extras) {
+        if(dialogTag.equals(TAG_IGNORE_MODIFICATION_DIALOGUE)){
+            if(which == BUTTON_POSITIVE){
+                enableEditionMode(false);
+            }
+        }
+        return false;
+    }
+
+    public interface DataUpdateListener {
+        void onDataUpdate(Boolean modeEdit);
+    }
+
+    public void setmDataUpdateListener(DataUpdateListener mDataUpdateListener) {
+        this.mDataUpdateListener = mDataUpdateListener;
+    }
+
+    private String mAgentPictureName;
+    private String mAgentPicturePath;
+    Uri imageUri;
+
+    private void selectImage() {
+        CharSequence[] items = new CharSequence[]{
+                getString(R.string.txtPostage2_attachementItemPrendreImage),
+                getString(R.string.txtPostage2_attachementItemChoisirImage),
+                getString(R.string.txtPostage2_attachementItemAnnuler)};
+        AlertDialog.Builder builder = new AlertDialog.Builder(A3techViewEditProfilActivity.this);
+        builder.setTitle(getString(R.string.txtPostage2_textViewAttachmentTitleDialog));
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int item) {
+
+                switch (item) {
+                    case 0 /* 0 */:
+                        String[] permission = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.CAMERA"};
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(permission, 201);
+                        }
+
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                        ContentValues values = new ContentValues();
+                        values.put(MediaStore.Images.Media.TITLE, "New Picture");
+                        values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+                        imageUri = getContentResolver().insert(
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                        startActivityForResult(intent, PICK_FROM_CAMERA);
+                        break;
+                    case 1 /* 1 */:
+                        String[] permissions = {"android.permission.WRITE_EXTERNAL_STORAGE", "android.permission.READ_EXTERNAL_STORAGE", "android.permission.READ_INTERNAL_STORAGE"};
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                            requestPermissions(permissions, 201);
+                        }
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+                        if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                            return;
+                        }
+
+                        Intent intentPck = new Intent();
+                        intentPck.setType("image/*");
+                        intentPck.setAction(Intent.ACTION_GET_CONTENT);
+                        startActivityForResult(Intent.createChooser(intentPck, "Select Picture"), PICK_FROM_GALLERY);
+                        break;
+                    default:
+                        dialog.dismiss();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    String image_str;
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode != -1) {
+            return;
+        }
+        if (requestCode == PICK_FROM_GALLERY) {
+            Uri selectedImage = data.getData();
+            try {
+                ImageCompression ic = new ImageCompression(getBaseContext());
+                // Bitmap selectedPic = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
+                Bitmap photo = ic.compressImage(ImagesStuffs.getRealPathFromURI(A3techViewEditProfilActivity.this, selectedImage));
+                if (photo != null) {
+                    circleImage.setImageBitmap(photo);
+                    image_str = ImageManager.getInstance().getString(photo);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+        if (requestCode == PICK_FROM_CAMERA) {
+            try {
+
+                ImageCompression ic = new ImageCompression(getBaseContext());
+                Bitmap photo = ic.compressImage(ImagesStuffs.getRealPathFromURI(A3techViewEditProfilActivity.this, imageUri));
+                if (photo != null) {
+                    circleImage.setImageBitmap(photo);
+                    image_str = ImageManager.getInstance().getString(photo);
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (requestCode == PICK_FROM_CAMERA || requestCode == PICK_FROM_GALLERY) {
+            if (requestCode == PICK_FROM_GALLERY) {
+                Util.saveImage(Util.getBitmap(
+                        Util.getRealPathFromURI(this, data.getData()),
+                        Util.MAX_IMAGE_SIZE), mAgentPictureName.replace(".jpg",
+                        ""));
+            }
+            try {
+                Bitmap picture = Util.getBitmap(mAgentPicturePath,
+                        Util.MAX_IMAGE_SIZE);
+                if (picture != null) {
+                    picture = Util.adjustImageOrientation(mAgentPicturePath,
+                            picture);
+                } else {
+                    new File(mAgentPicturePath).exists();
+                }
+                if (picture != null) {
+                    circleImage.setImageBitmap(picture);
+                    image_str = ImageManager.getInstance().getString(picture);
+                }
+            } catch (Exception e) {
+            }
+            Util.deleteDirectory(new File(new StringBuilder(String
+                    .valueOf(Environment.getExternalStorageDirectory()
+                            .getAbsolutePath())).append("/KhodaraTempImages")
+                    .toString()));
+        }
+    }
+
+
+    @Override
+    public void onBackPressed() {
+
+        if (isModeEdition) {
+            SimpleDialog.build().theme(R.style.SimpleDialogThemeProfile).title(R.string.ignore_modifications_label).msg(R.string.ignore_modifications_msg).pos(R.string.save).neg(R.string.cancel).show(A3techViewEditProfilActivity.this, TAG_IGNORE_MODIFICATION_DIALOGUE);
+        }else{
+            super.onBackPressed();
+        }
     }
 }

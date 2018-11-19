@@ -178,7 +178,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             @Override
             public void onClick(View v) {
                 hideKeyboard();
-                SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission);
+                SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission).theme(R.style.SimpleDialogThemeProfile);
                 cal.setCancelable(true);
                 cal.show(A3techPostMissionFragment.this, TAG_CALENDAR_MISSION);
             }
@@ -203,7 +203,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             @Override
             public void onClick(View view) {
                 hideKeyboard();
-                SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission);
+                SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission).theme(R.style.SimpleDialogThemeProfile);
                 cal.setCancelable(true);
                 cal.show(A3techPostMissionFragment.this, TAG_CALENDAR_MISSION);
             }
@@ -373,13 +373,13 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
     }
 
     private void showAlarmDatePickup() {
-        SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission).minDate(new Date().getTime()).cancelable(true).neg(R.string.cancel).pos(R.string.ok_label);
+        SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission).minDate(new Date().getTime()).cancelable(true).neg(R.string.cancel).pos(R.string.ok_label).theme(R.style.SimpleDialogThemeProfile);
         cal.setCancelable(true);
         cal.show(this, TAG_CALENDAR_MISSION);
     }
 
     private void showAlarmDateTimePickup() {
-        SimpleTimeDialog cal = SimpleTimeDialog.build().title(R.string.choose_time_mission).cancelable(true).neg(R.string.cancel).pos(R.string.ok_label);
+        SimpleTimeDialog cal = SimpleTimeDialog.build().title(R.string.choose_time_mission).cancelable(true).neg(R.string.cancel).pos(R.string.ok_label).theme(R.style.SimpleDialogThemeProfile);
         cal.setCancelable(true);
         cal.show(this, TAG_TIME_MISSION);
     }

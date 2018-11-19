@@ -1,5 +1,7 @@
 package mobile.a3tech.com.a3tech.service;
 
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -96,18 +98,25 @@ public class AbstractService {
 			return result;
 		
 		} catch (UnsupportedEncodingException e) {
+			Log.e("CNXION KKKK","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
 			throw new EducationException("Cannot read params.", e);
 		} catch (SocketTimeoutException e) {
+			Log.e("CNXION KKKK1","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
 			throw new EducationException(CONNECTION_ERROR, e);
 		} catch (ClientProtocolException e) {
+			Log.e("CNXION KKKK2","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
 			throw new EducationException(CONNECTION_ERROR, e);
 		} catch (ConnectTimeoutException e) {
+			Log.e("CNXION KKKK3","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
 			throw new EducationException(CONNECTION_ERROR, e);
 		} catch (UnknownHostException e) {
+			Log.e("CNXION KKKK4","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
 			throw new EducationException(CONNECTION_ERROR, e);
 		} catch (IOException e) {
+			Log.e("CNXION KKKK5","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
 			throw new EducationException("Cannot read JSON stream.", e);
 		} catch (Exception e) {
+			Log.e("CNXION KKKK6","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
 			throw new EducationException("Cannot read JSON stream.", e);
 		}
 	}

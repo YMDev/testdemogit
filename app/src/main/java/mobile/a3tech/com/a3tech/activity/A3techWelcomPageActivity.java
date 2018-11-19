@@ -11,7 +11,7 @@ import com.gauravbhola.ripplepulsebackground.RipplePulseLayout;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.fragment.A3techWelcomHomeFragment;
 
-public class A3techWelcomPageActivity extends AppCompatActivity implements A3techWelcomHomeFragment.OnFragmentInteractionListener{
+public class A3techWelcomPageActivity extends BaseActivity implements A3techWelcomHomeFragment.OnFragmentInteractionListener{
 
     public static final String TAG_ADD_MISSION_FROM_WELCOM = "TAG_ADD_MISSION_FROM_WELCOM";
     public static final int REQ_ADD_MISSION_FROM_WELCOM = 9175;

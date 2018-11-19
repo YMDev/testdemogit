@@ -3,13 +3,56 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.A3techHomeBrowseTechFragment"
-    android:background="@color/white">
+    android:background="@color/white"
+    tools:context=".fragment.A3techHomeBrowseTechFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycle_select_category_browse_tech"
+    <RelativeLayout
+        android:id="@+id/network_on"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="6dp"></android.support.v7.widget.RecyclerView>
+        android:visibility="visible">
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_select_category_browse_tech"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="6dp"></android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/network_down"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_above="@id/no_connection_label"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/a3tech_no_network" />
+
+        <TextView
+            android:id="@+id/no_connection_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-meduim"
+            android:text="@string/no_connection"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+        <!-- <TextView
+             android:id="@+id/tap_to_refresh_label"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_below="@id/no_connection_label"
+             android:layout_centerHorizontal="true"
+             android:layout_centerInParent="true"
+             android:text="@string/tap_to_refresh"
+             android:textStyle="normal"
+             android:textSize="14dp"
+             android:clickable="true"
+             android:fontFamily="sans-serif-meduim"
+             android:drawableLeft="@drawable/a3tech_retry_action"/>-->
+    </RelativeLayout>
 </FrameLayout>

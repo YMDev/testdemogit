@@ -29,7 +29,8 @@
             android:layout_marginRight="5dp"
             android:src="@drawable/a3tech_edit_profil_action"
             android:tint="@color/colorPrimary"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorPrimary"
+            android:visibility="gone"/>
     </RelativeLayout>
 <ScrollView
     android:id="@+id/sc_ex"
@@ -197,7 +198,8 @@
             android:layout_marginRight="5dp"
             android:src="@drawable/a3tech_edit_profil_action"
             android:tint="@color/colorPrimary"
-            android:backgroundTint="@color/colorPrimary"/>
+            android:backgroundTint="@color/colorPrimary"
+            android:visibility="gone"/>
     </RelativeLayout>
 
 

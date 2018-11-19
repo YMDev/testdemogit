@@ -16,6 +16,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -33,6 +35,7 @@ import mobile.a3tech.com.a3tech.model.A3techNotificationType;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterMission;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.utils.NetworkUtils;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
@@ -56,15 +59,17 @@ public class A3techMissionsHomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     String keyWord = "";
-    String premium ="" ;
+    String premium = "";
     String lang = "";
     String connectedUser = "";
-    String password ="" ;
+    String password = "";
     int distance = -1;
     int limit = 10;
 
     private RecyclerView recycleMission;
     private FloatingActionButton addMission;
+    private RelativeLayout networkOn, networkDown;
+    private TextView tapToRetry;
 
     private OnFragmentInteractionListener mListener;
 
@@ -110,9 +115,35 @@ public class A3techMissionsHomeFragment extends Fragment {
         this.password = prefs.getString("password", "");
         this.lang = prefs.getString("ApplicationLanguage",
                 Constant.LANGUAGE_FRENSH);
-       View viewFr = inflater.inflate(R.layout.fragment_a3tech_missions_home, container, false);
-       recycleMission = viewFr.findViewById(R.id.recycle_missions);
+        View viewFr = inflater.inflate(R.layout.fragment_a3tech_missions_home, container, false);
+        recycleMission = viewFr.findViewById(R.id.recycle_missions);
+        networkDown = viewFr.findViewById(R.id.network_down);
+        networkOn = viewFr.findViewById(R.id.network_on);
+        /*tapToRetry = viewFr.findViewById(R.id.tap_to_refresh_label);
 
+        tapToRetry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshMissionsList();
+            }
+        });*/
+        networkOn.setVisibility(View.VISIBLE);
+        networkDown.setVisibility(View.GONE);
+        refreshMissionsList();
+
+        addMission = viewFr.findViewById(R.id.add_mission);
+        addMission.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // start activity add mission
+                startActivityForResult(new Intent(getActivity(), A3techAddMissionActivity.class), REQ_ADD_MISSION);
+            }
+        });
+        return viewFr;
+    }
+
+
+    private void refreshMissionsList() {
         final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
         MissionManager.getInstance().filtreMission(lang, connectedUser,
                 keyWord, String.valueOf(distance), "",
@@ -122,7 +153,7 @@ public class A3techMissionsHomeFragment extends Fragment {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
                         List<A3techMission> listeRetour = (List<A3techMission>) data;
-                        SimpleAdapterMission adapter = new SimpleAdapterMission(getActivityContext(),listeRetour, (A3techHomeActivity) getActivityContext());
+                        SimpleAdapterMission adapter = new SimpleAdapterMission(getActivityContext(), listeRetour, (A3techHomeActivity) getActivityContext());
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
                         recycleMission.setLayoutManager(mLayoutManager);
                         recycleMission.setItemAnimator(new DefaultItemAnimator());
@@ -132,19 +163,9 @@ public class A3techMissionsHomeFragment extends Fragment {
 
                     @Override
                     public void dataLoadingError(int errorCode) {
-
+                        dd.dismiss();
                     }
                 });
-
-       addMission = viewFr.findViewById(R.id.add_mission);
-       addMission.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               // start activity add mission
-               startActivityForResult(new Intent(getActivity(), A3techAddMissionActivity.class),REQ_ADD_MISSION);
-           }
-       });
-        return viewFr;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -155,6 +176,7 @@ public class A3techMissionsHomeFragment extends Fragment {
     }
 
     Context activityContext;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -201,17 +223,17 @@ public class A3techMissionsHomeFragment extends Fragment {
                 if (resultCode == Activity.RESULT_OK) {
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
                     final A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
-                    ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
+                    ((SimpleAdapterMission) recycleMission.getAdapter()).addMissionb(mission);
 
                     //TODO create mission
-                    final ProgressDialog dialogWaiting = CustomProgressDialog.createProgressDialog(getActivity(),"");
+                    final ProgressDialog dialogWaiting = CustomProgressDialog.createProgressDialog(getActivity(), "");
                     MissionManager.getInstance().createMission(mission, new DataLoadCallback() {
                         @Override
                         public void dataLoaded(Object data, int method, int typeOperation) {
-                           //TODO commentaire a reconstituer.
-                            String commentaire = "Demande créée pour une Mission en  "+mission.getCategoryMission().getLibelle()+"";
+                            //TODO commentaire a reconstituer.
+                            String commentaire = "Demande créée pour une Mission en  " + mission.getCategoryMission().getLibelle() + "";
                             A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
-                                    null,mission,A3techNotificationType.CREATION_MISSION,commentaire,getString(R.string.libelle_creatio_mission));
+                                    null, mission, A3techNotificationType.CREATION_MISSION, commentaire, getString(R.string.libelle_creatio_mission));
                             NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
                                 @Override
                                 public void dataLoaded(Object data, int method, int typeOperation) {
@@ -222,7 +244,6 @@ public class A3techMissionsHomeFragment extends Fragment {
                                 @Override
                                 public void dataLoadingError(int errorCode) {
                                     dialogWaiting.dismiss();
-                                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
                                 }
                             });
                         }
@@ -230,7 +251,7 @@ public class A3techMissionsHomeFragment extends Fragment {
                         @Override
                         public void dataLoadingError(int errorCode) {
                             dialogWaiting.dismiss();
-                            A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                            A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                         }
                     });
 
@@ -242,11 +263,28 @@ public class A3techMissionsHomeFragment extends Fragment {
     }
 
 
-    public void addMissionToLise(A3techMission mission){
-        if(recycleMission != null){
-            ((SimpleAdapterMission)recycleMission.getAdapter()).addMissionb(mission);
-        }else{
+    public void addMissionToLise(A3techMission mission) {
+        if (recycleMission != null) {
+            ((SimpleAdapterMission) recycleMission.getAdapter()).addMissionb(mission);
+        } else {
 
         }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(NetworkUtils.isNetworkAvailable(getActivity())){
+            onNetworkUp();
+        }
+    }
+    public void onNetworkDown() {
+        networkOn.setVisibility(View.GONE);
+        networkDown.setVisibility(View.VISIBLE);
+    }
+
+    public void onNetworkUp() {
+        networkOn.setVisibility(View.VISIBLE);
+        networkDown.setVisibility(View.GONE);
+        refreshMissionsList();
     }
 }

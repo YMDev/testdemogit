@@ -42,7 +42,7 @@ import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
-public class A3techLoginActivity extends Activity implements DataLoadCallback {
+public class A3techLoginActivity extends BaseActivity implements DataLoadCallback {
 
 	AlertDialog alertDialog;
 	static int requestKey = 3422;
@@ -449,6 +449,6 @@ public class A3techLoginActivity extends Activity implements DataLoadCallback {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+		this.finishAffinity();
     }
 }

@@ -21,6 +21,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
+import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techLoginActivity;
@@ -98,9 +99,10 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
             @Override
             public void onClick(View view) {
                 if(dessert.getId() == 4  && dessert.getType() == 2){
-                    deconnexion();
+                    SimpleDialog.build().pos(R.string.deconnexion).title(R.string.deconnexion_label).neg(R.string.cancel).msg(R.string.msg_deconnexion).theme(R.style.SimpleDialogThemeProfile).show((A3techHomeActivity)context,"DEC");
+                   /* deconnexion();
 
-                    if(mDecListener != null) mDecListener.deconnexion();
+                    if(mDecListener != null) mDecListener.deconnexion();*/
                 }
             }
         });

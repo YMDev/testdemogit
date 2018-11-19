@@ -264,4 +264,5 @@ public interface Constant {
     public static final int STATUT_OFFRE_ACCEPTEE = 1;
     public static final int STATUT_OFFRE_REJETEE = 2;
 
+    String DIR_IMAGES = "DIR_3TECH_IMAGES";
 }

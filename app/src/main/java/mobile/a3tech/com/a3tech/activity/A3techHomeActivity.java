@@ -3,11 +3,15 @@ package mobile.a3tech.com.a3tech.activity;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -17,6 +21,7 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -37,6 +42,12 @@ import com.google.gson.Gson;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import eltos.simpledialogfragment.SimpleDateDialog;
+import eltos.simpledialogfragment.SimpleDialog;
+import eltos.simpledialogfragment.SimpleTimeDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
@@ -54,13 +65,15 @@ import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTest;
+import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
+import mobile.a3tech.com.a3tech.utils.NetworkUtils;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
-public class A3techHomeActivity extends AppCompatActivity implements A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener, A3techHomeBrowseTechFragment.OnFragmentInteractionListener, A3techNotificationHomeFragment.OnFragmentInteractionListener, SimpleAdapterTest.OnDeconnexion {
+public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.OnDialogResultListener ,A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener, A3techHomeBrowseTechFragment.OnFragmentInteractionListener, A3techNotificationHomeFragment.OnFragmentInteractionListener, SimpleAdapterTest.OnDeconnexion {
     private final int[] colors = {R.color.white, R.color.white, R.color.white, R.color.white};
     private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
@@ -88,7 +101,7 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
         connectedUser = PreferencesValuesUtils.getConnectedUser(A3techHomeActivity.this);
         Log.i("KKKKKKKKKKKKKKKKKKKKKK", "initialisation Home Activity");
         new InitActivityTask(A3techHomeActivity.this).execute();
-
+        installListener();
     }
 
 
@@ -153,13 +166,34 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
                     viewPager.setCurrentItem(position);
 
                 updateAppbarLayout(position);
+
+                if (NetworkUtils.isNetworkAvailable(A3techHomeActivity.this)) {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            onNetworkUp();
+                        }
+                    },300);
+                } else {
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            onNetworkDown();
+                        }
+                    },300);
+
+                }
                 // remove notification badge
                 int lastItemPos = bottomNavigation.getItemsCount() - 1;
                 if (notificationVisible && position == lastItemPos)
                     bottomNavigation.setNotification(new AHNotification(), lastItemPos);
+
+
                 return true;
             }
         });
+
+
     }
 
 
@@ -180,24 +214,12 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    final Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            traitementDisplayMissionCreated();
-                        }
-                    }, 200);
+                    traitementDisplayMissionCreated();
                 }
             });
         } else {
 
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    hundleMessageFromWelcomPage();
-                }
-            }, 200);
+            hundleMessageFromWelcomPage();
         }
 
 
@@ -656,6 +678,17 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
 
     @Override
     public void deconnexion() {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(A3techHomeActivity.this).edit();
+        editor.putString("MyCredentials", "");
+        editor.putString("facebookId", "");
+        editor.putString("conMode", "");
+        editor.putString("ApplicationLanguage", "");
+        editor.putString("identifiant", "");
+
+     /*   GCMRegistrar.checkDevice(this.getActivity());
+        GCMRegistrar.checkManifest(this.getActivity());
+        GCMRegistrar.unregister(this.getActivity());*/
+        editor.commit();
         Intent mainIntent = new Intent(A3techHomeActivity.this, A3techLoginActivity.class);
         startActivity(mainIntent);
         finish();
@@ -705,10 +738,90 @@ public class A3techHomeActivity extends AppCompatActivity implements A3techHomeA
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+        }
     }
 
     private Activity getActivity() {
         return A3techHomeActivity.this;
     }
+
+
+    BroadcastReceiver broadcastReceiver;
+
+    private void installListener() {
+
+        if (broadcastReceiver == null) {
+
+            broadcastReceiver = new BroadcastReceiver() {
+
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                    Bundle extras = intent.getExtras();
+
+                    NetworkInfo info = (NetworkInfo) extras
+                            .getParcelable("networkInfo");
+
+                    NetworkInfo.State state = info.getState();
+                    Log.d("KKKKKKKK NET", info.toString() + " "
+                            + state.toString());
+
+                    if (state == NetworkInfo.State.CONNECTED) {
+                        onNetworkUp();
+                       /* A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.connexion_retablie), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);*/
+
+                    } else {
+                        A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.network_error_text), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                        onNetworkDown();
+                    }
+
+                }
+            };
+
+            final IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(broadcastReceiver, intentFilter);
+        }
+    }
+
+    private void onNetworkDown() {
+        if (bottomNavigation.getCurrentItem() == 1) {
+            // missions
+            ((A3techMissionsHomeFragment) pagerAdapter.getItem(1)).onNetworkDown();
+        } else if (bottomNavigation.getCurrentItem() == 2) {
+            // browse users tech
+            ((A3techHomeBrowseTechFragment) pagerAdapter.getItem(2)).onNetworkDown();
+        }else if (bottomNavigation.getCurrentItem() == 3) {
+            // browse users tech
+            ((A3techHomeAccountFragment) pagerAdapter.getItem(3)).onNetworkDown();
+        }
+
+    }
+
+    private void onNetworkUp() {
+        if (bottomNavigation.getCurrentItem() == 1) {
+            // missions
+            ((A3techMissionsHomeFragment) pagerAdapter.getItem(1)).onNetworkUp();
+        } else if (bottomNavigation.getCurrentItem() == 2) {
+            // browse users tech
+            ((A3techHomeBrowseTechFragment) pagerAdapter.getItem(2)).onNetworkUp();
+        }else if (bottomNavigation.getCurrentItem() == 3) {
+            // browse users tech
+            ((A3techHomeAccountFragment) pagerAdapter.getItem(3)).onNetworkUp();
+        }
+    }
+
+
+
+    @Override
+    public boolean onResult(@NonNull String dialogTag, int which, @NonNull Bundle extras) {
+        if (which == BUTTON_POSITIVE && "DEC".equals(dialogTag)) {
+             deconnexion();
+        }
+        return false;
+    }
+
 
 }

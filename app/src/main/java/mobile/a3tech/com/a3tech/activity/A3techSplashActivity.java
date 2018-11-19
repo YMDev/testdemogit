@@ -40,7 +40,7 @@ import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.A3techWaitingDialog;
 
-public class A3techSplashActivity extends AppCompatActivity implements DataLoadCallback {
+public class A3techSplashActivity extends BaseActivity implements DataLoadCallback {
     ImageView animationLoginImage;
     String conMode;
     String connectedUser;

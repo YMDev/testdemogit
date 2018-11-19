@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.ObjectMenu;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTest;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -117,6 +119,10 @@ public class A3techHomeAccountFragment extends Fragment {
         progresseSoldeDispo = viewFr.findViewById(R.id.progress_solde_valable);
         progresseSoldeDispo.setVisibility(View.VISIBLE);
 
+        fetchSoldeTech();
+    }
+
+    private void fetchSoldeTech(){
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -125,14 +131,17 @@ public class A3techHomeAccountFragment extends Fragment {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
                         Double solde = (Double) data;
-                        soldeDisponibleForConnectedUser.setText(solde + "");
+                        soldeDisponibleForConnectedUser.setText(solde + " DH");
                         progresseSoldeDispo.setVisibility(View.GONE);
                         soldeDisponibleForConnectedUser.setVisibility(View.VISIBLE);
                     }
 
                     @Override
                     public void dataLoadingError(int errorCode) {
-
+                        soldeDisponibleForConnectedUser.setText( "N/A"+ " DH");
+                        progresseSoldeDispo.setVisibility(View.GONE);
+                        soldeDisponibleForConnectedUser.setVisibility(View.VISIBLE);
+                        A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.txtInscription_msg_verification_connexion_internet), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                     }
                 });
             }
@@ -206,5 +215,15 @@ public class A3techHomeAccountFragment extends Fragment {
             }
 
         }
+    }
+
+    public void onNetworkDown() {
+        soldeDisponibleForConnectedUser.setText( "N/A"+ " DH");
+        progresseSoldeDispo.setVisibility(View.GONE);
+        soldeDisponibleForConnectedUser.setVisibility(View.VISIBLE);
+    }
+
+    public void onNetworkUp() {
+       fetchSoldeTech();
     }
 }
