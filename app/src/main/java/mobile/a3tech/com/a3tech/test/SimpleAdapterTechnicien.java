@@ -129,6 +129,10 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
         loading = false;
     }
 
+    public void disableLoading() {
+        loading = true;
+    }
+
     public void setOnLoadMoreListener(OnLoadMoreListener onLoadMoreListener) {
         this.onLoadMoreListener = onLoadMoreListener;
     }

@@ -22,6 +22,7 @@ import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
+import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
@@ -134,7 +135,8 @@ public class A3techAffecterTechnicienFragment extends Fragment {
         recyclerViewTechnicien.setAdapter(adapter);
 
         // load the first page of users (PAGE_SIZE to controle number of users to load)
-        getListOFTechToDisplayFirstInit(start, end, PreferencesValuesUtils.getPermietreRechercheTechniciens(getActivity()) + "", CustomProgressDialog.createProgressDialog(getActivity(), ""));
+        ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(),"");
+        getListOFTechToDisplayFirstInit(start,end,PreferencesValuesUtils.getPermietreRechercheTechniciens(getActivity())+"",dd);
         start = start + PAGE_SIZE;
         end = start + PAGE_SIZE - 1;
         adapter.setOnLoadMoreListener(new SimpleAdapterTechnicien.OnLoadMoreListener() {
@@ -144,10 +146,11 @@ public class A3techAffecterTechnicienFragment extends Fragment {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        adapter.getListObject().add(null);
-                        adapter.notifyItemInserted(adapter.getListObject().size() - 1);
+                  /*      adapter.getListObject().add(null);
+                        adapter.notifyItemInserted(adapter.getListObject().size() - 1);*/
+                      ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(),"");
                         // load the next page
-                        getListOFTechToDisplay(start, end, PreferencesValuesUtils.getPermietreRechercheTechniciens(getActivity()) + "", null);
+                        getListOFTechToDisplay(start, end, PreferencesValuesUtils.getPermietreRechercheTechniciens(getActivity()) + "", dd);
                         start = start + PAGE_SIZE;
                         end = start + PAGE_SIZE - 1;
                     }
@@ -166,10 +169,10 @@ public class A3techAffecterTechnicienFragment extends Fragment {
             public void dataLoaded(Object data, int method, int typeOperation) {
                 List<A3techUser> reslisteOfTechToDisplay = (List<A3techUser>) data;
                 //whene loading next page, delete progress bar
-                if (dd == null) {
+              /*  if (dd == null) {
                     adapter.getListObject().remove(adapter.getListObject().size() - 1);
                     adapter.notifyItemRemoved(adapter.getListObject().size());
-                }
+                }*/
 
                 // adding each element to recycle
                 if (reslisteOfTechToDisplay != null && reslisteOfTechToDisplay.size() != 0) {
@@ -186,11 +189,11 @@ public class A3techAffecterTechnicienFragment extends Fragment {
 
             @Override
             public void dataLoadingError(int errorCode) {
-
-                if (dd == null) {
+                if (dd != null) dd.dismiss();
+                /*if (dd == null) {
                     adapter.getListObject().remove(adapter.getListObject().size() - 1);
                     adapter.notifyItemRemoved(adapter.getListObject().size());
-                }
+                }*/
             }
         });
     }
@@ -214,16 +217,16 @@ public class A3techAffecterTechnicienFragment extends Fragment {
 
             @Override
             public void dataLoadingError(int errorCode) {
-
-                if (dd == null) {
+                if (dd != null) dd.dismiss();
+                /*if (dd == null) {
                     adapter.getListObject().remove(adapter.getListObject().size() - 1);
                     adapter.notifyItemRemoved(adapter.getListObject().size());
-               /*     recyclerViewTechnicien.post(new Runnable() {
+               *//*     recyclerViewTechnicien.post(new Runnable() {
                         public void run() {
                             adapter.notifyItemRemoved(adapter.getListObject().size());
                         }
-                    });*/
-                }
+                    });*//*
+                }*/
             }
         });
     }
