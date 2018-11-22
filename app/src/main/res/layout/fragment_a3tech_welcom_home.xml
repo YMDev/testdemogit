@@ -57,7 +57,7 @@
             android:layout_height="270dp"
             android:layout_centerInParent="true"
             android:clipChildren="false"
-            app:duration="2000"
+            app:duration="1000"
             app:endRadius="120dp"
             app:rippleColor="@color/colorPrimary"
             app:rippleType="fill"

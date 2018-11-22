@@ -1,5 +1,6 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -168,5 +169,28 @@ String password;
     public void dataLoadingError(int errorCode) {
         A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this,getString(R.string.probleme_technique),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
         this.dialog.dismiss();
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != A3techChooseSignInOption.REQUEST_KEY_CONNECT_BY_FACEBOOK
+                || resultCode != -1) {
+            return;
+        }
+        if (data.getStringExtra("resultCode").equals("OK")) {
+            String nom = data.getStringExtra("nom");
+            String prenom = data.getStringExtra("prenom");
+            String email = data.getStringExtra("email");
+            String facebookIdentifiant = data
+                    .getStringExtra("facebookIdentifiant");
+            password = facebookIdentifiant ;
+            this.dialog = CustomProgressDialog.createProgressDialog(this,
+                    getString(R.string.txtMenu_dialogChargement));
+            UserManager.getInstance().loginfb(nom, prenom, facebookIdentifiant,
+                    email, this);
+            return;
+        }
+        new AlertDialog.Builder(this).setTitle("Error")
+                .setMessage(data.getStringExtra("info"))
+                .setPositiveButton("OK", null).show();
     }
 }

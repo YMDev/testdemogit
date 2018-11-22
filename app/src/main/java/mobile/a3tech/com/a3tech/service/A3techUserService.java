@@ -26,7 +26,7 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
         params.put("prenom", prenom);
         params.put("facebookId", facebookId);
         params.put("email", email);
-        A3techUser result = getResult(CHECK_EDU_LOGIN_FB_URL, params,
+        A3techUser result = getResult(A3TECH_LOGIN_FB_URL, params,
                 new TypeReference<A3techUser>() {
                 });
         return result;

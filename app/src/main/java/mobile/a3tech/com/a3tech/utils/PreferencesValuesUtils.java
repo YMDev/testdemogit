@@ -21,6 +21,7 @@ public class PreferencesValuesUtils {
     public static final String KEY_CONNECTED_USER_EMAIL = "MyCredentials";
     public static final String KEY_CONNECTED_USER_NAME = "nomPrenom";
     public static final String KEY_CONNECTED_USER_GSON = "gsonuser";
+    public static final String KEY_PERIMETRE_RECHERCHE_TECHNICIEN = "perimetreTech";
     public static final String KEY_USER_ENGAGED_FOR_CLIENT = "listeClientTech";
 
 
@@ -29,16 +30,28 @@ public class PreferencesValuesUtils {
         return prefs.getString(paramKey, defaultVal);
     }
 
+
     public static A3techUser getConnectedUser(Activity context) {
         String jsonuserConnected = PreferencesValuesUtils.getPreferenceStringByParam(context, PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, "");
         return new Gson().fromJson(jsonuserConnected, A3techUser.class);
     }
 
-    public static Boolean isTechnicien(Activity context){
+    public static Integer getPermietreRechercheTechniciens(Activity context) {
+        Integer permResultat = PreferencesValuesUtils.getPreferenceIntegerByParam(context, PreferencesValuesUtils.KEY_PERIMETRE_RECHERCHE_TECHNICIEN, 0);
+        return permResultat;
+    }
+
+    public static void setPermietreRechercheTechniciens(Activity context, Integer newperim) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        prefs.edit().putInt(KEY_PERIMETRE_RECHERCHE_TECHNICIEN, newperim).commit();
+    }
+
+    public static Boolean isTechnicien(Activity context) {
         String jsonuserConnected = PreferencesValuesUtils.getPreferenceStringByParam(context, PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, "");
-        A3techUser connected =  new Gson().fromJson(jsonuserConnected, A3techUser.class);
+        A3techUser connected = new Gson().fromJson(jsonuserConnected, A3techUser.class);
         return connected.getTypeUser().getId() == A3techUserType.TECHNICIEN.getId();
     }
+
     public static Long getPreferenceLongByParam(Activity context, String paramKey, Long defaultVal) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
         return prefs.getLong(paramKey, defaultVal);

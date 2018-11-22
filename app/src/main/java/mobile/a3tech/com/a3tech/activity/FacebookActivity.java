@@ -130,11 +130,7 @@ public class FacebookActivity extends Activity {
         	}
         }
     }
-    
-  
-    
-  
-    
+
     private FacebookCallback<Sharer.Result> shareCallback = new FacebookCallback<Sharer.Result>() {
         @Override
         public void onCancel() {

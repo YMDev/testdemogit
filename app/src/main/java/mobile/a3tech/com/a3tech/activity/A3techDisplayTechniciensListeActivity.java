@@ -2,6 +2,7 @@ package mobile.a3tech.com.a3tech.activity;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,14 +28,16 @@ import mobile.a3tech.com.a3tech.fragment.A3techPostMissionFragment;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.view.A3techDialogFilterTechniciens;
 
-public class A3techDisplayTechniciensListeActivity extends BaseActivity implements A3techDisplayTechniciensFragment.OnFragmentInteractionListener, A3techPostMissionFragment.OnFragmentInteractionListener, A3techDisplayTechniciensPArentFragment.OnFragmentInteractionListener, A3techDisplayTechInMapFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener {
+public class A3techDisplayTechniciensListeActivity extends BaseActivity implements A3techDialogFilterTechniciens.OnAppliquerPerimetre, A3techDisplayTechniciensFragment.OnFragmentInteractionListener, A3techPostMissionFragment.OnFragmentInteractionListener, A3techDisplayTechniciensPArentFragment.OnFragmentInteractionListener, A3techDisplayTechInMapFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener {
 
     public static final String TAG_MISSION_TO_SAVE_FROM_BROWS_TECH = "TAG_MISSION_TO_SAVE_FROM_BROWS_TECH";
     public static final String TAG_CATEGORY_FOR_RELOADING = "TAG_CATEGORY_FOR_RELOADING";
     private FrameLayout framePostMission;
     private ProgressBar progressPostMission;
-    private ImageView backAction;
+    private ImageView backAction, filterTechniciens;
     private RecyclerView recyclerViewTechnicien;
     private Toolbar toolbarSelectTechnicien;
     private Categorie categorieSelected;
@@ -42,31 +45,51 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
 
     private Boolean isFromSearchActivity = Boolean.FALSE;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3tech_display_techniciens_liste_activity);
-        if(!getSelectedMissionTechFromRecherche()){
+        if (!getSelectedMissionTechFromRecherche()) {
             getSelectedCategory();
             initiInterfaceActivity();
-        }else{
+        } else {
             isFromSearchActivity = Boolean.TRUE;
         }
 
     }
+
+    private A3techDisplayTechniciensPArentFragment fragmentToDispl;
 
     private void initiInterfaceActivity() {
         bindComponents();
         updateAppbarLayout(0);
         getSupportActionBar().setElevation(0);
         progressBarchangeSmouthly(50);
-        setFragment(A3techDisplayTechniciensPArentFragment.newInstance(categorieSelected), false, false);
+        fragmentToDispl = A3techDisplayTechniciensPArentFragment.newInstance(categorieSelected);
+        setFragment(fragmentToDispl, false, false);
+    }
+
+    private Integer getPerimetresRechercheTechnicien() {
+        return PreferencesValuesUtils.getPermietreRechercheTechniciens(A3techDisplayTechniciensListeActivity.this);
+    }
+
+    private void setPerimetreRechercheTechnicien(Integer perimNew) {
+        PreferencesValuesUtils.setPermietreRechercheTechniciens(A3techDisplayTechniciensListeActivity.this, perimNew);
     }
 
     private void bindComponents() {
         framePostMission = findViewById(R.id.frame_add_mission);
         toolbarSelectTechnicien = findViewById(R.id.toolbar_select_tech);
         progressPostMission = findViewById(R.id.progress_add_mission);
+        filterTechniciens = findViewById(R.id.filter_techniciens);
+        filterTechniciens.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                A3techDialogFilterTechniciens.displayFilterDialogue(A3techDisplayTechniciensListeActivity.this, getPerimetresRechercheTechnicien());
+            }
+        });
        /* backAction = findViewById(R.id.back_action);
         backAction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +97,7 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
                 onBackPressed();
             }
         });*/
+
 
     }
 
@@ -96,7 +120,7 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_title)).setText(categorieSelected.getLibelle());
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_sub_title)).setText(getResources().getString(R.string.find_best_tech));
                 }
-                 findViewById(R.id.filter_techniciens).setVisibility(View.VISIBLE);
+                findViewById(R.id.filter_techniciens).setVisibility(View.VISIBLE);
                 setSupportActionBar(toolbarSelectTechnicien);
                 break;
             case 1:
@@ -104,7 +128,7 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_title)).setText(getResources().getString(R.string.save_mission));
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_sub_title)).setText(getResources().getString(R.string.complete_mission_informations));
                 }
-                 findViewById(R.id.filter_techniciens).setVisibility(View.GONE);
+                findViewById(R.id.filter_techniciens).setVisibility(View.GONE);
                 actionToolbar(false);
                 break;
             case 3:
@@ -168,12 +192,14 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
 
 
     public static final int RESULT_RELOAD = 3213;
-    public void finishActivityToBeReloaded(){
+
+    public void finishActivityToBeReloaded() {
         Intent resultIntent = new Intent();
         resultIntent.putExtra(TAG_CATEGORY_FOR_RELOADING, new Gson().toJson(categorieSelected));
         setResult(RESULT_RELOAD, resultIntent);
         finish();
     }
+
     private Boolean getSelectedMissionTechFromRecherche() {
         String jsonMyObject = null;
         Bundle b = getIntent().getExtras();
@@ -204,9 +230,9 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
         switch (requestCode) {
             case (SimpleAdapterTechnicien.REQUEST_DISPLAY_TECH_FROM_HOME): {
                 if (resultCode == Activity.RESULT_OK) {
-                        String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
-                        missionSelected = new Gson().fromJson(jsonMission, A3techMission.class);
-                        nextStepAfterSelectTechnicien(missionSelected);
+                    String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
+                    missionSelected = new Gson().fromJson(jsonMission, A3techMission.class);
+                    nextStepAfterSelectTechnicien(missionSelected);
                 }
                 break;
             }
@@ -238,14 +264,14 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
     public void actionNext(Integer typeAction, Object data) {
         switch (typeAction) {
             case A3techPostMissionFragment.ACTION_SAVE_MISSION_INFO_FROM_TECH:
-                if(isFromSearchActivity){
+                if (isFromSearchActivity) {
                     A3techMission mission = (A3techMission) data;
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(TAG_MISSION_TO_SAVE_FROM_BROWS_TECH, new Gson().toJson(mission));
                     setResult(Activity.RESULT_OK, resultIntent);
                     finish();
                     break;
-                }else{
+                } else {
                     A3techMission mission = (A3techMission) data;
                     Intent resultIntent = new Intent();
                     resultIntent.putExtra(TAG_MISSION_TO_SAVE_FROM_BROWS_TECH, new Gson().toJson(mission));
@@ -256,4 +282,20 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
 
         }
     }
+
+    @Override
+    public void appliquerPerimetre(Integer perim) {
+        // refresh liste tech with permi
+        setPerimetreRechercheTechnicien(perim);
+        if(fragmentToDispl != null){
+
+        }
+    }
+
+    @Override
+    public Context getContext() {
+        return A3techDisplayTechniciensListeActivity.this;
+    }
+
+
 }

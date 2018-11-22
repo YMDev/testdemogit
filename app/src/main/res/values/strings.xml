@@ -753,4 +753,11 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="ignore_modifications_msg">Voulez-vous annuler les modifications ?</string>
 
 
+    <string name="facebook_app_id">432764023920253</string>
+    <string name="fb_login_protocol_scheme">fb432764023920253</string>
+    <string name="toolbar_filter_tech_label">Filtre</string>
+    <string name="perimetre">Périmètre de recherche</string>
+    <string name="valier_filter">Appliquer</string>
+
+
 </resources>

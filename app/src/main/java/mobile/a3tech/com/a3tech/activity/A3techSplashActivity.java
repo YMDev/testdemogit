@@ -2,7 +2,10 @@ package mobile.a3tech.com.a3tech.activity;
 
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.pm.ActivityInfo;
@@ -12,6 +15,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,8 +23,10 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -32,6 +38,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Locale;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.fragment.A3techHomeAccountFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techHomeBrowseTechFragment;
+import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
@@ -53,6 +62,7 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
     String versionname;
     A3techUser usern;
     ProgressDialog waitingDialg;
+    RelativeLayout networkOn, networkDown;
 
     static int requExce = 34232;
 
@@ -68,7 +78,13 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.a3tech_splash_activity);
+        networkDown = findViewById(R.id.network_down);
+        networkOn = findViewById(R.id.network_on);
 
+        networkDown.setVisibility(View.GONE);
+        networkOn.setVisibility(View.VISIBLE);
+
+        installListener();
         //android O fix bug orientation
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -86,7 +102,11 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
             Log.e("KeyHash:", e.toString());
         }
         setVersionInfo();
+        initAuthParam();
+    }
 
+
+    private void initAuthParam() {
 
         this.idMissionNotif = getIntent().getStringExtra("idMissionNot");
         this.userIdNotif = getIntent().getStringExtra("userIdNot");
@@ -96,11 +116,11 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
         this.conMode = prefs.getString("conMode", "");
         this.connectedUser = prefs.getString("identifiant", "");
         this.password = prefs.getString("password", "");
-        if (!isConnected()) {
+    /*    if (!isConnected()) {
            // startActivity(new Intent(this, A3techWelcomPageActivity.class));
             A3techCustomToastDialog.createToastDialog(A3techSplashActivity.this, getApplicationContext().getString(R.string.txtSplash_messageCheckConnexion), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);
-            finish();
-        } else if (this.conMode.equals("facebook")) {
+        } else*/
+        if (this.conMode.equals("facebook")) {
             Intent mainIntent = new Intent(this, FacebookActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString(Constant.RESULT_ACTION_CODE_FACEBOOK_SRC, Constant.RESULT_ACTION_CODE_FACEBOOK_SRC_SPLASH);
@@ -143,6 +163,9 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
 
     protected void onDestroy() {
         super.onDestroy();
+        if (broadcastReceiver != null) {
+            unregisterReceiver(broadcastReceiver);
+        }
     }
 
     public boolean isConnected() {
@@ -183,7 +206,7 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
                     editor.putString("checkphone", usern.getTelephone());
                     editor.commit();
                     startActivity(mainIntent);
-                    if(waitingDialg != null)
+                    if (waitingDialg != null)
                         waitingDialg.dismiss();
                     finish();
                 } else {
@@ -219,4 +242,57 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
         super.onBackPressed();
         this.finishAffinity();
     }
+
+
+    BroadcastReceiver broadcastReceiver;
+
+    private void installListener() {
+
+        if (broadcastReceiver == null) {
+
+            broadcastReceiver = new BroadcastReceiver() {
+
+                @Override
+                public void onReceive(Context context, Intent intent) {
+
+                    Bundle extras = intent.getExtras();
+
+                    NetworkInfo info = (NetworkInfo) extras
+                            .getParcelable("networkInfo");
+
+                    NetworkInfo.State state = info.getState();
+                    Log.d("KKKKKKKK NET", info.toString() + " "
+                            + state.toString());
+
+                    if (state == NetworkInfo.State.CONNECTED) {
+                        onNetworkUp();
+                        /* A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.connexion_retablie), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);*/
+
+                    } else {
+                        A3techCustomToastDialog.createToastDialog(A3techSplashActivity.this, getString(R.string.network_error_text), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                        onNetworkDown();
+                    }
+
+                }
+            };
+
+            final IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+            registerReceiver(broadcastReceiver, intentFilter);
+        }
+    }
+
+
+    private void onNetworkDown() {
+        networkDown.setVisibility(View.VISIBLE);
+        networkOn.setVisibility(View.GONE);
+
+    }
+
+    private void onNetworkUp() {
+        networkDown.setVisibility(View.GONE);
+        networkOn.setVisibility(View.VISIBLE);
+        initAuthParam();
+    }
+
 }

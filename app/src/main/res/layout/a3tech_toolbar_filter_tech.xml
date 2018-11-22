@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary"
+    android:fitsSystemWindows="true"
+    android:minHeight="?attr/actionBarSize"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/back_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/black"
+            android:src="@drawable/a3tech_back_black"
+            android:tint="@color/white"/>
+
+        <TextView
+            android:id="@+id/big_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/back_action"
+            android:text="@string/toolbar_filter_tech_label"
+            android:textColor="@color/white"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+
+
+        <LinearLayout
+            android:id="@+id/cancel_mission_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:background="@drawable/ripple_effect_red_color">
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>
+

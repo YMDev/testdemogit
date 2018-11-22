@@ -4,26 +4,67 @@
     android:id="@+id/about_dados"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:background="@color/white" >
+    android:background="@color/white"
+    android:gravity="center">
 
-    <ImageView
+    <RelativeLayout
+        android:id="@+id/network_on"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/splach"
-        android:scaleType="fitXY"
-        />
-    <!--<LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical" >
-        <ProgressBar
-            android:id="@+id/progressId"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="40dp" />
-    </LinearLayout>-->
+        android:visibility="visible">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/splach" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/network_down"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/a3tech_logo_v3_round" />
+
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_above="@id/no_connection_label"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/a3tech_no_network" />
+
+        <TextView
+            android:id="@+id/no_connection_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:fontFamily="sans-serif-meduim"
+            android:text="@string/no_connection"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+        <!--   <TextView
+               android:id="@+id/tap_to_refresh_label"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_below="@id/no_connection_label"
+               android:layout_centerHorizontal="true"
+               android:layout_centerInParent="true"
+               android:text="@string/tap_to_refresh"
+               android:textStyle="normal"
+               android:textSize="14dp"
+               android:fontFamily="sans-serif-meduim"
+               android:drawableLeft="@drawable/a3tech_retry_action"/>-->
+    </RelativeLayout>
 
 </RelativeLayout>

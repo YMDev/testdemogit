@@ -15,6 +15,8 @@ public interface Constant {
 	static final String A3TECH_CREATE_MISSION = IP+"/mission/createMission";
 	static final String A3TECH_CREATE_NOTIFICATION = IP+"/notification/createNotification";
 	static final String A3TECH_CREATE_ACCOUNT = IP+"user/createAccount";
+	static final String A3TECH_LOGIN_FB_URL = IP+"user/loginfb";
+
 
 
 	public static final String CGU_URL_FR="http://arakhod.com/cgu/cgu.html";
