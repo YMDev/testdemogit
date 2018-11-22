@@ -218,7 +218,7 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
 
     }
 
-    public List<A3techUser> getTechnicienNearLocation(String latitude, String longitude, String ville, int st, int en) throws EducationException {
+    public List<A3techUser> getTechnicienNearLocation(String latitude, String longitude, String perim, int st, int en) throws EducationException {
         Map<String, String> params = new HashMap<String, String>();
         params.put("start", st+"");
         params.put("end", en+"");
@@ -226,6 +226,11 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
 				new TypeReference<List<A3techUser>>() {
 				});
 
+		if(perim.equals("56")){
+		    if(st != 0) return null;
+		    return result.subList(0,3);
+
+        }
         return result;
     }
 

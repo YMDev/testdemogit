@@ -288,7 +288,7 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
         // refresh liste tech with permi
         setPerimetreRechercheTechnicien(perim);
         if(fragmentToDispl != null){
-
+            fragmentToDispl.notifyPerimetreChanged(perim);
         }
     }
 

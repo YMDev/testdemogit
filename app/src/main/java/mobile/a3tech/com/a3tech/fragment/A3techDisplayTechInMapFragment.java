@@ -50,6 +50,7 @@ import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.utils.MapUtilities;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.DialogDisplayTechProfile;
 
@@ -131,7 +132,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         final RelativeLayout mMapLayout = viewFr.findViewById(R.id.layout_container_map);
         gps = new GPSTracker(getActivity());
 
-        getListOFTechToDisplay(start, end, CustomProgressDialog.createProgressDialog(getActivity(), ""));
+        getListOFTechToDisplay(start, end, PreferencesValuesUtils.getPermietreRechercheTechniciens(getActivity()), CustomProgressDialog.createProgressDialog(getActivity(), ""));
 
         FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
         mMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_tech);
@@ -144,12 +145,12 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     }
 
 
-    private void getListOFTechToDisplay(final int start, final int end, final ProgressDialog dd) {
+    private void getListOFTechToDisplay(final int start, final int end, Integer perim, final ProgressDialog dd) {
         //TODO get location of connected user not mission
         //TODO add filter
 
             gpsGetLocation();
-            UserManager.getInstance().getTechnicienNearLocation(userLatitude != null ? userLatitude+"" :"", userLongetude != null ? userLongetude+"" :"", mission.getAdresse(), start, end, new DataLoadCallback() {
+            UserManager.getInstance().getTechnicienNearLocation(userLatitude != null ? userLatitude+"" :"", userLongetude != null ? userLongetude+"" :"", perim+"", start, end, new DataLoadCallback() {
                 @Override
                 public void dataLoaded(Object data, int method, int typeOperation) {
                     listeOfTechToDisplay = (List<A3techUser>) data;
@@ -184,6 +185,12 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     }
     public void refreshMap() {
         mMapFragment.getMapAsync(this);
+    }
+
+    public void notifyPerimetreChanged(Integer permi) {
+        start = 0;
+        end = PAGE_SIZE - 1;
+        getListOFTechToDisplay(start, end, permi, CustomProgressDialog.createProgressDialog(getActivity(), ""));
     }
 
     // TODO: Rename method, update argument and hook method into UI event

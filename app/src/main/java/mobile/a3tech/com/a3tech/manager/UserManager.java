@@ -585,7 +585,7 @@ public class UserManager implements Constant {
 	}
 
 
-	public void getTechnicienNearLocation(final String latitude, final String longitude, final String ville, final int start, final int end,
+	public void getTechnicienNearLocation(final String latitude, final String longitude, final String perim, final int start, final int end,
 										  final DataLoadCallback dataLoadCallback)   {
 
 		final Handler handler = new Handler() {
@@ -607,7 +607,7 @@ public class UserManager implements Constant {
 				try {
 
                     A3techUserService service = new A3techUserService();
-					List<A3techUser> user = service.getTechnicienNearLocation(latitude,longitude,ville, start, end);
+					List<A3techUser> user = service.getTechnicienNearLocation(latitude,longitude,perim, start, end);
 					if (user == null) {
 						Message message = handler.obtainMessage(0, 0);
 						handler.sendMessage(message);

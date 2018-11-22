@@ -28,6 +28,7 @@ import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techDistanceBarView;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
@@ -101,6 +102,7 @@ public class A3techAffecterTechnicienFragment extends Fragment {
     GPSTracker gps;
     Double userLatitude;
     Double userLongetude;
+
     private void gpsGetLocation() {
         gps = new GPSTracker(getActivity());
         if (gps.canGetLocation()) {
@@ -132,32 +134,34 @@ public class A3techAffecterTechnicienFragment extends Fragment {
         recyclerViewTechnicien.setAdapter(adapter);
 
         // load the first page of users (PAGE_SIZE to controle number of users to load)
-        getListOFTechToDisplayFirstInit(start, end, CustomProgressDialog.createProgressDialog(getActivity(), ""));
+        getListOFTechToDisplayFirstInit(start, end, PreferencesValuesUtils.getPermietreRechercheTechniciens(getActivity()) + "", CustomProgressDialog.createProgressDialog(getActivity(), ""));
+        start = start + PAGE_SIZE;
+        end = start + PAGE_SIZE - 1;
         adapter.setOnLoadMoreListener(new SimpleAdapterTechnicien.OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 //add null , so the adapter will check view_type and show progress bar at bottom
-                recyclerViewTechnicien.post(new Runnable() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
                     public void run() {
                         adapter.getListObject().add(null);
                         adapter.notifyItemInserted(adapter.getListObject().size() - 1);
                         // load the next page
-                        getListOFTechToDisplay( start, end, null);
+                        getListOFTechToDisplay(start, end, PreferencesValuesUtils.getPermietreRechercheTechniciens(getActivity()) + "", null);
                         start = start + PAGE_SIZE;
                         end = start + PAGE_SIZE - 1;
-
                     }
-                });
+                },200);
 
             }
         });
         return viewFr;
     }
 
-    private void getListOFTechToDisplay(final int start, final int end, final ProgressDialog dd) {
+    private void getListOFTechToDisplay(final int start, final int end, String perim, final ProgressDialog dd) {
 
 
-        UserManager.getInstance().getTechnicienNearLocation(userLatitude!= null ? userLatitude+"" : "", userLongetude != null ? userLongetude+"": "", mission.getAdresse(), start, end, new DataLoadCallback() {
+        UserManager.getInstance().getTechnicienNearLocation(userLatitude != null ? userLatitude + "" : "", userLongetude != null ? userLongetude + "" : "", perim, start, end, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 List<A3techUser> reslisteOfTechToDisplay = (List<A3techUser>) data;
@@ -165,11 +169,6 @@ public class A3techAffecterTechnicienFragment extends Fragment {
                 if (dd == null) {
                     adapter.getListObject().remove(adapter.getListObject().size() - 1);
                     adapter.notifyItemRemoved(adapter.getListObject().size());
-               /*     recyclerViewTechnicien.post(new Runnable() {
-                        public void run() {
-                            adapter.notifyItemRemoved(adapter.getListObject().size());
-                        }
-                    });*/
                 }
 
                 // adding each element to recycle
@@ -178,23 +177,9 @@ public class A3techAffecterTechnicienFragment extends Fragment {
                             ) {
                         adapter.getListObject().add(userTmp);
                         adapter.notifyItemInserted(adapter.getListObject().size());
-                     /*   handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                adapter.notifyItemInserted(adapter.getListObject().size());
-                            }
-                        });*/
                     }
                 }
                 adapter.setLoaded();
-
-               /* getActivity().runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-
-                    }
-                });*/
                 if (dd != null) dd.dismiss();
                 return;
             }
@@ -205,20 +190,15 @@ public class A3techAffecterTechnicienFragment extends Fragment {
                 if (dd == null) {
                     adapter.getListObject().remove(adapter.getListObject().size() - 1);
                     adapter.notifyItemRemoved(adapter.getListObject().size());
-               /*     recyclerViewTechnicien.post(new Runnable() {
-                        public void run() {
-                            adapter.notifyItemRemoved(adapter.getListObject().size());
-                        }
-                    });*/
                 }
             }
         });
     }
 
-    private void getListOFTechToDisplayFirstInit(final int start, final int end, final ProgressDialog dd) {
+    private void getListOFTechToDisplayFirstInit(final int start, final int end, String perim, final ProgressDialog dd) {
 
 
-        UserManager.getInstance().getTechnicienNearLocation(userLatitude != null ? userLatitude+"":"", userLongetude != null ? userLongetude+"":"", mission.getAdresse(), start, end, new DataLoadCallback() {
+        UserManager.getInstance().getTechnicienNearLocation(userLatitude != null ? userLatitude + "" : "", userLongetude != null ? userLongetude + "" : "", perim, start, end, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 List<A3techUser> reslisteOfTechToDisplay = (List<A3techUser>) data;
@@ -247,6 +227,18 @@ public class A3techAffecterTechnicienFragment extends Fragment {
             }
         });
     }
+
+
+    public void notifyPerimetreChanged(Integer permi) {
+        start = 0;
+        end = PAGE_SIZE - 1;
+        adapter.getListObject().clear();
+        adapter.notifyDataSetChanged();
+        getListOFTechToDisplayFirstInit(start, end, PreferencesValuesUtils.getPermietreRechercheTechniciens(getActivity()) + "", CustomProgressDialog.createProgressDialog(getActivity(), ""));
+        start = start + PAGE_SIZE;
+        end = start + PAGE_SIZE - 1;
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

@@ -92,7 +92,8 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             String jsonMission = getArguments().getString(ARG_SELECTED_MISSION);
-            if (jsonMission != null) mission = new Gson().fromJson(jsonMission, A3techMission.class);
+            if (jsonMission != null)
+                mission = new Gson().fromJson(jsonMission, A3techMission.class);
 
 
             String jsonCat = getArguments().getString(ARG_SELECTED_CAT);
@@ -155,6 +156,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
     public void deleteMapInFragment() {
         ((A3techDisplayTechInMapFragment) pagerAdapter.getItem(1)).destroyMap();
     }
+
     /*private void getListOFTechToDisplay() {
 
         //TODO get location of connected user not mission
@@ -208,6 +210,13 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
         viewPager.setAdapter(pagerAdapter);
     }
 
+    public void notifyPerimetreChanged(Integer perim){
+        if(pagerAdapter != null && pagerAdapter.getItem(0) != null && pagerAdapter.getItem(1) != null){
+            ((A3techAffecterTechnicienFragment)pagerAdapter.getItem(0)).notifyPerimetreChanged(perim);
+            ((A3techDisplayTechInMapFragment)pagerAdapter.getItem(1)).notifyPerimetreChanged(perim);
+
+        }
+    }
     /**
      * Adds styling properties to {@link AHBottomNavigation}
      */
@@ -308,9 +317,9 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
             case PermissionsStuffs.INITIAL_REQUEST:
                 if (PermissionsStuffs.canAccessLocation(getActivity())) {
                     ///doCameraThing();
-                   // ((A3techDisplayTechniciensListeActivity)getActivity()).finishActivityToBeReloaded();
+                    // ((A3techDisplayTechniciensListeActivity)getActivity()).finishActivityToBeReloaded();
                     pagerAdapter.notifyDataSetChanged();
-                   // viewPager.setAdapter(pagerAdapter);
+                    // viewPager.setAdapter(pagerAdapter);
                 } else {
                     SimpleDialog.build().title("Autorisation location est nécessaire").msg("pour afficher la liste des techniciens sur Map, il faut autoriser l'app à accéder à votre position").show(getActivity());
                 }
