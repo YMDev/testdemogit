@@ -56,6 +56,9 @@ dependencies {
     implementation 'com.github.aakira:expandable-layout:1.6.0@aar'
     implementation 'com.github.wangjiegulu:rfab:2.0.0'
     implementation 'com.gauravbhola.ripplepulsebackground:library:1.0.0'
+    implementation 'com.google.firebase:firebase-core:16.0.1'
+    implementation 'com.google.firebase:firebase-auth:16.0.1'
+    implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
 }
