@@ -4,8 +4,10 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -27,8 +29,10 @@ import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechniciensPArentFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techPostMissionFragment;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.Categorie;
+import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.utils.ValidationPatternUtils;
 import mobile.a3tech.com.a3tech.view.A3techDialogFilterTechniciens;
 
 public class A3techDisplayTechniciensListeActivity extends BaseActivity implements A3techDialogFilterTechniciens.OnAppliquerPerimetre, A3techDisplayTechniciensFragment.OnFragmentInteractionListener, A3techPostMissionFragment.OnFragmentInteractionListener, A3techDisplayTechniciensPArentFragment.OnFragmentInteractionListener, A3techDisplayTechInMapFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener {
@@ -86,8 +90,13 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
         filterTechniciens.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                GPSTracker gps = new GPSTracker(A3techDisplayTechniciensListeActivity.this);
+                if (gps.canGetLocation()) {
+                    A3techDialogFilterTechniciens.displayFilterDialogue(A3techDisplayTechniciensListeActivity.this, getPerimetresRechercheTechnicien());
+                } else {
+                    gps.showSettingsAlert();
+                }
 
-                A3techDialogFilterTechniciens.displayFilterDialogue(A3techDisplayTechniciensListeActivity.this, getPerimetresRechercheTechnicien());
             }
         });
        /* backAction = findViewById(R.id.back_action);

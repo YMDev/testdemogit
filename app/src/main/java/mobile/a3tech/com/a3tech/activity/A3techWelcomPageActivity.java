@@ -37,9 +37,8 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
         networkDown = findViewById(R.id.network_down);
         networkOn = findViewById(R.id.network_on);
 
-        installListener();
-        networkDown.setVisibility(View.GONE);
-        networkOn.setVisibility(View.VISIBLE);
+        onNetworkUp();
+        /*installListener();*/
 
     }
 

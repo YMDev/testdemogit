@@ -10,11 +10,18 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
@@ -44,10 +51,30 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
     FrameLayout frameView;
     A3techUser account;
     ProgressDialog dialog = null;
+    FirebaseAuth auth ;
+    FirebaseAuth.AuthStateListener mAuthListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        auth = FirebaseAuth.getInstance();
         account = new A3techUser();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    // NOTE: this Activity should get onpen only when the user is not signed in, otherwise
+                    // the user will receive another verification email.
+                    sendVerificationEmail();
+
+                } else {
+                    // User is signed out
+                    dialog.dismiss();
+
+                }
+            }
+        };
         setContentView(R.layout.a3tech_create_account_activity);
         frameView = findViewById(R.id.frame_create_account);
         progressbarAccountCreation = findViewById(R.id.progress_creation_account);
@@ -140,6 +167,7 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
     public void actionNext(Integer typeAction, Object data) {
         switch (typeAction) {
             case A3techSelecteAccountFragment.ACTION_SELECT_ACCOUNT:
+                // account type selected : client or tech
                 progressBarchangeSmouthly(progressbarAccountCreation.getProgress() + 20);
                 if (((Integer) data) == A3techSelecteAccountFragment.ACCOUNT_HIRE) {
                     account.setTypeUser(A3techUserType.CLIENT);
@@ -150,7 +178,9 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                 break;
             case A3techAddUserNameFragment.ACTION_TYPE_USERNAME:
                 progressBarchangeSmouthly(progressbarAccountCreation.getProgress() + 20);
-                account.setNom(String.valueOf(data));
+                A3techUser tmpUSer= (A3techUser)data;
+                account.setNom(tmpUSer.getNom());
+                account.setPrenom(tmpUSer.getPrenom());
                 setFragment(new A3techAddEmailFragment(), true, false);
                 break;
             case A3techAddEmailFragment.ACTION_TYPE_EMAIL:
@@ -167,20 +197,6 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                 dialog = CustomProgressDialog.createProgressDialog(
                       A3techCreateAccountActivity.this,
                         getString(R.string.txtMenu_dialogChargement));
-                UserManager
-                        .getInstance()
-                        .createAccount(
-                                account.getNom(),
-                                account.getPrenom(),
-                                account.getEmail(),
-                                account.getPassword(),
-                                "",
-                                "",
-                                new StringBuilder(String.valueOf( account.getPrenom()))
-                                        .append(MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR)
-                                        .append(account.getNom().substring(0, 1)).toString(),
-                                A3techCreateAccountActivity.this);
-
                 break;
 
         }
@@ -212,6 +228,8 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
         editor.putString("conMode", "application");
         editor.commit();
         dialog.dismiss();
+
+        // send ema
         Intent mainIntent = new Intent(this, A3techWelcomPageActivity.class);
         mainIntent.putExtra("nomPrenom", this.account.getPrenom()
                 + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + this.account.getNom());
@@ -220,9 +238,100 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
         finish();
     }
 
+
+    private void createAccountFirebase(String email, String password){
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("TAG", "createUserWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            // Show the message task.getException()
+                            A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this, getString(R.string.probleme_technique_create_account), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                            dialog.dismiss();
+                        }
+                        else
+                        {
+                            // successfully account created
+                            // now the AuthStateListener runs the onAuthStateChanged callback
+                            mAuthListener.onAuthStateChanged(auth);
+                        }
+
+                    }
+                });
+    }
     @Override
     public void dataLoadingError(int errorCode) {
         A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this,getString(R.string.probleme_technique),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
         this.dialog.dismiss();
+    }
+
+
+
+    private void sendVerificationEmail()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            createAccountFirebase(account.getEmail(),account.getPassword());
+                            UserManager
+                                    .getInstance()
+                                    .createAccount(
+                                            account.getNom(),
+                                            account.getPrenom(),
+                                            account.getEmail(),
+                                            account.getPassword(),
+                                            "",
+                                            "",
+                                            new StringBuilder(String.valueOf(account.getPrenom()))
+                                                    .append(MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR)
+                                                    .append(account.getNom().substring(0, 1)).toString(),
+                                            new DataLoadCallback() {
+                                                @Override
+                                                public void dataLoaded(Object data, int method, int typeOperation) {
+                                                    dialog.dismiss();
+                                                    A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this,getString(R.string.email_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                                                    // after email is sent just logout the user and finish this activity
+                                                    FirebaseAuth.getInstance().signOut();
+                                                    startActivity(new Intent(A3techCreateAccountActivity.this, A3techLoginActivity.class));
+                                                    finish();
+                                                }
+
+                                                @Override
+                                                public void dataLoadingError(int errorCode) {
+                                                    dialog.dismiss();
+                                                    A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this,getString(R.string.email_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                                                    // after email is sent just logout the user and finish this activity
+                                                    FirebaseAuth.getInstance().signOut();
+                                                    startActivity(new Intent(A3techCreateAccountActivity.this, A3techLoginActivity.class));
+                                                    finish();
+                                                }
+                                            });
+                            // email sent
+
+
+                        }
+                        else
+                        {
+                            dialog.dismiss();
+                            // email not sent, so display message and restart the activity or do whatever you wish to do
+                            A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this,getString(R.string.probleme_technique_create_account_email_not_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                            //restart this activity
+                            overridePendingTransition(0, 0);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            startActivity(getIntent());
+
+                        }
+                    }
+                });
     }
 }

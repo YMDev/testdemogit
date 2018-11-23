@@ -583,7 +583,7 @@
     <string name="header_i_want_to_hire">Je veux recruter</string>
     <string name="header_i_want_to_work">Je veux travailler</string>
     <string name="header_create_an_account">Créer un Compte</string>
-    <string name="hint_username"><![CDATA[Choisir un Nom & Prénom]]></string>
+    <string name="hint_username"><![CDATA[Saisissez votre Nom]]></string>
     <string name="next">Suivant</string>
     <string name="hint_email">Ajouter votre adresse mail</string>
     <string name="hint_password">Ajouter un mot de passe</string>
@@ -758,6 +758,14 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="toolbar_filter_tech_label">Filtre</string>
     <string name="perimetre">Périmètre de recherche</string>
     <string name="valier_filter">Appliquer</string>
+    <string name="hint_userpname">Saisissez  votre Prénom</string>
+    <string name="error_userpname_empty">Le Prénom est obligatoire</string>
+    <string name="probleme_technique_create_account">un problème technique est survenu, prière de réessayer ultérieurement</string>
+    <string name="probleme_technique_create_account_email_not_sent">L\'email de vérification n\'a pas été envoyé, prière de réessayer ultérieurement</string>
+    <string name="error_auth_email_not_verified">Email non encore vérifié, prière de revérifier votre Mail et réessayer de se connecter</string>
+    <string name="email_sent">Un mail de vérification a été envoyé à votre boite, prière de le valider</string>
+    <string name="verify">Renvoyer</string>
+    <string name="mail_non_verifie">Votre mail n\'a pas encore été vérifié, prière de le faire pour utiliser l\'application</string>
 
 
 </resources>

@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techCreateAccountActivity;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,7 +38,7 @@ public class A3techAddUserNameFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private TextInputLayout username;
+    private TextInputLayout username, userPname;
     private Button next;
     private OnFragmentInteractionListener mListener;
 
@@ -77,6 +78,7 @@ public class A3techAddUserNameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_user_name, container, false);
         username = viewFr.findViewById(R.id.input_layout_username);
+        userPname = viewFr.findViewById(R.id.input_layout_userpname);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -95,7 +97,16 @@ public class A3techAddUserNameFragment extends Fragment {
                     username.getEditText().setError(getString(R.string.error_username_empty));
                     return;
                 }
-                mListener.actionNext(ACTION_TYPE_USERNAME, username.getEditText().getText().toString());
+
+                String pnameSaisi = userPname.getEditText().getText() != null ? userPname.getEditText().getText().toString() :"";
+                if(StringUtils.isBlank(pnameSaisi)){
+                    userPname.getEditText().setError(getString(R.string.error_userpname_empty));
+                    return;
+                }
+                A3techUser userTmp = new A3techUser();
+                userTmp.setNom(username.getEditText().getText().toString());
+                userTmp.setPrenom(userPname.getEditText().getText().toString());
+                mListener.actionNext(ACTION_TYPE_USERNAME, userTmp);
             }
         });
         /*viewFr.setOnKeyListener(new View.OnKeyListener() {

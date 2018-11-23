@@ -99,7 +99,6 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3tech_home_activity);
         connectedUser = PreferencesValuesUtils.getConnectedUser(A3techHomeActivity.this);
-        Log.i("KKKKKKKKKKKKKKKKKKKKKK", "initialisation Home Activity");
         new InitActivityTask(A3techHomeActivity.this).execute();
         installListener();
     }
@@ -152,7 +151,6 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
         setupToolbarAccount();
 
         appBarHome = findViewById(R.id.appbar_home);
-
 
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.home_bottom_navigation);
         setupBottomNavBehaviors();
