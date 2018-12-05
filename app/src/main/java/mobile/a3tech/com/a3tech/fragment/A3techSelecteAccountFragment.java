@@ -73,7 +73,7 @@ public class A3techSelecteAccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View viewFr = inflater.inflate(R.layout.fragment_a3tech_selecte_account, container, false);
+        View viewFr = inflater.inflate(R.layout.fragment_a3tech_selecte_account_v2, container, false);
         btnWantHire = viewFr.findViewById(R.id.want_hire);
         btnWantWork = viewFr.findViewById(R.id.want_work);
         btnWantWork.setOnClickListener(new View.OnClickListener() {

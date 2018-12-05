@@ -3,6 +3,9 @@ package mobile.a3tech.com.a3tech.test;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,6 +26,7 @@ import java.util.List;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
+import mobile.a3tech.com.a3tech.activity.A3techMissionListeActivity;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
@@ -37,13 +41,13 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
     private List<A3techMission> listeObjects = new ArrayList<>();
 
     private Context context;
-    private A3techHomeActivity parentActivity;
+    private A3techMissionListeActivity parentActivity;
 
     public SimpleAdapterMission(Context context) {
         this.context = context;
     }
 
-    public SimpleAdapterMission(Context context, List objectMenu, A3techHomeActivity parent) {
+    public SimpleAdapterMission(Context context, List objectMenu, A3techMissionListeActivity parent) {
         this.context = context;
         listeObjects = objectMenu;
         parentActivity = parent;
@@ -96,9 +100,19 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
 
         if (missionTmp.getStatut() != null) {
             holder.statutMission.setText(missionTmp.getStatut().getDiscreptionEnum());
+            if(missionTmp.getStatut().getId() == A3techMissionStatut.VALIDEE.getId()){
+                GradientDrawable backStatutMission = (GradientDrawable) holder.containerMissionStatut.getBackground();
+                backStatutMission.setColorFilter(context.getResources().getColor(R.color.green_dark), PorterDuff.Mode.SRC_ATOP);
+                holder.containerMissionStatut.setBackground(backStatutMission);
+            }else if(missionTmp.getStatut().getId() == A3techMissionStatut.ANNULEE.getId()){
+                GradientDrawable backStatutMission = (GradientDrawable) holder.containerMissionStatut.getBackground();
+                backStatutMission.setColorFilter(context.getResources().getColor(R.color.red_dark), PorterDuff.Mode.SRC_ATOP);
+                holder.containerMissionStatut.setBackground(backStatutMission);
+            }
 
         } else
             holder.statutMission.setText(A3techMissionStatut.CREE.getDiscreptionEnum());
+
 
 
         if (missionTmp.getTechnicien() != null) {
@@ -140,7 +154,7 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
         TextView dateMission;
         TextView technicien;
         TextView statutMission;
-        RelativeLayout container;
+        RelativeLayout container, containerMissionStatut;
 
         public SimpleItemVH(View itemView) {
             super(itemView);
@@ -151,6 +165,7 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
             dateMission = itemView.findViewById(R.id.date_mission);
             technicien = itemView.findViewById(R.id.technicien_selected);
             statutMission = itemView.findViewById(R.id.statut_mission);
+            containerMissionStatut = itemView.findViewById(R.id.container_mission_statut);
         }
     }
 

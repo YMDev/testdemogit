@@ -124,6 +124,9 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
         //createFakeNotification();
         addBottomNavigationItems();
         bottomNavigation.setCurrentItem(0);
+        if (mListener != null) {
+            mListener.actionToolbar(true);
+        }
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
@@ -132,11 +135,11 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
 
                 if (position == 1) {
                     if (mListener != null) {
-                        mListener.actionToolbar(true);
+                        mListener.actionToolbar(false);
                     }
                 } else {
                     if (mListener != null) {
-                        mListener.actionToolbar(false);
+                        mListener.actionToolbar(true);
                     }
                 }
                 return true;
@@ -154,7 +157,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
     }
 
     public void deleteMapInFragment() {
-        ((A3techDisplayTechInMapFragment) pagerAdapter.getItem(1)).destroyMap();
+        ((A3techDisplayTechInMapFragment) pagerAdapter.getItem(0)).destroyMap();
     }
 
     /*private void getListOFTechToDisplay() {
@@ -205,15 +208,15 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
         }
 
         pagerAdapter = new BottomBarAdapter(getFragmentManager());
-        pagerAdapter.addFragments(A3techAffecterTechnicienFragment.newInstance(mission, listeOfTechToDisplay));
         pagerAdapter.addFragments(A3techDisplayTechInMapFragment.newInstance(mission, listeOfTechToDisplay));
+        pagerAdapter.addFragments(A3techAffecterTechnicienFragment.newInstance(mission, listeOfTechToDisplay));
         viewPager.setAdapter(pagerAdapter);
     }
 
     public void notifyPerimetreChanged(Integer perim){
         if(pagerAdapter != null && pagerAdapter.getItem(0) != null && pagerAdapter.getItem(1) != null){
-            ((A3techAffecterTechnicienFragment)pagerAdapter.getItem(0)).notifyPerimetreChanged(perim);
-            ((A3techDisplayTechInMapFragment)pagerAdapter.getItem(1)).notifyPerimetreChanged(perim);
+            ((A3techAffecterTechnicienFragment)pagerAdapter.getItem(1)).notifyPerimetreChanged(perim);
+            ((A3techDisplayTechInMapFragment)pagerAdapter.getItem(0)).notifyPerimetreChanged(perim);
 
         }
     }
@@ -249,8 +252,8 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.display_tech_tab_2, R.drawable.a3tech_display_as_list, R.color.colorPrimary);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.display_tech_tab_1, R.drawable.a3tech_display_as_maps, R.color.colorPrimary);
 
-        bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
+        bottomNavigation.addItem(item1);
 
     }
 

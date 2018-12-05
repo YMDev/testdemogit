@@ -41,7 +41,10 @@ import mobile.a3tech.com.a3tech.fragment.A3techStep1CreatAccountFragment;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.model.Mission;
+import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.view.A3techDialogFilterTechniciens;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
 public class A3techAddMissionActivity extends BaseActivity implements A3techSelectCategoryMissionFragment.OnFragmentInteractionListener,A3techPostMissionFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener, A3techDisplayTechniciensPArentFragment.OnFragmentInteractionListener, A3techDisplayTechInMapFragment.OnFragmentInteractionListener
@@ -54,8 +57,8 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
     private Toolbar toolbarSelectCategoryMission;
     private Toolbar toolbarAffecterTech;
     private ProgressBar progressPostMission;
-    private ImageView backAction;
-
+    private ImageView backAction, filterTech;
+    A3techDisplayTechniciensPArentFragment fragmentMap;
     public static final String TAG_RESULT_FROM_SELECT_TECH ="TAG_RESULT_FROM_SELECT_TECH";
     public static final String TAG_RESULT_FROM_ADD_MISSION_WELCOM ="TAG_RESULT_FROM_ADD_MISSION_WELCOM";
     public static final String TAG_RESULT_OBJECT_ADD_MISSION_WELCOM ="TAG_RESULT_OBJECT_ADD_MISSION_WELCOM";
@@ -100,6 +103,31 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        filterTech = findViewById(R.id.filter_techniciens);
+        filterTech.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GPSTracker gps = new GPSTracker(A3techAddMissionActivity.this);
+                if (gps.canGetLocation()) {
+                    A3techDialogFilterTechniciens.displayFilterDialogue(new A3techDialogFilterTechniciens.OnAppliquerPerimetre() {
+                        @Override
+                        public void appliquerPerimetre(Integer perim) {
+                            PreferencesValuesUtils.setPermietreRechercheTechniciens(A3techAddMissionActivity.this, perim);
+                            if(fragmentMap != null){
+                                fragmentMap.notifyPerimetreChanged(perim);
+                            }
+                        }
+
+                        @Override
+                        public Context getContext() {
+                            return A3techAddMissionActivity.this;
+                        }
+                    }, PreferencesValuesUtils.getPermietreRechercheTechniciens(A3techAddMissionActivity.this));
+                } else {
+                    gps.showSettingsAlert();
+                }
             }
         });
 
@@ -194,7 +222,9 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
                 updateAppbarLayout(3);
                 ((TextView)toolbarAffecterTech.findViewById(R.id.big_title)).setText(mission.getCategoryMission().getLibelle());
                // avant d'introduire buttom tabs : setFragment(A3techAffecterTechnicienFragment.newInstance(mission), true, false);
-                setFragment(A3techDisplayTechniciensPArentFragment.newInstance(mission), true, false);
+                 fragmentMap = A3techDisplayTechniciensPArentFragment.newInstance(mission);
+                actionToolbar(true);
+                setFragment(fragmentMap, true, false);
                 break;
         }
     }
@@ -265,8 +295,8 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
         switch (requestCode) {
             case (SimpleAdapterTechnicien.REQUEST_DISPLAY_TECH_FROM_MISSION): {
                 if (resultCode == Activity.RESULT_OK) {
-                   if (isFromWelcom){
-                       Intent intentAddMissionn  = new Intent(A3techAddMissionActivity.this, A3techHomeActivity.class);
+                   /*if (isFromWelcom){
+                       Intent intentAddMissionn  = new Intent(A3techAddMissionActivity.this, A3techWelcomPageActivity.class);
                        String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
                        A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
                        intentAddMissionn.putExtra(A3techAddMissionActivity.TAG_RESULT_OBJECT_ADD_MISSION_WELCOM,jsonMission);
@@ -281,8 +311,13 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
                        resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH,jsonMission);
                        setResult(Activity.RESULT_OK, resultIntent);
                        finish();
-                   }
-
+                   }*/
+                    String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
+                    A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH,jsonMission);
+                    setResult(Activity.RESULT_OK, resultIntent);
+                    finish();
                 }
                 break;
             }

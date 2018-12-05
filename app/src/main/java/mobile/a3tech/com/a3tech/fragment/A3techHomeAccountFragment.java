@@ -19,6 +19,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techAccountActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.User;
@@ -104,13 +105,13 @@ public class A3techHomeAccountFragment extends Fragment {
         recycyleInformation = viewFr.findViewById(R.id.recycle_informtaions);
         recycyleInformation.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         SimpleAdapterTest adapter = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(1));
-        adapter.setmDecListener((A3techHomeActivity)getActivity());
+        adapter.setmDecListener((A3techAccountActivity)getActivity());
         recycyleInformation.setAdapter(adapter);
 
         recycyleAccountSetting = viewFr.findViewById(R.id.recycle_account_setting);
         recycyleAccountSetting.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         SimpleAdapterTest adapterrecycyleAccountSetting = new SimpleAdapterTest(getActivity(), prepareListeObjectToshow(2));
-        adapterrecycyleAccountSetting.setmDecListener((A3techHomeActivity)getActivity());
+        adapterrecycyleAccountSetting.setmDecListener((A3techAccountActivity)getActivity());
         recycyleAccountSetting.setAdapter(adapterrecycyleAccountSetting);
 
 
@@ -121,6 +122,7 @@ public class A3techHomeAccountFragment extends Fragment {
 
         fetchSoldeTech();
     }
+
 
     private void fetchSoldeTech(){
         getActivity().runOnUiThread(new Runnable() {
@@ -152,15 +154,14 @@ public class A3techHomeAccountFragment extends Fragment {
         switch (typeRecycle) {
             case 1:
                 //Information
-                listeRetour.add(new ObjectMenu("Notification", "Les notification du jour", 1, 1));
+                listeRetour.add(new ObjectMenu("Notification", "Les notifications du jour", 1, 1));
                 listeRetour.add(new ObjectMenu("Demander une mission", "chercher parmi nos meilleurs techniciens", 1, 2));
                 listeRetour.add(new ObjectMenu("Recever un crédit gratuit", "Inviter vos amis est gagner 200 MAD", 1, 3));
                 break;
             case 2:
                 //Information
-                listeRetour.add(new ObjectMenu("Notification", "Les notification du jour", 2, 1));
-                listeRetour.add(new ObjectMenu("Demander une mission", "chercher parmi nos meilleurs techniciens", 2, 2));
-                listeRetour.add(new ObjectMenu("Recever un crédit gratuit", "Inviter vos amis est gagner 200 MAD", 2, 3));
+                listeRetour.add(new ObjectMenu("Devenez un Technicien 3TEC", "Inscrivez-vous et bénificier de nos services", 2, 1));
+                listeRetour.add(new ObjectMenu("Recommander un Technicien", "Recommander un Technicien à 3TEC et gangner un solde de 100 dh", 2, 2));
                 listeRetour.add(new ObjectMenu("Deconnexion", "", 2, 4));
         }
         return listeRetour;

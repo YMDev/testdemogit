@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -31,8 +33,12 @@ import butterknife.ButterKnife;
 import eltos.simpledialogfragment.form.Input;
 import eltos.simpledialogfragment.form.SimpleFormDialog;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
+import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
+import mobile.a3tech.com.a3tech.activity.A3techTechnicienAvailabilityActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
+import mobile.a3tech.com.a3tech.animation.ProgresseAnimation;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
@@ -101,6 +107,15 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
     @BindView(R.id.date_inscription_value)
     TextView dateInscriptionValue;
 
+    @BindView(R.id.taux_completion_profil)
+    TextView tauxCompletionProfil;
+
+    @BindView(R.id.progress_complete_profil)
+    ProgressBar progressCompletionProfil;
+
+    @BindView(R.id.label_completion_profil)
+    TextView labelCompletionProfil;
+
     private A3techUser user;
     private A3techViewEditProfilActivity activity;
     private OnFragmentInteractionListener mListener;
@@ -166,6 +181,7 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
         activity = (A3techViewEditProfilActivity) getActivity();  // <--- add this line here
         setRetainInstance(true);
         actionsEdition();
+        initProgresseCompletionProfil();
         return viewFr;
     }
 
@@ -183,6 +199,22 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
                 displayCoordonneeEditDialogue(user);
             }
         });
+    }
+
+
+    private void initProgresseCompletionProfil(){
+        //TODO get taux profile from server
+        ProgresseAnimation anim = new ProgresseAnimation(progressCompletionProfil, tauxCompletionProfil, 0, 75);
+        anim.setDuration(1000);
+        progressCompletionProfil.startAnimation(anim);
+        labelCompletionProfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainIntent = new Intent(getActivity(), A3techTechnicienAvailabilityActivity.class);
+                startActivity(mainIntent);
+            }
+        });
+
     }
 
     private static final String TAG_EDIT_ABOUT_INPUT = "TAG_EDIT_ABOUT_INPUT";

@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -38,7 +39,7 @@ public class A3techAddUserNameFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private TextInputLayout username, userPname;
+    private EditText username, userPname;
     private Button next;
     private OnFragmentInteractionListener mListener;
 
@@ -76,13 +77,13 @@ public class A3techAddUserNameFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_user_name, container, false);
-        username = viewFr.findViewById(R.id.input_layout_username);
-        userPname = viewFr.findViewById(R.id.input_layout_userpname);
+        View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_user_name_v2, container, false);
+        username = viewFr.findViewById(R.id.input_username);
+        userPname = viewFr.findViewById(R.id.input_userpname);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                username.getEditText().requestFocus();
+                username.requestFocus();
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
             }
@@ -92,20 +93,20 @@ public class A3techAddUserNameFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String emailSaisi = username.getEditText().getText() != null ? username.getEditText().getText().toString() :"";
+                String emailSaisi = username.getText() != null ? username.getText().toString() :"";
                 if(StringUtils.isBlank(emailSaisi)){
-                    username.getEditText().setError(getString(R.string.error_username_empty));
+                    username.setError(getString(R.string.error_username_empty));
                     return;
                 }
 
-                String pnameSaisi = userPname.getEditText().getText() != null ? userPname.getEditText().getText().toString() :"";
+                String pnameSaisi = userPname.getText() != null ? userPname.getText().toString() :"";
                 if(StringUtils.isBlank(pnameSaisi)){
-                    userPname.getEditText().setError(getString(R.string.error_userpname_empty));
+                    userPname.setError(getString(R.string.error_userpname_empty));
                     return;
                 }
                 A3techUser userTmp = new A3techUser();
-                userTmp.setNom(username.getEditText().getText().toString());
-                userTmp.setPrenom(userPname.getEditText().getText().toString());
+                userTmp.setNom(username.getText().toString());
+                userTmp.setPrenom(userPname.getText().toString());
                 mListener.actionNext(ACTION_TYPE_USERNAME, userTmp);
             }
         });

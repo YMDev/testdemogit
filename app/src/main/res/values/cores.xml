@@ -2,8 +2,8 @@
 <resources>
 
     <color name="semi_transparent">#40000000</color>
-    <color name="colorPrimary">#590a63</color>
-    <color name="colorPrimaryDark">#690b81</color>
+  <!--  <color name="colorPrimary">#590a63</color>
+    <color name="colorPrimaryDark">#690b81</color>-->
     <color name="colorPrimarysemiTransparent">#1b73fdf4</color>
     <color name="colorAccent">#FF4081</color>
     <color name="material_orange">#FF9800</color>
@@ -148,4 +148,10 @@
     <color name="info_toast_color">#585dfa</color>
 
 
+    <color name="light_bleu_gray">#ff435e6c</color>
+    <color name="dark_bleu_gray">#ff2a4959</color>
+    <color name="back_color">#FF286F95</color>
+
+    <color name="colorPrimary">#FF286F95</color>
+    <color name="colorPrimaryDark">#ff2a4959</color>
 </resources>

@@ -23,6 +23,7 @@ import java.util.List;
 
 import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techAccountActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techLoginActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
@@ -99,7 +100,7 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
             @Override
             public void onClick(View view) {
                 if(dessert.getId() == 4  && dessert.getType() == 2){
-                    SimpleDialog.build().pos(R.string.deconnexion).title(R.string.deconnexion_label).neg(R.string.cancel).msg(R.string.msg_deconnexion).theme(R.style.SimpleDialogThemeProfile).show((A3techHomeActivity)context,"DEC");
+                    SimpleDialog.build().pos(R.string.deconnexion).title(R.string.deconnexion_label).neg(R.string.cancel).msg(R.string.msg_deconnexion).theme(R.style.SimpleDialogThemeProfile).show((A3techAccountActivity)context,"DEC");
                    /* deconnexion();
 
                     if(mDecListener != null) mDecListener.deconnexion();*/

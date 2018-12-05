@@ -4,10 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import mobile.a3tech.com.a3tech.R;
 
@@ -31,7 +33,7 @@ public class A3techStep1CreatAccountFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    Button btnFacebookConnection;
+    LinearLayout btnFacebookConnection;
     Button btnCreateAccount;
     private OnFragmentInteractionListener mListener;
 
@@ -70,8 +72,8 @@ public class A3techStep1CreatAccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_a3tech_step1_creat_account, container, false);
-        btnFacebookConnection = view.findViewById(R.id.btnfacebookConnection);
+        View view = inflater.inflate(R.layout.fragment_a3tech_step1_creat_account_v2, container, false);
+        btnFacebookConnection = view.findViewById(R.id.lay_btn_create_facebook_account);
         btnCreateAccount = view.findViewById(R.id.btn_create_account);
 
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {

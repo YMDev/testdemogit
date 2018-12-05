@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
@@ -63,6 +64,7 @@ import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
+import mobile.a3tech.com.a3tech.service.MailService;
 import mobile.a3tech.com.a3tech.test.DummyFragment;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTest;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
@@ -73,7 +75,7 @@ import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 import mobile.a3tech.com.a3tech.view.NoSwipePager;
 
-public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.OnDialogResultListener ,A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener, A3techHomeBrowseTechFragment.OnFragmentInteractionListener, A3techNotificationHomeFragment.OnFragmentInteractionListener, SimpleAdapterTest.OnDeconnexion {
+public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnDialogResultListener, A3techHomeAccountFragment.OnFragmentInteractionListener, A3techMissionsHomeFragment.OnFragmentInteractionListener, A3techHomeBrowseTechFragment.OnFragmentInteractionListener, A3techNotificationHomeFragment.OnFragmentInteractionListener, SimpleAdapterTest.OnDeconnexion {
     private final int[] colors = {R.color.white, R.color.white, R.color.white, R.color.white};
     private NoSwipePager viewPager;
     private AHBottomNavigation bottomNavigation;
@@ -135,7 +137,6 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
     }
 
     private void initiInterfaceActivity() {
-        setupViewPager();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -146,17 +147,14 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
         toolEchange = findViewById(R.id.toolbar_echange);
         toolAccount = findViewById(R.id.toolbar_account);
         toolBrowse = findViewById(R.id.toolbar_browse);
-
-
         setupToolbarAccount();
-
-        appBarHome = findViewById(R.id.appbar_home);
-
         bottomNavigation = (AHBottomNavigation) findViewById(R.id.home_bottom_navigation);
         setupBottomNavBehaviors();
         setupBottomNavStyle();
         //createFakeNotification();
         addBottomNavigationItems();
+        setupViewPager();
+        appBarHome = findViewById(R.id.appbar_home);
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
@@ -171,14 +169,14 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
                         public void run() {
                             onNetworkUp();
                         }
-                    },300);
+                    }, 300);
                 } else {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             onNetworkDown();
                         }
-                    },300);
+                    }, 300);
 
                 }
                 // remove notification badge
@@ -216,10 +214,8 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
                 }
             });
         } else {
-
             hundleMessageFromWelcomPage();
         }
-
 
     }
 
@@ -510,6 +506,7 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
      * Also assigns a distinct color to each Bottom Navigation item, used for the color ripple.
      */
     private void addBottomNavigationItems() {
+        bottomNavigation.removeAllItems();
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.home_tab_1, R.drawable.ic_action_echange, colors[0]);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.home_tab_2, R.drawable.a3tech_missions_icon, colors[1]);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.home_tab_3, R.drawable.a3tech_search_icon, colors[2]);
@@ -649,6 +646,12 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
                                 @Override
                                 public void dataLoaded(Object data, int method, int typeOperation) {
                                     A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                                    MailService mailer = new MailService("mouadbouhjra@gmail.com", "m.bouhjra@gmail.com", "Subject", "TextBody", "<b>HtmlBody</b>");
+                                    try {
+                                        mailer.sendAuthenticated();
+                                    } catch (Exception e) {
+                                        Log.e("MAILKKKKKKKKK", "Failed sending email.", e);
+                                    }
                                     dialogWaiting.dismiss();
                                 }
 
@@ -709,14 +712,23 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
 
         @Override
         protected Boolean doInBackground(Void... arg0) {
-            initiInterfaceActivity();
+            try {
+                initiInterfaceActivity();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             return true;
         }
 
         @Override
         protected void onPostExecute(Boolean result) {
             if (pd != null) pd.dismiss();
-            getSelectedMission();
+            try {
+                getSelectedMission();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -768,7 +780,7 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
 
                     if (state == NetworkInfo.State.CONNECTED) {
                         onNetworkUp();
-                       /* A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.connexion_retablie), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);*/
+                        /* A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.connexion_retablie), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);*/
 
                     } else {
                         A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.network_error_text), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
@@ -791,7 +803,7 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
         } else if (bottomNavigation.getCurrentItem() == 2) {
             // browse users tech
             ((A3techHomeBrowseTechFragment) pagerAdapter.getItem(2)).onNetworkDown();
-        }else if (bottomNavigation.getCurrentItem() == 3) {
+        } else if (bottomNavigation.getCurrentItem() == 3) {
             // browse users tech
             ((A3techHomeAccountFragment) pagerAdapter.getItem(3)).onNetworkDown();
         }
@@ -805,21 +817,32 @@ public class A3techHomeActivity extends BaseActivity implements  SimpleDialog.On
         } else if (bottomNavigation.getCurrentItem() == 2) {
             // browse users tech
             ((A3techHomeBrowseTechFragment) pagerAdapter.getItem(2)).onNetworkUp();
-        }else if (bottomNavigation.getCurrentItem() == 3) {
+        } else if (bottomNavigation.getCurrentItem() == 3) {
             // browse users tech
             ((A3techHomeAccountFragment) pagerAdapter.getItem(3)).onNetworkUp();
         }
     }
 
 
-
     @Override
     public boolean onResult(@NonNull String dialogTag, int which, @NonNull Bundle extras) {
         if (which == BUTTON_POSITIVE && "DEC".equals(dialogTag)) {
-             deconnexion();
+            deconnexion();
         }
         return false;
     }
 
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            initiInterfaceActivity();
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            initiInterfaceActivity();
+        }
+    }
 
 }

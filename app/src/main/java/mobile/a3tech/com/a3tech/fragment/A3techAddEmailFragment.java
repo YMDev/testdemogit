@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,8 +35,8 @@ public class A3techAddEmailFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private TextInputLayout email;
-    private TextInputLayout phone;
+    private EditText email;
+    private EditText phone;
     private Button next;
     private OnFragmentInteractionListener mListener;
 
@@ -73,29 +74,29 @@ public class A3techAddEmailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_email, container, false);
-        email = viewFr.findViewById(R.id.input_layout_email);
-        phone = viewFr.findViewById(R.id.input_layout_phone);
+        View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_email_v2, container, false);
+        email = viewFr.findViewById(R.id.input_email);
+        phone = viewFr.findViewById(R.id.input_phone);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(email.getEditText(), InputMethodManager.SHOW_FORCED);
+        imm.showSoftInput(email, InputMethodManager.SHOW_FORCED);
         next = viewFr.findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String emailSaisi = email.getEditText().getText() != null ? email.getEditText().getText().toString() :"";
-                String phoneSaisi = phone.getEditText().getText() != null ? phone.getEditText().getText().toString() :"";
+                String emailSaisi = email.getText() != null ? email.getText().toString() :"";
+                String phoneSaisi = phone.getText() != null ? phone.getText().toString() :"";
                 if(StringUtils.isBlank(emailSaisi)){
-                    email.getEditText().setError(getString(R.string.error_email_empty));
+                    email.setError(getString(R.string.error_email_empty));
                     return;
                 }
                 if(StringUtils.isBlank(phoneSaisi)){
-                    phone.getEditText().setError(getString(R.string.error_phone_empty));
+                    phone.setError(getString(R.string.error_phone_empty));
                     return;
                 }
 
 
                 if(!isValidEmailAddress(emailSaisi)){
-                    email.getEditText().setError(getString(R.string.error_email_not_valide));
+                    email.setError(getString(R.string.error_email_not_valide));
                     return;
                 }
                 HashMap mapData  = new HashMap();

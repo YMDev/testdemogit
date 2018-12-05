@@ -2,10 +2,12 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 27
+
     defaultConfig {
         applicationId "mobile.a3tech.com.a3tech"
-        minSdkVersion 21
+        minSdkVersion 16
         targetSdkVersion 27
+        multiDexEnabled true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -59,6 +61,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-auth:16.0.1'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
+    implementation 'com.txusballesteros:FitChart:1.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
 }

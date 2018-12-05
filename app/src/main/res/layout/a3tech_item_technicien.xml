@@ -228,7 +228,7 @@
                             android:background="@drawable/a3tech_back_distance_bar"
                             android:max="100"
                             android:progress="0"
-                            android:progressDrawable="@drawable/progress_bar_color_back" />
+                            android:progressDrawable="@drawable/progress_add_mission_bar_color_back" />
 
                         <TextView
                             android:id="@+id/distance_value"

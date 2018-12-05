@@ -84,7 +84,7 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
         networkDown.setVisibility(View.GONE);
         networkOn.setVisibility(View.VISIBLE);
 
-        installListener();
+
         //android O fix bug orientation
         if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -102,7 +102,8 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
             Log.e("KeyHash:", e.toString());
         }
         setVersionInfo();
-        initAuthParam();
+        installListener();
+        //initAuthParam();
     }
 
 

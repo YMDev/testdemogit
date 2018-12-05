@@ -31,7 +31,15 @@
                 android:textColor="@color/black"
                 android:textSize="21dp"
                 android:textStyle="bold" />
-
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/filter_techniciens"
+                android:src="@drawable/a3tech_filter_liste"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:visibility="visible"/>
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 

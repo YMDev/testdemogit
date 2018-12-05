@@ -7,12 +7,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,15 +30,20 @@ import java.util.List;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
+import mobile.a3tech.com.a3tech.activity.A3techMissionListeActivity;
+import mobile.a3tech.com.a3tech.adapter.A3techMissionsListeAdapter;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
 import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
 import mobile.a3tech.com.a3tech.model.A3techNotification;
 import mobile.a3tech.com.a3tech.model.A3techNotificationType;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
+import mobile.a3tech.com.a3tech.service.MailService;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterMission;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.utils.NetworkUtils;
+import mobile.a3tech.com.a3tech.utils.NotificationStuffs;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
@@ -52,12 +60,14 @@ public class A3techMissionsHomeFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_TYPE_MISSIONS = "arg_type_missions";
     private static final String ARG_PARAM2 = "param2";
     public static final int REQ_ADD_MISSION = 4953;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String mTypeMissions;
     String keyWord = "";
     String premium = "";
     String lang = "";
@@ -95,11 +105,20 @@ public class A3techMissionsHomeFragment extends Fragment {
         return fragment;
     }
 
+    public static A3techMissionsHomeFragment newInstance(String typeDisplay) {
+        A3techMissionsHomeFragment fragment = new A3techMissionsHomeFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_TYPE_MISSIONS, typeDisplay);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
+            mTypeMissions = getArguments().getString(ARG_TYPE_MISSIONS);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -108,6 +127,10 @@ public class A3techMissionsHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         // Inflate the layout for this fragment
         SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(getActivity());
@@ -131,29 +154,36 @@ public class A3techMissionsHomeFragment extends Fragment {
         networkDown.setVisibility(View.GONE);
         refreshMissionsList();
 
-        addMission = viewFr.findViewById(R.id.add_mission);
+       /* addMission = viewFr.findViewById(R.id.add_mission);
         addMission.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // start activity add mission
                 startActivityForResult(new Intent(getActivity(), A3techAddMissionActivity.class), REQ_ADD_MISSION);
             }
-        });
+        });*/
         return viewFr;
     }
 
 
     private void refreshMissionsList() {
+        if(mTypeMissions == null) return;
         final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
+        A3techMission criteriaM = new A3techMission();
+        Log.d("KKKKKKKKKKK",mTypeMissions);
+        if (mTypeMissions != null && mTypeMissions.equals(A3techMissionsListeAdapter.MISSIONS_EN_COURS)) {
+            criteriaM.setStatut(A3techMissionStatut.CREE);
+        } else if (mTypeMissions != null && mTypeMissions.equals(A3techMissionsListeAdapter.MISSIONS_HISTORIQUE)) {
+            criteriaM.setStatut(A3techMissionStatut.CLOTUREE);
+        }
         MissionManager.getInstance().filtreMission(lang, connectedUser,
-                keyWord, String.valueOf(distance), "",
-                Constant.LOAD_DATA_FINISH, String.valueOf(0),
-                String.valueOf(limit), connectedUser, null, premium, password, 0, 0,
+                new Gson().toJson(criteriaM),
+                String.valueOf(limit), connectedUser, 0, 0,
                 new DataLoadCallback() {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
                         List<A3techMission> listeRetour = (List<A3techMission>) data;
-                        SimpleAdapterMission adapter = new SimpleAdapterMission(getActivityContext(), listeRetour, (A3techHomeActivity) getActivityContext());
+                        SimpleAdapterMission adapter = new SimpleAdapterMission(getActivityContext(), listeRetour, (A3techMissionListeActivity) getActivityContext());
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
                         recycleMission.setLayoutManager(mLayoutManager);
                         recycleMission.setItemAnimator(new DefaultItemAnimator());
@@ -238,6 +268,8 @@ public class A3techMissionsHomeFragment extends Fragment {
                                 @Override
                                 public void dataLoaded(Object data, int method, int typeOperation) {
                                     A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                                    // NotificationStuffs.sendSmsMsgFnc("0630988910","sms sms sms 3tech",getActivity());
+                                    //NotificationStuffs.sendMail(Constant.MAIL_3TECH,"this is a test of 3 tech notification", "3Tech mission créée");
                                     dialogWaiting.dismiss();
                                 }
 
@@ -270,13 +302,15 @@ public class A3techMissionsHomeFragment extends Fragment {
 
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
-        if(NetworkUtils.isNetworkAvailable(getActivity())){
+        if (NetworkUtils.isNetworkAvailable(getActivity())) {
             onNetworkUp();
         }
     }
+
     public void onNetworkDown() {
         networkOn.setVisibility(View.GONE);
         networkDown.setVisibility(View.VISIBLE);

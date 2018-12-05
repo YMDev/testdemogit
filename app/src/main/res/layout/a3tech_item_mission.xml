@@ -51,9 +51,18 @@
                     android:layout_centerVertical="true"
                     android:fontFamily="sans-serif-meduim"
                     android:text="CREEE"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/white"
                     android:textSize="12dp"
                     android:textStyle="bold" />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/a3tech_show_next"/>
             </RelativeLayout>
             <LinearLayout
                 android:id="@+id/container_informations_mission"

@@ -2,7 +2,8 @@ package mobile.a3tech.com.a3tech.utils;
 
 public interface Constant {
 
-    static String IP = "http://142.54.180.146:8080";
+    static String IP = "http://192.168.1.24:8080";
+	//static String IP = "http://142.54.180.146:8080";
 	static final String CHECK_local = IP+"/user/allusers";
 	static final String A3TECH_FETCH_TECHNICIEN = IP+"/user/fetchTechniciens";
 	static final String A3TECH_GET_TECH_ENABLED_FOR_CLIENT = IP+"/user/techEnabled";
@@ -16,6 +17,8 @@ public interface Constant {
 	static final String A3TECH_CREATE_NOTIFICATION = IP+"/notification/createNotification";
 	static final String A3TECH_CREATE_ACCOUNT = IP+"user/createAccount";
 	static final String A3TECH_LOGIN_FB_URL = IP+"user/loginfb";
+
+	static final String MAIL_3TECH = "mouadbouhjra@gmail.com";
 
 
 
@@ -32,6 +35,7 @@ public interface Constant {
 	static final String CHECK_EDU_CREATE_MISSION_URL = "http://arakhod.com/frontend_dev.php/mission/createMission.json";
 	static final String CHECK_EDU_FILTER_MISSION_URL = "http://arakhod.com/frontend_dev.php/mission/filtreMission.json";
 	static final String CHECK_EDU_ALGO_MISSION_URL = IP+"/mission/filtreMission";
+    static final String CHECK_EDU_ALGO_MISSION_CRITERIA_URL = IP+"/mission/filtreMissionByCriteria";
 	static final String CHECK_EDU_MISSIONS_EMISES_URL = "http://arakhod.com/frontend_dev.php/mission/missionsEmises.json";
 	static final String CHECK_EDU_MISSIONS_SUIVIES_URL = "http://arakhod.com/frontend_dev.php/mission/missionsSuivies.json";
 	static final String CHECK_EDU_MISSIONS_SUIVIES_CHAT_URL = "http://arakhod.com/frontend_dev.php/mission/missionsSuiviesChat.json";

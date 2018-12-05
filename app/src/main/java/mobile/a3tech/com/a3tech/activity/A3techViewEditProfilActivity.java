@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
@@ -286,6 +287,8 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
             //pour lancer le mode edition dy fragment "PROFIL"
             if (mDataUpdateListener != null) mDataUpdateListener.onDataUpdate(false);
             isModeEdition = Boolean.FALSE;
+            mAppBarLayout.setExpanded(true);
+
         }
 
     }

@@ -73,6 +73,27 @@ public class MissionService extends AbstractService implements Constant {
         return s;
     }
 
+
+
+    //filtrer missions
+    public List<A3techMission> filtreMission(String lang, String connectedUser, String missionCriteria, String start, String limit,
+                                             int order, int type) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("start", start);
+        params.put("limit", limit);
+        params.put("connectedUser", connectedUser);
+        params.put("missionCriteria", missionCriteria);
+        params.put("lang", lang);
+        params.put("order", String.valueOf(order));
+        params.put("type", String.valueOf(type));
+        List<A3techMission> result = getResult(CHECK_EDU_ALGO_MISSION_CRITERIA_URL, params,
+                new TypeReference<List<A3techMission>>() {
+                });
+
+        return result;
+    }
+
+
     //filtrer missions
     public List<A3techMission> filtreMission(String lang, String connectedUser, String keyWord, String distance, String services, String start, String limit, String key, String typeTransaction, String premium, String password,
                                              int order, int type) throws EducationException {

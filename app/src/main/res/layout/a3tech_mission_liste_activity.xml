@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.A3techMissionListeActivity">
+
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_mission_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/toolbar_mission"
+                layout="@layout/a3tech_toolbar_mission_fragment" />
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/frame_view_account_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar_mission_list">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabs_mission"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="18dp"
+            app:tabIndicatorColor="#00000000"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/white"
+            app:tabTextColor="@color/colorPrimary"
+           />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_missions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tabs_mission"
+            android:background="@android:color/white" />
+    </RelativeLayout>
+
+ <!--   <FrameLayout
+        android:id="@+id/frame_liste_missions"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar_mission_list"></FrameLayout>-->
+</RelativeLayout>

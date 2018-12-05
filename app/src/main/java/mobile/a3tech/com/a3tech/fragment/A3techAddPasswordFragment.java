@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -36,7 +37,7 @@ public class A3techAddPasswordFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private TextInputLayout password;
+    private EditText password, confirmedPassword;
     private Button next;
     private OnFragmentInteractionListener mListener;
     public A3techAddPasswordFragment() {
@@ -73,8 +74,9 @@ public class A3techAddPasswordFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_password, container, false);
+        View viewFr = inflater.inflate(R.layout.fragment_a3tech_add_password_v2, container, false);
         password = viewFr.findViewById(R.id.input_password);
+        confirmedPassword = viewFr.findViewById(R.id.input_confirm_password);
         final InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         password.postDelayed(new Runnable()
         {
@@ -82,19 +84,29 @@ public class A3techAddPasswordFragment extends Fragment {
             public void run()
             {
                 password.requestFocus();
-                imm.showSoftInput(password.getEditText(), 0);
+                imm.showSoftInput(password, 0);
             }
         }, 200);
         next = viewFr.findViewById(R.id.next);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String passSaisi = password.getEditText().getText() != null ? password.getEditText().getText().toString() :"";
+                String passSaisi = password.getText() != null ? password.getText().toString() :"";
+                String passSaisiConfirmed = confirmedPassword.getText() != null ? confirmedPassword.getText().toString() :"";
                 if(StringUtils.isBlank(passSaisi)){
-                    password.getEditText().setError(getString(R.string.error_password_empty));
+                    password.setError(getString(R.string.error_password_empty));
                     return;
                 }
-                mListener.actionNext(ACTION_TYPE_PASS, password.getEditText().getText().toString());
+                if(StringUtils.isBlank(passSaisiConfirmed)){
+                    confirmedPassword.setError(getString(R.string.error_password_confirmed_empty));
+                    return;
+                }
+
+                if(!passSaisiConfirmed.equals(passSaisi)){
+                    confirmedPassword.setError(getString(R.string.error_password_confirmed_do_not_match));
+                    return;
+                }
+                mListener.actionNext(ACTION_TYPE_PASS, password.getText().toString());
             }
         });
         return viewFr;

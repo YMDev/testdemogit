@@ -12,8 +12,10 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -24,16 +26,23 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
 import java.security.SecureRandom;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Pattern;
 
+import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techLoginPagerviewerAdapter;
 import mobile.a3tech.com.a3tech.manager.UserManager;
@@ -41,8 +50,10 @@ import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.utils.ValidationPatternUtils;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
-public class A3techLoginActivity extends BaseActivity implements DataLoadCallback {
+public class A3techLoginActivity extends BaseActivity implements DataLoadCallback,SimpleDialog.OnDialogResultListener {
 
 	AlertDialog alertDialog;
 	static int requestKey = 3422;
@@ -51,8 +62,8 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
 	EditText idLoginDialog_editTextMail;
 	EditText idLoginDialog_editTextPassword;
 	TextView idLoginDialog_textViewPasswordForgot;
-	Button idLogin_buttonAddContact;
-	Button btn_create_account;
+	Button startConnexion;
+	TextView btn_create_account, btn_password_forgotten;
 	LinearLayout idLogin_linearLayoutAnnuler;
 	LinearLayout idLogin_linearLayoutCreateAccount;
 	RelativeLayout createAccountContainer;
@@ -60,14 +71,12 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
 	LinearLayout idLogin_linearLayoutLogin;
 	LinearLayout idLogin_linearLayoutValider;
 	EditText idPasswordForgetDialog_editTextEmail;
-	TextView signinAction;
 	LinearLayout idPasswordForget_linearLayoutAnnuler;
 	LinearLayout idPasswordForget_linearLayoutValider;
 	RelativeLayout idLogin_linearLayoutAnonyme;
 	String password ;
 
-	AnimationDrawable rocketAnimation;
-
+	FirebaseAuth mAuth;
 
 	/*
 	First view pager of login screen
@@ -230,12 +239,50 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		mAuth = FirebaseAuth.getInstance();
 		requestWindowFeature(1);
-		setContentView(R.layout.a3tech_login_activity);
-		btn_create_account = findViewById(R.id.btn_create_account);
+		setContentView(R.layout.a3tech_login_activity_v2);
+		btn_create_account = findViewById(R.id.create_account);
+		btn_password_forgotten = findViewById(R.id.forgot_password);
 		btn_create_account.setOnClickListener(this.addContactListener);
-		signinAction = findViewById(R.id.signin_action_login);
-		signinAction.setOnClickListener(this.loginListener);
+		idLoginDialog_editTextMail = (EditText)  findViewById(R.id.input_username_log_in);
+		idLoginDialog_editTextPassword = (EditText)findViewById(R.id.input_password_log_in);
+		startConnexion = findViewById(R.id.btn_start_connexion);
+
+		startConnexion.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(!ValidationPatternUtils.isValideEmail(idLoginDialog_editTextMail.getText().toString())){
+					idLoginDialog_editTextMail.setError(getString(R.string.error_email_not_valide));
+					return;
+				}
+
+				if(idLoginDialog_editTextPassword.getText() == null || idLoginDialog_editTextPassword.getText().toString().equals("")){
+					idLoginDialog_editTextPassword.setError(getString(R.string.error_invalid_password));
+					return;
+				}
+				dialog = CustomProgressDialog.createProgressDialog(A3techLoginActivity.this,
+						getString(R.string.txtMenu_dialogChargement));
+				String email = idLoginDialog_editTextMail.getText().toString();
+				password = idLoginDialog_editTextPassword.getText().toString();
+				mAuth.signInWithEmailAndPassword(email, password)
+						.addOnCompleteListener(A3techLoginActivity.this, new OnCompleteListener<AuthResult>() {
+							@Override
+							public void onComplete(@NonNull Task<AuthResult> task) {
+								if (!task.isSuccessful()) {
+									Log.w("TAG", "signInWithEmail:failed", task.getException());
+									A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+
+									dialog.dismiss();
+
+								} else {
+									checkIfEmailVerified();
+								}
+								// ...
+							}
+						});
+			}
+		});
 		/*this.idLogin_linearLayoutLogin = (LinearLayout) findViewById(R.id.idLogin_linearLayoutLogin);
 		this.idLogin_linearLayoutCreateAccount = (LinearLayout) findViewById(R.id.idLogin_linearLayoutCreateAccount);
 		this.idLogin_linearLayoutFacebook = (RelativeLayout) findViewById(R.id.idLogin_linearLayoutFacebook);
@@ -256,9 +303,50 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
 			}
 		});
 */
-		iniPager();
+		/*iniPager();*/
 	}
+	private void checkIfEmailVerified() {
+		final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
+		if (user.isEmailVerified()) {
+			final Intent mainIntent = new Intent(this, A3techWelcomPageActivity.class);
+			// user is verified, so you can finish this activity or send user to activity which you want.
+			final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
+					getApplicationContext()).edit();
+
+			//TODO getUser
+			UserManager.getInstance().login(user.getEmail(), password, new DataLoadCallback() {
+				@Override
+				public void dataLoaded(Object data, int method, int typeOperation) {
+					editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson((A3techUser)data));
+					editor.putString("identifiant", user.getProviderId() + "");
+					editor.putString("password", password);
+					editor.putString("pseudo", user.getDisplayName());
+					editor.putString("conMode", "application");
+					editor.commit();
+					startActivity(mainIntent);
+					finish();
+					Toast.makeText(A3techLoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+					if (dialog != null) dialog.dismiss();
+
+				}
+
+				@Override
+				public void dataLoadingError(int errorCode) {
+					if (dialog != null) dialog.dismiss();
+				}
+			});
+
+
+		} else {
+			// email is not verified, so just prompt the message to the user and restart this activity.
+			// NOTE: don't forget to log out the user.
+			//restart this activity
+			A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, getString(R.string.error_auth_email_not_verified), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+			SimpleDialog.build().msg(R.string.mail_non_verifie).pos(R.string.verify).neg(R.string.cancel).theme(R.style.SimpleDialogThemeProfile).show(A3techLoginActivity.this,"MAIL_VERIF");
+			if (dialog != null) dialog.dismiss();
+		}
+	}
 	private void iniPager(){
         zero = (ImageView) findViewById(R.id.intro_indicator_0);
         one = (ImageView) findViewById(R.id.intro_indicator_1);
@@ -451,4 +539,49 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
         super.onBackPressed();
 		this.finishAffinity();
     }
+
+	@Override
+	public boolean onResult(@NonNull String dialogTag, int which, @NonNull Bundle extras) {
+		if(dialogTag.equals("MAIL_VERIF")){
+			if(which == BUTTON_POSITIVE){
+				sendVerificationEmail();
+			}else{
+				FirebaseAuth.getInstance().signOut();
+			}
+		}
+		return false;
+	}
+
+
+	private void sendVerificationEmail()
+	{
+		FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+		if(user == null) return;
+		user.sendEmailVerification()
+				.addOnCompleteListener(new OnCompleteListener<Void>() {
+					@Override
+					public void onComplete(@NonNull Task<Void> task) {
+						if (task.isSuccessful()) {
+							dialog.dismiss();
+							// email sent
+							A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this,getString(R.string.email_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+							// after email is sent just logout the user and finish this activity
+							FirebaseAuth.getInstance().signOut();
+						}
+						else
+						{
+							dialog.dismiss();
+							// email not sent, so display message and restart the activity or do whatever you wish to do
+							A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this,getString(R.string.probleme_technique_create_account_email_not_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+							//restart this activity
+							overridePendingTransition(0, 0);
+							finish();
+							overridePendingTransition(0, 0);
+							startActivity(getIntent());
+
+						}
+					}
+				});
+	}
 }

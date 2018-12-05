@@ -6,11 +6,73 @@
     android:layout_height="wrap_content"
     android:layout_marginTop="14dp">
 
+
+    <RelativeLayout
+        android:id="@+id/etat_profil_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/a3tech_account_solde_layout">
+
+
+        <LinearLayout
+            android:id="@+id/container_solde"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="2dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/taux_completion_profil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/taux_profile_completed"
+                android:textColor="@color/colorPrimary"
+                android:textSize="20dp"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_complete_profil"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="10dp"
+            android:layout_below="@id/container_solde"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:max="100"
+            android:progress="45"
+            android:progressDrawable="@drawable/progresse_profil_completed_drawable" />
+
+        <TextView
+            android:id="@+id/label_completion_profil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/progress_complete_profil"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="sans-serif-meduim"
+            android:text="@string/label_profile_completed"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16dp"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/title_about_container"
+        android:layout_below="@+id/etat_profil_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp">
+
         <TextView
             android:id="@+id/title_about"
             android:layout_width="match_parent"
@@ -27,20 +89,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
+            android:backgroundTint="@color/colorPrimary"
             android:src="@drawable/a3tech_edit_profil_action"
             android:tint="@color/colorPrimary"
-            android:backgroundTint="@color/colorPrimary"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </RelativeLayout>
-<ScrollView
-    android:id="@+id/sc_ex"
-    android:layout_below="@+id/title_about_container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="16dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginRight="16dp"
-    android:fillViewport="true">
+
+
     <mobile.a3tech.com.a3tech.view.ExpandableTextView
         android:id="@+id/detail_about_user"
         android:layout_width="match_parent"
@@ -48,13 +103,17 @@
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/black"
         android:textSize="14dp"
-        android:textStyle="normal" />
-</ScrollView>
+        android:textStyle="normal"
+        android:layout_below="@+id/title_about_container"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="16dp"/>
+
     <LinearLayout
         android:id="@+id/space_under_about"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@id/sc_ex"
+        android:layout_below="@id/detail_about_user"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/semi_transparent"
@@ -79,8 +138,8 @@
                 android:layout_width="40dp"
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
-                android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/style_layout_raduis">
@@ -113,8 +172,8 @@
                 android:id="@+id/rating_nbr_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/rating_tech"
                 android:fontFamily="sans-serif-light"
@@ -125,54 +184,54 @@
         </RelativeLayout>
     </RelativeLayout>
 
-   <!-- <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/container_nbr_mission"
+    <!-- <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+         android:id="@+id/container_nbr_mission"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/layout_rating_mission"
+         android:layout_marginLeft="16dp"
+         android:layout_marginRight="16dp"
+         android:layout_marginTop="16dp"
+         android:clickable="true"
+         android:orientation="vertical">
+
+         <TextView
+             android:id="@+id/nbr_mission_value"
+             style="@style/TextAppearance.AppCompat.Small"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:alpha="0.87"
+             android:fontFamily="sans-serif-meduim"
+             android:textColor="@android:color/black"
+             android:textSize="15dp"
+             android:textStyle="bold"
+             android:text="56" />
+
+         <TextView
+             android:id="@+id/nbr_mission_label"
+             style="@style/TextAppearance.AppCompat.Small"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_below="@+id/nbr_mission_value"
+             android:alpha="0.54"
+             android:ellipsize="end"
+             android:fontFamily="sans-serif-meduim"
+             android:maxLines="3"
+             android:textColor="@android:color/black"
+             android:textSize="12dp"
+             android:text="@string/nbr_mission" />
+
+
+     </RelativeLayout>-->
+    <LinearLayout
+        android:id="@+id/space_under_nbr_mision"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/layout_rating_mission"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/nbr_mission_value"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.87"
-            android:fontFamily="sans-serif-meduim"
-            android:textColor="@android:color/black"
-            android:textSize="15dp"
-            android:textStyle="bold"
-            android:text="56" />
-
-        <TextView
-            android:id="@+id/nbr_mission_label"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/nbr_mission_value"
-            android:alpha="0.54"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-meduim"
-            android:maxLines="3"
-            android:textColor="@android:color/black"
-            android:textSize="12dp"
-            android:text="@string/nbr_mission" />
-
-
-    </RelativeLayout>-->
-        <LinearLayout
-            android:id="@+id/space_under_nbr_mision"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_below="@id/layout_rating_mission"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@color/semi_transparent"
-            android:orientation="horizontal" />
+        android:layout_height="2dp"
+        android:layout_below="@id/layout_rating_mission"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@color/semi_transparent"
+        android:orientation="horizontal" />
 
     <RelativeLayout
         android:id="@+id/title_coordonnes_container"
@@ -180,6 +239,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/space_under_nbr_mision"
         android:layout_marginLeft="16dp">
+
         <TextView
             android:id="@+id/title_coordonnes"
             android:layout_width="match_parent"
@@ -196,10 +256,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="5dp"
+            android:backgroundTint="@color/colorPrimary"
             android:src="@drawable/a3tech_edit_profil_action"
             android:tint="@color/colorPrimary"
-            android:backgroundTint="@color/colorPrimary"
-            android:visibility="gone"/>
+            android:visibility="gone" />
     </RelativeLayout>
 
 
@@ -216,15 +276,14 @@
         android:id="@+id/container_coordonnees"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_below="@+id/title_coordonnes_container"
         android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:layout_below="@+id/title_coordonnes_container">
+        android:layout_marginRight="16dp"
+        android:orientation="vertical">
 
         <!--Email-->
-        <RelativeLayout
-            xmlns:tools="http://schemas.android.com/tools"
+        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/email_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -240,30 +299,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.87"
-                android:textColor="@android:color/black"
-                android:text="Dessert Name"
                 android:fontFamily="sans-serif-meduim"
+                android:text="Dessert Name"
+                android:textColor="@android:color/black"
                 android:textSize="15dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/email_label"
                 style="@style/TextAppearance.AppCompat.Small"
-                android:layout_below="@+id/email_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/email_value"
                 android:alpha="0.54"
                 android:ellipsize="end"
-                android:maxLines="3"
                 android:fontFamily="sans-serif-meduim"
-                android:textSize="12dp"
+                android:maxLines="3"
+                android:text="@string/email_address"
                 android:textColor="@android:color/black"
-                android:text="@string/email_address" />
+                android:textSize="12dp" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_below="@+id/email_label"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@color/gray" />
 
 
@@ -288,31 +348,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.87"
-                android:textColor="@android:color/black"
-                android:text="Dessert Name"
                 android:fontFamily="sans-serif-meduim"
+                android:text="Dessert Name"
+                android:textColor="@android:color/black"
                 android:textSize="15dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/adresse_label"
                 style="@style/TextAppearance.AppCompat.Small"
-                android:layout_below="@+id/adresse_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/adresse_value"
                 android:alpha="0.54"
                 android:ellipsize="end"
-                android:maxLines="3"
                 android:fontFamily="sans-serif-meduim"
-                android:textSize="12dp"
+                android:maxLines="3"
+                android:text="@string/adresse_label"
                 android:textColor="@android:color/black"
-                android:text="@string/adresse_label" />
+                android:textSize="12dp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_below="@+id/adresse_label"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@color/gray" />
 
         </RelativeLayout>
@@ -336,25 +396,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.87"
-                android:textColor="@android:color/black"
-                android:text="Dessert Name"
                 android:fontFamily="sans-serif-meduim"
+                android:text="Dessert Name"
+                android:textColor="@android:color/black"
                 android:textSize="15dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/phone_label"
                 style="@style/TextAppearance.AppCompat.Small"
-                android:layout_below="@+id/phone_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/phone_value"
                 android:alpha="0.54"
                 android:ellipsize="end"
-                android:maxLines="3"
                 android:fontFamily="sans-serif-meduim"
-                android:textSize="12dp"
+                android:maxLines="3"
+                android:text="@string/numero_tel"
                 android:textColor="@android:color/black"
-                android:text="@string/numero_tel" />
+                android:textSize="12dp" />
 
             <LinearLayout
                 android:id="@+id/layout_actions_phone"
@@ -388,8 +448,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_below="@+id/phone_label"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@color/gray" />
 
 
@@ -414,31 +474,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.87"
-                android:textColor="@android:color/black"
-                android:text="Dessert Name"
                 android:fontFamily="sans-serif-meduim"
+                android:text="Dessert Name"
+                android:textColor="@android:color/black"
                 android:textSize="15dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/date_naissance_label"
                 style="@style/TextAppearance.AppCompat.Small"
-                android:layout_below="@+id/date_naissance_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/date_naissance_value"
                 android:alpha="0.54"
                 android:ellipsize="end"
-                android:maxLines="3"
                 android:fontFamily="sans-serif-meduim"
-                android:textSize="12dp"
+                android:maxLines="3"
+                android:text="@string/txtProfil_editTextDateNaissance"
                 android:textColor="@android:color/black"
-                android:text="@string/txtProfil_editTextDateNaissance" />
+                android:textSize="12dp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_below="@+id/date_naissance_label"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@color/gray" />
 
         </RelativeLayout>
@@ -462,31 +522,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.87"
-                android:textColor="@android:color/black"
-                android:text="Dessert Name"
                 android:fontFamily="sans-serif-meduim"
+                android:text="Dessert Name"
+                android:textColor="@android:color/black"
                 android:textSize="15dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/date_inscription_label"
                 style="@style/TextAppearance.AppCompat.Small"
-                android:layout_below="@+id/date_inscription_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/date_inscription_value"
                 android:alpha="0.54"
                 android:ellipsize="end"
-                android:maxLines="3"
                 android:fontFamily="sans-serif-meduim"
-                android:textSize="12dp"
+                android:maxLines="3"
+                android:text="@string/date_inscription_label"
                 android:textColor="@android:color/black"
-                android:text="@string/date_inscription_label" />
+                android:textSize="12dp" />
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:layout_below="@+id/date_inscription_label"
+                android:layout_marginTop="@dimen/activity_horizontal_margin"
                 android:background="@color/gray" />
 
         </RelativeLayout>

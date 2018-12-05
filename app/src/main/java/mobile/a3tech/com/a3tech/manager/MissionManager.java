@@ -173,11 +173,51 @@ private static MissionManager uniqueInstance = null;
 			}
 		}.start();
 	}
-	
 
-	
-	
-	
+
+	public void filtreMission(final String lang, final String connectedUser,final String missionCriteria,final String start,
+							  final String limit,final int order,final int type, final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer)message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,KEY_MISSION_MANAGER_FILTRE_MISSION,1);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try{
+
+
+					MissionService service = new MissionService();
+					List<A3techMission> result = service.filtreMission(lang, connectedUser, missionCriteria,  start, limit,order,type);
+
+					if(result==null){
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					}else{
+						Message message = handler.obtainMessage(0, result);
+						handler.sendMessage(message);
+					}
+
+
+
+				}catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
+
+
 	public void missionsEmises(final String lang,final int typeOperation,final String idUser,final String start,final String limit,final String password, final DataLoadCallback dataLoadCallback) {
 		final Handler handler = new Handler() {
 			// @Override

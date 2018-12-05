@@ -231,6 +231,7 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
         // next step add mission informations
         progressBarchangeSmouthly(100);
         setFragment(A3techPostMissionFragment.newInstance(missionSelected), true, false);
+        findViewById(R.id.filter_techniciens).setVisibility(View.GONE);
     }
 
     @Override

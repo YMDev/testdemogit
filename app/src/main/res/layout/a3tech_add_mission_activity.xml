@@ -42,7 +42,7 @@
         android:layout_height="6dp"
         android:max="100"
         android:progress="0"
-        android:progressDrawable="@drawable/progress_bar_color_back"
+        android:progressDrawable="@drawable/progress_add_mission_bar_color_back"
         android:layout_below="@id/appbar_add_mission"/>
 
     <FrameLayout

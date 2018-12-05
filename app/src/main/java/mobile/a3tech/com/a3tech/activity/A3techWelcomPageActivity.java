@@ -1,5 +1,6 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -73,23 +74,19 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     public void startAddMission() {
         Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techAddMissionActivity.class);
         intentAddMissionn.putExtra(TAG_ADD_MISSION_FROM_WELCOM, Boolean.TRUE);
-        startActivity(intentAddMissionn);
+        startActivityForResult(intentAddMissionn,REQ_ADD_MISSION_FROM_WELCOM);
     }
 
     @Override
     public void startBrowse() {
-        Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techHomeActivity.class);
-        intentAddMissionn.putExtra(TAG_ADD_MISSION_FROM_WELCOM, Boolean.TRUE);
-        intentAddMissionn.putExtra(KEY_WELCOM_BROWSE_OR_ACCOUNT, TAG_WELCOM_BROWSE);
+        Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techMissionListeActivity.class);
         startActivity(intentAddMissionn);
     }
 
     @Override
     public void startAccount() {
-        Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techHomeActivity.class);
-        intentAddMissionn.putExtra(TAG_ADD_MISSION_FROM_WELCOM, Boolean.TRUE);
-        intentAddMissionn.putExtra(KEY_WELCOM_BROWSE_OR_ACCOUNT, TAG_WELCOM_ACCOUNT);
-        startActivityForResult(intentAddMissionn, REQ_ADD_MISSION_FROM_WELCOM);
+        Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techAccountActivity.class);
+        startActivity(intentAddMissionn);
     }
 
     @Override
@@ -149,4 +146,13 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
         setFragment(A3techWelcomHomeFragment.newInstance(null, null));
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQ_ADD_MISSION_FROM_WELCOM && resultCode == Activity.RESULT_OK){
+            A3techCustomToastDialog.createToastDialog(A3techWelcomPageActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+            startBrowse();
+        }
+    }
 }

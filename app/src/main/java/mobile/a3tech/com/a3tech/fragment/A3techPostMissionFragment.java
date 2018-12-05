@@ -212,7 +212,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             @Override
             public void onClick(View view) {
                 if(!verifyDataInserted()){
-                    A3techCustomToastDialog.createToastDialog(getActivity(),getString(R.string.donnee_obligatoires), A3techCustomToastDialog.TOAST_ERROR, Toast.LENGTH_SHORT);
+                    //A3techCustomToastDialog.createToastDialog(getActivity(),getString(R.string.donnee_obligatoires), A3techCustomToastDialog.TOAST_ERROR, Toast.LENGTH_SHORT);
                     return;
                 }
                 if (mListener != null) {
@@ -295,9 +295,11 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
 
     private Boolean verifyDataInserted(){
         if (StringUtils.isBlank(dateIntervension.getText().toString())) {
+            dateIntervension.setError(getString(R.string.error_date_intervention_empty));
             return Boolean.FALSE;
         }
         if (StringUtils.isBlank(locationMission.getText().toString())) {
+            locationMission.setError(getString(R.string.error_location_mission_empty));
             return Boolean.FALSE;
         }
         return Boolean.TRUE;
