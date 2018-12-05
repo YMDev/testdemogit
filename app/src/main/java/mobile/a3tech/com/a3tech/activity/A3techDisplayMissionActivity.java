@@ -745,9 +745,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
     }
 
 
-    private Activity getActivity() {
-        return this;
-    }
+
 
     private void validationReportDemande() {
         final ProgressDialog dialogueWaiting = CustomProgressDialog.createProgressDialog(A3techDisplayMissionActivity.this, "");

@@ -25,7 +25,7 @@ public class A3techCustomToastDialog {
     public static final int TOAST_SUCESS = 4;
     public static Toast createToastDialog(Context mContext, String text, int duration, int type) {
         LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
-        View layout = inflater.inflate(R.layout.a3tech_toast,
+        View layout = inflater.inflate(R.layout.a3tech_toast_v2,
                 null);
 
         ImageView infoIcon = (ImageView) layout.findViewById(R.id.icon_toast_info);
@@ -83,7 +83,7 @@ public class A3techCustomToastDialog {
 
         layout.startAnimation(animation);  contentToast.setText(text);
         Toast toast = new Toast(mContext);
-        toast.setGravity(Gravity.BOTTOM, 0, 230);
+        toast.setGravity(Gravity.FILL_HORIZONTAL|Gravity.BOTTOM, 0, 230);
         toast.setDuration(duration);
         toast.setView(layout);
         toast.show();

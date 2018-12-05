@@ -14,10 +14,12 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,36 +53,38 @@ import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.utils.ValidationPatternUtils;
+import mobile.a3tech.com.a3tech.view.A3techCustomSnackbar;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
-public class A3techLoginActivity extends BaseActivity implements DataLoadCallback,SimpleDialog.OnDialogResultListener {
 
-	AlertDialog alertDialog;
-	static int requestKey = 3422;
-	ProgressDialog dialog = null;
+public class A3techLoginActivity extends BaseActivity implements DataLoadCallback, SimpleDialog.OnDialogResultListener {
 
-	EditText idLoginDialog_editTextMail;
-	EditText idLoginDialog_editTextPassword;
-	TextView idLoginDialog_textViewPasswordForgot;
-	Button startConnexion;
-	TextView btn_create_account, btn_password_forgotten;
-	LinearLayout idLogin_linearLayoutAnnuler;
-	LinearLayout idLogin_linearLayoutCreateAccount;
-	RelativeLayout createAccountContainer;
+    AlertDialog alertDialog;
+    static int requestKey = 3422;
+    ProgressDialog dialog = null;
 
-	LinearLayout idLogin_linearLayoutLogin;
-	LinearLayout idLogin_linearLayoutValider;
-	EditText idPasswordForgetDialog_editTextEmail;
-	LinearLayout idPasswordForget_linearLayoutAnnuler;
-	LinearLayout idPasswordForget_linearLayoutValider;
-	RelativeLayout idLogin_linearLayoutAnonyme;
-	String password ;
+    EditText idLoginDialog_editTextMail;
+    EditText idLoginDialog_editTextPassword;
+    TextView idLoginDialog_textViewPasswordForgot;
+    Button startConnexion;
+    TextView btn_create_account, btn_password_forgotten;
+    LinearLayout idLogin_linearLayoutAnnuler;
+    LinearLayout idLogin_linearLayoutCreateAccount;
+    RelativeLayout createAccountContainer;
 
-	FirebaseAuth mAuth;
+    LinearLayout idLogin_linearLayoutLogin;
+    LinearLayout idLogin_linearLayoutValider;
+    EditText idPasswordForgetDialog_editTextEmail;
+    LinearLayout idPasswordForget_linearLayoutAnnuler;
+    LinearLayout idPasswordForget_linearLayoutValider;
+    RelativeLayout idLogin_linearLayoutAnonyme;
+    String password;
 
-	/*
-	First view pager of login screen
-	 */
+    FirebaseAuth mAuth;
+
+    /*
+    First view pager of login screen
+     */
     private CoordinatorLayout rootView;
     private ViewPager mViewPager;
     ImageView zero, one, two;
@@ -93,71 +97,71 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
     End of view pager
      */
 
-	private OnClickListener faceBookListener = new OnClickListener() {
-		public void onClick(View v) {
-			Intent mainIntent = new Intent(A3techLoginActivity.this,
-					FacebookActivity.class);
-			Bundle bundle = new Bundle();
-			bundle.putString(Constant.RESULT_ACTION_CODE_FACEBOOK_SRC,
-					Constant.RESULT_ACTION_CODE_FACEBOOK_SRC_LOGIN);
-			mainIntent.putExtras(bundle);
-			A3techLoginActivity.this.startActivityForResult(mainIntent,
-					requestKey);
-		}
-	};
+    private OnClickListener faceBookListener = new OnClickListener() {
+        public void onClick(View v) {
+            Intent mainIntent = new Intent(A3techLoginActivity.this,
+                    FacebookActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.RESULT_ACTION_CODE_FACEBOOK_SRC,
+                    Constant.RESULT_ACTION_CODE_FACEBOOK_SRC_LOGIN);
+            mainIntent.putExtras(bundle);
+            A3techLoginActivity.this.startActivityForResult(mainIntent,
+                    requestKey);
+        }
+    };
 
-	private OnClickListener addContactListener = new OnClickListener() {
-		public void onClick(View v) {
+    private OnClickListener addContactListener = new OnClickListener() {
+        public void onClick(View v) {
 			/*A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
 					InscriptionActivity.class));*/
-			A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
-					A3techCreateAccountActivity.class));
-			A3techLoginActivity.this.finish();
-		}
-	};
+            A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
+                    A3techCreateAccountActivity.class));
+            A3techLoginActivity.this.finish();
+        }
+    };
 
-	private OnClickListener passWordForgetListener = new OnClickListener() {
+    private OnClickListener passWordForgetListener = new OnClickListener() {
 
-		public void onClick(View v) {
+        public void onClick(View v) {
 
-			new Handler().post(new Runnable() {
+            new Handler().post(new Runnable() {
 
-				@Override
-				public void run() {
-					try {
-						A3techLoginActivity.this.alertDialog.dismiss();
-					} catch (Exception e) {
-					}
-					Builder builder = new Builder(A3techLoginActivity.this);
-					View content = A3techLoginActivity.this.getLayoutInflater()
-							.inflate(R.layout.password_forget_dialog, null);
-					A3techLoginActivity.this.idPasswordForgetDialog_editTextEmail = (EditText) content
-							.findViewById(R.id.idPasswordForgetDialog_editTextEmail);
-					A3techLoginActivity.this.idPasswordForget_linearLayoutAnnuler = (LinearLayout) content
-							.findViewById(R.id.idPasswordForget_linearLayoutAnnuler);
-					A3techLoginActivity.this.idPasswordForget_linearLayoutValider = (LinearLayout) content
-							.findViewById(R.id.idPasswordForget_linearLayoutValider);
-					builder.setTitle(A3techLoginActivity.this
-							.getString(R.string.txtLogin_title_dialog_password_forget));
-					A3techLoginActivity.this.idPasswordForget_linearLayoutValider
-							.setOnClickListener(A3techLoginActivity.this.validerForgetListener);
-					A3techLoginActivity.this.idPasswordForget_linearLayoutAnnuler
-							.setOnClickListener(A3techLoginActivity.this.annulerListener);
-					builder.setView(content);
-					A3techLoginActivity.this.alertDialog = builder.create();
-					A3techLoginActivity.this.alertDialog.show();
+                @Override
+                public void run() {
+                    try {
+                        A3techLoginActivity.this.alertDialog.dismiss();
+                    } catch (Exception e) {
+                    }
+                    Builder builder = new Builder(A3techLoginActivity.this);
+                    View content = A3techLoginActivity.this.getLayoutInflater()
+                            .inflate(R.layout.password_forget_dialog, null);
+                    A3techLoginActivity.this.idPasswordForgetDialog_editTextEmail = (EditText) content
+                            .findViewById(R.id.idPasswordForgetDialog_editTextEmail);
+                    A3techLoginActivity.this.idPasswordForget_linearLayoutAnnuler = (LinearLayout) content
+                            .findViewById(R.id.idPasswordForget_linearLayoutAnnuler);
+                    A3techLoginActivity.this.idPasswordForget_linearLayoutValider = (LinearLayout) content
+                            .findViewById(R.id.idPasswordForget_linearLayoutValider);
+                    builder.setTitle(A3techLoginActivity.this
+                            .getString(R.string.txtLogin_title_dialog_password_forget));
+                    A3techLoginActivity.this.idPasswordForget_linearLayoutValider
+                            .setOnClickListener(A3techLoginActivity.this.validerForgetListener);
+                    A3techLoginActivity.this.idPasswordForget_linearLayoutAnnuler
+                            .setOnClickListener(A3techLoginActivity.this.annulerListener);
+                    builder.setView(content);
+                    A3techLoginActivity.this.alertDialog = builder.create();
+                    A3techLoginActivity.this.alertDialog.show();
 
-				}
-			});
-		}
-	};
+                }
+            });
+        }
+    };
 
-	private OnClickListener loginListener = new OnClickListener() {
+    private OnClickListener loginListener = new OnClickListener() {
 
-		public void onClick(View v) {
-			A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
+        public void onClick(View v) {
+            A3techLoginActivity.this.startActivity(new Intent(A3techLoginActivity.this,
                     A3techSignInActivity.class));
-			A3techLoginActivity.this.finish();
+            A3techLoginActivity.this.finish();
 		/*	new Handler().post(new Runnable() {
 
 				@Override
@@ -196,93 +200,96 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
 
 				}
 			});*/
-		}
-	};
+        }
+    };
 
-	private OnClickListener validerForgetListener = new OnClickListener() {
+    private OnClickListener validerForgetListener = new OnClickListener() {
 
-		public void onClick(View v) {
-			String email = A3techLoginActivity.this.idPasswordForgetDialog_editTextEmail
-					.getText().toString();
-			if (email.length() == 0
-					|| !A3techLoginActivity.this.isValidEmailAddress(email)) {
-				Toast.makeText(
-						A3techLoginActivity.this.getApplicationContext(),
-						A3techLoginActivity.this
-								.getString(R.string.txtPasswordForgetDialog_textViewPasswordForgot),
-						Toast.LENGTH_SHORT).show();
-				return;
-			}
-			A3techLoginActivity.this.dialog = CustomProgressDialog
-					.createProgressDialog(
-							A3techLoginActivity.this,
-							A3techLoginActivity.this
-									.getString(R.string.txtMenu_dialogChargement));
-			UserManager.getInstance().initPassword(email,
-					A3techLoginActivity.this.generatePassword(), A3techLoginActivity.this);
-		}
-	};
+        public void onClick(View v) {
+            String email = A3techLoginActivity.this.idPasswordForgetDialog_editTextEmail
+                    .getText().toString();
+            if (email.length() == 0
+                    || !A3techLoginActivity.this.isValidEmailAddress(email)) {
+                Toast.makeText(
+                        A3techLoginActivity.this.getApplicationContext(),
+                        A3techLoginActivity.this
+                                .getString(R.string.txtPasswordForgetDialog_textViewPasswordForgot),
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
+            A3techLoginActivity.this.dialog = CustomProgressDialog
+                    .createProgressDialog(
+                            A3techLoginActivity.this,
+                            A3techLoginActivity.this
+                                    .getString(R.string.txtMenu_dialogChargement));
+            UserManager.getInstance().initPassword(email,
+                    A3techLoginActivity.this.generatePassword(), A3techLoginActivity.this);
+        }
+    };
 
-	private OnClickListener connecterListener = new OnClickListener() {
+    private OnClickListener connecterListener = new OnClickListener() {
 
-		public void onClick(View v) {
-			A3techLoginActivity.this.connecter();
-		}
-	};
+        public void onClick(View v) {
+            A3techLoginActivity.this.connecter();
+        }
+    };
 
-	private OnClickListener annulerListener = new OnClickListener() {
+    private OnClickListener annulerListener = new OnClickListener() {
 
-		public void onClick(View v) {
-			A3techLoginActivity.this.alertDialog.dismiss();
-		}
-	};
+        public void onClick(View v) {
+            A3techLoginActivity.this.alertDialog.dismiss();
+        }
+    };
 
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		mAuth = FirebaseAuth.getInstance();
-		requestWindowFeature(1);
-		setContentView(R.layout.a3tech_login_activity_v2);
-		btn_create_account = findViewById(R.id.create_account);
-		btn_password_forgotten = findViewById(R.id.forgot_password);
-		btn_create_account.setOnClickListener(this.addContactListener);
-		idLoginDialog_editTextMail = (EditText)  findViewById(R.id.input_username_log_in);
-		idLoginDialog_editTextPassword = (EditText)findViewById(R.id.input_password_log_in);
-		startConnexion = findViewById(R.id.btn_start_connexion);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        requestWindowFeature(1);
+        setContentView(R.layout.a3tech_login_activity_v2);
+        btn_create_account = findViewById(R.id.create_account);
+        btn_password_forgotten = findViewById(R.id.forgot_password);
+        btn_create_account.setOnClickListener(this.addContactListener);
+        idLoginDialog_editTextMail = (EditText) findViewById(R.id.input_username_log_in);
+        idLoginDialog_editTextPassword = (EditText) findViewById(R.id.input_password_log_in);
+        startConnexion = findViewById(R.id.btn_start_connexion);
 
-		startConnexion.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(!ValidationPatternUtils.isValideEmail(idLoginDialog_editTextMail.getText().toString())){
-					idLoginDialog_editTextMail.setError(getString(R.string.error_email_not_valide));
-					return;
-				}
+        startConnexion.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
-				if(idLoginDialog_editTextPassword.getText() == null || idLoginDialog_editTextPassword.getText().toString().equals("")){
-					idLoginDialog_editTextPassword.setError(getString(R.string.error_invalid_password));
-					return;
-				}
-				dialog = CustomProgressDialog.createProgressDialog(A3techLoginActivity.this,
-						getString(R.string.txtMenu_dialogChargement));
-				String email = idLoginDialog_editTextMail.getText().toString();
-				password = idLoginDialog_editTextPassword.getText().toString();
-				mAuth.signInWithEmailAndPassword(email, password)
-						.addOnCompleteListener(A3techLoginActivity.this, new OnCompleteListener<AuthResult>() {
-							@Override
-							public void onComplete(@NonNull Task<AuthResult> task) {
-								if (!task.isSuccessful()) {
-									Log.w("TAG", "signInWithEmail:failed", task.getException());
-									A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                hideKeyboard(idLoginDialog_editTextMail);
+                hideKeyboard(idLoginDialog_editTextPassword);
+                if (!ValidationPatternUtils.isValideEmail(idLoginDialog_editTextMail.getText().toString())) {
+                    idLoginDialog_editTextMail.setError(getString(R.string.error_email_not_valide));
+                    return;
+                }
 
-									dialog.dismiss();
+                if (idLoginDialog_editTextPassword.getText() == null || idLoginDialog_editTextPassword.getText().toString().equals("")) {
+                    idLoginDialog_editTextPassword.setError(getString(R.string.error_invalid_password));
+                    return;
+                }
+                dialog = CustomProgressDialog.createProgressDialog(A3techLoginActivity.this,
+                        getString(R.string.txtMenu_dialogChargement));
+                String email = idLoginDialog_editTextMail.getText().toString();
+                password = idLoginDialog_editTextPassword.getText().toString();
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(A3techLoginActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.w("TAG", "signInWithEmail:failed", task.getException());
+                                    A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
 
-								} else {
-									checkIfEmailVerified();
-								}
-								// ...
-							}
-						});
-			}
-		});
+                                    dialog.dismiss();
+
+                                } else {
+                                    checkIfEmailVerified();
+                                }
+                                // ...
+                            }
+                        });
+            }
+        });
 		/*this.idLogin_linearLayoutLogin = (LinearLayout) findViewById(R.id.idLogin_linearLayoutLogin);
 		this.idLogin_linearLayoutCreateAccount = (LinearLayout) findViewById(R.id.idLogin_linearLayoutCreateAccount);
 		this.idLogin_linearLayoutFacebook = (RelativeLayout) findViewById(R.id.idLogin_linearLayoutFacebook);
@@ -303,51 +310,60 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
 			}
 		});
 */
-		/*iniPager();*/
-	}
-	private void checkIfEmailVerified() {
-		final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        /*iniPager();*/
+    }
 
-		if (user.isEmailVerified()) {
-			final Intent mainIntent = new Intent(this, A3techWelcomPageActivity.class);
-			// user is verified, so you can finish this activity or send user to activity which you want.
-			final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
-					getApplicationContext()).edit();
+    private void checkIfEmailVerified() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-			//TODO getUser
-			UserManager.getInstance().login(user.getEmail(), password, new DataLoadCallback() {
-				@Override
-				public void dataLoaded(Object data, int method, int typeOperation) {
-					editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson((A3techUser)data));
-					editor.putString("identifiant", user.getProviderId() + "");
-					editor.putString("password", password);
-					editor.putString("pseudo", user.getDisplayName());
-					editor.putString("conMode", "application");
-					editor.commit();
-					startActivity(mainIntent);
-					finish();
-					Toast.makeText(A3techLoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
-					if (dialog != null) dialog.dismiss();
+        if (user.isEmailVerified()) {
+            final Intent mainIntent = new Intent(this, A3techWelcomPageActivity.class);
+            // user is verified, so you can finish this activity or send user to activity which you want.
+            final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
+                    getApplicationContext()).edit();
 
-				}
+            //TODO getUser
+            UserManager.getInstance().login(user.getEmail(), password, new DataLoadCallback() {
+                @Override
+                public void dataLoaded(Object data, int method, int typeOperation) {
+                    editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson((A3techUser) data));
+                    editor.putString("identifiant", user.getProviderId() + "");
+                    editor.putString("password", password);
+                    editor.putString("pseudo", user.getDisplayName());
+                    editor.putString("conMode", "application");
+                    editor.commit();
+                    startActivity(mainIntent);
+                    finish();
+                    Toast.makeText(A3techLoginActivity.this, "Successfully logged in", Toast.LENGTH_SHORT).show();
+                    if (dialog != null) dialog.dismiss();
 
-				@Override
-				public void dataLoadingError(int errorCode) {
-					if (dialog != null) dialog.dismiss();
-				}
-			});
+                }
+
+                @Override
+                public void dataLoadingError(int errorCode) {
+                    if (dialog != null) dialog.dismiss();
+                    // A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, getString(R.string.error_connexion_server), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                    final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) A3techLoginActivity.this
+                            .findViewById(android.R.id.content)).getChildAt(0);
+                    Snackbar
+                            .make(viewGroup,  getString(R.string.error_connexion_server),
+                                    Snackbar.LENGTH_LONG)
+                            .show();
+                }
+            });
 
 
-		} else {
-			// email is not verified, so just prompt the message to the user and restart this activity.
-			// NOTE: don't forget to log out the user.
-			//restart this activity
-			A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, getString(R.string.error_auth_email_not_verified), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
-			SimpleDialog.build().msg(R.string.mail_non_verifie).pos(R.string.verify).neg(R.string.cancel).theme(R.style.SimpleDialogThemeProfile).show(A3techLoginActivity.this,"MAIL_VERIF");
-			if (dialog != null) dialog.dismiss();
-		}
-	}
-	private void iniPager(){
+        } else {
+            // email is not verified, so just prompt the message to the user and restart this activity.
+            // NOTE: don't forget to log out the user.
+            //restart this activity
+            A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, getString(R.string.error_auth_email_not_verified), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+            SimpleDialog.build().msg(R.string.mail_non_verifie).pos(R.string.verify).neg(R.string.cancel).theme(R.style.SimpleDialogThemeProfile).show(A3techLoginActivity.this, "MAIL_VERIF");
+            if (dialog != null) dialog.dismiss();
+        }
+    }
+
+    private void iniPager() {
         zero = (ImageView) findViewById(R.id.intro_indicator_0);
         one = (ImageView) findViewById(R.id.intro_indicator_1);
         two = (ImageView) findViewById(R.id.intro_indicator_2);
@@ -355,8 +371,8 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
         indicators = new ImageView[]{zero, one, two};
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
-		final int[] listeBack = new int[]{R.drawable.a3tech_back_4, R.drawable.a3tech_back_4, R.drawable.a3tech_back_4};
-        mViewPager.setAdapter(new A3techLoginPagerviewerAdapter(this,listeBack));
+        final int[] listeBack = new int[]{R.drawable.a3tech_back_4, R.drawable.a3tech_back_4, R.drawable.a3tech_back_4};
+        mViewPager.setAdapter(new A3techLoginPagerviewerAdapter(this, listeBack));
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setClipChildren(false);
         mViewPager.setCurrentItem(page);
@@ -366,222 +382,222 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
+
             @Override
             public void onPageSelected(int position) {
                 page = position;
                 updateIndicators(page);
             }
+
             @Override
             public void onPageScrollStateChanged(int state) {
 
             }
         });
-		Timer timer = new Timer();
-		timer.scheduleAtFixedRate(new SliderTimer(), 2000, 4000);
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new SliderTimer(), 2000, 4000);
 
     }
-	void updateIndicators(int position) {
-		for (int i = 0; i < indicators.length; i++) {
-			indicators[i].setBackgroundResource(
-					i == position ? R.drawable.indicator_selected : R.drawable.indicator_unselected
-			);
-		}
-	}
+
+    void updateIndicators(int position) {
+        for (int i = 0; i < indicators.length; i++) {
+            indicators[i].setBackgroundResource(
+                    i == position ? R.drawable.indicator_selected : R.drawable.indicator_unselected
+            );
+        }
+    }
 
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if (requestCode != requestKey
-				|| resultCode != -1) {
-			return;
-		}
-		if (data.getStringExtra("resultCode").equals("OK")) {
-			String nom = data.getStringExtra("nom");
-			String prenom = data.getStringExtra("prenom");
-			String email = data.getStringExtra("email");
-			String facebookIdentifiant = data
-					.getStringExtra("facebookIdentifiant");
-			password = facebookIdentifiant ;
-			this.dialog = CustomProgressDialog.createProgressDialog(this,
-					getString(R.string.txtMenu_dialogChargement));
-			UserManager.getInstance().loginfb(nom, prenom, facebookIdentifiant,
-					email, this);
-			return;
-		}
-		new Builder(this).setTitle("Error")
-				.setMessage(data.getStringExtra("info"))
-				.setPositiveButton("OK", null).show();
-	}
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode != requestKey
+                || resultCode != -1) {
+            return;
+        }
+        if (data.getStringExtra("resultCode").equals("OK")) {
+            String nom = data.getStringExtra("nom");
+            String prenom = data.getStringExtra("prenom");
+            String email = data.getStringExtra("email");
+            String facebookIdentifiant = data
+                    .getStringExtra("facebookIdentifiant");
+            password = facebookIdentifiant;
+            this.dialog = CustomProgressDialog.createProgressDialog(this,
+                    getString(R.string.txtMenu_dialogChargement));
+            UserManager.getInstance().loginfb(nom, prenom, facebookIdentifiant,
+                    email, this);
+            return;
+        }
+        new Builder(this).setTitle("Error")
+                .setMessage(data.getStringExtra("info"))
+                .setPositiveButton("OK", null).show();
+    }
 
-	protected void onResume() {
-		super.onResume();
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext());
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = PreferenceManager
+                .getDefaultSharedPreferences(getApplicationContext());
 
-		Locale locale2 = new Locale(prefs.getString("ApplicationLanguage",
-				Constant.LANGUAGE_FRENSH));
-		Locale.setDefault(locale2);
-		Configuration config2 = new Configuration();
-		config2.locale = locale2;
-		getBaseContext().getResources().updateConfiguration(config2,
-				getBaseContext().getResources().getDisplayMetrics());
-	}
+        Locale locale2 = new Locale(prefs.getString("ApplicationLanguage",
+                Constant.LANGUAGE_FRENSH));
+        Locale.setDefault(locale2);
+        Configuration config2 = new Configuration();
+        config2.locale = locale2;
+        getBaseContext().getResources().updateConfiguration(config2,
+                getBaseContext().getResources().getDisplayMetrics());
+    }
 
-	private String generatePassword() {
-		char[] allowedCharacters = new char[] { 'a', 'b', 'c', '1', '2', '3',
-				'4' };
-		SecureRandom random = new SecureRandom();
-		StringBuffer password = new StringBuffer();
-		for (int i = 0; i < 6; i++) {
-			password.append(allowedCharacters[random
-					.nextInt(allowedCharacters.length)]);
-		}
-		return password.toString();
-	}
+    private String generatePassword() {
+        char[] allowedCharacters = new char[]{'a', 'b', 'c', '1', '2', '3',
+                '4'};
+        SecureRandom random = new SecureRandom();
+        StringBuffer password = new StringBuffer();
+        for (int i = 0; i < 6; i++) {
+            password.append(allowedCharacters[random
+                    .nextInt(allowedCharacters.length)]);
+        }
+        return password.toString();
+    }
 
-	private boolean isValidEmailAddress(String emailAddress) {
-		return Pattern
-				.compile(
-						"^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+.([a-zA-Z])+([a-zA-Z])+",
-						Pattern.CASE_INSENSITIVE).matcher(emailAddress).matches();
-	}
+    private boolean isValidEmailAddress(String emailAddress) {
+        return Pattern
+                .compile(
+                        "^([a-zA-Z0-9_.-])+@([a-zA-Z0-9_.-])+.([a-zA-Z])+([a-zA-Z])+",
+                        Pattern.CASE_INSENSITIVE).matcher(emailAddress).matches();
+    }
 
-	private void connecter() {
-		String login = this.idLoginDialog_editTextMail.getText().toString();
-		 password = this.idLoginDialog_editTextPassword.getText()
-				.toString();
-		if (login.length() == 0 || !isValidEmailAddress(login)
-				|| password.length() == 0) {
-			Toast.makeText(getApplicationContext(),
-					getString(R.string.txtInscription_msgInformationCorrectes),
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
-		this.dialog = CustomProgressDialog.createProgressDialog(this,
-				getString(R.string.txtMenu_dialogChargement));
-		UserManager.getInstance().login(login, password, this);
-	}
+    private void connecter() {
+        String login = this.idLoginDialog_editTextMail.getText().toString();
+        password = this.idLoginDialog_editTextPassword.getText()
+                .toString();
+        if (login.length() == 0 || !isValidEmailAddress(login)
+                || password.length() == 0) {
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.txtInscription_msgInformationCorrectes),
+                    Toast.LENGTH_SHORT).show();
+            return;
+        }
+        this.dialog = CustomProgressDialog.createProgressDialog(this,
+                getString(R.string.txtMenu_dialogChargement));
+        UserManager.getInstance().login(login, password, this);
+    }
 
-	public void dataLoaded(Object data, int method, int i) {
-		switch (method) {
-		case Constant.KEY_USER_MANAGER_LOGIN /* 4 */:
-		case Constant.KEY_USER_MANAGER_LOGIN_FB /* 35 */:
-			A3techUser user = (A3techUser) data;
-			Editor editor = PreferenceManager.getDefaultSharedPreferences(
-					getApplicationContext()).edit();
-			editor.putString("MyCredentials", user.getEmail());
-			editor.putString("pseudo", user.getPseudo());
-            editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_NAME, user.getNom());
-			editor.putString("identifiant", user.getId()+"");
-			editor.putString("password", password);
-			editor.putString("facebookId", user.getFacebookId());
-			editor.putString("checkphone", user.getTelephone());
-			editor.putString("conMode", method == 4 ? "application"
-					: "facebook");
-			editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(user));
-			editor.commit();
-			this.dialog.dismiss();
-			Intent mainIntent = new Intent(this, NavigationMain.class);
-			mainIntent.putExtra("nomPrenom",
-					user.getPrenom()
-							+ MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR
-							+ user.getNom());
-			mainIntent.putExtra("nbr", user.getNbrMission()+"");
+    public void dataLoaded(Object data, int method, int i) {
+        switch (method) {
+            case Constant.KEY_USER_MANAGER_LOGIN /* 4 */:
+            case Constant.KEY_USER_MANAGER_LOGIN_FB /* 35 */:
+                A3techUser user = (A3techUser) data;
+                Editor editor = PreferenceManager.getDefaultSharedPreferences(
+                        getApplicationContext()).edit();
+                editor.putString("MyCredentials", user.getEmail());
+                editor.putString("pseudo", user.getPseudo());
+                editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_NAME, user.getNom());
+                editor.putString("identifiant", user.getId() + "");
+                editor.putString("password", password);
+                editor.putString("facebookId", user.getFacebookId());
+                editor.putString("checkphone", user.getTelephone());
+                editor.putString("conMode", method == 4 ? "application"
+                        : "facebook");
+                editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(user));
+                editor.commit();
+                this.dialog.dismiss();
+                Intent mainIntent = new Intent(this, NavigationMain.class);
+                mainIntent.putExtra("nomPrenom",
+                        user.getPrenom()
+                                + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR
+                                + user.getNom());
+                mainIntent.putExtra("nbr", user.getNbrMission() + "");
 
-			startActivity(mainIntent);
-			finish();
-			break;
-		case Constant.KEY_USER_MANAGER_INIT_PASSWORD /* 6 */:
-			this.dialog.dismiss();
-			this.alertDialog.dismiss();
-			Toast.makeText(getApplicationContext(),
-					R.string.txtPasswordForgot_msg_password_initilise,
-					Toast.LENGTH_SHORT).show();
-			break;
-		default:
-		}
-	}
+                startActivity(mainIntent);
+                finish();
+                break;
+            case Constant.KEY_USER_MANAGER_INIT_PASSWORD /* 6 */:
+                this.dialog.dismiss();
+                this.alertDialog.dismiss();
+                Toast.makeText(getApplicationContext(),
+                        R.string.txtPasswordForgot_msg_password_initilise,
+                        Toast.LENGTH_SHORT).show();
+                break;
+            default:
+        }
+    }
 
-	public void dataLoadingError(int errorCode) {
-		try {
-			Toast.makeText(
-					getApplicationContext(),
-					R.string.txtLogin_msg_erreur_connexion_login_password_incorrect,
-					Toast.LENGTH_SHORT).show();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		this.dialog.dismiss();
-	}
+    public void dataLoadingError(int errorCode) {
+        try {
+            Toast.makeText(
+                    getApplicationContext(),
+                    R.string.txtLogin_msg_erreur_connexion_login_password_incorrect,
+                    Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.dialog.dismiss();
+    }
 
-	public void dataLoadingError(String error) {
-		this.dialog = CustomProgressDialog.createProgressDialog(this, error);
-	}
+    public void dataLoadingError(String error) {
+        this.dialog = CustomProgressDialog.createProgressDialog(this, error);
+    }
 
-	private class SliderTimer extends TimerTask {
+    private class SliderTimer extends TimerTask {
 
-		@Override
-		public void run() {
-			A3techLoginActivity.this.runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					if (mViewPager.getCurrentItem() < 2) {
-						mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
-					} else {
-						mViewPager.setCurrentItem(0);
-					}
-				}
-			});
-		}
-	}
+        @Override
+        public void run() {
+            A3techLoginActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (mViewPager.getCurrentItem() < 2) {
+                        mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                    } else {
+                        mViewPager.setCurrentItem(0);
+                    }
+                }
+            });
+        }
+    }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-		this.finishAffinity();
+        this.finishAffinity();
     }
 
-	@Override
-	public boolean onResult(@NonNull String dialogTag, int which, @NonNull Bundle extras) {
-		if(dialogTag.equals("MAIL_VERIF")){
-			if(which == BUTTON_POSITIVE){
-				sendVerificationEmail();
-			}else{
-				FirebaseAuth.getInstance().signOut();
-			}
-		}
-		return false;
-	}
+    @Override
+    public boolean onResult(@NonNull String dialogTag, int which, @NonNull Bundle extras) {
+        if (dialogTag.equals("MAIL_VERIF")) {
+            if (which == BUTTON_POSITIVE) {
+                sendVerificationEmail();
+            } else {
+                FirebaseAuth.getInstance().signOut();
+            }
+        }
+        return false;
+    }
 
 
-	private void sendVerificationEmail()
-	{
-		FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+    private void sendVerificationEmail() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-		if(user == null) return;
-		user.sendEmailVerification()
-				.addOnCompleteListener(new OnCompleteListener<Void>() {
-					@Override
-					public void onComplete(@NonNull Task<Void> task) {
-						if (task.isSuccessful()) {
-							dialog.dismiss();
-							// email sent
-							A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this,getString(R.string.email_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
-							// after email is sent just logout the user and finish this activity
-							FirebaseAuth.getInstance().signOut();
-						}
-						else
-						{
-							dialog.dismiss();
-							// email not sent, so display message and restart the activity or do whatever you wish to do
-							A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this,getString(R.string.probleme_technique_create_account_email_not_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
-							//restart this activity
-							overridePendingTransition(0, 0);
-							finish();
-							overridePendingTransition(0, 0);
-							startActivity(getIntent());
+        if (user == null) return;
+        user.sendEmailVerification()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            dialog.dismiss();
+                            // email sent
+                            A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, getString(R.string.email_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                            // after email is sent just logout the user and finish this activity
+                            FirebaseAuth.getInstance().signOut();
+                        } else {
+                            dialog.dismiss();
+                            // email not sent, so display message and restart the activity or do whatever you wish to do
+                            A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, getString(R.string.probleme_technique_create_account_email_not_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                            //restart this activity
+                            overridePendingTransition(0, 0);
+                            finish();
+                            overridePendingTransition(0, 0);
+                            startActivity(getIntent());
 
-						}
-					}
-				});
-	}
+                        }
+                    }
+                });
+    }
 }

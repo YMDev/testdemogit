@@ -19,11 +19,14 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -128,7 +131,8 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
             mainIntent.putExtras(bundle);
             startActivityForResult(mainIntent, requExce);
         } else if (this.conMode.length() == 0) {
-            startActivity(new Intent(this, A3techLoginActivity.class));
+            startActivity(new Intent(this, A3techTechnicienAvailabilityActivity.class));
+            /*startActivity(new Intent(this, A3techLoginActivity.class));*/
             finish();
         } else {
             //Todo display dialogue
@@ -233,6 +237,18 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
     }
 
     public void dataLoadingError(int errorCode) {
+        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) A3techSplashActivity.this
+                .findViewById(android.R.id.content)).getChildAt(0);
+        Snackbar
+                .make(viewGroup, getString(R.string.error_connexion_server),
+                        Snackbar.LENGTH_LONG)
+                .show();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                finish();
+            }
+        }, 1000);
     }
 
     public void dataLoadingError(String error) {

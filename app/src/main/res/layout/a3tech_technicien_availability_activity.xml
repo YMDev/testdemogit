@@ -42,8 +42,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/container_label_header"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp">
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="20dp">
 
                 <RelativeLayout
                     android:id="@+id/lundi_container"
@@ -229,46 +229,38 @@
                 android:layout_below="@+id/container_indicators_colors"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <RelativeLayout
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
-                    android:layout_marginRight="10dp">
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1">
 
-                    <TextView
-                        android:id="@+id/jour_clock"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="Jour"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
 
                     <view
                         android:id="@+id/pie_view"
                         class="mobile.a3tech.com.a3tech.view.ClockPieView"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/jour_clock"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="5dp" />
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="150dp"
-                    android:layout_height="150dp">
+                <!--<RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
 
                     <TextView
                         android:id="@+id/nuit_clock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-meduim"
-                        android:text="Soir"
+                        android:text="Aprém"
                         android:textColor="@color/colorPrimary"
                         android:textSize="18dp"
                         android:textStyle="bold" />
@@ -278,11 +270,11 @@
                         class="mobile.a3tech.com.a3tech.view.ClockPieView"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/nuit_clock"
                         android:layout_alignParentTop="true"
+                        android:layout_below="@+id/nuit_clock"
                         android:layout_centerHorizontal="true"
                         android:layout_margin="5dp" />
-                </RelativeLayout>
+                </RelativeLayout>-->
             </LinearLayout>
 
             <RelativeLayout
@@ -291,9 +283,29 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/container_hours_dispo">
 
-                <TimePicker
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"></TimePicker>
+                <LinearLayout
+                    android:id="@+id/container_hours_dispo_seek_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp">
+
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/grid_range_matin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
 
             </RelativeLayout>
 

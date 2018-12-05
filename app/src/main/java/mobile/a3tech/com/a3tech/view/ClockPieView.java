@@ -37,7 +37,12 @@ public class ClockPieView extends View {
     private int lineThickness;
     private RectF cirRect;
     private Rect textRect;
-    static final int DIV = 6;
+    static final int DIV = 12;
+    private Boolean isNuit = false;
+
+    public void setNuit(Boolean nuit) {
+        isNuit = nuit;
+    }
 
     private ArrayList<ClockPieHelper> pieArrayList = new ArrayList<ClockPieHelper>();
 
@@ -68,7 +73,7 @@ public class ClockPieView extends View {
     public ClockPieView(Context context, AttributeSet attrs){
         super(context, attrs);
         textSize = MyUtils.sp2px(context, 18);
-        lineThickness = MyUtils.dip2px(context, 2);
+        lineThickness = MyUtils.dip2px(context, 1);
         lineLength = MyUtils.dip2px(context, 6);
 
         textPaint = new Paint();
@@ -122,7 +127,7 @@ public class ClockPieView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        drawBackground(canvas);
+        drawBackground(canvas, isNuit);
         if(pieArrayList != null){
             for(ClockPieHelper helper:pieArrayList){
                 canvas.drawArc(cirRect,helper.getStart(),helper.getSweep(),true,redPaint);
@@ -130,7 +135,7 @@ public class ClockPieView extends View {
         }
     }
 
-    private void drawBackground(Canvas canvas){
+    private void drawBackground(Canvas canvas, Boolean isNuit){
         for(int i=0; i<DIV; i++){
             tempPoint.set(pieCenterPoint.x-(int)(Math.sin(Math.PI / DIV * i)*(pieRadius+lineLength)),
                     pieCenterPoint.y-(int)(Math.cos(Math.PI / DIV * i)*(pieRadius+lineLength)));
@@ -142,13 +147,31 @@ public class ClockPieView extends View {
         canvas.drawCircle(pieCenterPoint.x,pieCenterPoint.y,pieRadius+lineLength/2, whitePaint);
         canvas.drawCircle(pieCenterPoint.x,pieCenterPoint.y,pieRadius+lineThickness,linePaint);
         canvas.drawCircle(pieCenterPoint.x,pieCenterPoint.y,pieRadius,whitePaint);
-        canvas.drawText("12", pieCenterPoint.x, topTextHeight, textPaint);
-        canvas.drawText("6",pieCenterPoint.x,mViewHeight,textPaint);
-        canvas.drawText("9",leftTextWidth/2,
-                pieCenterPoint.y+textRect.height()/2,textPaint);
-        canvas.drawText("3",mViewWidth-rightTextWidth/2,
-                pieCenterPoint.y+textRect.height()/2,textPaint);
+     /* if(isNuit){
+          canvas.drawText("0", pieCenterPoint.x, topTextHeight, textPaint);
+          canvas.drawText("18",pieCenterPoint.x,mViewHeight,textPaint);
+          canvas.drawText("21",leftTextWidth/2,
+                  pieCenterPoint.y+textRect.height()/2,textPaint);
+          canvas.drawText("15",mViewWidth-rightTextWidth/2,
+                  pieCenterPoint.y+textRect.height()/2,textPaint);
 
+      }else{
+          canvas.drawText("0", pieCenterPoint.x, topTextHeight, textPaint);
+          canvas.drawText("12",pieCenterPoint.x,mViewHeight,textPaint);
+          canvas.drawText("18",leftTextWidth/2,
+                  pieCenterPoint.y+textRect.height()/2,textPaint);
+          canvas.drawText("6",mViewWidth-rightTextWidth/2,
+                  pieCenterPoint.y+textRect.height()/2,textPaint);
+
+      }*/
+
+
+        canvas.drawText("0", pieCenterPoint.x, topTextHeight, textPaint);
+        canvas.drawText("12",pieCenterPoint.x,mViewHeight,textPaint);
+        canvas.drawText("18",leftTextWidth/2,
+                pieCenterPoint.y+textRect.height()/2,textPaint);
+        canvas.drawText("6",mViewWidth-rightTextWidth/2,
+                pieCenterPoint.y+textRect.height()/2,textPaint);
     }
 
     @Override

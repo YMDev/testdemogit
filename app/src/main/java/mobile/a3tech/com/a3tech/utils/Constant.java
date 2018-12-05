@@ -2,8 +2,8 @@ package mobile.a3tech.com.a3tech.utils;
 
 public interface Constant {
 
-    static String IP = "http://192.168.1.24:8080";
-	//static String IP = "http://142.54.180.146:8080";
+   // static String IP = "http://192.168.1.24:8080";
+	 static String IP = "http://142.54.180.146:8080";
 	static final String CHECK_local = IP+"/user/allusers";
 	static final String A3TECH_FETCH_TECHNICIEN = IP+"/user/fetchTechniciens";
 	static final String A3TECH_GET_TECH_ENABLED_FOR_CLIENT = IP+"/user/techEnabled";

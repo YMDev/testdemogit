@@ -154,4 +154,9 @@
 
     <color name="colorPrimary">#FF286F95</color>
     <color name="colorPrimaryDark">#ff2a4959</color>
+
+
+    <color name="disabled_gray">#FF999999</color>
+    <color name="seekbar_color">#FF9FDC00</color>
+    <color name="error_clock">#FFE40000</color>
 </resources>

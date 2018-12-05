@@ -61,7 +61,10 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.1'
     implementation 'com.google.firebase:firebase-auth:16.0.1'
     implementation 'com.facebook.android:facebook-android-sdk:[4,5)'
-    implementation 'com.txusballesteros:FitChart:1.0'
+    implementation 'com.sun.mail:android-mail:1.6.0'
+    implementation 'com.sun.mail:android-activation:1.6.0'
+    implementation group: 'joda-time', name: 'joda-time', version: '2.3'
+    implementation 'com.edmodo:rangebar:1.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
 }

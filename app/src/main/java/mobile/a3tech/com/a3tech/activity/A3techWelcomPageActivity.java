@@ -43,7 +43,7 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
 
     }
 
-    protected void setFragment(Fragment fragment) {
+       protected void setFragment(Fragment fragment) {
         android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.fragment_frame, fragment);
         t.addToBackStack(fragment.getClass().getName());

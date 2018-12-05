@@ -281,9 +281,7 @@ public class A3techSearchMissionsResultsActivity extends BaseActivity {
         });
     }
 
-    private Activity getActivity() {
-        return A3techSearchMissionsResultsActivity.this;
-    }
+
 
     public A3techSearchMissionsResultsActivity() {
     }

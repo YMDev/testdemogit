@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.fragment.A3techAffecterTechnicienFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techDisplayTechInMapFragment;
@@ -31,6 +32,7 @@ import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 import mobile.a3tech.com.a3tech.utils.ValidationPatternUtils;
 import mobile.a3tech.com.a3tech.view.A3techDialogFilterTechniciens;
@@ -95,6 +97,11 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
                     A3techDialogFilterTechniciens.displayFilterDialogue(A3techDisplayTechniciensListeActivity.this, getPerimetresRechercheTechnicien());
                 } else {
                     gps.showSettingsAlert();
+                }
+                if(PermissionsStuffs.canAccessLocation(A3techDisplayTechniciensListeActivity.this)){
+                    A3techDialogFilterTechniciens.displayFilterDialogue(A3techDisplayTechniciensListeActivity.this, getPerimetresRechercheTechnicien());
+                }else{
+                    SimpleDialog.build().title("Autorisation location est nécessaire").msg("pour afficher la liste des techniciens sur Map, il faut autoriser l'app à accéder à votre position").show(A3techDisplayTechniciensListeActivity.this);
                 }
 
             }

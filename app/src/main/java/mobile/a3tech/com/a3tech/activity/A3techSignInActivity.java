@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
@@ -114,10 +117,19 @@ public class A3techSignInActivity extends BaseActivity implements DataLoadCallba
                                 // signed in user can be handled in the listener.
                                 if (!task.isSuccessful()) {
                                     Log.w("TAG", "signInWithEmail:failed", task.getException());
-                                    A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                                    try {
+                                        throw task.getException();
+                                    } catch(FirebaseAuthWeakPasswordException e) {
+                                        A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                                    } catch(FirebaseAuthInvalidCredentialsException e) {
+                                        A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this, getString(R.string.auth_firebase_failed_pass_not_valide), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                                    } catch(FirebaseAuthUserCollisionException e) {
+                                        A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                                    } catch(Exception e) {
+                                        A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                                    }
 
                                     dialog.dismiss();
-
                                 } else {
                                     checkIfEmailVerified();
                                 }
@@ -238,7 +250,7 @@ public class A3techSignInActivity extends BaseActivity implements DataLoadCallba
             final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
                     getApplicationContext()).edit();
 
-            //TODO getUser
+            //TODO getUser si user existe connecte, sinon display message error
             UserManager.getInstance().login(user.getEmail(), password, new DataLoadCallback() {
                 @Override
                 public void dataLoaded(Object data, int method, int typeOperation) {

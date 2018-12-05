@@ -2,26 +2,47 @@ package mobile.a3tech.com.a3tech.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.model.A3techDisponibility;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterDisponibility;
 import mobile.a3tech.com.a3tech.view.ClockPieHelper;
 import mobile.a3tech.com.a3tech.view.ClockPieView;
+import mobile.a3tech.com.a3tech.view.seekbar.ClockView;
 
 public class A3techTechnicienAvailabilityActivity extends AppCompatActivity {
     ClockPieView clockPieViewJour, clockPieViewNuit;
     RelativeLayout lundi,mardi,mercredi,jeudi,vendredi,samedi,dimanche;
     TextView txtLundi, txtMardi, txtMercredi, txtJeudi, txtVendredi, txtSamedi, txtDimanche;
+    RecyclerView gridRangeMatin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3tech_technicien_availability_activity);
         clockPieViewJour = (ClockPieView)findViewById(R.id.pie_view);
-        clockPieViewNuit = (ClockPieView)findViewById(R.id.pie_view2);
-        randomSet(clockPieViewNuit);
+       /* clockPieViewNuit = (ClockPieView)findViewById(R.id.pie_view2);*/
+        gridRangeMatin = findViewById(R.id.grid_range_matin);
+        List<A3techDisponibility> listeDis = new ArrayList<>();
+        A3techDisponibility dd = new A3techDisponibility("1", Calendar.getInstance().getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
+        A3techDisponibility dd2 = new A3techDisponibility("2", Calendar.getInstance().getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
+        listeDis.add(dd);
+        listeDis.add(dd2);
+        SimpleAdapterDisponibility adapter = new SimpleAdapterDisponibility(A3techTechnicienAvailabilityActivity.this, listeDis);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        gridRangeMatin.setLayoutManager(mLayoutManager);
+        gridRangeMatin.setAdapter(adapter);
+       /* clockPieViewNuit.setNuit(Boolean.TRUE);*/
+/*        randomSet(clockPieViewNuit);*/
         randomSet(clockPieViewJour);
     }
 

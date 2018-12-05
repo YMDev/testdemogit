@@ -785,6 +785,9 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="label_vendredi">V</string>
     <string name="label_samedi">S</string>
     <string name="label_dimanche">D</string>
+    <string name="auth_firebase_failed_pass_not_valide">Mot de passe n\'est pas valide</string>
+    <string name="error_connexion_server">Problème de communication avec le serveur, prière de réessayer ultérieurement</string>
+    <string name="flights_app_short_hrs_cbd">hrs</string>
 
 
 </resources>

@@ -753,9 +753,7 @@ public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnD
         }
     }
 
-    private Activity getActivity() {
-        return A3techHomeActivity.this;
-    }
+
 
 
     BroadcastReceiver broadcastReceiver;
