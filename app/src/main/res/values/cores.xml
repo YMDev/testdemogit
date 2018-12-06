@@ -159,4 +159,11 @@
     <color name="disabled_gray">#FF999999</color>
     <color name="seekbar_color">#FF9FDC00</color>
     <color name="error_clock">#FFE40000</color>
+
+    <color name="gray_light_dispo">#f9f9f9</color>
+    <color name="gray_dark_dispo">#f0f0f0</color>
+
+
+
+
 </resources>

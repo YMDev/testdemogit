@@ -64,7 +64,7 @@ dependencies {
     implementation 'com.sun.mail:android-mail:1.6.0'
     implementation 'com.sun.mail:android-activation:1.6.0'
     implementation group: 'joda-time', name: 'joda-time', version: '2.3'
-    implementation 'com.edmodo:rangebar:1.0.0'
+    implementation 'com.github.Jay-Goo:RangeSeekBar:v2.0.4'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
 }

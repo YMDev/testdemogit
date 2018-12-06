@@ -92,7 +92,7 @@ public class ClockPieView extends View {
         linePaint.setColor(context.getResources().getColor(R.color.colorPrimary));
         linePaint.setStrokeWidth(lineThickness);
         whitePaint = new Paint(linePaint);
-        whitePaint.setColor(Color.WHITE);
+        whitePaint.setColor(context.getResources().getColor(R.color.gray_light_dispo));
         tempPoint = new Point();
         pieCenterPoint = new Point();
         tempPointRight = new Point();

@@ -4,196 +4,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_light_dispo"
     tools:context=".activity.A3techTechnicienAvailabilityActivity">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_display_dispo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include
+                android:id="@+id/toolbar_display_mission"
+                layout="@layout/a3tech_toolbar_display_disponibility"
+                android:visibility="visible" />
+
+        </FrameLayout>
+    </android.support.design.widget.AppBarLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:fillViewport="true">
+        android:scrollbars="none"
+        android:fillViewport="true"
+        android:layout_below="@+id/appbar_display_dispo">
 
         <RelativeLayout
             android:id="@+id/container_root"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <RelativeLayout
-                android:id="@+id/container_label_header"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/label_header"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginLeft="20dp"
-                    android:fontFamily="sans-serif-meduim"
-                    android:text="@string/label_header_disponibility"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="22dp"
-                    android:textStyle="bold" />
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/container_days"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/container_label_header"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="20dp">
-
-                <RelativeLayout
-                    android:id="@+id/lundi_container"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/circle_layout_days">
-
-                    <TextView
-                        android:id="@+id/label_lundi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="@string/label_lundi"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/mardi_container"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_toRightOf="@+id/lundi_container"
-                    android:background="@drawable/circle_layout_days">
-
-                    <TextView
-                        android:id="@+id/label_mardi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="@string/label_mardi"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:id="@+id/mercredi_container"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_toRightOf="@+id/mardi_container"
-                    android:background="@drawable/circle_layout_days">
-
-                    <TextView
-                        android:id="@+id/label_mercredi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="@string/label_mardi"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:id="@+id/jeudi_container"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_toRightOf="@+id/mercredi_container"
-                    android:background="@drawable/circle_layout_days">
-
-                    <TextView
-                        android:id="@+id/label_jeudi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="@string/label_jeudi"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:id="@+id/vendredi_container"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_toRightOf="@+id/jeudi_container"
-                    android:background="@drawable/circle_layout_days">
-
-                    <TextView
-                        android:id="@+id/label_vendredi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="@string/label_vendredi"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/samedi_container"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_toRightOf="@+id/vendredi_container"
-                    android:background="@drawable/circle_layout_days">
-
-                    <TextView
-                        android:id="@+id/label_samedi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="@string/label_samedi"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/dimanche_container"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_toRightOf="@+id/samedi_container"
-                    android:background="@drawable/circle_layout_days">
-
-                    <TextView
-                        android:id="@+id/label_dimanche"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:fontFamily="sans-serif-meduim"
-                        android:text="@string/label_dimanche"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-                </RelativeLayout>
-
-            </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
 
             <LinearLayout
                 android:id="@+id/container_indicators_colors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/container_days"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -308,6 +154,33 @@
                 </LinearLayout>
 
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_action_add_dispo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/container_time_range"
+                android:background="@drawable/backgournd_shadow"
+                android:clipToPadding="false"
+                android:paddingBottom="5dp"
+               >
+                    <Button
+                        android:id="@+id/action_add_dispo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="15dp"
+                        android:alpha="0.8"
+                        android:background="@color/transparent"
+                        android:drawableLeft="@drawable/a3tech_add_icon"
+                        android:text="@string/add" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/layout_action_add_dispo"
+                android:background="@color/gray_dark_dispo"></RelativeLayout>
 
         </RelativeLayout>
     </ScrollView>
