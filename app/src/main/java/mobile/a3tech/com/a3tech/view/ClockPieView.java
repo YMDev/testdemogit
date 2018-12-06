@@ -102,6 +102,14 @@ public class ClockPieView extends View {
         topTextHeight = textRect.height();
     }
 
+
+    public void disableClock(Boolean disable){
+        if(disable){
+            redPaint.setColor(context.getResources().getColor(R.color.orange));
+        }else{
+            redPaint.setColor(context.getResources().getColor(R.color.orange));
+        }
+    }
     public void setDate(ArrayList<ClockPieHelper> helperList){
         if(helperList != null && !helperList.isEmpty()){
             int pieSize = pieArrayList.isEmpty()? 0:pieArrayList.size();

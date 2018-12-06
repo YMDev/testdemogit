@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray_light_dispo"
+    android:background="@color/gray_dark_dispo"
     tools:context=".activity.A3techTechnicienAvailabilityActivity">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_display_dispo"
@@ -34,24 +34,49 @@
             android:id="@+id/container_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
+            android:background="@color/gray_light_dispo">
 
+            <RelativeLayout
+                android:id="@+id/layout_controle_visibility"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/label_disable_profil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:text="@string/disable_profil"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="14dp"
+                    android:fontFamily="sans-serif-meduim"
+                    android:textStyle="bold"
+                    />
+                <Switch
+                    android:id="@+id/disable_profil_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    />
+            </RelativeLayout>
             <LinearLayout
+                android:layout_marginTop="20dp"
                 android:id="@+id/container_indicators_colors"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:layout_below="@+id/layout_controle_visibility">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="20dp">
 
                     <RelativeLayout
                         android:id="@+id/disp_color"
                         android:layout_width="30dp"
                         android:layout_height="20dp"
-                        android:layout_marginLeft="5dp"
                         android:layout_marginRight="10dp"
                         android:background="@color/orange"></RelativeLayout>
 

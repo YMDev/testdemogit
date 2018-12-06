@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -71,7 +72,7 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
     }
 
     @Override
-    public void onBindViewHolder(final SimpleItemVH holder, int position) {
+    public void onBindViewHolder(final SimpleItemVH holder, final int position) {
         final A3techDisponibility dispo = listeObjects.get(position);
         if (dispo == null) return;
         if (dispo.getTimeFrom() == 0l) {
@@ -136,6 +137,15 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
+            }
+        });
+
+        holder.deleteDispo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getListeObjects().remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position, getListeObjects().size());
             }
         });
 
@@ -265,12 +275,14 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
         RangeSeekBar rangeBar;
         RelativeLayout lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche;
         TextView txtLundi, txtMardi, txtMercredi, txtJeudi, txtVendredi, txtSamedi, txtDimanche;
+        ImageView deleteDispo;
 
         public SimpleItemVH(View itemView) {
             super(itemView);
             timeTo = itemView.findViewById(R.id.to_time);
             timeFrom = itemView.findViewById(R.id.from_time);
             rangeBar = itemView.findViewById(R.id.rangebar);
+            deleteDispo = itemView.findViewById(R.id.img_close);
 
             txtLundi = itemView.findViewById(R.id.label_lundi);
             txtMardi = itemView.findViewById(R.id.label_mardi);

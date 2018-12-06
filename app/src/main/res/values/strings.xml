@@ -791,6 +791,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="from">De</string>
     <string name="to">A</string>
     <string name="toolbar_display_disponibilities_title">Disponibilités</string>
+    <string name="disable_profil">Mode non disponible</string>
 
 
 </resources>

@@ -1,5 +1,7 @@
 package mobile.a3tech.com.a3tech.model;
 
+import java.util.Objects;
+
 public class A3techDisponibility {
     private String id;
     private Long timeFrom;
@@ -107,4 +109,6 @@ public class A3techDisponibility {
     public void setValideForSunday(Boolean valideForSunday) {
         this.valideForSunday = valideForSunday;
     }
+
+
 }

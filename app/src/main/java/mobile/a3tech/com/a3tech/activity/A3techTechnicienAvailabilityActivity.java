@@ -7,7 +7,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.joda.time.DateTime;
@@ -33,14 +35,24 @@ public class A3techTechnicienAvailabilityActivity extends AppCompatActivity impl
     RecyclerView gridRangeMatin;
     Button btnAjouterDispo;
 
+    Switch switchDisableProfile;
     SimpleAdapterDisponibility adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3tech_technicien_availability_activity);
         clockPieViewJour = (ClockPieView)findViewById(R.id.pie_view);
-       /* clockPieViewNuit = (ClockPieView)findViewById(R.id.pie_view2);*/
+       switchDisableProfile = (Switch) findViewById(R.id.disable_profil_switch);
         gridRangeMatin = findViewById(R.id.grid_range_matin);
+
+        switchDisableProfile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    clockPieViewJour.set
+                }
+            }
+        });
         List<A3techDisponibility> listeDis = new ArrayList<>();
         A3techDisponibility dd = new A3techDisponibility("1", Calendar.getInstance().getTimeInMillis(), Calendar.getInstance().getTimeInMillis());
         listeDis.add(dd);
