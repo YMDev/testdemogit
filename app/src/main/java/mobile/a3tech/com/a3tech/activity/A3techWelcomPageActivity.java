@@ -121,7 +121,7 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
                         /* A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.connexion_retablie), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);*/
 
                     } else {
-                        A3techCustomToastDialog.createToastDialog(A3techWelcomPageActivity.this, getString(R.string.network_error_text), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                        A3techCustomToastDialog.createSnackBar(A3techWelcomPageActivity.this, getString(R.string.network_error_text), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                         onNetworkDown();
                     }
 
@@ -151,7 +151,7 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQ_ADD_MISSION_FROM_WELCOM && resultCode == Activity.RESULT_OK){
-            A3techCustomToastDialog.createToastDialog(A3techWelcomPageActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+            A3techCustomToastDialog.createSnackBar(A3techWelcomPageActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
             startBrowse();
         }
     }

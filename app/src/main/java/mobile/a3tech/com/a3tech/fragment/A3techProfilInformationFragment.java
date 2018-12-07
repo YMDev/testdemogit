@@ -210,6 +210,7 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
         labelCompletionProfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // activity complete profil
                 Intent mainIntent = new Intent(getActivity(), A3techTechnicienAvailabilityActivity.class);
                 startActivity(mainIntent);
             }

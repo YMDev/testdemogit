@@ -793,6 +793,10 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="toolbar_display_disponibilities_title">Disponibilités</string>
     <string name="disable_profil">Mode non disponible</string>
     <string name="disponibilities_saved">vos informations ont été sauvegardées avec succès</string>
+    <string name="password_weak">Mot de passe non valide</string>
+    <string name="invalide_email">Email non valide</string>
+    <string name="firebase_user_exist">Utilisateur existe déja</string>
+    <string name="firebase_ath_email_exception">email exception</string>
 
 
 </resources>

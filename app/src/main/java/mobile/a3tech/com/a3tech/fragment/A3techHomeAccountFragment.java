@@ -155,14 +155,15 @@ public class A3techHomeAccountFragment extends Fragment {
             case 1:
                 //Information
                 listeRetour.add(new ObjectMenu("Notification", "Les notifications du jour", 1, 1));
-                listeRetour.add(new ObjectMenu("Demander une mission", "chercher parmi nos meilleurs techniciens", 1, 2));
+                listeRetour.add(new ObjectMenu("Demander une mission", "chercher parmi nos meilleurs techniciens", 1, 2, ObjectMenu.CODE_DEMANDER_MISSION));
                 listeRetour.add(new ObjectMenu("Recever un crédit gratuit", "Inviter vos amis est gagner 200 MAD", 1, 3));
                 break;
             case 2:
                 //Information
-                listeRetour.add(new ObjectMenu("Devenez un Technicien 3TEC", "Inscrivez-vous et bénificier de nos services", 2, 1));
-                listeRetour.add(new ObjectMenu("Recommander un Technicien", "Recommander un Technicien à 3TEC et gangner un solde de 100 dh", 2, 2));
-                listeRetour.add(new ObjectMenu("Deconnexion", "", 2, 4));
+                listeRetour.add(new ObjectMenu("Devenez un Technicien 3TEC", "Inscrivez-vous et bénificier de nos services", 2, 1, ObjectMenu.CODE_DEVENIR_TECH));
+                listeRetour.add(new ObjectMenu("Recommander un Technicien", "Recommander un Technicien à 3TEC et gangner un solde de 100 dh", 2, 2, ObjectMenu.CODE_RECOMMANDER_TECH));
+                listeRetour.add(new ObjectMenu("Disponibilité", "", 2, 5,ObjectMenu.CODE_DISPO));
+                listeRetour.add(new ObjectMenu("Deconnexion", "", 2, 4,ObjectMenu.CODE_DECONNEXION));
         }
         return listeRetour;
     }

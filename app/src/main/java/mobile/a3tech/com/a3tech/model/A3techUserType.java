@@ -3,6 +3,7 @@ package mobile.a3tech.com.a3tech.model;
 public enum A3techUserType {
 
     TECHNICIEN("Technicien", 1, "USER"),
+    TECH_USER("Technicien Client", 3, "USER"),
     CLIENT("Client", 2, "USER");
 
 

@@ -278,7 +278,7 @@ public class A3techSignInActivity extends BaseActivity implements DataLoadCallba
             // email is not verified, so just prompt the message to the user and restart this activity.
             // NOTE: don't forget to log out the user.
             //restart this activity
-            A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this, getString(R.string.error_auth_email_not_verified), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+            A3techCustomToastDialog.createSnackBar(A3techSignInActivity.this, getString(R.string.error_auth_email_not_verified), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
             SimpleDialog.build().msg(R.string.mail_non_verifie).pos(R.string.verify).neg(R.string.cancel).theme(R.style.SimpleDialogThemeProfile).show(A3techSignInActivity.this,"MAIL_VERIF");
             if (dialog != null) dialog.dismiss();
         }
@@ -309,7 +309,7 @@ public class A3techSignInActivity extends BaseActivity implements DataLoadCallba
                         if (task.isSuccessful()) {
                             dialog.dismiss();
                             // email sent
-                            A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this,getString(R.string.email_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                            A3techCustomToastDialog.createSnackBar(A3techSignInActivity.this,getString(R.string.email_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
                             // after email is sent just logout the user and finish this activity
                             FirebaseAuth.getInstance().signOut();
                             startActivity(new Intent(A3techSignInActivity.this, A3techLoginActivity.class));
@@ -319,7 +319,7 @@ public class A3techSignInActivity extends BaseActivity implements DataLoadCallba
                         {
                             dialog.dismiss();
                             // email not sent, so display message and restart the activity or do whatever you wish to do
-                            A3techCustomToastDialog.createToastDialog(A3techSignInActivity.this,getString(R.string.probleme_technique_create_account_email_not_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                            A3techCustomToastDialog.createSnackBar(A3techSignInActivity.this,getString(R.string.probleme_technique_create_account_email_not_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                             //restart this activity
                             overridePendingTransition(0, 0);
                             finish();

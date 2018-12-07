@@ -261,7 +261,7 @@ public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnD
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                                A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
                             }
                         });
                         bottomNavigation.setCurrentItem(1);
@@ -275,7 +275,7 @@ public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnD
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                                A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
                             }
                         });
                     }
@@ -288,7 +288,7 @@ public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnD
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                        A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
                     }
                 });
             }
@@ -645,7 +645,7 @@ public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnD
                             NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
                                 @Override
                                 public void dataLoaded(Object data, int method, int typeOperation) {
-                                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                                    A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
                                     MailService mailer = new MailService("mouadbouhjra@gmail.com", "m.bouhjra@gmail.com", "Subject", "TextBody", "<b>HtmlBody</b>");
                                     try {
                                         mailer.sendAuthenticated();
@@ -658,7 +658,7 @@ public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnD
                                 @Override
                                 public void dataLoadingError(int errorCode) {
                                     dialogWaiting.dismiss();
-                                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                                    A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
                                 }
                             });
                         }
@@ -666,7 +666,7 @@ public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnD
                         @Override
                         public void dataLoadingError(int errorCode) {
                             dialogWaiting.dismiss();
-                            A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                            A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
                         }
                     });
                     //A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, "Mission created with success", Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_WARNING);

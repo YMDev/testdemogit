@@ -336,7 +336,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
                         if (canBe != null && canBe) {
                             cancelOrReportMissionDialogue();
                         } else {
-                            A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this, "Cannot be canceled or reported", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                            A3techCustomToastDialog.createSnackBar(A3techDisplayMissionActivity.this, "Cannot be canceled or reported", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                         }
 
                         dialogWaitingCancel.dismiss();
@@ -499,7 +499,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
         ratingMission.setRating(Float.valueOf(review.getRating()));
         commentaire.setText(review.getCommentaire());
         btnEditReview.setVisibility(View.VISIBLE);
-        A3techCustomToastDialog.createToastDialog(getContext(), "Merci", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+        A3techCustomToastDialog.createSnackBar(getContext(), "Merci", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
     }
 
     @Override
@@ -587,7 +587,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
 
     private void validationAjoutDescriptionDemande(String value) {
         //
-        A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this,value, Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+        A3techCustomToastDialog.createSnackBar(A3techDisplayMissionActivity.this,value, Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
     }
 
     private void validationDemande() {
@@ -597,7 +597,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
         MissionManager.getInstance().updateMission(selectedMission, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
-                A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this, "Mission Validée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                A3techCustomToastDialog.createSnackBar(A3techDisplayMissionActivity.this, "Mission Validée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
                 notificiationValidationDemande(dialogueWaiting);
 
             }
@@ -605,7 +605,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
             @Override
             public void dataLoadingError(int errorCode) {
                 dialogueWaiting.dismiss();
-                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_validation_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_validation_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
             }
         });
         actionRefreshStatutMission();
@@ -659,7 +659,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 dialogueWaiting.dismiss();
-                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.libelle_annulation_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.libelle_annulation_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
             }
 
             @Override
@@ -717,7 +717,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 dialogueWaiting.dismiss();
-                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.libelle_cloture_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.libelle_cloture_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
             }
 
             @Override
@@ -773,7 +773,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
         MissionManager.getInstance().updateMission(selectedMission, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
-                A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this, "Mission Annulée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                A3techCustomToastDialog.createSnackBar(A3techDisplayMissionActivity.this, "Mission Annulée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
                 notificiationAnnulationDemande(dialogueWaiting);
             }
 
@@ -802,7 +802,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
                 btnEditReview.setVisibility(View.GONE);
                 containerActions.setVisibility(View.GONE);
 
-                A3techCustomToastDialog.createToastDialog(A3techDisplayMissionActivity.this, "Mission Cloturée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                A3techCustomToastDialog.createSnackBar(A3techDisplayMissionActivity.this, "Mission Cloturée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
                 notificiationClotureDemande(dialogueWaiting);
             }
 

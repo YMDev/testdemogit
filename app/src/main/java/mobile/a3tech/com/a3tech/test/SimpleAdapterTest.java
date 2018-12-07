@@ -24,8 +24,10 @@ import java.util.List;
 import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAccountActivity;
+import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techLoginActivity;
+import mobile.a3tech.com.a3tech.activity.A3techTechnicienAvailabilityActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
 import mobile.a3tech.com.a3tech.images.Image;
@@ -49,7 +51,6 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
 
     public SimpleAdapterTest(Context context) {
         this.context = context;
-        preparelisteObjects();
     }
 
     public SimpleAdapterTest(Context context, List objectMenu) {
@@ -57,21 +58,6 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
         listeObjects = objectMenu;
     }
 
-    private void preparelisteObjects() {
-        String[] nameArray = context.getResources().getStringArray(R.array.dessert_names);
-        String[] descArray = context.getResources().getStringArray(R.array.dessert_descriptions);
-
-        final int SIZE = nameArray.length;
-
-        for (int i = 0; i < SIZE; i++) {
-            ObjectMenu dessert = new ObjectMenu(
-                    nameArray[i],
-                    descArray[i],0,0
-            );
-
-            listeObjects.add(dessert);
-        }
-    }
 
     @Override
     public SimpleItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -83,12 +69,12 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
 
     @Override
     public void onBindViewHolder(SimpleItemVH holder, int position) {
-        final ObjectMenu dessert = listeObjects.get(position);
+        final ObjectMenu menuItem = listeObjects.get(position);
 
-        holder.txtTitle.setText(dessert.getName());
-        holder.txtDesc.setText(dessert.getDescription());
+        holder.txtTitle.setText(menuItem.getName());
+        holder.txtDesc.setText(menuItem.getDescription());
 
-        if(dessert.getId() == 4  && dessert.getType() == 2){
+        if (menuItem.getId() == 4 && menuItem.getType() == 2) {
             holder.txtDesc.setVisibility(View.GONE);
             holder.txtTitle.setGravity(Gravity.CENTER_HORIZONTAL);
             holder.txtTitle.setTextColor(Color.RED);
@@ -99,15 +85,25 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(dessert.getId() == 4  && dessert.getType() == 2){
-                    SimpleDialog.build().pos(R.string.deconnexion).title(R.string.deconnexion_label).neg(R.string.cancel).msg(R.string.msg_deconnexion).theme(R.style.SimpleDialogThemeProfile).show((A3techAccountActivity)context,"DEC");
-                   /* deconnexion();
-
-                    if(mDecListener != null) mDecListener.deconnexion();*/
+                if (menuItem.getCode() != null && menuItem.getCode().equals(ObjectMenu.CODE_DECONNEXION)) {
+                    SimpleDialog.build().pos(R.string.deconnexion).title(R.string.deconnexion_label).neg(R.string.cancel).msg(R.string.msg_deconnexion).theme(R.style.SimpleDialogThemeProfile).show((A3techAccountActivity) context, "DEC");
+                } else if (menuItem.getCode() != null && menuItem.getCode().equals(ObjectMenu.CODE_DISPO)) {
+                    Intent mainIntent = new Intent(context, A3techTechnicienAvailabilityActivity.class);
+                    context.startActivity(mainIntent);
+                } else if (menuItem.getCode() != null && menuItem.getCode().equals(ObjectMenu.CODE_DEMANDER_MISSION)) {
+                    Intent mainIntent = new Intent(context, A3techAddMissionActivity.class);
+                    context.startActivity(mainIntent);
+                } else if (menuItem.getCode() != null && menuItem.getCode().equals(ObjectMenu.CODE_RECOMMANDER_TECH)) {
+                    Intent mainIntent = new Intent(context, A3techTechnicienAvailabilityActivity.class);
+                    context.startActivity(mainIntent);
+                } else if (menuItem.getCode() != null && menuItem.getCode().equals(ObjectMenu.CODE_DEVENIR_TECH)) {
+                    Intent mainIntent = new Intent(context, A3techTechnicienAvailabilityActivity.class);
+                    context.startActivity(mainIntent);
                 }
             }
         });
     }
+
     public void deconnexion() {
         SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(context).edit();
         editor.putString("MyCredentials", "");
@@ -121,6 +117,7 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
         GCMRegistrar.unregister(this.getActivity());*/
         editor.commit();
     }
+
     @Override
     public int getItemCount() {
         return listeObjects != null ? listeObjects.size() : 0;
@@ -139,7 +136,7 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
         }
     }
 
-    public  interface OnDeconnexion{
+    public interface OnDeconnexion {
         void deconnexion();
     }
 }

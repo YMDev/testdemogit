@@ -5,9 +5,12 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.drawable.Animatable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -16,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techTechnicienAvailabilityActivity;
 
 public class A3techCustomToastDialog {
 
@@ -23,8 +27,9 @@ public class A3techCustomToastDialog {
     public static final int TOAST_INFO = 2;
     public static final int TOAST_WARNING = 3;
     public static final int TOAST_SUCESS = 4;
+
     public static Toast createToastDialog(Context mContext, String text, int duration, int type) {
-        LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
+       /* LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
         View layout = inflater.inflate(R.layout.a3tech_toast_v2,
                 null);
 
@@ -86,8 +91,34 @@ public class A3techCustomToastDialog {
         toast.setGravity(Gravity.FILL_HORIZONTAL|Gravity.BOTTOM, 0, 230);
         toast.setDuration(duration);
         toast.setView(layout);
-        toast.show();
-        return toast;
+        toast.show();*/
+        createSnackBar(mContext, text, duration, type);
+        return null;
+    }
+
+
+    public static Snackbar createSnackBar(Context mContext, String text, int duration, int type) {
+        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) ((Activity) mContext).findViewById(android.R.id.content)).getChildAt(0);
+        Snackbar snack = Snackbar
+                .make(viewGroup, text,
+                        Snackbar.LENGTH_LONG);
+        switch (type) {
+            case TOAST_ERROR:
+                snack.getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.error_toast_color));
+                break;
+            case TOAST_INFO:
+                snack.getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.info_toast_color));
+                break;
+            case TOAST_WARNING:
+                snack.getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.warning_toat_color));
+                break;
+            case TOAST_SUCESS:
+                snack.getView().setBackgroundColor(ContextCompat.getColor(mContext, R.color.sucess_toast_color));
+                break;
+        }
+
+        snack.show();
+        return snack;
     }
 
 }

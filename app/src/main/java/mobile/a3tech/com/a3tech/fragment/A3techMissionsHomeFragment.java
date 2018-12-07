@@ -267,7 +267,7 @@ public class A3techMissionsHomeFragment extends Fragment {
                             NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
                                 @Override
                                 public void dataLoaded(Object data, int method, int typeOperation) {
-                                    A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                                    A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
                                     // NotificationStuffs.sendSmsMsgFnc("0630988910","sms sms sms 3tech",getActivity());
                                     //NotificationStuffs.sendMail(Constant.MAIL_3TECH,"this is a test of 3 tech notification", "3Tech mission créée");
                                     dialogWaiting.dismiss();
@@ -283,7 +283,7 @@ public class A3techMissionsHomeFragment extends Fragment {
                         @Override
                         public void dataLoadingError(int errorCode) {
                             dialogWaiting.dismiss();
-                            A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                            A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                         }
                     });
 

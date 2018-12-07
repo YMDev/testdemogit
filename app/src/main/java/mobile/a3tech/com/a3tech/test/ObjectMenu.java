@@ -5,10 +5,16 @@ package mobile.a3tech.com.a3tech.test;
 
 public class ObjectMenu {
 
+    public static String CODE_DISPO = "DISPO";
+    public static String CODE_DECONNEXION = "DECON";
+    public static String CODE_DEVENIR_TECH = "DTECH";
+    public static String CODE_RECOMMANDER_TECH = "RTECH";
+    public static String CODE_DEMANDER_MISSION = "DMISSION";
     private Integer id;
     private Integer type;
     private String name;
     private String description;
+    private String code;
 
     public ObjectMenu() {
     }
@@ -19,7 +25,13 @@ public class ObjectMenu {
         this.type = type;
         this.id = id;
     }
-
+    public ObjectMenu(String name, String description, int type, int id, String code) {
+        this.name = name;
+        this.description = description;
+        this.type = type;
+        this.id = id;
+        this.code = code;
+    }
     public String getName() {
         return name;
     }
@@ -50,5 +62,14 @@ public class ObjectMenu {
 
     public void setType(Integer type) {
         this.type = type;
+    }
+
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

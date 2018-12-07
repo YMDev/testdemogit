@@ -33,6 +33,7 @@ import mobile.a3tech.com.a3tech.exception.EducationException;
 public class AbstractService {
 
 	public final static String CONNECTION_ERROR = "connection_error";
+	public final static String CONNECTION_TIME_OUT = "connection_timeout";
 
 	protected <T> T getResult(String url, TypeReference<T> typeReference)
 			throws EducationException {
@@ -102,13 +103,13 @@ public class AbstractService {
 			throw new EducationException("Cannot read params.", e);
 		} catch (SocketTimeoutException e) {
 			Log.e("CNXION KKKK1","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
-			throw new EducationException(CONNECTION_ERROR, e);
+			throw new EducationException(CONNECTION_TIME_OUT, e);
 		} catch (ClientProtocolException e) {
 			Log.e("CNXION KKKK2","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
 			throw new EducationException(CONNECTION_ERROR, e);
 		} catch (ConnectTimeoutException e) {
 			Log.e("CNXION KKKK3","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
-			throw new EducationException(CONNECTION_ERROR, e);
+			throw new EducationException(CONNECTION_TIME_OUT, e);
 		} catch (UnknownHostException e) {
 			Log.e("CNXION KKKK4","KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKK "+e.getMessage());
 			throw new EducationException(CONNECTION_ERROR, e);

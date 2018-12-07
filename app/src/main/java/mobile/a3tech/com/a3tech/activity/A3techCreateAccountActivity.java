@@ -272,17 +272,15 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                         if (!task.isSuccessful()) {
                             // Show the message task.getException()
                             if (task.getException() instanceof FirebaseAuthWeakPasswordException) {
-                                Toast.makeText(A3techCreateAccountActivity.this, "Weak Password", Toast.LENGTH_SHORT).show();
+                                A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.password_weak), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                             } else if (task.getException() instanceof FirebaseAuthEmailException) {
-                                Toast.makeText(A3techCreateAccountActivity.this, "FirebaseAuthEmailException", Toast.LENGTH_SHORT).show();
+                                A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.firebase_ath_email_exception), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                             } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                Toast.makeText(A3techCreateAccountActivity.this, "email invalide", Toast.LENGTH_SHORT).show();
-
+                                A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.invalide_email), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                             } else if (task.getException() instanceof FirebaseAuthUserCollisionException) {
-                                Toast.makeText(A3techCreateAccountActivity.this, "user existe déja", Toast.LENGTH_SHORT).show();
-
+                                A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.firebase_user_exist), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                             } else {
-                                A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this, getString(R.string.probleme_technique_create_account), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                                A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.probleme_technique_create_account), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                             }
 
                             dialog.dismiss();
@@ -298,7 +296,7 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
 
     @Override
     public void dataLoadingError(int errorCode) {
-        A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this, getString(R.string.probleme_technique), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+        A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.probleme_technique), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
         this.dialog.dismiss();
     }
 
@@ -328,7 +326,7 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                                                 @Override
                                                 public void dataLoaded(Object data, int method, int typeOperation) {
                                                     dialog.dismiss();
-                                                    A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this, getString(R.string.email_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                                                    A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.email_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
                                                     // after email is sent just logout the user and finish this activity
                                                     FirebaseAuth.getInstance().signOut();
                                                     startActivity(new Intent(A3techCreateAccountActivity.this, A3techLoginActivity.class));
@@ -338,7 +336,7 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                                                 @Override
                                                 public void dataLoadingError(int errorCode) {
                                                     dialog.dismiss();
-                                                    A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this, getString(R.string.email_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                                                    A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.email_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
                                                     // after email is sent just logout the user and finish this activity
                                                     FirebaseAuth.getInstance().signOut();
                                                     startActivity(new Intent(A3techCreateAccountActivity.this, A3techLoginActivity.class));
@@ -351,7 +349,7 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                         } else {
                             dialog.dismiss();
                             // email not sent, so display message and restart the activity or do whatever you wish to do
-                            A3techCustomToastDialog.createToastDialog(A3techCreateAccountActivity.this, getString(R.string.probleme_technique_create_account_email_not_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                            A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.probleme_technique_create_account_email_not_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                             //restart this activity
                             overridePendingTransition(0, 0);
                             finish();

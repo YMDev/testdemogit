@@ -131,8 +131,8 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
             mainIntent.putExtras(bundle);
             startActivityForResult(mainIntent, requExce);
         } else if (this.conMode.length() == 0) {
-            startActivity(new Intent(this, A3techTechnicienAvailabilityActivity.class));
-            /*startActivity(new Intent(this, A3techLoginActivity.class));*/
+          /*  startActivity(new Intent(this, A3techTechnicienAvailabilityActivity.class));*/
+            startActivity(new Intent(this, A3techLoginActivity.class));
             finish();
         } else {
             //Todo display dialogue
@@ -286,7 +286,7 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
                         /* A3techCustomToastDialog.createToastDialog(A3techHomeActivity.this, getString(R.string.connexion_retablie), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);*/
 
                     } else {
-                        A3techCustomToastDialog.createToastDialog(A3techSplashActivity.this, getString(R.string.network_error_text), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                        A3techCustomToastDialog.createSnackBar(A3techSplashActivity.this, getString(R.string.network_error_text), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                         onNetworkDown();
                     }
 
