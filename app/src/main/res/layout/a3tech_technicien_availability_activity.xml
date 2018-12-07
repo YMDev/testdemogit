@@ -39,7 +39,8 @@
             <RelativeLayout
                 android:id="@+id/layout_controle_visibility"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
                 <TextView
                     android:id="@+id/label_disable_profil"
                     android:layout_width="wrap_content"
@@ -47,7 +48,7 @@
                     android:layout_centerVertical="true"
                     android:text="@string/disable_profil"
                     android:layout_marginLeft="20dp"
-                    android:textSize="14dp"
+                    android:textSize="16dp"
                     android:fontFamily="sans-serif-meduim"
                     android:textStyle="bold"
                     />

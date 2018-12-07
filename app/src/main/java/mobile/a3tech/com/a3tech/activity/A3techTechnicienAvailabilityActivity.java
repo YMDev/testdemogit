@@ -2,12 +2,17 @@ package mobile.a3tech.com.a3tech.activity;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -19,6 +24,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.BindView;
 import eltos.simpledialogfragment.SimpleDateDialog;
 import eltos.simpledialogfragment.SimpleTimeDialog;
 import mobile.a3tech.com.a3tech.R;
@@ -37,6 +43,10 @@ public class A3techTechnicienAvailabilityActivity extends AppCompatActivity impl
 
     Switch switchDisableProfile;
     SimpleAdapterDisponibility adapter;
+
+    ImageView backAction;
+    LinearLayout saveDisponibilitiesContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,13 +54,34 @@ public class A3techTechnicienAvailabilityActivity extends AppCompatActivity impl
         clockPieViewJour = (ClockPieView)findViewById(R.id.pie_view);
        switchDisableProfile = (Switch) findViewById(R.id.disable_profil_switch);
         gridRangeMatin = findViewById(R.id.grid_range_matin);
+        backAction = findViewById(R.id.back_action);
+        saveDisponibilitiesContainer = findViewById(R.id.save_disponibilities_container);
+        backAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                A3techTechnicienAvailabilityActivity.super.onBackPressed();
+            }
+        });
+        saveDisponibilitiesContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // A3techTechnicienAvailabilityActivity.super.onBackPressed();
+                final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) A3techTechnicienAvailabilityActivity.this
+                        .findViewById(android.R.id.content)).getChildAt(0);
+                Snackbar snack  =    Snackbar
+                        .make(viewGroup,  getString(R.string.disponibilities_saved),
+                                Snackbar.LENGTH_LONG);
+                snack.getView().setBackgroundColor(ContextCompat.getColor(A3techTechnicienAvailabilityActivity.this, R.color.sucess_toast_color));
+                snack.show();
 
+            }
+        });
+        gridRangeMatin.setNestedScrollingEnabled(false);
         switchDisableProfile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    clockPieViewJour.set
-                }
+                    clockPieViewJour.disableClock(Boolean.valueOf(b),A3techTechnicienAvailabilityActivity.this);
+                    adapter.disableDisponibilities(b);
             }
         });
         List<A3techDisponibility> listeDis = new ArrayList<>();
@@ -105,5 +136,10 @@ public class A3techTechnicienAvailabilityActivity extends AppCompatActivity impl
             clockPieHelperArrayList.add(new ClockPieHelper(calendarFrom.get(Calendar.HOUR_OF_DAY),calendarFrom.get(Calendar.MINUTE),calendarTo.get(Calendar.HOUR_OF_DAY),calendarTo.get(Calendar.MINUTE)));
         }
         clockPieViewJour.setDate(clockPieHelperArrayList);
+    }
+
+    @Override
+    public void ondeleteAllItems() {
+        clockPieViewJour.setDate(new ArrayList<ClockPieHelper>());
     }
 }

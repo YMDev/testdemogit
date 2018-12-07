@@ -103,11 +103,17 @@ public class ClockPieView extends View {
     }
 
 
-    public void disableClock(Boolean disable){
+    public void disableClock(Boolean disable, Context context){
         if(disable){
-            redPaint.setColor(context.getResources().getColor(R.color.orange));
+            redPaint.setColor(context.getResources().getColor(R.color.gray_dark_dispo));
+            ArrayList<ClockPieHelper> clockPieHelperArrayList = new ArrayList<ClockPieHelper>();
+            clockPieHelperArrayList.add(new ClockPieHelper(0,0,0,24,0,0));
+            setDate(clockPieHelperArrayList);
+            invalidate();
         }else{
             redPaint.setColor(context.getResources().getColor(R.color.orange));
+            setDate(new ArrayList<ClockPieHelper>());
+            invalidate();
         }
     }
     public void setDate(ArrayList<ClockPieHelper> helperList){

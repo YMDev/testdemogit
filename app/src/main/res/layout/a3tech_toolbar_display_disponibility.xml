@@ -37,7 +37,7 @@
 
 
         <LinearLayout
-            android:id="@+id/cancel_mission_layout"
+            android:id="@+id/save_disponibilities_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -47,6 +47,7 @@
             android:background="@drawable/ripple_effect_red_color">
 
             <TextView
+                android:id="@+id/save_dispo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
     //  Data
     private List<A3techDisponibility> listeObjects = new ArrayList<>();
 
+    private Boolean disabled = Boolean.FALSE;
     private Context context;
     public static final String TAG_TIME_DISPO_FROM = "TAG_TIME_DISPO_FROM";
     public static final String TAG_TIME_DISPO_TO = "TAG_TIME_DISPO_TO";
@@ -62,6 +64,10 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
         this.notifyDataSetChanged();
     }
 
+    public void disableDisponibilities(Boolean disable) {
+        this.disabled = disable;
+        notifyDataSetChanged();
+    }
 
     @Override
     public SimpleItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -88,6 +94,7 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
             @Override
             public void onClick(View view) {
                 Calendar mcurrentTime = Calendar.getInstance();
+                mcurrentTime.setTimeInMillis(dispo.getTimeFrom());
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
@@ -116,6 +123,7 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
             @Override
             public void onClick(View view) {
                 Calendar mcurrentTime = Calendar.getInstance();
+                mcurrentTime.setTimeInMillis(dispo.getTimeTo());
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
                 TimePickerDialog mTimePicker;
@@ -136,6 +144,7 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
+                mTimePicker.setCancelable(true);
                 mTimePicker.show();
             }
         });
@@ -146,6 +155,11 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
                 getListeObjects().remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, getListeObjects().size());
+                if(getListeObjects() == null || getListeObjects().size() == 0 ){
+                    if(onRangeTimeChangedListener != null){
+                        onRangeTimeChangedListener.ondeleteAllItems();
+                    }
+                }
             }
         });
 
@@ -156,6 +170,16 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
         holder.vendredi.setOnClickListener(getOnclickDay(dispo, Calendar.FRIDAY, holder.vendredi, holder.txtVendredi));
         holder.samedi.setOnClickListener(getOnclickDay(dispo, Calendar.SATURDAY, holder.samedi, holder.txtSamedi));
         holder.dimanche.setOnClickListener(getOnclickDay(dispo, Calendar.SUNDAY, holder.dimanche, holder.txtDimanche));
+        if (disabled) {
+            holder.daysdisabled.setVisibility(View.VISIBLE);
+            holder.fromDiabled.setVisibility(View.VISIBLE);
+            holder.toDisabled.setVisibility(View.VISIBLE);
+        } else {
+            holder.daysdisabled.setVisibility(View.GONE);
+            holder.fromDiabled.setVisibility(View.GONE);
+            holder.toDisabled.setVisibility(View.GONE);
+        }
+
     }
 
     private View.OnClickListener getOnclickDay(final A3techDisponibility dispo, final int day, final RelativeLayout view, final TextView label) {
@@ -166,70 +190,70 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
                 switch (day) {
                     case Calendar.MONDAY:
                         dispo.setValideForMonday(!dispo.getValideForMonday());
-                        if(dispo.getValideForMonday()){
+                        if (dispo.getValideForMonday()) {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days_selected));
                             label.setTextColor(Color.WHITE);
-                        }else{
+                        } else {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days));
                             label.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                         }
                         break;
                     case Calendar.TUESDAY:
                         dispo.setValideForTuesday(!dispo.getValideForTuesday());
-                        if(dispo.getValideForTuesday()){
+                        if (dispo.getValideForTuesday()) {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days_selected));
                             label.setTextColor(Color.WHITE);
-                        }else{
+                        } else {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days));
                             label.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                         }
                         break;
                     case Calendar.WEDNESDAY:
                         dispo.setValideForWednesday(!dispo.getValideForWednesday());
-                        if(dispo.getValideForWednesday()){
+                        if (dispo.getValideForWednesday()) {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days_selected));
                             label.setTextColor(Color.WHITE);
-                        }else{
+                        } else {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days));
                             label.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                         }
                         break;
                     case Calendar.THURSDAY:
                         dispo.setValideForThursday(!dispo.getValideForThursday());
-                        if(dispo.getValideForThursday()){
+                        if (dispo.getValideForThursday()) {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days_selected));
                             label.setTextColor(Color.WHITE);
-                        }else{
+                        } else {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days));
                             label.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                         }
                         break;
                     case Calendar.FRIDAY:
                         dispo.setValideForFriday(!dispo.getValideForFriday());
-                        if(dispo.getValideForFriday()){
+                        if (dispo.getValideForFriday()) {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days_selected));
                             label.setTextColor(Color.WHITE);
-                        }else{
+                        } else {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days));
                             label.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                         }
                         break;
                     case Calendar.SATURDAY:
                         dispo.setValideForSaturday(!dispo.getValideForSaturday());
-                        if(dispo.getValideForSaturday()){
+                        if (dispo.getValideForSaturday()) {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days_selected));
                             label.setTextColor(Color.WHITE);
-                        }else{
+                        } else {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days));
                             label.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                         }
                         break;
                     case Calendar.SUNDAY:
                         dispo.setValideForSunday(!dispo.getValideForSunday());
-                        if(dispo.getValideForSunday()){
+                        if (dispo.getValideForSunday()) {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days_selected));
                             label.setTextColor(Color.WHITE);
-                        }else{
+                        } else {
                             view.setBackground(context.getResources().getDrawable(R.drawable.circle_layout_days));
                             label.setTextColor(context.getResources().getColor(R.color.colorPrimary));
                         }
@@ -276,6 +300,7 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
         RelativeLayout lundi, mardi, mercredi, jeudi, vendredi, samedi, dimanche;
         TextView txtLundi, txtMardi, txtMercredi, txtJeudi, txtVendredi, txtSamedi, txtDimanche;
         ImageView deleteDispo;
+        RelativeLayout daysdisabled, fromDiabled, toDisabled;
 
         public SimpleItemVH(View itemView) {
             super(itemView);
@@ -283,6 +308,9 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
             timeFrom = itemView.findViewById(R.id.from_time);
             rangeBar = itemView.findViewById(R.id.rangebar);
             deleteDispo = itemView.findViewById(R.id.img_close);
+            toDisabled = itemView.findViewById(R.id.to_time_disabled);
+            fromDiabled = itemView.findViewById(R.id.from_time_disabled);
+            daysdisabled = itemView.findViewById(R.id.container_days_disabled);
 
             txtLundi = itemView.findViewById(R.id.label_lundi);
             txtMardi = itemView.findViewById(R.id.label_mardi);
@@ -312,5 +340,6 @@ public class SimpleAdapterDisponibility extends RecyclerView.Adapter<SimpleAdapt
 
     public interface OnRangeTimeChangedListener {
         void rangeChanged(A3techDisponibility dispo);
+        void ondeleteAllItems();
     }
 }

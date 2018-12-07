@@ -55,6 +55,18 @@
                         android:textSize="30dp"
                         android:textStyle="normal" />
 
+                    <RelativeLayout
+                        android:id="@+id/from_time_disabled"
+                        android:layout_width="60dp"
+                        android:layout_height="4dp"
+                        android:layout_below="@+id/from_label"
+                        android:layout_marginTop="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/DarkGray"
+                        android:visibility="gone"
+                        />
+
+
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -83,6 +95,17 @@
                         android:textSize="30dp"
                         android:textStyle="normal" />
 
+                    <RelativeLayout
+                        android:id="@+id/to_time_disabled"
+                        android:layout_width="60dp"
+                        android:layout_height="4dp"
+                        android:layout_below="@+id/to_label"
+                        android:layout_marginTop="20dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@color/DarkGray"
+                        android:visibility="gone"
+                        />
+
                 </RelativeLayout>
             </LinearLayout>
 
@@ -94,6 +117,9 @@
 
                 <com.jaygoo.widget.RangeSeekBar
                     android:id="@+id/rangebar"
+                    android:isScrollContainer="true"
+                    android:nestedScrollingEnabled="false"
+                    android:overScrollMode="ifContentScrolls"
                     android:layout_centerInParent="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -118,6 +144,7 @@
                     />
 
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/container_days"
                 android:layout_width="wrap_content"
@@ -276,7 +303,18 @@
                 </RelativeLayout>
 
             </RelativeLayout>
-
+            <RelativeLayout
+                android:id="@+id/container_days_disabled"
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginLeft="30dp"
+                android:layout_below="@+id/container_bar_time"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:background="@color/DarkGray"
+                android:visibility="gone"
+                />
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
