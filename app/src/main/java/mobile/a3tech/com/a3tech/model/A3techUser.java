@@ -5,6 +5,9 @@ import java.util.List;
 public class A3techUser {
 
 
+    public static final String FIREBASE_PHONE_PROPS  = "phone";
+    public static final String FIREBASE_NAME_PROPS  = "name";
+    public static final String FIREBASE_PNAME_PROPS  = "pname";
     //technique
     private Long id;
     private Long dateCreation;

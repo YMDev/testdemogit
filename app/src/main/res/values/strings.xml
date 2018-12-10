@@ -797,6 +797,12 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="invalide_email">Email non valide</string>
     <string name="firebase_user_exist">Utilisateur existe déja</string>
     <string name="firebase_ath_email_exception">email exception</string>
-
-
+    <string name="forgot_password_question">Mot de passe oublié ?</string>
+    <string name="forgot_password_sub">Nous avons juste besoin de votre identifiant email enregistré pour vous envoyer les instructions de réinitialisation</string>
+    <string name="valider">Valdier</string>
+    <string name="reset_password">Réinitialiser</string>
+    <string name="error_mail_not_sent">Mail de réinitialisation non envoyé, prière de réessayer ultérieurement </string>
+    <string name="check_your_email">Vérifie votre boite email</string>
+    <string name="mail_sent_sub_msg">Nous avons envoyé un courrier électronique à l\'adresse ci-dessus avec un lien pour réinitialiser le mot de passe</string>
+    <string name="ok_thanx">D\'accord, merci</string>
 </resources>

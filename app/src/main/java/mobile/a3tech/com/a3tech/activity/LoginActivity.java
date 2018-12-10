@@ -91,7 +91,7 @@ public class LoginActivity extends Activity implements DataLoadCallback {
 
 		public void onClick(View v) {
 
-			new Handler().post(new Runnable() {
+			/*new Handler().post(new Runnable() {
 
 				@Override
 				public void run() {
@@ -105,9 +105,9 @@ public class LoginActivity extends Activity implements DataLoadCallback {
 					LoginActivity.this.idPasswordForgetDialog_editTextEmail = (EditText) content
 							.findViewById(R.id.idPasswordForgetDialog_editTextEmail);
 					LoginActivity.this.idPasswordForget_linearLayoutAnnuler = (LinearLayout) content
-							.findViewById(R.id.idPasswordForget_linearLayoutAnnuler);
+							.findViewById(R.id.close_dialog);
 					LoginActivity.this.idPasswordForget_linearLayoutValider = (LinearLayout) content
-							.findViewById(R.id.idPasswordForget_linearLayoutValider);
+							.findViewById(R.id.validerForgetListener);
 					builder.setTitle(LoginActivity.this
 							.getString(R.string.txtLogin_title_dialog_password_forget));
 					LoginActivity.this.idPasswordForget_linearLayoutValider
@@ -119,7 +119,7 @@ public class LoginActivity extends Activity implements DataLoadCallback {
 					LoginActivity.this.alertDialog.show();
 
 				}
-			});
+			});*/
 		}
 	};
 

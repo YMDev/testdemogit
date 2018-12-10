@@ -12,6 +12,8 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fasterxml.jackson.core.util.MinimalPrettyPrinter;
@@ -296,10 +298,10 @@ public class A3techSignInActivity extends BaseActivity implements DataLoadCallba
         return false;
     }
 
-
+    AlertDialog okMsgDialog;
     private void sendVerificationEmail()
     {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         if(user == null) return;
         user.sendEmailVerification()
@@ -309,11 +311,24 @@ public class A3techSignInActivity extends BaseActivity implements DataLoadCallba
                         if (task.isSuccessful()) {
                             dialog.dismiss();
                             // email sent
-                            A3techCustomToastDialog.createSnackBar(A3techSignInActivity.this,getString(R.string.email_sent),Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
-                            // after email is sent just logout the user and finish this activity
-                            FirebaseAuth.getInstance().signOut();
-                            startActivity(new Intent(A3techSignInActivity.this, A3techLoginActivity.class));
-                            finish();
+                            AlertDialog.Builder builder = new AlertDialog.Builder(A3techSignInActivity.this);
+                            View content = A3techSignInActivity.this.getLayoutInflater()
+                                    .inflate(R.layout.mail_verification_sent_dialog, null);
+                            content.findViewById(R.id.ok_close).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if (okMsgDialog != null) okMsgDialog.dismiss();
+                                    FirebaseAuth.getInstance().signOut();
+                                    startActivity(new Intent(A3techSignInActivity.this, A3techLoginActivity.class));
+                                    finish();
+                                }
+                            });
+                            ((TextView) content.findViewById(R.id.header_email_val_label)).setText( user.getEmail());
+                            builder.setView(content);
+                            okMsgDialog = builder.create();
+                            okMsgDialog.setCancelable(false);
+                            okMsgDialog.show();  // after email is sent just logout the user and finish this activity
+
                         }
                         else
                         {

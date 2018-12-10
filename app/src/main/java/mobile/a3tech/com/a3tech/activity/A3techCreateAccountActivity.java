@@ -2,9 +2,11 @@ package mobile.a3tech.com.a3tech.activity;
 
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -12,13 +14,16 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthEmailException;
@@ -26,6 +31,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.FirebaseUserMetadata;
+import com.google.firebase.auth.UserInfo;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
@@ -258,7 +266,7 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
         finish();
     }
 
-
+    private FirebaseAnalytics mFirebaseAnalytics;
     private void createAccountFirebase(String email, String password) {
         auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -287,6 +295,14 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                         } else {
                             // successfully account created
                             // now the AuthStateListener runs the onAuthStateChanged callback
+                           try {
+                               mFirebaseAnalytics = FirebaseAnalytics.getInstance(A3techCreateAccountActivity.this);
+                               mFirebaseAnalytics.setUserProperty(A3techUser.FIREBASE_NAME_PROPS, account.getNom());
+                               mFirebaseAnalytics.setUserProperty(A3techUser.FIREBASE_PNAME_PROPS, account.getPrenom());
+                               mFirebaseAnalytics.setUserProperty(A3techUser.FIREBASE_PHONE_PROPS, account.getTelephone());
+                           }catch (Exception e){
+                               e.printStackTrace();
+                           }
                             mAuthListener.onAuthStateChanged(auth);
                         }
 
@@ -300,7 +316,7 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
         this.dialog.dismiss();
     }
 
-
+    AlertDialog okMsgDialog;
     private void sendVerificationEmail() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -326,11 +342,26 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                                                 @Override
                                                 public void dataLoaded(Object data, int method, int typeOperation) {
                                                     dialog.dismiss();
-                                                    A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.email_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(A3techCreateAccountActivity.this);
+                                                    View content = A3techCreateAccountActivity.this.getLayoutInflater()
+                                                            .inflate(R.layout.mail_verification_sent_dialog, null);
+                                                    content.findViewById(R.id.ok_close).setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            if (okMsgDialog != null) okMsgDialog.dismiss();
+                                                            FirebaseAuth.getInstance().signOut();
+                                                            startActivity(new Intent(A3techCreateAccountActivity.this, A3techLoginActivity.class));
+                                                            finish();
+                                                        }
+                                                    });
+                                                    ((TextView) content.findViewById(R.id.header_email_val_label)).setText( account.getEmail());
+                                                    builder.setView(content);
+                                                    okMsgDialog = builder.create();
+                                                    okMsgDialog.setCancelable(false);
+                                                    okMsgDialog.show();
+                                                    /*A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.email_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);*/
                                                     // after email is sent just logout the user and finish this activity
-                                                    FirebaseAuth.getInstance().signOut();
-                                                    startActivity(new Intent(A3techCreateAccountActivity.this, A3techLoginActivity.class));
-                                                    finish();
+
                                                 }
 
                                                 @Override
@@ -338,9 +369,26 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                                                     dialog.dismiss();
                                                     A3techCustomToastDialog.createSnackBar(A3techCreateAccountActivity.this, getString(R.string.email_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
                                                     // after email is sent just logout the user and finish this activity
-                                                    FirebaseAuth.getInstance().signOut();
-                                                    startActivity(new Intent(A3techCreateAccountActivity.this, A3techLoginActivity.class));
-                                                    finish();
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(A3techCreateAccountActivity.this);
+                                                    View content = A3techCreateAccountActivity.this.getLayoutInflater()
+                                                            .inflate(R.layout.mail_verification_sent_dialog, null);
+                                                    content.findViewById(R.id.ok_close).setOnClickListener(new View.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(View view) {
+                                                            if (okMsgDialog != null) okMsgDialog.dismiss();
+                                                            FirebaseAuth.getInstance().signOut();
+                                                            startActivity(new Intent(A3techCreateAccountActivity.this, A3techLoginActivity.class));
+                                                            finish();
+
+                                                        }
+                                                    });
+
+                                                    ((TextView) content.findViewById(R.id.header_email_val_label)).setText( account.getEmail());
+                                                    builder.setView(content);
+                                                    okMsgDialog = builder.create();
+                                                    okMsgDialog.setCancelable(false);
+                                                    okMsgDialog.show();
+
                                                 }
                                             });
                             // email sent

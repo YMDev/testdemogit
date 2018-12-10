@@ -16,6 +16,7 @@ import android.widget.EditText;
 import org.apache.commons.lang3.StringUtils;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techCreateAccountActivity;
 import mobile.a3tech.com.a3tech.activity.InscriptionActivity;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
@@ -93,6 +94,8 @@ public class A3techAddPasswordFragment extends Fragment {
             public void onClick(View view) {
                 String passSaisi = password.getText() != null ? password.getText().toString() :"";
                 String passSaisiConfirmed = confirmedPassword.getText() != null ? confirmedPassword.getText().toString() :"";
+                ((A3techCreateAccountActivity)getActivity()).hideKeyboard(password);
+                ((A3techCreateAccountActivity)getActivity()).hideKeyboard(confirmedPassword);
                 if(StringUtils.isBlank(passSaisi)){
                     password.setError(getString(R.string.error_password_empty));
                     return;

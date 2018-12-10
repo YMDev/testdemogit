@@ -27,9 +27,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginRight="20dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="3dp">
 
@@ -100,8 +100,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/spacerss"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             app:cardBackgroundColor="@color/dark_bleu_gray"
             app:cardCornerRadius="5dp"
             app:cardElevation="2dp">
@@ -134,9 +134,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/card_btn_signup"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp">
+            android:layout_marginRight="20dp">
 
             <TextView
                 android:id="@+id/forgot_password"
@@ -145,7 +145,10 @@
                 android:layout_alignParentLeft="true"
                 android:text="@string/forgot_password"
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"/>
 
 
             <TextView
@@ -155,7 +158,10 @@
                 android:layout_alignParentRight="true"
                 android:text="@string/header_create_an_account"
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackground"/>
 
 
         </RelativeLayout>
@@ -169,7 +175,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="40dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
             android:layout_marginBottom="20dp">
 
             <TextView
