@@ -805,4 +805,18 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="check_your_email">Vérifie votre boite email</string>
     <string name="mail_sent_sub_msg">Nous avons envoyé un courrier électronique à l\'adresse ci-dessus avec un lien pour réinitialiser le mot de passe</string>
     <string name="ok_thanx">D\'accord, merci</string>
+    <string name="error_authentication_firebase_token">Problème d\'authentification avec le serveur</string>
+    <string name="error_authentication_firebase_cridential">Les paramètres d\'authentification fournis sont incorrects ou ont expirés</string>
+    <string name="error_authentication_firebase_mail">L\'adresse email est mal formatée.</string>
+    <string name="error_authentication_firebase_pass">Le mot de passe est invalide</string>
+    <string name="error_authentication_firebase_user_mismatch">Les paramètres d\'authentification fournis ne correspondent pas à l\'utilisateur précédemment connecté.</string>
+    <string name="error_authentication_firebase_sensitive_data">Cette opération est sensible et nécessite une authentification récente. Reconnectez-vous avant de réessayer cette demande</string>
+    <string name="error_authentication_firebase_user_exist_diff_cri">Un compte existe déjà avec la même adresse électronique, mais des informations d\'identification de connexion différentes.</string>
+    <string name="error_authentication_firebase_mail_used">L\'adresse email est déjà utilisée par un autre compte.</string>
+    <string name="error_authentication_firebase_crd_used">Cette information d\'identification est déjà associée à un compte d\'utilisateur différent.</string>
+    <string name="error_authentication_firebase_user_disabled">Votre compte  été désactivé par un administrateur.</string>
+    <string name="error_authentication_firebase_reconnect">Votre session n\'est plus valide. Veuillez vous connecter à nouveau.</string>
+    <string name="error_authentication_firebase_no_user">Aucun Compte ne correspond aux critères d\'identifications fournis, L\'utilisateur peut avoir été supprimé</string>
+    <string name="error_authentication_firebase_weak_pass">Le mot de passe est invalide il faut au moins 6 caractères</string>
+    <string name="select_adresse">Sélectionnez votre adresse</string>
 </resources>

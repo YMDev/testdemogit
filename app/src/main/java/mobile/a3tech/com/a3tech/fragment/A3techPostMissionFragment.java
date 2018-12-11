@@ -2,15 +2,18 @@ package mobile.a3tech.com.a3tech.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -33,6 +36,7 @@ import eltos.simpledialogfragment.SimpleTimeDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
+import mobile.a3tech.com.a3tech.model.Adresse;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
@@ -211,7 +215,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         btnValidation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!verifyDataInserted()){
+                if (!verifyDataInserted()) {
                     //A3techCustomToastDialog.createToastDialog(getActivity(),getString(R.string.donnee_obligatoires), A3techCustomToastDialog.TOAST_ERROR, Toast.LENGTH_SHORT);
                     return;
                 }
@@ -247,7 +251,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         latitude = null;
         longitude = null;
 
-        new Thread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (gps.canGetLocation()) {
@@ -257,26 +261,28 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
                     Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
                     try {
                         List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                        cityName = addresses.get(0).getAddressLine(0); // adresse
-                        stateName = addresses.get(0).getFeatureName(); // city
-                        countryName = addresses.get(0).getCountryName(); // country
+                        if(addresses != null && addresses.size() > 1){
+                            displayListAdresse(addresses,waitingDialog);
+                        }else if(addresses != null && addresses.size() > 0){
+                            cityName = addresses.get(0).getAddressLine(0); // adresse
+                            if (cityName != null) {
+                                try {
+                                    getActivity().runOnUiThread(new Runnable() {
 
-                        if (cityName != null) {
-                            try {
-                                getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            locationMission.setText(cityName);
+                                            waitingDialog.dismiss();
+                                        }
+                                    });
+                                    Thread.sleep(300);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
 
-                                    @Override
-                                    public void run() {
-                                        locationMission.setText(cityName);
-                                        waitingDialog.dismiss();
-                                    }
-                                });
-                                Thread.sleep(300);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
                             }
-
                         }
+
                     } catch (Exception e) {
                         e.printStackTrace();
                         waitingDialog.dismiss();
@@ -288,22 +294,72 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
                     gps.showSettingsAlert();
                 }
             }
-        }).start();
+        });
 
     }
 
+    private void displayListAdresse(List<Address> adresses, final ProgressDialog waitingDialog) {
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
+        //builderSingle.setIcon(R.drawable.ic_launcher);
+        builderSingle.setTitle(R.string.select_adresse);
 
-    private Boolean verifyDataInserted(){
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), R.layout.a3tech_select_adresse_popup);
+        String _cityName = null;
+        for (Address addresses : adresses
+                ) {
+            if (addresses != null) {
+                _cityName = addresses.getAddressLine(0); // adresse
+                arrayAdapter.add(_cityName);
+            }
+        }
+
+        builderSingle.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                waitingDialog.dismiss();
+                dialog.dismiss();
+            }
+        });
+
+        builderSingle.setAdapter(arrayAdapter, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                cityName = arrayAdapter.getItem(which);
+                if (cityName != null) {
+                    try {
+                        getActivity().runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                locationMission.setText(cityName);
+                                waitingDialog.dismiss();
+                            }
+                        });
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        });
+        builderSingle.show();
+    }
+
+    private Boolean verifyDataInserted() {
         if (StringUtils.isBlank(dateIntervension.getText().toString())) {
             dateIntervension.setError(getString(R.string.error_date_intervention_empty));
+            dateIntervension.requestFocus();
             return Boolean.FALSE;
         }
         if (StringUtils.isBlank(locationMission.getText().toString())) {
             locationMission.setError(getString(R.string.error_location_mission_empty));
+            locationMission.requestFocus();
             return Boolean.FALSE;
         }
         return Boolean.TRUE;
     }
+
     private A3techMission populateMission() {
         A3techMission mission = null;
         if (missionObject != null) {
@@ -322,7 +378,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             mission.setTitre(titleMission.getText().toString());
         }
         mission.setDateCreation(new Date().getTime());
-        mission.setDateIntervention(((Calendar)dateIntervension.getTag()).getTime().getTime());
+        mission.setDateIntervention(((Calendar) dateIntervension.getTag()).getTime().getTime());
         mission.setClientMission(PreferencesValuesUtils.getConnectedUser(getActivity()));
         mission.setLatitude(String.valueOf(latitude));
         mission.setLongitude(String.valueOf(longitude));

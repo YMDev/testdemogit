@@ -96,12 +96,14 @@ public class A3techAddUserNameFragment extends Fragment {
                 String emailSaisi = username.getText() != null ? username.getText().toString() :"";
                 if(StringUtils.isBlank(emailSaisi)){
                     username.setError(getString(R.string.error_username_empty));
+                    username.requestFocus();
                     return;
                 }
 
                 String pnameSaisi = userPname.getText() != null ? userPname.getText().toString() :"";
                 if(StringUtils.isBlank(pnameSaisi)){
                     userPname.setError(getString(R.string.error_userpname_empty));
+                    userPname.requestFocus();
                     return;
                 }
                 A3techUser userTmp = new A3techUser();

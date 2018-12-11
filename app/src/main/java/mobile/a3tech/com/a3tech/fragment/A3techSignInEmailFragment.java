@@ -98,6 +98,7 @@ public class A3techSignInEmailFragment extends Fragment {
                 //TODO VERIFICATION
                 if(!ValidationPatternUtils.isValideEmail(email.getEditText().getText().toString())){
                     email.getEditText().setError(getString(R.string.error_email_not_valide));
+                    email.requestFocus();
                     return;
                 }
                /* if(!ValidationPatternUtils.isValidPassword(pass.getEditText().getText().toString())){

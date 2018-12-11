@@ -36,6 +36,7 @@ public class BaseActivity extends AppCompatActivity implements View.OnFocusChang
     }
 
     public void hideKeyboard(View view) {
+        if(view == null) return;
         Activity act = getActivity();
         if(act == null) return;
         InputMethodManager inputMethodManager =(InputMethodManager)act.getSystemService(Activity.INPUT_METHOD_SERVICE);

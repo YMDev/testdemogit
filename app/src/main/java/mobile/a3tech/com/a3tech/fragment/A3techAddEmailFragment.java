@@ -87,16 +87,19 @@ public class A3techAddEmailFragment extends Fragment {
                 String phoneSaisi = phone.getText() != null ? phone.getText().toString() :"";
                 if(StringUtils.isBlank(emailSaisi)){
                     email.setError(getString(R.string.error_email_empty));
+                    email.requestFocus();
                     return;
                 }
                 if(StringUtils.isBlank(phoneSaisi)){
                     phone.setError(getString(R.string.error_phone_empty));
+                    phone.requestFocus();
                     return;
                 }
 
 
                 if(!isValidEmailAddress(emailSaisi)){
                     email.setError(getString(R.string.error_email_not_valide));
+                    email.requestFocus();
                     return;
                 }
                 HashMap mapData  = new HashMap();

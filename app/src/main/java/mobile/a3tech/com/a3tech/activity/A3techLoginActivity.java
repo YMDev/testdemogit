@@ -33,6 +33,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
@@ -48,6 +49,7 @@ import java.util.regex.Pattern;
 import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techLoginPagerviewerAdapter;
+import mobile.a3tech.com.a3tech.exception.FirebaseException;
 import mobile.a3tech.com.a3tech.images.Image;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techUser;
@@ -209,11 +211,13 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
     private OnClickListener validerForgetListener = new OnClickListener() {
 
         public void onClick(View v) {
+            hideKeyboard(A3techLoginActivity.this.idPasswordForgetDialog_editTextEmail);
             final String email = A3techLoginActivity.this.idPasswordForgetDialog_editTextEmail
                     .getText().toString();
             if (email.length() == 0
                     || !A3techLoginActivity.this.isValidEmailAddress(email)) {
                 A3techLoginActivity.this.idPasswordForgetDialog_editTextEmail.setError(getString(R.string.txtPasswordForgetDialog_textViewPasswordForgot));
+                A3techLoginActivity.this.idPasswordForgetDialog_editTextEmail.requestFocus();
                 return;
             }
 
@@ -244,7 +248,7 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
                                 okMsgDialog.show();
 
                             } else {
-                                A3techCustomToastDialog.createSnackBar(A3techLoginActivity.this, getResources().getString(R.string.error_mail_not_sent), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);
+                                A3techCustomToastDialog.createSnackBar(A3techLoginActivity.this, FirebaseException.getExceptionMessage(A3techLoginActivity.this,((FirebaseAuthException) task.getException())), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_INFO);
                             }
                         }
                     });
@@ -268,6 +272,7 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
     private OnClickListener annulerListener = new OnClickListener() {
 
         public void onClick(View v) {
+            hideKeyboard(A3techLoginActivity.this.idPasswordForgetDialog_editTextEmail);
             A3techLoginActivity.this.alertDialog.dismiss();
         }
     };
@@ -314,9 +319,7 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
                                 if (!task.isSuccessful()) {
                                     Log.w("TAG", "signInWithEmail:failed", task.getException());
                                     A3techCustomToastDialog.createSnackBar(A3techLoginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
-
                                     dialog.dismiss();
-
                                 } else {
                                     checkIfEmailVerified();
                                 }

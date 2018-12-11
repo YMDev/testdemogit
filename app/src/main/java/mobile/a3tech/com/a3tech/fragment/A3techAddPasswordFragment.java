@@ -98,15 +98,18 @@ public class A3techAddPasswordFragment extends Fragment {
                 ((A3techCreateAccountActivity)getActivity()).hideKeyboard(confirmedPassword);
                 if(StringUtils.isBlank(passSaisi)){
                     password.setError(getString(R.string.error_password_empty));
+                    password.requestFocus();
                     return;
                 }
                 if(StringUtils.isBlank(passSaisiConfirmed)){
                     confirmedPassword.setError(getString(R.string.error_password_confirmed_empty));
+                    confirmedPassword.requestFocus();
                     return;
                 }
 
                 if(!passSaisiConfirmed.equals(passSaisi)){
                     confirmedPassword.setError(getString(R.string.error_password_confirmed_do_not_match));
+                    confirmedPassword.requestFocus();
                     return;
                 }
                 mListener.actionNext(ACTION_TYPE_PASS, password.getText().toString());
