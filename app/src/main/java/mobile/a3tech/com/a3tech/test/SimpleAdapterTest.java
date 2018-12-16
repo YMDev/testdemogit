@@ -94,11 +94,11 @@ public class SimpleAdapterTest extends RecyclerView.Adapter<SimpleAdapterTest.Si
                     Intent mainIntent = new Intent(context, A3techAddMissionActivity.class);
                     context.startActivity(mainIntent);
                 } else if (menuItem.getCode() != null && menuItem.getCode().equals(ObjectMenu.CODE_RECOMMANDER_TECH)) {
-                    Intent mainIntent = new Intent(context, A3techTechnicienAvailabilityActivity.class);
-                    context.startActivity(mainIntent);
+                   /* Intent mainIntent = new Intent(context, A3techTechnicienAvailabilityActivity.class);
+                    context.startActivity(mainIntent);*/
                 } else if (menuItem.getCode() != null && menuItem.getCode().equals(ObjectMenu.CODE_DEVENIR_TECH)) {
-                    Intent mainIntent = new Intent(context, A3techTechnicienAvailabilityActivity.class);
-                    context.startActivity(mainIntent);
+                   /* Intent mainIntent = new Intent(context, A3techTechnicienAvailabilityActivity.class);
+                    context.startActivity(mainIntent);*/
                 }
             }
         });

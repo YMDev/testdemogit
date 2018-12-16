@@ -147,12 +147,14 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     }
 
 
+    public static String KEY_IS_AFTER_ADD_MISSION = "ISAFTERADDMISSION";
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQ_ADD_MISSION_FROM_WELCOM && resultCode == Activity.RESULT_OK){
-            A3techCustomToastDialog.createSnackBar(A3techWelcomPageActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
-            startBrowse();
+            Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techMissionListeActivity.class);
+            intentAddMissionn.putExtra(KEY_IS_AFTER_ADD_MISSION,true);
+            startActivity(intentAddMissionn);
         }
     }
 }

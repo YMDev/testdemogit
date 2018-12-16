@@ -318,7 +318,7 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (!task.isSuccessful()) {
                                     Log.w("TAG", "signInWithEmail:failed", task.getException());
-                                    A3techCustomToastDialog.createSnackBar(A3techLoginActivity.this, task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                                    A3techCustomToastDialog.createSnackBar(A3techLoginActivity.this, FirebaseException.getExceptionMessage(A3techLoginActivity.this,((FirebaseAuthException) task.getException())), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
                                     dialog.dismiss();
                                 } else {
                                     checkIfEmailVerified();
@@ -366,6 +366,15 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
                     A3techUser userconnectedFromDB = (A3techUser) data;
                     if(userconnectedFromDB != null && userconnectedFromDB.getPassword() != password){
                         //update user password
+                        editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson((A3techUser) data));
+                        editor.putString("identifiant", user.getProviderId() + "");
+                        editor.putString("password", password);
+                        editor.putString("pseudo", user.getDisplayName());
+                        editor.putString("conMode", "application");
+                        editor.commit();
+                        startActivity(mainIntent);
+                        finish();
+                        if (dialog != null) dialog.dismiss();
                     }else{
                         editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson((A3techUser) data));
                         editor.putString("identifiant", user.getProviderId() + "");

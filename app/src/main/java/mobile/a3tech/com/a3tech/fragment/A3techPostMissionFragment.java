@@ -194,10 +194,11 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             public void onClick(View v) {
                 // create class object
                 hideKeyboard();
-                gps = new GPSTracker(getActivity());
                 if (!PermissionsStuffs.canAccessLocation(getActivity())) {
-                    requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
+                    requestPermissions(PermissionsStuffs.LOCATION_PERMS, PermissionsStuffs.LOCATION_REQUEST);
+                    return;
                 }
+                gps = new GPSTracker(getActivity());
                 gpsGetLocation();
 
             }
@@ -254,6 +255,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if(gps == null) gps = new GPSTracker(getActivity());
                 if (gps.canGetLocation()) {
 
                     latitude = gps.getLatitude();
@@ -486,7 +488,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
 
             case PermissionsStuffs.LOCATION_REQUEST:
                 if (PermissionsStuffs.canAccessLocation(getActivity())) {
-                    //gpsGetLocation();
+                    gpsGetLocation();
                 } else {
                     // bzzzt();
                 }

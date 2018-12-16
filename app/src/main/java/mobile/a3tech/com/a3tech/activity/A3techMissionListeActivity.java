@@ -10,11 +10,15 @@ import android.os.Bundle;
 import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import org.apache.commons.lang3.BooleanUtils;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.adapter.A3techMissionsListeAdapter;
 import mobile.a3tech.com.a3tech.adapter.A3techProfilFragmentAdapter;
 import mobile.a3tech.com.a3tech.fragment.A3techMissionsHomeFragment;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 
 public class A3techMissionListeActivity extends AppCompatActivity implements A3techMissionsHomeFragment.OnFragmentInteractionListener{
 
@@ -26,6 +30,8 @@ public class A3techMissionListeActivity extends AppCompatActivity implements A3t
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.a3tech_mission_liste_activity);
         viewPagerMissions = (ViewPager) findViewById(R.id.viewpager_missions);
         tabLayouMissions = (TabLayout) findViewById(R.id.tabs_mission);
@@ -62,6 +68,13 @@ public class A3techMissionListeActivity extends AppCompatActivity implements A3t
             }
         });
         /*setfragment(a3techmissionshomefragment.newinstance(null,null));*/
+        Bundle b = getIntent().getExtras();
+        if (b != null) {
+            Boolean isAfterAddMission = b.getBoolean(A3techWelcomPageActivity.KEY_IS_AFTER_ADD_MISSION);
+            if(BooleanUtils.isTrue(isAfterAddMission)){
+                A3techCustomToastDialog.createSnackBar(A3techMissionListeActivity.this, getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+            }
+        }
     }
 
     /*protected void setFragment(Fragment fragment) {
