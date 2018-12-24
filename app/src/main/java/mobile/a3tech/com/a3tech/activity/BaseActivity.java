@@ -3,6 +3,9 @@ package mobile.a3tech.com.a3tech.activity;
 import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
@@ -36,17 +39,32 @@ public class BaseActivity extends AppCompatActivity implements View.OnFocusChang
     }
 
     public void hideKeyboard(View view) {
-        if(view == null) return;
+        if (view == null) return;
         Activity act = getActivity();
-        if(act == null) return;
-        InputMethodManager inputMethodManager =(InputMethodManager)act.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        if (act == null) return;
+        InputMethodManager inputMethodManager = (InputMethodManager) act.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
+
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
         if (!hasFocus) {
             hideKeyboard(v);
         }
     }
+
+    public void startAlphaAnimation(View v, long duration, int visibility) {
+        Animation alphaAnimation = (visibility == View.VISIBLE)
+                ? AnimationUtils.loadAnimation(BaseActivity.this, R.anim.scale_up)
+                : AnimationUtils.loadAnimation(BaseActivity.this, R.anim.scale_down);
+
+        alphaAnimation.setDuration(duration);
+        alphaAnimation.setFillAfter(true);
+        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        v.startAnimation(alphaAnimation);
+        v.setVisibility(visibility);
+    }
+
+
 
 }

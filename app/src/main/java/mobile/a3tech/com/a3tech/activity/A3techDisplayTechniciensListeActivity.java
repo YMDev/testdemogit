@@ -140,7 +140,7 @@ public class A3techDisplayTechniciensListeActivity extends BaseActivity implemen
                 setSupportActionBar(toolbarSelectTechnicien);
                 break;
             case 1:
-                if (missionSelected != null && missionSelected.getCategoryMission() != null) {
+                if (missionSelected != null && missionSelected.getCategorie() != null) {
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_title)).setText(getResources().getString(R.string.save_mission));
                     ((TextView) toolbarSelectTechnicien.findViewById(R.id.big_sub_title)).setText(getResources().getString(R.string.complete_mission_informations));
                 }

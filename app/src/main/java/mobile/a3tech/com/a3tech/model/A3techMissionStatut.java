@@ -7,7 +7,9 @@ public enum A3techMissionStatut {
     CLOTUREE("Clôturée", 3, "USER"),
     ANNULEE("Annulée", 4, "USER"),
     REPORTEE("Reportée", 5, "USER"),
-    REJETEE("Rejetée", 6, "SYSTEM");
+    REJETEE("Rejetée", 6, "SYSTEM"),
+    DEMARREE("Démarrée", 7, "USER"),
+    EN_PAUSE("En Pause", 8, "SYSTEM");
 
 
     private String discreptionEnum;

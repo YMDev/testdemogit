@@ -252,7 +252,7 @@ public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnD
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 //TODO commentaire a reconstituer.
-                String commentaire = "Demande créée pour une Mission en  " + selectedMission.getCategoryMission().getLibelle() + "";
+                String commentaire = "Demande créée pour une Mission en  " + selectedMission.getCategorie().getLibelle() + "";
                 A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
                         null, selectedMission, A3techNotificationType.CREATION_MISSION, commentaire, getString(R.string.libelle_creatio_mission));
                 NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
@@ -635,8 +635,8 @@ public class A3techHomeActivity extends BaseActivity implements SimpleDialog.OnD
                         public void dataLoaded(Object data, int method, int typeOperation) {
                             //TODO commentaire a reconstituer.
                             String commentaire = "";
-                            if (mission.getCategoryMission() != null) {
-                                commentaire = "Demande créée pour une Mission en  " + mission.getCategoryMission().getLibelle() + "";
+                            if (mission.getCategorie() != null) {
+                                commentaire = "Demande créée pour une Mission en  " + mission.getCategorie().getLibelle() + "";
                             } else if (mission.getTechnicien().getCategorie() != null) {
                                 commentaire = "Demande créée pour une Mission en  " + mission.getTechnicien().getCategorie().getLibelle() + "";
                             }

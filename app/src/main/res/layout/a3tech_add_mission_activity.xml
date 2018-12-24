@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.A3techAddMissionActivity">
+    tools:context=".activity.A3techAddMissionActivity"
+    android:animateLayoutChanges="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_add_mission"

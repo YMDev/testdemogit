@@ -16,11 +16,20 @@ public class A3techProfilFragmentAdapter extends FragmentPagerAdapter {
     private Context context;
     private A3techUser user;
     private Boolean editMode = Boolean.FALSE;
+    private Boolean modeMyAccount = Boolean.FALSE;
 
     public A3techProfilFragmentAdapter(FragmentManager fm, Context context, A3techUser userV) {
         super(fm);
         this.context = context;
         this.user = userV;
+    }
+
+    public void setModeMyAccount(Boolean modeMyAccount) {
+        this.modeMyAccount = modeMyAccount;
+    }
+
+    public Boolean getModeMyAccount() {
+        return modeMyAccount;
     }
 
     @Override
@@ -33,7 +42,7 @@ public class A3techProfilFragmentAdapter extends FragmentPagerAdapter {
         Fragment fragmntToShow = null;
         switch (position) {
             case 0:
-                fragmntToShow = A3techProfilInformationFragment.newInstance(user);
+                fragmntToShow = A3techProfilInformationFragment.newInstance(user, modeMyAccount);
                 break;
             case 1:
                 fragmntToShow = A3techReviewsFragment.newInstance(user);

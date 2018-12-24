@@ -68,8 +68,8 @@ public class A3techDialogAddReview {
 			@Override
 			public void onClick(View view) {
 				A3techReviewMission avis  = new A3techReviewMission();
-				avis.setDateEdition(Calendar.getInstance().getTime().getTime());
-				avis.setDateEdition(Calendar.getInstance().getTime().getTime());
+				avis.setDateEdition(Calendar.getInstance().getTime());
+				avis.setDateEvaluation(Calendar.getInstance().getTime());
 				avis.setRating(mRatingBar.getRating());
 				avis.setCommentaire(mFeedback.getText().toString());
 				param.actionsubmitt(avis);

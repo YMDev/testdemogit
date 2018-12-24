@@ -1,6 +1,9 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
@@ -15,6 +18,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -38,17 +42,19 @@ import mobile.a3tech.com.a3tech.fragment.A3techPostMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelectCategoryMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techStep1CreatAccountFragment;
+import mobile.a3tech.com.a3tech.manager.MissionManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.model.Mission;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.A3techDialogFilterTechniciens;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
-public class A3techAddMissionActivity extends BaseActivity implements A3techSelectCategoryMissionFragment.OnFragmentInteractionListener,A3techPostMissionFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener, A3techDisplayTechniciensPArentFragment.OnFragmentInteractionListener, A3techDisplayTechInMapFragment.OnFragmentInteractionListener
-{
+public class A3techAddMissionActivity extends BaseActivity implements A3techSelectCategoryMissionFragment.OnFragmentInteractionListener, A3techPostMissionFragment.OnFragmentInteractionListener, A3techAffecterTechnicienFragment.OnFragmentInteractionListener, A3techDisplayTechniciensPArentFragment.OnFragmentInteractionListener, A3techDisplayTechInMapFragment.OnFragmentInteractionListener {
 
 
     private FrameLayout framePostMission;
@@ -56,12 +62,14 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
     private Toolbar toolbarPostMission;
     private Toolbar toolbarSelectCategoryMission;
     private Toolbar toolbarAffecterTech;
+    private Toolbar toolbarVisible;
     private ProgressBar progressPostMission;
     private ImageView backAction, filterTech;
     A3techDisplayTechniciensPArentFragment fragmentMap;
-    public static final String TAG_RESULT_FROM_SELECT_TECH ="TAG_RESULT_FROM_SELECT_TECH";
-    public static final String TAG_RESULT_FROM_ADD_MISSION_WELCOM ="TAG_RESULT_FROM_ADD_MISSION_WELCOM";
-    public static final String TAG_RESULT_OBJECT_ADD_MISSION_WELCOM ="TAG_RESULT_OBJECT_ADD_MISSION_WELCOM";
+    public static final String TAG_RESULT_FROM_SELECT_TECH = "TAG_RESULT_FROM_SELECT_TECH";
+    public static final String TAG_RESULT_FROM_ADD_MISSION_WELCOM = "TAG_RESULT_FROM_ADD_MISSION_WELCOM";
+    public static final String TAG_RESULT_OBJECT_ADD_MISSION_WELCOM = "TAG_RESULT_OBJECT_ADD_MISSION_WELCOM";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,21 +78,23 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
 
     }
 
-    private void initiInterfaceActivity(){
+    private void initiInterfaceActivity() {
         bindComponents();
         updateAppbarLayout(0);
         getSupportActionBar().setElevation(0);
         setFragment(A3techSelectCategoryMissionFragment.newInstance(null, null), false, false);
         getExtratData();
     }
+
     Boolean isFromWelcom = Boolean.FALSE;
-    private void getExtratData(){
+
+    private void getExtratData() {
         Bundle b = getIntent().getExtras();
         if (b != null) {
             Boolean isFromWelcoms = b.getBoolean(A3techWelcomPageActivity.TAG_ADD_MISSION_FROM_WELCOM);
-            if(BooleanUtils.isTrue(isFromWelcoms)){
+            if (BooleanUtils.isTrue(isFromWelcoms)) {
                 isFromWelcom = Boolean.TRUE;
-            }else{
+            } else {
                 isFromWelcom = Boolean.FALSE;
             }
         }
@@ -115,7 +125,7 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
                         @Override
                         public void appliquerPerimetre(Integer perim) {
                             PreferencesValuesUtils.setPermietreRechercheTechniciens(A3techAddMissionActivity.this, perim);
-                            if(fragmentMap != null){
+                            if (fragmentMap != null) {
                                 fragmentMap.notifyPerimetreChanged(perim);
                             }
                         }
@@ -159,6 +169,7 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
         } else
             progressPostMission.setProgress(progress); // no animation on Gingerbread or lower
     }
+
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
@@ -171,7 +182,7 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
     }
 
     private void updateProgress() {
-         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_add_mission);
+        Fragment f = getSupportFragmentManager().findFragmentById(R.id.frame_add_mission);
         if (f instanceof A3techSelectCategoryMissionFragment) {
             progressBarchangeSmouthly(0);
             updateAppbarLayout(0);
@@ -181,9 +192,10 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
         } else if (f instanceof A3techDisplayTechniciensPArentFragment) {
             progressBarchangeSmouthly(50);
             updateAppbarLayout(1);
-            ((A3techDisplayTechniciensPArentFragment)f).deleteMapInFragment();
+            ((A3techDisplayTechniciensPArentFragment) f).deleteMapInFragment();
         }
     }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
@@ -191,39 +203,62 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
 
     @Override
     public void actionToolbar(boolean hide) {
-        if(hide){
-            getSupportActionBar().hide();
-        }else{
-            getSupportActionBar().show();
+        if (getSupportActionBar() == null) return;
+        if (hide) {
+            toolbarVisible.animate()
+                    .translationY(-toolbarVisible.getHeight())
+                    .alpha(0.0f)
+                    .setDuration(200)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            toolbarVisible.setVisibility(View.GONE);
+                        }
+                    });
+        } else {
+            toolbarVisible.setVisibility(View.VISIBLE);
+            toolbarVisible.animate()
+                    .translationY(0)
+                    .alpha(1.0f)
+                    .setDuration(200)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            toolbarVisible.setVisibility(View.VISIBLE);
+                        }
+                    });
         }
     }
 
+
     Categorie categorieSelected;
+
     @Override
     public void actionNext(Integer typeAction, Object data) {
         switch (typeAction) {
             case A3techSelectCategoryMissionFragment.ACTION_SELECT_CATEGORY_MISSION:
                 //Categorie Mission selectionnée
-                progressBarchangeSmouthly(50);
-                  categorieSelected = (Categorie)data;
+                categorieSelected = (Categorie) data;
                 updateAppbarLayout(1);
                 setFragment(A3techPostMissionFragment.newInstance(categorieSelected), true, false);
+                progressBarchangeSmouthly(50);
                 break;
             case A3techPostMissionFragment.ACTION_SAVE_MISSION_INFO:
                 //Categorie Mission selectionnée
-               runOnUiThread(new Runnable() {
+                runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {
                         progressBarchangeSmouthly(100);
                     }
                 });
-                A3techMission mission = (A3techMission)data;
+                A3techMission mission = (A3techMission) data;
                 updateAppbarLayout(3);
-                ((TextView)toolbarAffecterTech.findViewById(R.id.big_title)).setText(mission.getCategoryMission().getLibelle());
-               // avant d'introduire buttom tabs : setFragment(A3techAffecterTechnicienFragment.newInstance(mission), true, false);
-                 fragmentMap = A3techDisplayTechniciensPArentFragment.newInstance(mission);
-                actionToolbar(true);
+                ((TextView) toolbarAffecterTech.findViewById(R.id.big_title)).setText(mission.getCategorie().getLibelle());
+                // avant d'introduire buttom tabs : setFragment(A3techAffecterTechnicienFragment.newInstance(mission), true, false);
+                fragmentMap = A3techDisplayTechniciensPArentFragment.newInstance(mission);
                 setFragment(fragmentMap, true, false);
                 break;
         }
@@ -235,25 +270,30 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
     }
 
 
-    private void updateAppbarLayout(int position){
-        switch (position){
+    @SuppressLint("RestrictedApi")
+    private void updateAppbarLayout(int position) {
+
+        switch (position) {
             case 0:
-                toolbarSelectCategoryMission.setVisibility(View.VISIBLE);
-                toolbarPostMission.setVisibility(View.GONE);
-                toolbarAffecterTech.setVisibility(View.GONE);
+                showToolbar(toolbarSelectCategoryMission);
+                hideToolbar(toolbarPostMission);
+                hideToolbar(toolbarAffecterTech);
                 setSupportActionBar(toolbarSelectCategoryMission);
+                toolbarVisible = toolbarSelectCategoryMission;
                 break;
             case 1:
-                toolbarPostMission.setVisibility(View.VISIBLE);
-                toolbarSelectCategoryMission.setVisibility(View.GONE);
-                toolbarAffecterTech.setVisibility(View.GONE);
+                hideToolbar(toolbarPostMission);
+                hideToolbar(toolbarSelectCategoryMission);
+                hideToolbar(toolbarAffecterTech);
                 setSupportActionBar(toolbarPostMission);
+                toolbarVisible = toolbarPostMission;
                 break;
             case 3:
-                toolbarPostMission.setVisibility(View.GONE);
-                toolbarSelectCategoryMission.setVisibility(View.GONE);
-                toolbarAffecterTech.setVisibility(View.VISIBLE);
+                hideToolbar(toolbarAffecterTech);
+                hideToolbar(toolbarPostMission);
+                hideToolbar(toolbarSelectCategoryMission);
                 setSupportActionBar(toolbarAffecterTech);
+                toolbarVisible = toolbarAffecterTech;
                 break;
         }
         getSupportActionBar().setElevation(0);
@@ -270,7 +310,7 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
 
         @Override
         protected void onPreExecute() {
-            pd  = CustomProgressDialog.createProgressDialog(
+            pd = CustomProgressDialog.createProgressDialog(
                     activity,
                     "");
             pd.show();
@@ -314,13 +354,92 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
                    }*/
                     String jsonMission = data.getStringExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH);
                     A3techMission mission = new Gson().fromJson(jsonMission, A3techMission.class);
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH,jsonMission);
-                    setResult(Activity.RESULT_OK, resultIntent);
-                    finish();
+                    addMission(mission);
                 }
                 break;
             }
         }
+    }
+
+    private void addMission(A3techMission mission) {
+        MissionManager.getInstance().createMission(mission, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+//mission created
+                A3techMission missionSaved = (A3techMission) data;
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH, new Gson().toJson(missionSaved));
+                setResult(Activity.RESULT_OK, resultIntent);
+                finish();
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                A3techCustomToastDialog.createSnackBar(A3techAddMissionActivity.this, getString(R.string.mission_error_creation), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+            }
+        });
+    }
+
+    public void hideToolbar(Boolean hide) {
+
+        if (getSupportActionBar() == null) return;
+        if (hide) {
+            toolbarVisible.animate()
+                    .translationY(-toolbarVisible.getHeight())
+                    .alpha(0.0f)
+                    .setDuration(200)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            toolbarVisible.setVisibility(View.GONE);
+                        }
+                    });
+        } else {
+            toolbarVisible.setVisibility(View.VISIBLE);
+            toolbarVisible.animate()
+                    .translationY(0)
+                    .alpha(1.0f)
+                    .setDuration(200)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            toolbarVisible.setVisibility(View.VISIBLE);
+                        }
+                    });
+        }
+    }
+
+    private void showToolbar(final Toolbar tool) {
+        tool.animate()
+                .translationY(0)
+                .alpha(1.0f)
+                .setDuration(200)
+                .setListener(new AnimatorListenerAdapter() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        super.onAnimationEnd(animation);
+                        tool.setVisibility(View.VISIBLE);
+                    }
+                });
+
+    }
+
+    private void hideToolbar(final Toolbar tool) {
+        if (tool != null && tool.getVisibility() == View.VISIBLE) {
+            tool.animate()
+                    .translationY(-toolbarVisible.getHeight())
+                    .alpha(0.0f)
+                    .setDuration(200)
+                    .setListener(new AnimatorListenerAdapter() {
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            super.onAnimationEnd(animation);
+                            tool.setVisibility(View.GONE);
+                        }
+                    });
+        }
+
     }
 }

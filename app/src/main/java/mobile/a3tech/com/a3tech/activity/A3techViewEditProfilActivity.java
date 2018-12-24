@@ -74,6 +74,7 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
     private static final int ALPHA_ANIMATIONS_DURATION = 200;
     private static final int ALPHA_ANIMATIONS_DURATION_TOOL = 400;
     public static final String ARG_USER_OBJECT = "ARG_USER_OBJECT";
+    public static final String MODE_MY_ACCOUNT = "MODE_MY_ACCOUNT";
     public static final String ARG_SRC_ACTION = "ARG_SRC_ACTION";
     public static final String ARG_MISSION_OBJECT = "ARG_MISSION_OBJECT";
     public static final String TAG_IGNORE_MODIFICATION_DIALOGUE  = "TAG_IGNORE_MODIFICATION_DIALOGUE";
@@ -85,7 +86,6 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
     private boolean mIsTheCircleVisible = true;
 
     private LinearLayout mTitleContainer;
-    private LinearLayout layoutEditImageUser;
     private TextView mTitle;
     private AppBarLayout mAppBarLayout;
     private Toolbar mToolbar;
@@ -106,7 +106,6 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
     private Button btnValidationSelection;
     A3techUser userToDisplay;
     A3techMission mission;
-    private CircleImageView circleImage;
     private FloatingActionButton fabEdit, fabHire, fabSave;
     private RelativeLayout frameViewLayout;
     private TextView titleToolbar;
@@ -159,6 +158,7 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
         bindActivity();
         adaoter = new A3techProfilFragmentAdapter(getSupportFragmentManager(),
                 A3techViewEditProfilActivity.this, userToDisplay);
+        adaoter.setModeMyAccount(isFromHomeAccount);
         viewPagerProfil.setAdapter(adaoter);
 
         tabLayouProfil.post(new Runnable() {
@@ -199,7 +199,6 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
         mAppBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
         viewPagerProfil = (ViewPager) findViewById(R.id.viewpager_profile_detail);
         tabLayouProfil = (TabLayout) findViewById(R.id.tabs_profil);
-        circleImage = findViewById(R.id.img_profile_pic);
         fabEdit = findViewById(R.id.fabEdit);
         fabHire = findViewById(R.id.fabhire);
         fabSave = findViewById(R.id.fabSave);
@@ -209,24 +208,26 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
         containerNameUSer = findViewById(R.id.container_name_user);
         final LetterTileProvider tileProvider = new LetterTileProvider(A3techViewEditProfilActivity.this);
         final Bitmap letterTile = tileProvider.getLetterTile(userToDisplay.getNom(), userToDisplay.getNom(), 88, 88);
-        circleImage.setImageBitmap(letterTile);
         titleToolbar = findViewById(R.id.user_name_toolbar);
-        titleToolbar.setText(userToDisplay.getNom());
+
         userNamePname = findViewById(R.id.txt_name_p);
-        userNamePname.setText(userToDisplay.getNom() + " " + userToDisplay.getPrenom());
+        String nameConnectedUser = "";
+        String nameConnectedUserToolbar = "";
+        if (userToDisplay != null && userToDisplay.getNom() != null && userToDisplay.getPrenom() != null) {
+            nameConnectedUser = userToDisplay.getNom().toUpperCase() + " " + userToDisplay.getPrenom().toUpperCase();
+            nameConnectedUserToolbar = userToDisplay.getNom().toUpperCase() + " " + userToDisplay.getPrenom().toUpperCase().substring(0,1)+".";
+        }
+        titleToolbar.setText(nameConnectedUserToolbar);
+        userNamePname.setText(nameConnectedUser);
         categoryUser = findViewById(R.id.txt_category);
-        if (userToDisplay.getCategorie() != null)
+        if (userToDisplay.getCategorie() != null){
+            categoryUser.setVisibility(View.VISIBLE);
             categoryUser.setText(userToDisplay.getCategorie().getDescription());
+        }else{
+            categoryUser.setVisibility(View.GONE);
+        }
 
-        layoutEditImageUser = findViewById(R.id.edit_user_image_layout);
-        layoutEditImageUser.setVisibility(View.GONE);
 
-        layoutEditImageUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                selectImage();
-            }
-        });
         /*backBtn = findViewById(R.id.back_home_btn);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -276,14 +277,12 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
         if (isModeEditionV) {
             startAlphaAnimation(fabEdit, 200, View.INVISIBLE);
             startAlphaAnimation(fabSave, 200, View.VISIBLE);
-            startAlphaAnimation(layoutEditImageUser, 200, View.VISIBLE);
             //pour lancer le mode edition dy fragment "PROFIL"
             if (mDataUpdateListener != null) mDataUpdateListener.onDataUpdate(true);
             isModeEdition = Boolean.TRUE;
         } else {
             startAlphaAnimation(fabEdit, 200, View.VISIBLE);
             startAlphaAnimation(fabSave, 200, View.INVISIBLE);
-            startAlphaAnimation(layoutEditImageUser, 200, View.INVISIBLE);
             //pour lancer le mode edition dy fragment "PROFIL"
             if (mDataUpdateListener != null) mDataUpdateListener.onDataUpdate(false);
             isModeEdition = Boolean.FALSE;
@@ -356,13 +355,11 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
     private void handleAlphaOnCircleImage(float percentage) {
         if (percentage >= PERCENTAGE_TO_HIDE_CIRCLE_IMAGE) {
             if (mIsTheCircleVisible) {
-                startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
                 startAlphaAnimation(containerNameUSer, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
                 if (isFromHomeAccount) {
                     if (!isModeEdition) {
                         startAlphaAnimation(fabEdit, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
                     } else {
-                        startAlphaAnimation(layoutEditImageUser, ALPHA_ANIMATIONS_DURATION_TOOL, View.INVISIBLE);
                         /*startAlphaAnimation(fabSave, ALPHA_ANIMATIONS_DURATION_TOOL, View.GONE);*/
                     }
                 } else {
@@ -375,13 +372,11 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
         } else {
 
             if (!mIsTheCircleVisible) {
-                startAlphaAnimation(circleImage, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
                 startAlphaAnimation(containerNameUSer, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
                 if (isFromHomeAccount) {
                     if (!isModeEdition) {
                         startAlphaAnimation(fabEdit, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
                     } else {
-                        startAlphaAnimation(layoutEditImageUser, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);
                         /*startAlphaAnimation(fabSave, ALPHA_ANIMATIONS_DURATION_TOOL, View.VISIBLE);*/
                     }
                 } else {
@@ -567,7 +562,6 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
                 // Bitmap selectedPic = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), selectedImage);
                 Bitmap photo = ic.compressImage(ImagesStuffs.getRealPathFromURI(A3techViewEditProfilActivity.this, selectedImage));
                 if (photo != null) {
-                    circleImage.setImageBitmap(photo);
                     image_str = ImageManager.getInstance().getString(photo);
                 }
 
@@ -582,7 +576,6 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
                 ImageCompression ic = new ImageCompression(getBaseContext());
                 Bitmap photo = ic.compressImage(ImagesStuffs.getRealPathFromURI(A3techViewEditProfilActivity.this, imageUri));
                 if (photo != null) {
-                    circleImage.setImageBitmap(photo);
                     image_str = ImageManager.getInstance().getString(photo);
                 }
 
@@ -607,7 +600,6 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
                     new File(mAgentPicturePath).exists();
                 }
                 if (picture != null) {
-                    circleImage.setImageBitmap(picture);
                     image_str = ImageManager.getInstance().getString(picture);
                 }
             } catch (Exception e) {

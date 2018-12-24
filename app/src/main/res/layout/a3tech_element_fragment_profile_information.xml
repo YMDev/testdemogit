@@ -71,7 +71,8 @@
         android:layout_below="@+id/etat_profil_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp">
+        android:layout_marginLeft="16dp"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/title_about"
@@ -107,13 +108,32 @@
         android:layout_below="@+id/title_about_container"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"/>
+        android:layout_marginRight="16dp"
+        android:visibility="gone"/>
 
+
+    <android.support.v7.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="6dp"
+        android:id="@+id/avatar_techncien_profil_card"
+        android:layout_below="@+id/detail_about_user"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp">
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:id="@+id/avatar_techncien_profil"
+            android:scaleType="centerCrop"/>
+    </android.support.v7.widget.CardView>
     <LinearLayout
         android:id="@+id/space_under_about"
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:layout_below="@id/detail_about_user"
+        android:layout_below="@id/avatar_techncien_profil_card"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@color/semi_transparent"
@@ -340,7 +360,8 @@
             android:clickable="true"
             android:orientation="vertical"
             android:paddingTop="8dp"
-            tools:background="@color/white">
+            tools:background="@color/white"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/adresse_value"
@@ -466,7 +487,8 @@
             android:clickable="true"
             android:orientation="vertical"
             android:paddingTop="8dp"
-            tools:background="@color/white">
+            tools:background="@color/white"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/date_naissance_value"

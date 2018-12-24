@@ -1,6 +1,8 @@
 package mobile.a3tech.com.a3tech.fragment;
 
 import android.content.Context;
+import android.graphics.EmbossMaskFilter;
+import android.graphics.MaskFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,8 +13,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gauravbhola.ripplepulsebackground.RipplePulseLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techWelcomPageActivity;
+import mobile.a3tech.com.a3tech.model.A3techUser;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,6 +38,9 @@ public class A3techWelcomHomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private TextView welcomUserName;
+
+    private A3techUser userFirebase;
 
     private OnFragmentInteractionListener mListener;
 
@@ -76,6 +86,20 @@ public class A3techWelcomHomeFragment extends Fragment {
         RelativeLayout containerAccount = viewFr.findViewById(R.id.container_image_account);
         RelativeLayout containerBrowse = viewFr.findViewById(R.id.container_image_browse);
         RelativeLayout containerSetting = viewFr.findViewById(R.id.container_image_account);
+        welcomUserName = viewFr.findViewById(R.id.tech_name_welcom);
+        userFirebase = PreferencesValuesUtils.getConnectedUser(getActivity());
+        if(userFirebase != null){
+            StringBuilder nomSb = new StringBuilder();
+            if(userFirebase.getNom() != null){
+                nomSb.append(userFirebase.getNom().toUpperCase());
+                nomSb.append(" ");
+            }
+            if(userFirebase.getPrenom() != null){
+                nomSb.append(userFirebase.getPrenom().toUpperCase());
+            }
+
+            welcomUserName.setText(nomSb);
+        }
 
         containerPulse.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -5,6 +5,7 @@
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
         android:background="@color/white"
+        app:layout_scrollFlags="scroll|enterAlways"
         app:elevation="0dp">
 
         <RelativeLayout

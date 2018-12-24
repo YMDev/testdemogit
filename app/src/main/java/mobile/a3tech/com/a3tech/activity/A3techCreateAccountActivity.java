@@ -34,6 +34,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.FirebaseUserMetadata;
 import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.gson.Gson;
 
 import org.codehaus.jackson.util.MinimalPrettyPrinter;
 
@@ -328,16 +329,8 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
                             //createAccountFirebase(account.getEmail(),account.getPassword());
                             UserManager
                                     .getInstance()
-                                    .createAccount(
-                                            account.getNom(),
-                                            account.getPrenom(),
-                                            account.getEmail(),
-                                            account.getPassword(),
-                                            "",
-                                            "",
-                                            new StringBuilder(String.valueOf(account.getPrenom()))
-                                                    .append(MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR)
-                                                    .append(account.getNom().substring(0, 1)).toString(),
+                                    .createAccountJson(
+                                           new Gson().toJson(account),
                                             new DataLoadCallback() {
                                                 @Override
                                                 public void dataLoaded(Object data, int method, int typeOperation) {

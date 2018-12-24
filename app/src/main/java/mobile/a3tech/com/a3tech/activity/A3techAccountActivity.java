@@ -137,7 +137,7 @@ public class A3techAccountActivity extends AppCompatActivity implements A3techHo
         nomPrenomUser = findViewById(R.id.user_name_pname);
         String nameConnectedUser = "";
         if (connectedUser != null && connectedUser.getNom() != null && connectedUser.getPrenom() != null) {
-            nameConnectedUser = connectedUser.getNom() + " " + connectedUser.getPrenom().substring(0, 1) + ".";
+            nameConnectedUser = connectedUser.getNom().toUpperCase() + " " + connectedUser.getPrenom().toUpperCase().substring(0, 1) + ".";
         }
         nomPrenomUser.setText(nameConnectedUser);
 

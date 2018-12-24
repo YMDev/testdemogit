@@ -40,8 +40,11 @@ import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techSearchMissionsResultsActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
+import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
@@ -180,8 +183,16 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
             }
             final A3techUser technicien = listeObjects.get(position);
             if (technicien == null) return;
+            StringBuilder nomSb = new StringBuilder();
+            if(technicien.getNom() != null){
+                nomSb.append(technicien.getNom().toUpperCase());
+                nomSb.append(" ");
+            }
+            if(technicien.getPrenom() != null){
+                nomSb.append(technicien.getPrenom().toUpperCase().substring(0, 1) + ".");
+            }
 
-            ((SimpleItemVH) holder).nameTech.setText(technicien.getNom() + " " + technicien.getPrenom().substring(0, 1) + ".");
+            ((SimpleItemVH) holder).nameTech.setText(nomSb);
             /* String adresseFromGpsLocation = StringStuffs.getAdresseFromGpsLocation(Double.valueOf(technicien.getLatitude()),Double.valueOf(technicien.getLongitude()),context);
              */
             final LetterTileProvider tileProvider = new LetterTileProvider(context);
@@ -190,9 +201,10 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
             ((SimpleItemVH) holder).adresse.setText(technicien.getAdresse());
             ((SimpleItemVH) holder).avatareTech.setImageBitmap(letterTile);
             ((SimpleItemVH) holder).ratingTech.setNumStars(5);
-            ((SimpleItemVH) holder).ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
-            ((SimpleItemVH) holder).ratingNumberValue.setText(technicien.getRating() + "");
-            ((SimpleItemVH) holder).numberOfReviews.setText("(+ " + technicien.getNbrReview() + " avis )");
+           getRationUser(technicien,((SimpleItemVH) holder).ratingNumberValue,((SimpleItemVH) holder).ratingTech, context);
+            //((SimpleItemVH) holder).ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
+            //((SimpleItemVH) holder).ratingNumberValue.setText(technicien.getRating() + "");
+            ((SimpleItemVH) holder).numberOfReviews.setText("(+ " + technicien.getNbrReview() + " "+context.getResources().getString(R.string.avis)+" )");
             GradientDrawable backCheckPhone = (GradientDrawable) ((RelativeLayout) ((SimpleItemVH) holder).checkPhone.getParent()).getBackground();
             backCheckPhone.setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
             updateDistance(technicien, ((SimpleItemVH) holder));
@@ -294,7 +306,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
             holder.distance_value.setText("N/A" + " KM");
             return;
         }
-        Double distance = SphericalUtil.computeDistanceBetween(new LatLng(Double.valueOf(technicien.getLatitude()), Double.valueOf(technicien.getLongitude())), new LatLng(latitude, longitude));
+        Double distance = SphericalUtil.computeDistanceBetween(new LatLng(Double.valueOf(technicien.getLatitude()), Double.valueOf(technicien.getLongetude())), new LatLng(latitude, longitude));
         final Double distanceUser = Math.round((distance / 1000) * 100.0) / 100.0;
         final Double distanceMaxParametree = 100d;
         final Double prcentrageColored = distanceUser * 100 / distanceMaxParametree;
@@ -327,5 +339,33 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
         void onLoadMore();
     }
 
+    private  void getRationUser(A3techUser user, final TextView ratingView, final RatingBar ratingbar, final Context context){
+        UserManager.getInstance().getUserReviews(String.valueOf(user.getId()), "", new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                List<A3techReviewMission> reviews = (List) data;
+                if(reviews != null && reviews.size() != 0){
+                    Double ratingCalcule = 0d;
+                    for (A3techReviewMission rev: reviews
+                            ) {
+                        if (rev != null) {
+                            ratingCalcule = ratingCalcule + rev.getRating();
+                        }
+                    }
+                    if(ratingbar != null) ratingbar.setRating(Double.valueOf(ratingCalcule / reviews.size()).floatValue());
+                    if(ratingView != null) ratingView.setText(String.valueOf(ratingCalcule / reviews.size()));
+                }else {
+                    if(ratingbar != null) ratingbar.setRating(0f);
+                    if(ratingView != null) ratingView.setText(0);
 
+                }
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                if(ratingView != null) ratingView.setText("0");
+                if(ratingbar != null)  ratingbar.setRating(0);
+            }
+        });
+    }
 }

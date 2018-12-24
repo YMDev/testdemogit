@@ -3,6 +3,7 @@ package mobile.a3tech.com.a3tech.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,9 +21,13 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,6 +38,7 @@ import butterknife.ButterKnife;
 import eltos.simpledialogfragment.form.Input;
 import eltos.simpledialogfragment.form.SimpleFormDialog;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techAccountActivity;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techTechnicienAvailabilityActivity;
@@ -45,6 +51,8 @@ import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.ObjectMenu;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
+import mobile.a3tech.com.a3tech.utils.ImagesStuffs;
+import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.view.ExpandableTextView;
 
 /**
@@ -116,7 +124,14 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
     @BindView(R.id.label_completion_profil)
     TextView labelCompletionProfil;
 
+    @BindView(R.id.avatar_techncien_profil)
+    ImageView avatareTech;
+
+    @BindView(R.id.etat_profil_layout)
+    RelativeLayout etatProfileContainer;
+
     private A3techUser user;
+    private Boolean modeMyAccount = Boolean.FALSE;
     private A3techViewEditProfilActivity activity;
     private OnFragmentInteractionListener mListener;
 
@@ -138,7 +153,14 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
         fragment.setArguments(args);
         return fragment;
     }
-
+    public static A3techProfilInformationFragment newInstance(A3techUser user, Boolean moseMyAccount) {
+        A3techProfilInformationFragment fragment = new A3techProfilInformationFragment();
+        Bundle args = new Bundle();
+        args.putString(A3techViewEditProfilActivity.ARG_USER_OBJECT, new Gson().toJson(user));
+        args.putBoolean(A3techViewEditProfilActivity.MODE_MY_ACCOUNT, moseMyAccount);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,6 +169,7 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
         Bundle extras = getArguments();
         if (extras != null) {
             jsonMyObject = extras.getString(A3techViewEditProfilActivity.ARG_USER_OBJECT);
+            modeMyAccount = extras.getBoolean(A3techViewEditProfilActivity.MODE_MY_ACCOUNT);
         }
         if (jsonMyObject != null) {
             user = new Gson().fromJson(jsonMyObject, A3techUser.class);
@@ -181,7 +204,12 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
         activity = (A3techViewEditProfilActivity) getActivity();  // <--- add this line here
         setRetainInstance(true);
         actionsEdition();
-        initProgresseCompletionProfil();
+        if(modeMyAccount){
+            initProgresseCompletionProfil();
+        }else{
+            etatProfileContainer.setVisibility(View.GONE);
+        }
+
         return viewFr;
     }
 
@@ -240,7 +268,7 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
                                 .inputType(InputType.TYPE_CLASS_PHONE), Input.phone(TAG_EDIT_ADRESSE_INPUT).required(true).text(user.getAdresse())
                                 .hint(R.string.hint_edit_add_adresse_profile)
                                 .inputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE | InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE),
-                        Input.phone(TAG_EDIT_DATE_NAISSANCE_INPUT).required(true).text(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(user.getDateNaissance())))
+                        Input.phone(TAG_EDIT_DATE_NAISSANCE_INPUT).required(true).text(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, user.getDateNaissance()))
                                 .hint(R.string.hint_edit_add_date_naissance)
                                 .inputType(InputType.TYPE_CLASS_DATETIME)).theme(R.style.SimpleDialogThemeProfile)
                 .show(getActivity(), TAG_EDIT_ABOUT_DIALOG);
@@ -259,13 +287,33 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
                 public void dataLoaded(Object data, int method, int typeOperation) {
                     switch (method) {
                         case Constant.KEY_USER_MANAGER_GET_PROFIL:
-                            A3techUser userV = (A3techUser) data;
+                           final A3techUser userV = (A3techUser) data;
                             aboutUser.setText(getString(R.string.lorem));
                             emailValue.setText(userV.getEmail());
                             phoneValue.setText(userV.getTelephone());
                             adresseValue.setText(userV.getAdresse());
-                            dateNaissanceValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(userV.getDateNaissance())));
-                            dateInscriptionValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(userV.getDateCreation())));
+                            dateNaissanceValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT,  userV.getDateNaissance()));
+                            if(userV.getDateCreation() == null){
+                                dateInscriptionValue.setText("N/A");
+                            }else{
+                                dateInscriptionValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, userV.getDateCreation()));
+                            }
+
+                            if(userV.getId_photo_profil() != null){
+                                Picasso.get().load("").centerCrop().into(avatareTech);
+                            }else{
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (userV != null && StringUtils.isNoneBlank(userV.getNom())) {
+                                            final LetterTileProvider tileProvider = new LetterTileProvider(getActivity());
+                                            final Bitmap letterTile = tileProvider.getLetterTile(userV.getNom(), userV.getNom(), 155, 155);
+                                            avatareTech.setImageBitmap(letterTile);
+                                        }
+
+                                    }
+                                });
+                            }
                             break;
                     }
 
@@ -283,10 +331,28 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
             phoneValue.setText(user.getTelephone());
             adresseValue.setText(user.getAdresse());
             if (user.getDateNaissance() != null)
-                dateNaissanceValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(user.getDateNaissance())));
-            if (user.getDateCreation() != null)
-                dateInscriptionValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, new Date(user.getDateCreation())));
+                dateNaissanceValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT,  user.getDateNaissance()));
+            if (user.getDateCreation() != null){
+                dateInscriptionValue.setText(DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, user.getDateCreation()));
+            }else{
+                dateInscriptionValue.setText(getResources().getString(R.string.n_a));
+            }
 
+            if(user.getId_photo_profil() != null){
+                Picasso.get().load("").centerCrop().into(avatareTech);
+            }else{
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (user != null && StringUtils.isNoneBlank(user.getNom())) {
+                            final LetterTileProvider tileProvider = new LetterTileProvider(getActivity());
+                            final Bitmap letterTile = tileProvider.getLetterTile(user.getNom(), user.getNom(), 155, 155);
+                            avatareTech.setImageBitmap(letterTile);
+                        }
+
+                    }
+                });
+            }
         }
 
         return listeRetour;

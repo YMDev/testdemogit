@@ -9,14 +9,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="125dp"
+        android:layout_height="wrap_content"
         android:background="@color/colorPrimary">
 
         <TextView
             android:id="@+id/big_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
+            android:layout_centerVertical="true"
             android:layout_marginTop="10dp"
             android:text="@string/toolbar_mission_title"
             android:textColor="@color/white"
@@ -31,7 +31,8 @@
             android:layout_marginLeft="7dp"
             android:layout_marginRight="13dp"
             android:background="@drawable/a3tech_btn_filter_back"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/header_criteria_filter"

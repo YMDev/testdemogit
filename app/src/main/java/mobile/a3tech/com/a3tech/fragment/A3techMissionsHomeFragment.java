@@ -178,7 +178,7 @@ public class A3techMissionsHomeFragment extends Fragment {
         }
         MissionManager.getInstance().filtreMission(lang, connectedUser,
                 new Gson().toJson(criteriaM),
-                String.valueOf(limit), connectedUser, 0, 0,
+                String.valueOf("0"),  String.valueOf(limit), 0, 0,
                 new DataLoadCallback() {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
@@ -261,7 +261,7 @@ public class A3techMissionsHomeFragment extends Fragment {
                         @Override
                         public void dataLoaded(Object data, int method, int typeOperation) {
                             //TODO commentaire a reconstituer.
-                            String commentaire = "Demande créée pour une Mission en  " + mission.getCategoryMission().getLibelle() + "";
+                            String commentaire = "Demande créée pour une Mission en  " + mission.getCategorie().getLibelle() + "";
                             A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
                                     null, mission, A3techNotificationType.CREATION_MISSION, commentaire, getString(R.string.libelle_creatio_mission));
                             NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {

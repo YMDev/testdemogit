@@ -1,9 +1,11 @@
 package mobile.a3tech.com.a3tech.activity;
 
+import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
@@ -28,8 +30,11 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -131,7 +136,7 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
             mainIntent.putExtras(bundle);
             startActivityForResult(mainIntent, requExce);
         } else if (this.conMode.length() == 0) {
-          /*  startActivity(new Intent(this, A3techTechnicienAvailabilityActivity.class));*/
+            /*  startActivity(new Intent(this, A3techTechnicienAvailabilityActivity.class));*/
             startActivity(new Intent(this, A3techLoginActivity.class));
             finish();
         } else {
@@ -204,7 +209,7 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
                     editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_NAME, usern.getPrenom() + MinimalPrettyPrinter.DEFAULT_ROOT_VALUE_SEPARATOR + usern.getNom());
                     editor.putString("MyCredentials", usern.getEmail());
                     editor.putString("pseudo", usern.getPseudo());
-                    editor.putString("identifiant", usern.getId() + "");
+                    editor.putString("identifiant", usern.getEmail() + "");
                     editor.putString("password", password);
                     editor.putString("facebookId", usern.getFacebookId());
                     editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(usern));
@@ -236,19 +241,99 @@ public class A3techSplashActivity extends BaseActivity implements DataLoadCallba
 
     }
 
+    public void dismissDialog(AlertDialog dialog){
+        if(dialog != null) dialog.dismiss();
+    }
+    AlertDialog alertDialog = null;
     public void dataLoadingError(int errorCode) {
-        final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) A3techSplashActivity.this
-                .findViewById(android.R.id.content)).getChildAt(0);
-        Snackbar
-                .make(viewGroup, getString(R.string.error_connexion_server),
-                        Snackbar.LENGTH_LONG)
-                .show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                finish();
-            }
-        }, 1000);
+
+        if (errorCode == Constant.ERROR_USER_DISABLED) {
+
+            Builder builder = new Builder(A3techSplashActivity.this);
+            View content = A3techSplashActivity.this.getLayoutInflater()
+                    .inflate(R.layout.a3tech_compte_disabled, null);
+
+            ImageView closeImg = (ImageView) content
+                    .findViewById(R.id.close_dialog);
+            closeImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismissDialog(alertDialog);
+                    deconnexion();
+                }
+            });
+            builder.setView(content);
+            alertDialog = builder.create();
+            alertDialog.setOnDismissListener(new AlertDialog.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    dismissDialog(alertDialog);
+                    deconnexion();
+                }
+            });
+            alertDialog.show();
+        } else if (errorCode == Constant.ERROR_USER_NOT_FOUND) {
+            Builder builder = new Builder(A3techSplashActivity.this);
+            View content = A3techSplashActivity.this.getLayoutInflater()
+                    .inflate(R.layout.a3tech_compte_disabled, null);
+
+            TextView label = (TextView) content
+                    .findViewById(R.id.header_label);
+            label.setText(getResources().getString(R.string.compte_not_found));
+            TextView labelsub = (TextView) content
+                    .findViewById(R.id.sub_header_label);
+            labelsub.setText(getResources().getString(R.string.error_user_not_found));
+            ImageView closeImg = (ImageView) content
+                    .findViewById(R.id.close_dialog);
+            closeImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismissDialog(alertDialog);
+                    deconnexion();
+
+                }
+            });
+            builder.setView(content);
+            alertDialog = builder.create();
+            alertDialog.setOnDismissListener(new AlertDialog.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialog) {
+                    dismissDialog(alertDialog);
+                    deconnexion();
+                }
+            });
+            alertDialog.show();
+        } else {
+            final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) A3techSplashActivity.this
+                    .findViewById(android.R.id.content)).getChildAt(0);
+            Snackbar
+                    .make(viewGroup, getString(R.string.error_connexion_server),
+                            Snackbar.LENGTH_LONG)
+                    .show();
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            }, 1000);
+        }
+
+    }
+    public void deconnexion() {
+        SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(A3techSplashActivity.this).edit();
+        editor.putString("MyCredentials", "");
+        editor.putString("facebookId", "");
+        editor.putString("conMode", "");
+        editor.putString("ApplicationLanguage", "");
+        editor.putString("identifiant", "");
+
+     /*   GCMRegistrar.checkDevice(this.getActivity());
+        GCMRegistrar.checkManifest(this.getActivity());
+        GCMRegistrar.unregister(this.getActivity());*/
+        editor.commit();
+        Intent mainIntent = new Intent(A3techSplashActivity.this, A3techLoginActivity.class);
+        startActivity(mainIntent);
+        finish();
     }
 
     public void dataLoadingError(String error) {

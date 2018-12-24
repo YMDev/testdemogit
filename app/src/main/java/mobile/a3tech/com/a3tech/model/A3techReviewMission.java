@@ -2,24 +2,21 @@ package mobile.a3tech.com.a3tech.model;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
+import java.util.Date;
+
 public class A3techReviewMission {
 
     private Long id;
     private String commentaire;
     private Float rating;
-    private A3techUser userTechnicien;
-    private A3techUser userClient;
-    @JsonIgnore
     private A3techMission mission;
-    private Long dateEvaluation;
-    private Long dateEdition;
+    private Date dateEvaluation;
+    private Date dateEdition;
 
-    public A3techReviewMission(Long id, String commentaire, Float rating, A3techUser userTechnicien, A3techUser userClient, A3techMission mission, Long dateEvaluation, Long dateEdition) {
+    public A3techReviewMission(Long id, String commentaire, Float rating, A3techMission mission, Date dateEvaluation, Date dateEdition) {
         this.id = id;
         this.commentaire = commentaire;
         this.rating = rating;
-        this.userTechnicien = userTechnicien;
-        this.userClient = userClient;
         this.mission = mission;
         this.dateEvaluation = dateEvaluation;
         this.dateEdition = dateEdition;
@@ -52,21 +49,6 @@ public class A3techReviewMission {
         this.rating = rating;
     }
 
-    public A3techUser getUserTechnicien() {
-        return userTechnicien;
-    }
-
-    public void setUserTechnicien(A3techUser userTechnicien) {
-        this.userTechnicien = userTechnicien;
-    }
-
-    public A3techUser getUserClient() {
-        return userClient;
-    }
-
-    public void setUserClient(A3techUser userClient) {
-        this.userClient = userClient;
-    }
 
     public A3techMission getMission() {
         return mission;
@@ -76,19 +58,19 @@ public class A3techReviewMission {
         this.mission = mission;
     }
 
-    public Long getDateEvaluation() {
+    public Date getDateEvaluation() {
         return dateEvaluation;
     }
 
-    public void setDateEvaluation(Long dateEvaluation) {
+    public void setDateEvaluation(Date dateEvaluation) {
         this.dateEvaluation = dateEvaluation;
     }
 
-    public Long getDateEdition() {
+    public Date getDateEdition() {
         return dateEdition;
     }
 
-    public void setDateEdition(Long dateEdition) {
+    public void setDateEdition(Date dateEdition) {
         this.dateEdition = dateEdition;
     }
 }

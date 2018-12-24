@@ -6,6 +6,7 @@ import java.util.List;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
 import mobile.a3tech.com.a3tech.model.A3techUser;
+import mobile.a3tech.com.a3tech.model.A3techUserStatut;
 import mobile.a3tech.com.a3tech.model.User;
 import mobile.a3tech.com.a3tech.service.A3techUserService;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
@@ -92,6 +93,48 @@ public class UserManager implements Constant {
 					
 					A3techUser user = service.createAccount(nom, prenom, email,
 							password, image, regId, pseudo);
+					if (user == null) {
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					} else {
+						if (!user.getNew()) {
+							Message message = handler.obtainMessage(0, 10);
+							handler.sendMessage(message);
+						} else {
+							Message message = handler.obtainMessage(0, user);
+							handler.sendMessage(message);
+						}
+					}
+				} catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+	public void createAccountJson(final String userJson,
+							  final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer) message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,
+							KEY_USER_MANAGER_CREATE_ACCOUNT,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+
+					A3techUserService service = new A3techUserService();
+
+					A3techUser user = service.createAccount(userJson);
 					if (user == null) {
 						Message message = handler.obtainMessage(0, 0);
 						handler.sendMessage(message);
@@ -327,14 +370,20 @@ public class UserManager implements Constant {
                     A3techUserService service = new A3techUserService();
 					A3techUser user = service.getProfil(idUser,password);
 					if (user == null) {
-						Message message = handler.obtainMessage(0, 0);
+						Message message = handler.obtainMessage(0, Constant.ERROR_USER_NOT_FOUND);
 						handler.sendMessage(message);
 					} else {
-						Message message = handler.obtainMessage(0, user);
-						handler.sendMessage(message);
+						if(user.getStatut() != null && A3techUserStatut.SUSPENDU.getDiscreptionEnum() == user.getStatut().getDiscreptionEnum()){
+							Message message = handler.obtainMessage(0, Constant.ERROR_USER_DISABLED);
+							handler.sendMessage(message);
+						}else{
+							Message message = handler.obtainMessage(0, user);
+							handler.sendMessage(message);
+						}
+
 					}
 				} catch (EducationException e) {
-					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					Message message = handler.obtainMessage(0, Constant.ERROR_USER_TECHNIQUE);
 					handler.sendMessage(message);
 				}
 
@@ -782,4 +831,44 @@ public class UserManager implements Constant {
 		}.start();
 	}
 
+
+
+    public void saveUserNewLocation(final String latitude, final String longitude,final String userMail,
+                                          final DataLoadCallback dataLoadCallback)   {
+
+        final Handler handler = new Handler() {
+
+            // @Override
+            public void handleMessage(Message message) {
+                if (message.obj instanceof Integer) {
+                    dataLoadCallback.dataLoadingError((Integer) message.obj);
+                } else {
+                    dataLoadCallback.dataLoaded(message.obj,
+                            KEY_USER_MANAGER_GET_PROFIL,0);
+                }
+            }
+        };
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+
+                    A3techUserService service = new A3techUserService();
+                    Boolean savedStat = service.saveUserNewLocation(latitude,longitude,userMail);
+                    if (savedStat == null) {
+                        Message message = handler.obtainMessage(0, 0);
+                        handler.sendMessage(message);
+                    } else {
+                        Message message = handler.obtainMessage(0, savedStat);
+                        handler.sendMessage(message);
+                    }
+                } catch (Exception e) {
+                    Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+                    handler.sendMessage(message);
+                }
+
+            }
+        }.start();
+    }
 }

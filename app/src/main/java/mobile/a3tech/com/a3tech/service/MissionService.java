@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,6 +15,7 @@ import org.codehaus.jackson.type.TypeReference;
 import mobile.a3tech.com.a3tech.exception.EducationException;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
+import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.A3techUserType;
 import mobile.a3tech.com.a3tech.model.Mission;
@@ -24,15 +26,16 @@ public class MissionService extends AbstractService implements Constant {
 
     // creer une nouvelle mission
 
-    public String createMission(A3techMission mission) throws  EducationException{
+    public A3techMission createMission(A3techMission mission) throws  EducationException{
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         Map<String, String> params = new HashMap<String, String>();
-        params.put("mission", new Gson().toJson(mission));
+        params.put("mission", gson.toJson(mission));
 
-        HashMap<String, String> result = getResult(
+        A3techMission s = getResult(
                 A3TECH_CREATE_MISSION, params,
-                new TypeReference<HashMap<String, String>>() {
+                new TypeReference<A3techMission>() {
                 });
-        String s = result.get("result");
         return s;
 
     }
@@ -194,8 +197,6 @@ public class MissionService extends AbstractService implements Constant {
 
         List<Mission> missions = result.get("missions");
         return missions;
-
-
     }
 
     //missions suivies
@@ -246,9 +247,10 @@ public class MissionService extends AbstractService implements Constant {
 
 
     public A3techMission updateMission(A3techMission mission) throws EducationException {
-
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         Map<String, String> params = new HashMap<String, String>();
-        params.put("mission", new Gson().toJson(mission));
+        params.put("mission", gson.toJson(mission));
         A3techMission s = getResult(
                 A3TECH_UPDATE_MISSION, params,
                 new TypeReference<A3techMission>() {
@@ -257,8 +259,10 @@ public class MissionService extends AbstractService implements Constant {
     }
 
     public Double calculeMontantMission(A3techMission mission) throws EducationException {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         Map<String, String> params = new HashMap<String, String>();
-        params.put("mission", new Gson().toJson(mission));
+        params.put("mission", gson.toJson(mission));
         Double s = getResult(
                 A3TECH_CALCULE_MONTAT_MISSION, params,
                 new TypeReference<Double>() {
@@ -267,8 +271,10 @@ public class MissionService extends AbstractService implements Constant {
     }
 
     public String calculeDureeMission(A3techMission selectedMission) throws EducationException {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
         Map<String, String> params = new HashMap<String, String>();
-        params.put("mission", new Gson().toJson(selectedMission));
+        params.put("mission", gson.toJson(selectedMission));
 
         HashMap<String, String> result = getResult(
                 A3TECH_CALCULE_DUREE_MISSION, params,
@@ -289,6 +295,67 @@ public class MissionService extends AbstractService implements Constant {
                 new TypeReference<HashMap<String, Boolean>>() {
                 });
         Boolean s = result.get("result");
+        return s;
+    }
+
+    public A3techMission startMission(A3techMission mission) throws EducationException {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mission", gson.toJson(mission));
+        A3techMission s = getResult(
+                A3TECH_START_MISSION, params,
+                new TypeReference<A3techMission>() {
+                });
+        return s;
+    }
+
+
+    public A3techMission pauseMission(A3techMission mission) throws EducationException {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mission", gson.toJson(mission));
+        A3techMission s = getResult(
+                A3TECH_PAUSE_MISSION, params,
+                new TypeReference<A3techMission>() {
+                });
+        return s;
+    }
+
+    public A3techMission cloturerMission(A3techMission mission) throws EducationException {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mission", gson.toJson(mission));
+        A3techMission s = getResult(
+                A3TECH_CLOTURER_MISSION, params,
+                new TypeReference<A3techMission>() {
+                });
+        return s;
+    }
+
+    public A3techReviewMission addReview(A3techReviewMission review)throws EducationException  {
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("review", gson.toJson(review));
+        A3techReviewMission s = getResult(
+                A3TECH_CREATE_REVIEW_MISSION, params,
+                new TypeReference<A3techReviewMission>() {
+                });
+        return s;
+    }
+
+    public A3techReviewMission getMissionReview(A3techMission mission) throws EducationException{
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("mission", gson.toJson(mission));
+        A3techReviewMission s = getResult(
+                A3TECH_GET_REVIEW_MISSION, params,
+                new TypeReference<A3techReviewMission>() {
+                });
         return s;
     }
 }

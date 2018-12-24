@@ -24,6 +24,7 @@ import mobile.a3tech.com.a3tech.model.Avis;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterReviews;
 import mobile.a3tech.com.a3tech.utils.Constant;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,7 +87,7 @@ public class A3techReviewsFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         String connectedUser = prefs.getString("identifiant", "");
         String password = prefs.getString("password", "");
-        UserManager.getInstance().getUserReviews(connectedUser, password, new DataLoadCallback() {
+        UserManager.getInstance().getUserReviews(PreferencesValuesUtils.getConnectedUser(getActivity()).getId()+"", password, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 switch (method) {

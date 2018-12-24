@@ -23,6 +23,7 @@ import java.util.List;
 import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayTechniciensListeActivity;
+import mobile.a3tech.com.a3tech.activity.BaseActivity;
 import mobile.a3tech.com.a3tech.adapter.BottomBarAdapter;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
@@ -105,7 +106,7 @@ public class A3techDisplayTechniciensPArentFragment extends Fragment {
             }
 
             if (categorie != null) {
-                mission.setCategoryMission(categorie);
+                mission.setCategorie(categorie);
             }
 
         }

@@ -155,7 +155,7 @@ public class A3techHomeAccountFragment extends Fragment {
             case 1:
                 //Information
                 listeRetour.add(new ObjectMenu("Notification", "Les notifications du jour", 1, 1));
-                listeRetour.add(new ObjectMenu("Demander une mission", "chercher parmi nos meilleurs techniciens", 1, 2, ObjectMenu.CODE_DEMANDER_MISSION));
+                //listeRetour.add(new ObjectMenu("Demander une mission", "chercher parmi nos meilleurs techniciens", 1, 2, ObjectMenu.CODE_DEMANDER_MISSION));
                 listeRetour.add(new ObjectMenu("Recever un crédit gratuit", "Inviter vos amis est gagner 200 MAD", 1, 3));
                 break;
             case 2:

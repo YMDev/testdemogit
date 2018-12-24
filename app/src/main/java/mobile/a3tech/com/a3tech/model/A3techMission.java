@@ -1,27 +1,29 @@
 package mobile.a3tech.com.a3tech.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 public class A3techMission {
 
     private String id;
-    private A3techUser clientMission;
+    private A3techUser client;
     private String adresse;
     private String latitude;
     private String longitude;
-    private Long dateCreation;
-    private Long dateIntervention;
+    private Date dateCreation;
+    private Date dateIntervention;
     private A3techMissionStatut statut;
     private A3techReviewMission reviewMission;
     private String titre;
-    private Categorie categoryMission;
+    private Categorie categorie;
     private A3techUser technicien;
-    private String descriptionMission;
-    private Long dateCloture;
+    private String description;
+    private Date dateCloture;
     private Double montantFacture;
-    private List<A3techEvenementiMission> evenement;
+    private List<A3techEvenementiMission> evenements;
+    private List<A3techMissionDuree> missionDurees;
     private String motifRejet;
     private String motifReport;
 
@@ -37,13 +39,6 @@ public class A3techMission {
         this.id = id;
     }
 
-    public A3techUser getClientMission() {
-        return clientMission;
-    }
-
-    public void setClientMission(A3techUser clientMission) {
-        this.clientMission = clientMission;
-    }
 
     public String getAdresse() {
         return adresse;
@@ -69,19 +64,19 @@ public class A3techMission {
         this.longitude = longitude;
     }
 
-    public Long getDateCreation() {
+    public Date getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Long dateCreation) {
+    public void setDateCreation(Date dateCreation) {
         this.dateCreation = dateCreation;
     }
 
-    public Long getDateIntervention() {
+    public Date getDateIntervention() {
         return dateIntervention;
     }
 
-    public void setDateIntervention(Long dateIntervention) {
+    public void setDateIntervention(Date dateIntervention) {
         this.dateIntervention = dateIntervention;
     }
 
@@ -109,13 +104,7 @@ public class A3techMission {
         this.titre = titre;
     }
 
-    public Categorie getCategoryMission() {
-        return categoryMission;
-    }
 
-    public void setCategoryMission(Categorie categoryMission) {
-        this.categoryMission = categoryMission;
-    }
 
     public A3techUser getTechnicien() {
         return technicien;
@@ -126,20 +115,28 @@ public class A3techMission {
     }
 
     public String getDescriptionMission() {
-        return descriptionMission;
+        return description;
     }
 
 
 
     public void setDescriptionMission(String descriptionMission) {
-        this.descriptionMission = descriptionMission;
+        this.description = descriptionMission;
     }
 
-    public Long getDateCloture() {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Date getDateCloture() {
         return dateCloture;
     }
 
-    public void setDateCloture(Long dateCloture) {
+    public void setDateCloture(Date dateCloture) {
         this.dateCloture = dateCloture;
     }
 
@@ -152,11 +149,19 @@ public class A3techMission {
     }
 
     public List<A3techEvenementiMission> getEvenement() {
-        return evenement;
+        return evenements;
     }
 
     public void setEvenement(List<A3techEvenementiMission> evenement) {
-        this.evenement = evenement;
+        this.evenements = evenement;
+    }
+
+    public List<A3techEvenementiMission> getEvenements() {
+        return evenements;
+    }
+
+    public void setEvenements(List<A3techEvenementiMission> evenements) {
+        this.evenements = evenements;
     }
 
     public String getMotifRejet() {
@@ -173,6 +178,30 @@ public class A3techMission {
 
     public void setMotifReport(String motifReport) {
         this.motifReport = motifReport;
+    }
+
+    public A3techUser getClient() {
+        return client;
+    }
+
+    public void setClient(A3techUser client) {
+        this.client = client;
+    }
+
+    public Categorie getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(Categorie categorie) {
+        this.categorie = categorie;
+    }
+
+    public List<A3techMissionDuree> getMissionDurees() {
+        return missionDurees;
+    }
+
+    public void setMissionDurees(List<A3techMissionDuree> missionDurees) {
+        this.missionDurees = missionDurees;
     }
 
     @Override

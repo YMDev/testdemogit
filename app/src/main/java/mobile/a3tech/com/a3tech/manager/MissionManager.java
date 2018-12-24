@@ -8,6 +8,7 @@ import android.os.Message;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.MissionService;
@@ -43,7 +44,7 @@ private static MissionManager uniqueInstance = null;
 			public void run() {
 				try{
 					MissionService service = new MissionService();
-					String result = service.createMission(missionToCreate);
+					A3techMission result = service.createMission(missionToCreate);
 					Message message = handler.obtainMessage(0, result);
 					handler.sendMessage(message);
 
@@ -529,4 +530,195 @@ private static MissionManager uniqueInstance = null;
             }
         }.start();
     }
+
+	public void startMission(final A3techMission mission,final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer)message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,KEY_USER_MANAGER_UPDATE_MISSION,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try{
+					MissionService service = new MissionService();
+					A3techMission result = service.startMission(mission);
+
+					if(result==null){
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					}else{
+						Message message = handler.obtainMessage(0, result);
+						handler.sendMessage(message);
+					}
+
+
+
+				}catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
+
+	public void pauseMission(final A3techMission mission,final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer)message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,KEY_USER_MANAGER_UPDATE_MISSION,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try{
+					MissionService service = new MissionService();
+					A3techMission result = service.pauseMission(mission);
+
+					if(result==null){
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					}else{
+						Message message = handler.obtainMessage(0, result);
+						handler.sendMessage(message);
+					}
+
+
+
+				}catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
+	public void cloturerMission(final A3techMission mission,final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer)message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,KEY_USER_MANAGER_UPDATE_MISSION,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try{
+					MissionService service = new MissionService();
+					A3techMission result = service.cloturerMission(mission);
+
+					if(result==null){
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					}else{
+						Message message = handler.obtainMessage(0, result);
+						handler.sendMessage(message);
+					}
+
+
+
+				}catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
+
+    public void addReview(final A3techReviewMission review, final DataLoadCallback dataLoadCallback) {
+        final Handler handler = new Handler() {
+            // @Override
+            public void handleMessage(Message message) {
+                if (message.obj instanceof Integer) {
+                    dataLoadCallback.dataLoadingError((Integer)message.obj);
+                } else {
+                    dataLoadCallback.dataLoaded(message.obj,KEY_USER_MANAGER_UPDATE_MISSION,0);
+                }
+            }
+        };
+
+        new Thread() {
+            @Override
+            public void run() {
+                try{
+                    MissionService service = new MissionService();
+                    A3techReviewMission result = service.addReview(review);
+
+                    if(result==null){
+                        Message message = handler.obtainMessage(0, 0);
+                        handler.sendMessage(message);
+                    }else{
+                        Message message = handler.obtainMessage(0, result);
+                        handler.sendMessage(message);
+                    }
+
+
+
+                }catch (EducationException e) {
+                    Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+                    handler.sendMessage(message);
+                }
+
+            }
+        }.start();
+    }
+
+	public void getMissionReview(final A3techMission mission, final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer)message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,KEY_USER_MANAGER_UPDATE_MISSION,0);
+				}
+			}
+		};
+
+		new Thread() {
+			@Override
+			public void run() {
+				try{
+					MissionService service = new MissionService();
+					A3techReviewMission result = service.getMissionReview(mission);
+
+					if(result==null){
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					}else{
+						Message message = handler.obtainMessage(0, result);
+						handler.sendMessage(message);
+					}
+
+
+
+				}catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
 }

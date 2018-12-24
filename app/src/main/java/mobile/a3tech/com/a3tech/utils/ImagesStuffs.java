@@ -29,6 +29,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.NoSuchElementException;
 
@@ -425,5 +427,28 @@ public class ImagesStuffs {
         }
         return directory.getAbsolutePath();
     }
+
+
+    public static Bitmap getBitmapFromURL(String link) {
+        /* this method downloads an Image from the given URL,
+         *  then decodes and returns a Bitmap object
+         */
+        try {
+            URL url = new URL(link);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+
+            return myBitmap;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }//getBitmapFromURL
+
 
 }

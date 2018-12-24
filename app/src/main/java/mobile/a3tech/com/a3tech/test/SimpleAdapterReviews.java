@@ -20,6 +20,7 @@ import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
+import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.Avis;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
@@ -31,7 +32,7 @@ import mobile.a3tech.com.a3tech.utils.DateStuffs;
 public class SimpleAdapterReviews extends RecyclerView.Adapter<SimpleAdapterReviews.SimpleItemVH> {
 
     //  Data
-    private List<Avis> listeObjects = new ArrayList<>();
+    private List<A3techReviewMission> listeObjects = new ArrayList<>();
 
     private Context context;
     private Activity parentActivity;
@@ -46,7 +47,7 @@ public class SimpleAdapterReviews extends RecyclerView.Adapter<SimpleAdapterRevi
         parentActivity = parent;
     }
 
-    public void addMissionb(Avis missionV){
+    public void addMissionb(A3techReviewMission missionV){
         this.listeObjects.add(missionV);
         this.notifyDataSetChanged();
     }
@@ -62,15 +63,24 @@ public class SimpleAdapterReviews extends RecyclerView.Adapter<SimpleAdapterRevi
 
     @Override
     public void onBindViewHolder(SimpleItemVH holder, int position) {
-        final Avis review = listeObjects.get(position);
+        final A3techReviewMission review = listeObjects.get(position);
         if (review == null) return;
 
-        holder.reviewContent.setText(review.getAvantage());
+        holder.reviewContent.setText(review.getCommentaire());
         holder.ratingBar.setNumStars(5);
-        holder.ratingBar.setRating(Float.valueOf(review.getNote()));
-        holder.dateReview.setText(DateStuffs.dateToString(DateStuffs.TIME_FORMAT, new Date()));
-        holder.userReview.setText("Par Mouad BOIJKRA");
-        holder.ratingValue.setText(review.getNote());
+        holder.ratingBar.setRating(Float.valueOf(review.getRating()));
+        holder.dateReview.setText(DateStuffs.dateToString(DateStuffs.TIME_FORMAT, review.getDateEvaluation()));
+        StringBuilder par = new StringBuilder("");
+        if(review.getMission() != null && review.getMission().getClient() != null){
+            par.append(review.getMission().getClient().getNom() != null ?
+                    review.getMission().getClient().getNom().toUpperCase() : "");
+            par.append(" ");
+
+            par.append(review.getMission().getClient().getPrenom() != null ?
+                    review.getMission().getClient().getPrenom().toUpperCase().substring(0,1)+"." : "");
+        }
+        holder.userReview.setText(par.toString() != "" ? "par "+par:"par "+context.getResources().getString(R.string.unkown));
+        holder.ratingValue.setText(review.getRating()+"");
         holder.avatare.setImageDrawable(context.getResources().getDrawable(R.drawable.image11));
     }
 

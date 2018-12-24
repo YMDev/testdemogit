@@ -1,10 +1,12 @@
 package mobile.a3tech.com.a3tech.model;
 
+import android.graphics.Bitmap;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Categorie implements Parcelable {
 
+	private Integer id;
 	private String identifiant;
 	private String service;
 	private String srvcType  ;
@@ -123,6 +125,14 @@ public class Categorie implements Parcelable {
 
 	public void setCoutHoraireTravail(Double coutHoraireTravail) {
 		this.coutHoraireTravail = coutHoraireTravail;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -36,6 +37,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import eltos.simpledialogfragment.SimpleDialog;
 import mobile.a3tech.com.a3tech.R;
@@ -128,6 +130,14 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        String languageToLoad = "fr";
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getActivity().getBaseContext().getResources().updateConfiguration(config,
+                getActivity().getBaseContext().getResources().getDisplayMetrics());
+
         final View viewFr = inflater.inflate(R.layout.fragment_a3tech_display_tech_in_map, container, false);
         final RelativeLayout mMapLayout = viewFr.findViewById(R.id.layout_container_map);
         gps = new GPSTracker(getActivity());
@@ -136,9 +146,9 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
 
         FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
         mMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_tech);
-       // if (mMapFragment == null) {
-            mMapFragment = SupportMapFragment.newInstance();
-            fm.beginTransaction().replace(R.id.map_tech, mMapFragment).commit();
+        // if (mMapFragment == null) {
+        mMapFragment = SupportMapFragment.newInstance();
+        fm.beginTransaction().replace(R.id.map_tech, mMapFragment).commit();
         //}
 
         return viewFr;
@@ -149,21 +159,21 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         //TODO get location of connected user not mission
         //TODO add filter
 
-            gpsGetLocation();
-            UserManager.getInstance().getTechnicienNearLocation(userLatitude != null ? userLatitude+"" :"", userLongetude != null ? userLongetude+"" :"", perim+"", start, end, new DataLoadCallback() {
-                @Override
-                public void dataLoaded(Object data, int method, int typeOperation) {
-                    listeOfTechToDisplay = (List<A3techUser>) data;
-                    refreshMap();
-                    if (dd != null) dd.dismiss();
-                    return;
-                }
+        gpsGetLocation();
+        UserManager.getInstance().getTechnicienNearLocation(userLatitude != null ? userLatitude + "" : "", userLongetude != null ? userLongetude + "" : "", perim + "", start, end, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                listeOfTechToDisplay = (List<A3techUser>) data;
+                refreshMap();
+                if (dd != null) dd.dismiss();
+                return;
+            }
 
-                @Override
-                public void dataLoadingError(int errorCode) {
+            @Override
+            public void dataLoadingError(int errorCode) {
 
-                }
-            });
+            }
+        });
 
     }
 
@@ -174,7 +184,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
                     .remove(mMapFragment).commit();
     }
 
-    public void reladMap(){
+    public void reladMap() {
         FragmentManager fm = getActivity().getSupportFragmentManager();/// getChildFragmentManager();
         mMapFragment = (SupportMapFragment) fm.findFragmentById(R.id.map_tech);
         if (mMapFragment == null) {
@@ -183,6 +193,7 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         }
 
     }
+
     public void refreshMap() {
         mMapFragment.getMapAsync(this);
     }
@@ -310,12 +321,20 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
     private void addMarkerFotUSer(A3techUser user) {
 
         final LetterTileProvider tileProvider = new LetterTileProvider(getActivity());
+        StringBuilder nomSb = new StringBuilder();
+        if(user.getNom() != null){
+            nomSb.append(user.getNom().toUpperCase());
+            nomSb.append(" ");
+        }
+        if(user.getPrenom() != null){
+            nomSb.append(user.getPrenom().toUpperCase().substring(0, 1) + ".");
+        }
         final Bitmap letterTile = tileProvider.getLetterTile(user.getNom(), user.getNom(), 88, 88);
 
-        LatLng currentPosition = new LatLng(Double.valueOf(user.getLatitude()), Double.valueOf(user.getLongitude()));
+        LatLng currentPosition = new LatLng(Double.valueOf(user.getLatitude()), Double.valueOf(user.getLongetude()));
         Marker markerUserTmp = map.addMarker(new MarkerOptions()
                 .position(currentPosition)
-                .title(user.getNom() + " " + user.getPrenom().substring(0, 1) + ".").
+                .title(nomSb.toString()).
                         icon(BitmapDescriptorFactory.fromBitmap(letterTile)));
         markerUserTmp.setTag(user);
         markerUserTmp.setSnippet(MapUtilities.getAddressFromLatLng(getActivity(), currentPosition).get(0));
@@ -345,8 +364,6 @@ public class A3techDisplayTechInMapFragment extends Fragment implements OnMapRea
         return false;
 
     }
-
-
 
 
     /**

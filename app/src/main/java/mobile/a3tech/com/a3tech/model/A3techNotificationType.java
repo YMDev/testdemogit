@@ -8,7 +8,8 @@ public enum A3techNotificationType {
     ANNULATION_MISSION("Mission Annulée", 4, "USER"),
     REPORTATION_MISSION("Mission Reportée", 5, "USER"),
     CLOTURE_MISSION("Mission Cloturée", 5, "USER"),
-    REJET_MISSION("Mission Rjetée", 6, "SYSTEM");
+    REJET_MISSION("Mission Rjetée", 6, "SYSTEM"),
+    DEMARRAGE_MISSION("Mission Démarrée", 7, "SYSTEM");
 
 
     private String discreptionEnum;

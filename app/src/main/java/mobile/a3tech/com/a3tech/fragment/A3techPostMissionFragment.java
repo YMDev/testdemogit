@@ -22,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -34,6 +35,8 @@ import eltos.simpledialogfragment.SimpleDateDialog;
 import eltos.simpledialogfragment.SimpleDialog;
 import eltos.simpledialogfragment.SimpleTimeDialog;
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
+import mobile.a3tech.com.a3tech.activity.BaseActivity;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
 import mobile.a3tech.com.a3tech.model.Adresse;
@@ -86,7 +89,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
     private ImageView btnGetDate;
     private Button btnValidation;
     private RelativeLayout containerUserSelected;
-    private ImageView avatareTechnicien;
+    private ImageView iconCategory;
     private TextView nameTechnicien;
     private TextView adresseTechnicien;
     GPSTracker gps;
@@ -156,7 +159,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
 
         categorySelcted = viewFr.findViewById(R.id.category_mission_selected);
         containerUserSelected = viewFr.findViewById(R.id.user_selected);
-        avatareTechnicien = viewFr.findViewById(R.id.avatare_technicien);
+        iconCategory = viewFr.findViewById(R.id.icon_category);
         nameTechnicien = viewFr.findViewById(R.id.name_tech);
         adresseTechnicien = viewFr.findViewById(R.id.adresse_alpha);
         btnValidation = viewFr.findViewById(R.id.validate_mission);
@@ -168,14 +171,21 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             categorySelcted.setVisibility(View.VISIBLE);
             containerUserSelected.setVisibility(View.GONE);
             btnValidation.setText(getText(R.string.affecter_un_technicien));
-        } else if (missionObject != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Picasso.get().load("https://www.sabeko.fr/wp-content/uploads/2018/04/climatisation-exterieure.jpg").into(iconCategory);
+                }
+            });
+        }
+      /*  else if (missionObject != null) {
             categorySelcted.setVisibility(View.GONE);
             containerUserSelected.setVisibility(View.VISIBLE);
             nameTechnicien.setText(missionObject.getTechnicien().getNom() + " " + missionObject.getTechnicien().getPrenom());
             adresseTechnicien.setText(missionObject.getTechnicien().getAdresse());
             avatareTechnicien.setImageDrawable(getResources().getDrawable(R.drawable.photo_login_1));
             btnValidation.setText(getText(R.string.valider_votre_demande));
-        }
+        }*/
 
         dateIntervension = viewFr.findViewById(R.id.date_mission);
         dateIntervension.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +241,10 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
                 }
             }
         });
+
+       /* if(mListener != null){
+            mListener.actionToolbar(true);
+        }*/
         return viewFr;
     }
 
@@ -350,13 +364,11 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
 
     private Boolean verifyDataInserted() {
         if (StringUtils.isBlank(dateIntervension.getText().toString())) {
-            dateIntervension.setError(getString(R.string.error_date_intervention_empty));
-            dateIntervension.requestFocus();
+            A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_date_intervention_empty), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
             return Boolean.FALSE;
         }
         if (StringUtils.isBlank(locationMission.getText().toString())) {
-            locationMission.setError(getString(R.string.error_location_mission_empty));
-            locationMission.requestFocus();
+            A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_location_mission_empty), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
             return Boolean.FALSE;
         }
         return Boolean.TRUE;
@@ -368,7 +380,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             mission = missionObject;
         } else {
             mission = new A3techMission();
-            mission.setCategoryMission(categoryObject);
+            mission.setCategorie(categoryObject);
         }
         if (StringUtils.isBlank(titleMission.getText().toString())) {
             if (StringUtils.isNoneBlank(categoryLibelle)) {
@@ -379,9 +391,9 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         } else {
             mission.setTitre(titleMission.getText().toString());
         }
-        mission.setDateCreation(new Date().getTime());
-        mission.setDateIntervention(((Calendar) dateIntervension.getTag()).getTime().getTime());
-        mission.setClientMission(PreferencesValuesUtils.getConnectedUser(getActivity()));
+        mission.setDateCreation(new Date());
+        mission.setDateIntervention(((Calendar) dateIntervension.getTag()).getTime());
+        mission.setClient(PreferencesValuesUtils.getConnectedUser(getActivity()));
         mission.setLatitude(String.valueOf(latitude));
         mission.setLongitude(String.valueOf(longitude));
         mission.setAdresse(locationMission.getText().toString());
@@ -428,7 +440,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-
+        void actionToolbar(boolean hide);
         void actionNext(Integer typeAction, Object data);
     }
 

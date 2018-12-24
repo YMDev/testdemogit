@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
+import mobile.a3tech.com.a3tech.activity.BaseActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techSelectMissionCategoryAdapter;
 import mobile.a3tech.com.a3tech.manager.CategorieManager;
 import mobile.a3tech.com.a3tech.model.Categorie;
@@ -96,6 +98,9 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
                 return false;
             }
         });
+       /* if(mListener != null){
+            mListener.actionToolbar(false);
+        }*/
         return viewFr;
     }
 
@@ -170,6 +175,7 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
         void actionNext(Integer typeAction, Object data);
         void backAction();
+        void actionToolbar(boolean hide);
     }
 
     public OnFragmentInteractionListener getmListener() {

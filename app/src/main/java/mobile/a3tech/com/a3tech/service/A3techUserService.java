@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Random;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
+import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.Avis;
 import mobile.a3tech.com.a3tech.model.User;
@@ -125,7 +126,17 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
 
         return result;
     }
+    public A3techUser createAccount(String userJson)
+            throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("user", userJson);
+        A3techUser result = getResult(
+                A3TECH_CREATE_ACCOUNT_JSON, params,
+                new TypeReference<A3techUser>() {
+                });
 
+        return result;
+    }
     public String initPassword(String email, String newPassword)
             throws EducationException {
         Map<String, String> params = new HashMap<String, String>();
@@ -153,8 +164,8 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
 
     public A3techUser getProfil(String idUser, String password) throws EducationException {
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("idUser", idUser);
-		params.put("password", password);
+		params.put("mail", idUser);
+		//params.put("password", password);
         A3techUser result = getResult(CHECK_EDU_PROFIL_URL, params,
 				new TypeReference<A3techUser>() {
 				});
@@ -222,7 +233,10 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
         Map<String, String> params = new HashMap<String, String>();
         params.put("start", st+"");
         params.put("end", en+"");
-		List<A3techUser> result = getResult(CHECK_local, params,
+        params.put("latitude", latitude);
+        params.put("longetude", longitude);
+        params.put("perimetre", perim);
+		List<A3techUser> result = getResult(A3TECH_GET_TECH_NEAR, params,
 				new TypeReference<List<A3techUser>>() {
 				});
 
@@ -249,7 +263,7 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
     public Boolean isTechnicienEnabledForClient(Long clientId, Long TechId) throws EducationException {
         Map<String, String> params = new HashMap<String, String>();
 		params.put("clientId", clientId+"");
-		params.put("TechId", TechId+"");
+		params.put("techId", TechId+"");
         Boolean s = getResult(
                 A3TECH_IS_TECH_ENABLED_FOR_CLIENT, params,
                 new TypeReference<Boolean>() {
@@ -262,12 +276,11 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
         Map<String, String> params = new HashMap<String, String>();
         params.put("userID", userID+"");
 
-        HashMap<String, Double> result = getResult(
+        Double result = getResult(
                 A3TECH_FETCH_USER_SOLDE_DISPO, params,
-                new TypeReference<HashMap<String, Double>>() {
+                new TypeReference<Double>() {
                 });
-        Double s = result.get("result");
-        return s;
+        return result == null ? 0d: result;
     }
 
     @Override
@@ -310,15 +323,15 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
         return userMocked;
     }
 
-    public List getUserReviews(String idUser, String password) throws EducationException {
-	/*	Map<String, String> params = new HashMap<String, String>();
-		params.put("idUser", idUser);
-		params.put("password", password);
-		User result = getResult(CHECK_EDU_PROFIL_URL, params,
-				new TypeReference<User>() {
-				});*/
+    public List<A3techReviewMission> getUserReviews(String idUser, String password) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("idUser", idUser+"");
+        List<A3techReviewMission> result = getResult(A3TECH_FETCH_TECHNICIEN_REVIEW, params,
+                new TypeReference<List<A3techReviewMission>>() {
+                });
+        return result;
 
-	List<Avis> listeReview = new ArrayList<>();
+	/*List<Avis> listeReview = new ArrayList<>();
 
         listeReview.add(new Avis("Goood job","02/02/2010", "4","", null));
         listeReview.add(new Avis("Cool Fancy Text Generator is a copy and paste font generator and font changer that creates Twitter, Facebook, Instagram fonts. It converts a normal text to different free cool fonts styles, such as tattoo fonts, calligraphy fonts","02/02/2010", "4","", null));
@@ -328,7 +341,19 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
         listeReview.add(new Avis("ext generator, weird text generator, word art generatb","02/02/2010", "4","", null));
         listeReview.add(new Avis("Goood job","02/02/2010", "4","", null));
         listeReview.add(new Avis("Goood job","02/02/2010", "4","", null));
-        return listeReview;
+        return listeReview;*/
+    }
+
+    public Boolean saveUserNewLocation(String latitude, String longitude, String userMail) throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("latitude", latitude+"");
+        params.put("longitude", longitude+"");
+        params.put("userMail", userMail+"");
+
+        Boolean result = getResult(A3TECH_SAVE_USER_LOCATION, params,
+                new TypeReference<Boolean>() {
+                });
+        return result;
     }
 
 

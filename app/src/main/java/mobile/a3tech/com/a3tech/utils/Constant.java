@@ -2,22 +2,35 @@ package mobile.a3tech.com.a3tech.utils;
 
 public interface Constant {
 
-    static String IP = "http://ec2-34-247-70-12.eu-west-1.compute.amazonaws.com:8080";
-    //  static String IP = "http://142.54.180.146:8080";
+    //static String IP = "http://ec2-34-247-70-12.eu-west-1.compute.amazonaws.com:8080";
+     static String IP = "http://192.168.1.24:8080/";
     static final String CHECK_local = IP + "/user/allusers";
+
+    static final String A3TECH_GET_TECH_NEAR = IP + "/user/getTechnicienNearLocation";
     static final String A3TECH_FETCH_TECHNICIEN = IP + "/user/fetchTechniciens";
     static final String A3TECH_GET_TECH_ENABLED_FOR_CLIENT = IP + "/user/techEnabled";
     static final String A3TECH_IS_TECH_ENABLED_FOR_CLIENT = IP + "/user/isTechnicienEnabledForClient";
     static final String A3TECH_FETCH_USER_SOLDE_DISPO = IP + "/user/fetchSoldeDisponible";
+    static final String A3TECH_FETCH_TECHNICIEN_REVIEW = IP + "/user/fetchUserReview";
     static final String A3TECH_UPDATE_MISSION = IP + "/mission/updateMission";
+    static final String A3TECH_START_MISSION = IP + "/mission/startMission";
+    static final String A3TECH_PAUSE_MISSION = IP + "/mission/pauseMission";
+    static final String A3TECH_CLOTURER_MISSION = IP + "/mission/cloturerMission";
     static final String A3TECH_CALCULE_MONTAT_MISSION = IP + "/mission/calculeMontantMission";
     static final String A3TECH_CALCULE_DUREE_MISSION = IP + "/mission/calculeDureeMission";
     static final String A3TECH_MISSION_CAN_BE_CANCELED = IP + "/mission/missionCanBeReportedOrCanceled";
     static final String A3TECH_CREATE_MISSION = IP + "/mission/createMission";
+    static final String A3TECH_CREATE_REVIEW_MISSION = IP + "/mission/addReview";
+    static final String A3TECH_GET_REVIEW_MISSION= IP + "/mission/getReviewForMission";
+
+
     static final String A3TECH_CREATE_NOTIFICATION = IP + "/notification/createNotification";
     static final String A3TECH_CREATE_ACCOUNT = IP + "user/createAccount";
+    static final String A3TECH_CREATE_ACCOUNT_JSON = IP + "user/createAccountJson";
     static final String A3TECH_LOGIN_FB_URL = IP + "user/loginfb";
+    static final String A3TECH_SAVE_USER_LOCATION = IP + "/user/saveTechLocation";
 
+    static final String A3TECH_LISTE_CATEGOIES = IP + "category/allCategories";
     static final String MAIL_3TECH = "mouadbouhjra@gmail.com";
 
 
@@ -28,7 +41,7 @@ public interface Constant {
     static final String CHECK_EDU_CREATE_ACCOUNT_URL = "http://arakhod.com/frontend_dev.php/user/createAccount.json";
     static final String CHECK_EDU_LOGIN_URL = IP + "/user/getUser";
     static final String CHECK_EDU_NEW_PASSWORD_URL = "http://arakhod.com/frontend_dev.php/user/initPassword.json";
-    static final String CHECK_EDU_PROFIL_URL = IP + "/user/getProfil";
+    static final String CHECK_EDU_PROFIL_URL = IP + "/user/getuserByMail";
     static final String CHECK_EDU_UPDATE_PROFIL_URL = "http://arakhod.com/frontend_dev.php/user/updateProfil.json";
     static final String CHECK_EDU_LISTE_CATEGORIE_URL = "http://arakhod.com/frontend_dev.php/categorie/listeCategories.json";
     static final String CHECK_EDU_CREATE_MISSION_URL = "http://arakhod.com/frontend_dev.php/mission/createMission.json";
@@ -264,4 +277,9 @@ public interface Constant {
     public static final int STATUT_OFFRE_REJETEE = 2;
 
     String DIR_IMAGES = "DIR_3TECH_IMAGES";
+
+
+    public static final Integer ERROR_USER_NOT_FOUND = 2312;
+    public static final Integer ERROR_USER_DISABLED = 2313;
+    public static final Integer ERROR_USER_TECHNIQUE = 2314;
 }

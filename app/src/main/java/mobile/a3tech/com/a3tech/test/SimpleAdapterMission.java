@@ -74,7 +74,7 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
 
 
         if (missionTmp.getDateIntervention() != null) {
-            Date dateIntervention = new Date(missionTmp.getDateIntervention());
+            Date dateIntervention = missionTmp.getDateIntervention();
             if (dateIntervention != null) {
                 String dateInterventionAlphaSimple = DateStuffs.dateToString(DateStuffs.SIMPLE_DATE_FORMAT, dateIntervention);
                 String timeIntervention = DateStuffs.dateToString(DateStuffs.HOURS_MINUTES_FORMAT, dateIntervention);

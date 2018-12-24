@@ -1,7 +1,14 @@
 package mobile.a3tech.com.a3tech.model;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+
+import java.util.Date;
 import java.util.List;
 
+import mobile.a3tech.com.a3tech.utils.CustomerDateAndTimeDeserialize;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class A3techUser {
 
 
@@ -10,7 +17,8 @@ public class A3techUser {
     public static final String FIREBASE_PNAME_PROPS  = "pname";
     //technique
     private Long id;
-    private Long dateCreation;
+    @JsonDeserialize(using=CustomerDateAndTimeDeserialize.class)
+    private Date dateCreation;
     private A3techUserStatut statut;
     private Boolean isEmailVerified;
     private Boolean isPhoneVerified;
@@ -25,13 +33,14 @@ public class A3techUser {
     private String id_photo_profil;
     private Float rating; // calculé
     private String adresse;
-    private Double longitude;
+    private Double longetude;
     private Double latitude;
     private Categorie categorie;
     private String pseudo;
     private String telephone;
     private Integer nbrMission;
-    private Long dateNaissance;
+    @JsonDeserialize(using=CustomerDateAndTimeDeserialize.class)
+    private Date dateNaissance;
     private Ville ville;
     private List<A3techReviewMission> listAvis;
     private A3techUserType typeUser;
@@ -55,11 +64,11 @@ public class A3techUser {
         this.id = id;
     }
 
-    public Long getDateCreation() {
+    public Date getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Long dateCreation) {
+    public void setDateCreation(Date dateCreation) {
         this.dateCreation = dateCreation;
     }
 
@@ -172,15 +181,18 @@ public class A3techUser {
         this.adresse = adresse;
     }
 
-    public Double getLongitude() {
-        return longitude;
+    public Double getLongetude() {
+        if(longetude == null) longetude = 0d;
+        return longetude;
     }
 
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
+    public void setLongetude(Double longitude) {
+        this.longetude = longitude;
     }
 
     public Double getLatitude() {
+
+        if(latitude == null) latitude = 0d;
         return latitude;
     }
 
@@ -220,11 +232,11 @@ public class A3techUser {
         this.nbrMission = nbrMission;
     }
 
-    public Long getDateNaissance() {
+    public Date getDateNaissance() {
         return dateNaissance;
     }
 
-    public void setDateNaissance(Long dateNaissance) {
+    public void setDateNaissance(Date dateNaissance) {
         this.dateNaissance = dateNaissance;
     }
 
@@ -265,6 +277,7 @@ public class A3techUser {
     }
 
     public Boolean getNew() {
+        if(isNew == null) isNew = Boolean.FALSE;
         return isNew;
     }
 

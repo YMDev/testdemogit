@@ -630,8 +630,8 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="about">A propos</string>
     <string name="coordonnees">Coordonnées</string>
     <string name="nbr_mission">Missions</string>
-    <string name="toolbar_select_category_title">Publier une Mission</string>
-    <string name="toolbar_select_category_mission_sub_title">Sélectionner la catégorie de la Mision</string>
+    <string name="toolbar_select_category_title">De quoi vous avez besoin ?</string>
+    <string name="toolbar_select_category_mission_sub_title">Sélectionner la catégorie</string>
     <string name="title_mission_header">Titre</string>
     <string name="hint_title_mission">Qu\'avez-vous besoin de faire ?</string>
     <string name="description_mission_header">Description</string>
@@ -717,6 +717,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="libelle_annulation_mission">Demande de Mission annulée</string>
     <string name="libelle_report_mission">Mission reportée</string>
     <string name="libelle_cloture_mission">Mission clôturée</string>
+    <string name="libelle_demarrage_mission">Mission démarrée</string>
     <string name="toolbar_display_results_search_title">Résultats Recherche</string>
     <string name="probleme_technique">Problème technique, veuillez patientez</string>
     <string name="stop_mission">Pause</string>
@@ -819,4 +820,22 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="error_authentication_firebase_no_user">Aucun Compte ne correspond aux critères d\'identifications fournis, L\'utilisateur peut avoir été supprimé</string>
     <string name="error_authentication_firebase_weak_pass">Le mot de passe est invalide il faut au moins 6 caractères</string>
     <string name="select_adresse">Sélectionnez votre adresse</string>
+    <string name="tech_msg_help">Je sui là pour vous aider</string>
+    <string name="mon_profil">Mon profil</string>
+    <string name="start_mission">Démarrer la Mission</string>
+    <string name="msg_start_mission">Voulez-vous démarrer cette Mission ?</string>
+    <string name="mission_started">Mission Démarrée avec succès !</string>
+    <string name="mission_error_creation">Mission non créée, erreur technique, veuillez réessayer ultérieurement</string>
+    <string name="avis">Avis</string>
+    <string name="error_user_disabled">Votre compte a été suspendu, veuillez Contacter notre Agence pour plus d\'informations.</string>
+    <string name="error_user_not_found">Votre Compte n\'existe pas ou a été supprimé</string>
+    <string name="compte_suspendu">Votre Compte a été suspendu !!</string>
+    <string name="compte_not_found">Compte introuvable, ou supprimé !!</string>
+    <string name="msg_pause_mission">Voulez vous mettre cette mission en Pause ?</string>
+    <string name="pause_mission">Pause Mission</string>
+    <string name="mission_en_pause">Mission en Pause</string>
+    <string name="thank_you">Nous vous remercions pour votre Avis</string>
+    <string name="error_review_not_created">Un problème technique est survenu, prière de rééssayer ultérieurement</string>
+    <string name="n_a">N/A</string>
+    <string name="unkown">Inconnu</string>
 </resources>

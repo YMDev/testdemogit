@@ -60,7 +60,7 @@
                     android:alpha="0.77"
                     android:fontFamily="sans-serif-meduim"
                     android:textColor="@color/black"
-                    android:textSize="15dp" />
+                    android:textSize="16dp" />
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -171,76 +171,18 @@
                 android:layout_marginTop="4dp">
 
                 <TextView
-                    android:id="@+id/category_tech"
+                    android:id="@+id/label_msg_help_tech"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:alpha="0.77"
                     android:fontFamily="sans-serif-meduim"
-                    android:text="Informatique"
+                    android:text="@string/tech_msg_help"
                     android:textColor="@color/black"
                     android:textSize="15dp"
                     android:textStyle="bold" />
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/cotainer_indicators"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="10dp"
-                android:orientation="horizontal">
 
-                <RelativeLayout
-                    android:id="@+id/disponibilite_container"
-                    android:layout_width="22dp"
-                    android:layout_height="20dp"
-                    android:background="@drawable/a3tech_back_circular_colored_layout">
-
-                    <ImageView
-                        android:id="@+id/disponibilite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/a3tech_dispo_white_indic" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/check_phone_container"
-                    android:layout_width="22dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/a3tech_back_circular_colored_layout">
-
-                    <ImageView
-                        android:id="@+id/check_phone"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/a3tech_phone_white_indic" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/check_mail_container"
-                    android:layout_width="22dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:background="@drawable/a3tech_back_circular_colored_layout">
-
-                    <ImageView
-                        android:id="@+id/check_mail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:layout_centerHorizontal="true"
-                        android:layout_centerVertical="true"
-                        android:src="@drawable/a3tech_check_mail_white_indic" />
-                </RelativeLayout>
-            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/container_actions"
@@ -258,7 +200,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="10dp"
                     android:background="@drawable/a3tech_btn_create_account_back"
-                    android:text="@string/hire_tech"
+                    android:text="@string/ok_label"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12dp" />
 
@@ -269,7 +211,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/a3tech_btn_create_account_back"
-                    android:text="@string/consulter"
+                    android:text="@string/mon_profil"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12dp" />
 
