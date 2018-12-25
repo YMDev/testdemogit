@@ -129,7 +129,8 @@
                         android:fontFamily="sans-serif-meduim"
                         android:text="@string/nbr_intervention"
                         android:textColor="@color/black"
-                        android:textSize="15dp" />
+                        android:textSize="15dp"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 
@@ -190,7 +191,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/container_informations_user"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginBottom="10dp">
 
                 <Button

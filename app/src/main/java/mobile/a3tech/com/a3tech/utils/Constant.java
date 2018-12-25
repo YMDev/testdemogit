@@ -2,8 +2,10 @@ package mobile.a3tech.com.a3tech.utils;
 
 public interface Constant {
 
-    //static String IP = "http://ec2-34-247-70-12.eu-west-1.compute.amazonaws.com:8080";
-     static String IP = "http://192.168.1.24:8080/";
+    static String IP = "http://ec2-34-247-70-12.eu-west-1.compute.amazonaws.com:8080/";
+    // static String IP = "http://192.168.1.24:8080/";
+    //static String IP = "http://192.168.43.242:8080/";
+
     static final String CHECK_local = IP + "/user/allusers";
 
     static final String A3TECH_GET_TECH_NEAR = IP + "/user/getTechnicienNearLocation";
@@ -25,12 +27,12 @@ public interface Constant {
 
 
     static final String A3TECH_CREATE_NOTIFICATION = IP + "/notification/createNotification";
-    static final String A3TECH_CREATE_ACCOUNT = IP + "user/createAccount";
-    static final String A3TECH_CREATE_ACCOUNT_JSON = IP + "user/createAccountJson";
-    static final String A3TECH_LOGIN_FB_URL = IP + "user/loginfb";
+    static final String A3TECH_CREATE_ACCOUNT = IP + "/user/createAccount";
+    static final String A3TECH_CREATE_ACCOUNT_JSON = IP + "/user/createAccountJson";
+    static final String A3TECH_LOGIN_FB_URL = IP + "/user/loginfb";
     static final String A3TECH_SAVE_USER_LOCATION = IP + "/user/saveTechLocation";
 
-    static final String A3TECH_LISTE_CATEGOIES = IP + "category/allCategories";
+    static final String A3TECH_LISTE_CATEGOIES = IP + "/category/allCategories";
     static final String MAIL_3TECH = "mouadbouhjra@gmail.com";
 
 

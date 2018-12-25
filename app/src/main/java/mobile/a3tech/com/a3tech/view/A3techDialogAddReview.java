@@ -24,7 +24,7 @@ public class A3techDialogAddReview {
 
     public static String SRC_FROM_DIALOGUE_DISPLAY_TECH = "SRC_FROM_DIALOGUE_DISPLAY_TECH";
     public static int REQUEST_DISPLAY_TECH_FROM_DIALOGUE = 3221;
-	public static Dialog createProfileDialog(final AddReviewParam param, A3techReviewMission review) {
+	public static Dialog createProfileDialog(final AddReviewParam param, final A3techReviewMission review) {
 		final  Dialog progressDialog = new Dialog(param.getContext());
         progressDialog.show();
 		LayoutInflater inflater =((Activity)param.getContext()).getLayoutInflater();
@@ -67,7 +67,12 @@ public class A3techDialogAddReview {
 		mSendFeedback.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				A3techReviewMission avis  = new A3techReviewMission();
+				A3techReviewMission avis = null;
+				if(review == null){
+					avis = new A3techReviewMission();
+				}else{
+					avis = review;
+				}
 				avis.setDateEdition(Calendar.getInstance().getTime());
 				avis.setDateEvaluation(Calendar.getInstance().getTime());
 				avis.setRating(mRatingBar.getRating());

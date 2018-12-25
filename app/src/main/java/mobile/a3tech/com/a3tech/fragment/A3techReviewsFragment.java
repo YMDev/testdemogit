@@ -87,7 +87,7 @@ public class A3techReviewsFragment extends Fragment {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         String connectedUser = prefs.getString("identifiant", "");
         String password = prefs.getString("password", "");
-        UserManager.getInstance().getUserReviews(PreferencesValuesUtils.getConnectedUser(getActivity()).getId()+"", password, new DataLoadCallback() {
+        UserManager.getInstance().getUserReviews(userReviews.getId()+"", password, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
                 switch (method) {

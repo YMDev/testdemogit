@@ -108,6 +108,19 @@ public class SimpleAdapterMission extends RecyclerView.Adapter<SimpleAdapterMiss
                 GradientDrawable backStatutMission = (GradientDrawable) holder.containerMissionStatut.getBackground();
                 backStatutMission.setColorFilter(context.getResources().getColor(R.color.red_dark), PorterDuff.Mode.SRC_ATOP);
                 holder.containerMissionStatut.setBackground(backStatutMission);
+            }else if(missionTmp.getStatut().getId() == A3techMissionStatut.DEMARREE.getId()){
+                GradientDrawable backStatutMission = (GradientDrawable) holder.containerMissionStatut.getBackground();
+                backStatutMission.setColorFilter(context.getResources().getColor(R.color.purple_dark), PorterDuff.Mode.SRC_ATOP);
+                holder.containerMissionStatut.setBackground(backStatutMission);
+            }else if(missionTmp.getStatut().getId() == A3techMissionStatut.EN_PAUSE.getId()){
+                GradientDrawable backStatutMission = (GradientDrawable) holder.containerMissionStatut.getBackground();
+                backStatutMission.setColorFilter(context.getResources().getColor(R.color.cinza_escuro), PorterDuff.Mode.SRC_ATOP);
+                holder.containerMissionStatut.setBackground(backStatutMission);
+            }
+            else if(missionTmp.getStatut().getId() == A3techMissionStatut.CLOTUREE.getId()){
+                GradientDrawable backStatutMission = (GradientDrawable) holder.containerMissionStatut.getBackground();
+                backStatutMission.setColorFilter(context.getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_ATOP);
+                holder.containerMissionStatut.setBackground(backStatutMission);
             }
 
         } else

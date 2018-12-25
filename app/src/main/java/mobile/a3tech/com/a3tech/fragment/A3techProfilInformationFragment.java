@@ -46,6 +46,7 @@ import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techProfileInformationAdapter;
 import mobile.a3tech.com.a3tech.animation.ProgresseAnimation;
 import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.ObjectMenu;
@@ -175,7 +176,39 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
             user = new Gson().fromJson(jsonMyObject, A3techUser.class);
         }
     }
+    private  void getRationUser(A3techUser user, final TextView ratingView, final RatingBar ratingbar, final TextView ratingViewNbr,final Context context){
+        UserManager.getInstance().getUserReviews(String.valueOf(user.getId()), "", new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                List<A3techReviewMission> reviews = (List) data;
+                if(reviews != null && reviews.size() != 0){
+                    Double ratingCalcule = 0d;
+                    for (A3techReviewMission rev: reviews
+                            ) {
+                        if (rev != null) {
+                            ratingCalcule = ratingCalcule + rev.getRating();
+                        }
+                    }
+                    if(ratingbar != null) ratingbar.setRating(Double.valueOf(ratingCalcule / reviews.size()).floatValue());
+                    if(ratingView != null) ratingView.setText(String.valueOf(String.format("%.02f", ratingCalcule / reviews.size())));
+                    if(ratingViewNbr != null) ratingViewNbr.setText(reviews.size()+" "+getResources().getString(R.string.avis));
+                }else {
+                    if(ratingbar != null) ratingbar.setRating(0f);
+                    if(ratingView != null) ratingView.setText(0+"");
+                    if(ratingViewNbr != null) ratingViewNbr.setText(0+" "+getResources().getString(R.string.avis));
 
+                }
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                if(ratingView != null) ratingView.setText("0");
+                if(ratingbar != null)  ratingbar.setRating(0);
+                if(ratingViewNbr != null) ratingViewNbr.setText(0+" "+getResources().getString(R.string.avis));
+
+            }
+        });
+    }
     public void startAlphaAnimation(View v, long duration, int visibility) {
         Animation alphaAnimation = (visibility == View.VISIBLE)
                 ? AnimationUtils.loadAnimation(activity, R.anim.scale_up)
@@ -210,6 +243,7 @@ public class A3techProfilInformationFragment extends Fragment implements A3techV
             etatProfileContainer.setVisibility(View.GONE);
         }
 
+        getRationUser(user,ratingNumber,ratingUser, numberOvReviews,getActivity());
         return viewFr;
     }
 

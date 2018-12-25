@@ -3,6 +3,7 @@ package mobile.a3tech.com.a3tech.view;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -81,9 +82,9 @@ public class DialogDisplayTechProfile {
         ratingBar.setNumStars(5);
         //ratingBar.setRating(Float.valueOf(user.getRating()));
         TextView tatingnbrVam = content.findViewById(R.id.rating_nbr_text);
-        tatingnbrVam.setText(user.getNbrReview()+" "+mContext.getResources().getString(R.string.avis));
+       // tatingnbrVam.setText(user.getNbrReview()+" "+mContext.getResources().getString(R.string.avis));
 
-        getRationUser(user,ratingValue,ratingBar, mContext);
+        getRationUser(user,ratingValue,ratingBar, tatingnbrVam,mContext);
         TextView adresse = content.findViewById(R.id.adresse_alpha);
         adresse.setText(user.getAdresse());
         TextView distance = content.findViewById(R.id.distance);
@@ -134,7 +135,7 @@ public class DialogDisplayTechProfile {
     }
 
 
-    private static void getRationUser(A3techUser user, final TextView ratingView, final RatingBar ratingbar, final Context context){
+    private static void getRationUser(A3techUser user, final TextView ratingView, final RatingBar ratingbar,final TextView ratingViewNbr,  final Context context){
         UserManager.getInstance().getUserReviews(String.valueOf(user.getId()), "", new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
@@ -148,22 +149,26 @@ public class DialogDisplayTechProfile {
                         }
                     }
                     ratingbar.setRating(Double.valueOf(ratingCalcule / reviews.size()).floatValue());
-                    ratingView.setText(String.valueOf(ratingCalcule / reviews.size()));
+                    ratingView.setText(String.valueOf(String.format("%.02f", ratingCalcule / reviews.size())));
+                    ratingViewNbr.setText(reviews.size()+" "+context.getResources().getString(R.string.avis));
                 }else {
                     if(ratingbar != null) ratingbar.setRating(0f);
-                    if(ratingView != null) ratingView.setText(0);
+                    if(ratingView != null) ratingView.setText(0+"");
+                    if(ratingViewNbr != null)  ratingViewNbr.setText(0+" "+context.getResources().getString(R.string.avis));
 
                 }
             }
 
             @Override
             public void dataLoadingError(int errorCode) {
-                ratingView.setText(0);
-                ratingbar.setRating(0);
+                if(ratingbar != null) ratingbar.setRating(0f);
+                if(ratingView != null) ratingView.setText(0+"");
+                if(ratingViewNbr != null)  ratingViewNbr.setText(0+" "+context.getResources().getString(R.string.avis));
             }
         });
     }
     private static void addMission(final A3techMission missionn ,final Context msContext) {
+       final ProgressDialog dialogwaiting  = CustomProgressDialog.createProgressDialog(msContext,"");
         MissionManager.getInstance().createMission(missionn, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
@@ -173,12 +178,14 @@ public class DialogDisplayTechProfile {
                 A3techMission missionSaved = (A3techMission) data;
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH, gson.toJson(missionn));
+                 if(dialogwaiting != null) dialogwaiting.dismiss();
                 ((A3techAddMissionActivity) msContext).setResult(Activity.RESULT_OK, resultIntent);
                 ((A3techAddMissionActivity) msContext).finish();
             }
 
             @Override
             public void dataLoadingError(int errorCode) {
+                if(dialogwaiting != null) dialogwaiting.dismiss();
                 A3techCustomToastDialog.createSnackBar(msContext, msContext.getResources().getString(R.string.mission_error_creation), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
             }
         });

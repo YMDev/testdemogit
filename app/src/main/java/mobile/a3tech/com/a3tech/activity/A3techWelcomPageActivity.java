@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,13 +10,18 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gauravbhola.ripplepulsebackground.RipplePulseLayout;
@@ -25,6 +31,9 @@ import mobile.a3tech.com.a3tech.fragment.A3techWelcomHomeFragment;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
+import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
+import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.utils.ValidationPatternUtils;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 
 public class A3techWelcomPageActivity extends BaseActivity implements A3techWelcomHomeFragment.OnFragmentInteractionListener {
@@ -153,34 +162,43 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
 
     GPSTracker gps;
     private void saveUserNewLocation(){
-        gps = new GPSTracker(A3techWelcomPageActivity.this);
-        if(gps.canGetLocation()){
-            double latitude = gps.getLatitude();
-            double longitude = gps.getLongitude();
-            try {
-                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                String userConnectedMail = prefs.getString("identifiant", "");
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
-                editor.putString(A3techHomeActivity.TAG_CONNECTED_USER_LATITUDE, String.valueOf(latitude));
-                editor.putString(A3techHomeActivity.TAG_CONNECTED_USER_LONGETUDE, String.valueOf(longitude));
-                editor.commit();
-                UserManager.getInstance().saveUserNewLocation(String.valueOf(latitude), String.valueOf(longitude), userConnectedMail, new DataLoadCallback() {
-                    @Override
-                    public void dataLoaded(Object data, int method, int typeOperation) {
-                        //OK
-                    }
 
-                    @Override
-                    public void dataLoadingError(int errorCode) {
-
-                    }
-                });
-            } catch (Exception e) {
-                e.printStackTrace();
+        if(!PermissionsStuffs.canAccessLocation(getActivity())){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
             }
         }else{
-            gps.showSettingsAlert();
+            gps = new GPSTracker(A3techWelcomPageActivity.this);
+            if(gps.canGetLocation()){
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+                try {
+                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    String userConnectedMail = prefs.getString("identifiant", "");
+                    SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit();
+                    editor.putString(A3techHomeActivity.TAG_CONNECTED_USER_LATITUDE, String.valueOf(latitude));
+                    editor.putString(A3techHomeActivity.TAG_CONNECTED_USER_LONGETUDE, String.valueOf(longitude));
+                    editor.commit();
+                    UserManager.getInstance().saveUserNewLocation(String.valueOf(latitude), String.valueOf(longitude), userConnectedMail, new DataLoadCallback() {
+                        @Override
+                        public void dataLoaded(Object data, int method, int typeOperation) {
+                            //OK
+                        }
+
+                        @Override
+                        public void dataLoadingError(int errorCode) {
+
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }else{
+                gps.showSettingsAlert();
+            }
         }
+
+
     }
     public static String KEY_IS_AFTER_ADD_MISSION = "ISAFTERADDMISSION";
     @Override
@@ -190,6 +208,21 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
             Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techMissionListeActivity.class);
             intentAddMissionn.putExtra(KEY_IS_AFTER_ADD_MISSION,true);
             startActivity(intentAddMissionn);
+        }
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+
+        switch (requestCode) {
+            case PermissionsStuffs.LOCATION_REQUEST:
+                if (PermissionsStuffs.canAccessLocation(getActivity())) {
+                    saveUserNewLocation();
+                } else {
+                    // bzzzt();
+                }
+                break;
         }
     }
 }

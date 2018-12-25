@@ -167,10 +167,10 @@ public class A3techMissionsHomeFragment extends Fragment {
 
 
     private void refreshMissionsList() {
-        if(mTypeMissions == null) return;
+        if (mTypeMissions == null) return;
         final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivity(), "");
         A3techMission criteriaM = new A3techMission();
-        Log.d("KKKKKKKKKKK",mTypeMissions);
+        Log.d("KKKKKKKKKKK", mTypeMissions);
         if (mTypeMissions != null && mTypeMissions.equals(A3techMissionsListeAdapter.MISSIONS_EN_COURS)) {
             criteriaM.setStatut(A3techMissionStatut.CREE);
         } else if (mTypeMissions != null && mTypeMissions.equals(A3techMissionsListeAdapter.MISSIONS_HISTORIQUE)) {
@@ -178,7 +178,7 @@ public class A3techMissionsHomeFragment extends Fragment {
         }
         MissionManager.getInstance().filtreMission(lang, connectedUser,
                 new Gson().toJson(criteriaM),
-                String.valueOf("0"),  String.valueOf(limit), 0, 0,
+                String.valueOf("0"), String.valueOf(limit), 0, 0,
                 new DataLoadCallback() {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
@@ -188,12 +188,16 @@ public class A3techMissionsHomeFragment extends Fragment {
                         recycleMission.setLayoutManager(mLayoutManager);
                         recycleMission.setItemAnimator(new DefaultItemAnimator());
                         recycleMission.setAdapter(adapter);
-                        dd.dismiss();
+                        if (dd != null) dd.dismiss();
                     }
 
                     @Override
                     public void dataLoadingError(int errorCode) {
-                        dd.dismiss();
+                        if (dd != null) dd.dismiss();
+                        if(errorCode == Constant.UNKNOWN_ERROR){
+                            // exception technique.
+                            A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_reseau_technique), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+                        }
                     }
                 });
     }

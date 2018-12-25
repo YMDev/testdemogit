@@ -27,6 +27,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.apache.commons.lang3.BooleanUtils;
 
@@ -362,12 +363,16 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
     }
 
     private void addMission(A3techMission mission) {
+        final ProgressDialog dialogwaiting  = CustomProgressDialog.createProgressDialog(getActivity(),"");
         MissionManager.getInstance().createMission(mission, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
 //mission created
+                Gson gson = new GsonBuilder()
+                        .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                 A3techMission missionSaved = (A3techMission) data;
                 Intent resultIntent = new Intent();
+                if(dialogwaiting != null) dialogwaiting.dismiss();
                 resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH, new Gson().toJson(missionSaved));
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();
@@ -375,6 +380,7 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
 
             @Override
             public void dataLoadingError(int errorCode) {
+                if(dialogwaiting != null) dialogwaiting.dismiss();
                 A3techCustomToastDialog.createSnackBar(A3techAddMissionActivity.this, getString(R.string.mission_error_creation), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
             }
         });

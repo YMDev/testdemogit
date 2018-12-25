@@ -206,8 +206,6 @@ private static MissionManager uniqueInstance = null;
 						handler.sendMessage(message);
 					}
 
-
-
 				}catch (EducationException e) {
 					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
 					handler.sendMessage(message);

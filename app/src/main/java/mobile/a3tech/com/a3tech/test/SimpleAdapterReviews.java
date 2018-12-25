@@ -3,6 +3,7 @@ package mobile.a3tech.com.a3tech.test;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,8 @@ import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +27,7 @@ import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.Avis;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
+import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 
 /**
  * Created by Suleiman on 03/02/17.
@@ -79,9 +83,26 @@ public class SimpleAdapterReviews extends RecyclerView.Adapter<SimpleAdapterRevi
             par.append(review.getMission().getClient().getPrenom() != null ?
                     review.getMission().getClient().getPrenom().toUpperCase().substring(0,1)+"." : "");
         }
+        final LetterTileProvider tileProvider = new LetterTileProvider(context);
+        if(review.getMission() != null && review.getMission().getClient() != null){
+            if(review.getMission().getClient().getId_photo_profil() != null){
+                try{
+                    Picasso.get().load(review.getMission().getClient().getId_photo_profil()).centerCrop().into(holder.avatare);
+                }catch (Exception e){
+                    e.printStackTrace();
+                    final Bitmap letterTile = tileProvider.getLetterTile(review.getMission().getClient().getNom(), review.getMission().getClient().getNom(), 129, 129);
+                    holder.avatare.setImageBitmap(letterTile);
+                }
+            }else{
+                final Bitmap letterTile = tileProvider.getLetterTile(review.getMission().getClient().getNom(), review.getMission().getClient().getNom(), 129, 129);
+                holder.avatare.setImageBitmap(letterTile);
+            }
+        }else{
+            final Bitmap letterTile = tileProvider.getLetterTile("TECH", "TECH", 129, 129);
+            holder.avatare.setImageBitmap(letterTile);
+        }
         holder.userReview.setText(par.toString() != "" ? "par "+par:"par "+context.getResources().getString(R.string.unkown));
         holder.ratingValue.setText(review.getRating()+"");
-        holder.avatare.setImageDrawable(context.getResources().getDrawable(R.drawable.image11));
     }
 
     @Override

@@ -201,10 +201,10 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
             ((SimpleItemVH) holder).adresse.setText(technicien.getAdresse());
             ((SimpleItemVH) holder).avatareTech.setImageBitmap(letterTile);
             ((SimpleItemVH) holder).ratingTech.setNumStars(5);
-           getRationUser(technicien,((SimpleItemVH) holder).ratingNumberValue,((SimpleItemVH) holder).ratingTech, context);
+           getRationUser(technicien,((SimpleItemVH) holder).ratingNumberValue,((SimpleItemVH) holder).ratingTech, ((SimpleItemVH) holder).numberOfReviews,context);
             //((SimpleItemVH) holder).ratingTech.setRating(Float.valueOf(technicien.getRating() + ""));
             //((SimpleItemVH) holder).ratingNumberValue.setText(technicien.getRating() + "");
-            ((SimpleItemVH) holder).numberOfReviews.setText("(+ " + technicien.getNbrReview() + " "+context.getResources().getString(R.string.avis)+" )");
+           // ((SimpleItemVH) holder).numberOfReviews.setText("(+ " + technicien.getNbrReview() + " "+context.getResources().getString(R.string.avis)+" )");
             GradientDrawable backCheckPhone = (GradientDrawable) ((RelativeLayout) ((SimpleItemVH) holder).checkPhone.getParent()).getBackground();
             backCheckPhone.setColorFilter(Color.RED, PorterDuff.Mode.SRC_IN);
             updateDistance(technicien, ((SimpleItemVH) holder));
@@ -339,7 +339,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
         void onLoadMore();
     }
 
-    private  void getRationUser(A3techUser user, final TextView ratingView, final RatingBar ratingbar, final Context context){
+    private  void getRationUser(A3techUser user, final TextView ratingView, final RatingBar ratingbar,final TextView ratingViewNbr, final Context context){
         UserManager.getInstance().getUserReviews(String.valueOf(user.getId()), "", new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
@@ -353,11 +353,12 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
                         }
                     }
                     if(ratingbar != null) ratingbar.setRating(Double.valueOf(ratingCalcule / reviews.size()).floatValue());
-                    if(ratingView != null) ratingView.setText(String.valueOf(ratingCalcule / reviews.size()));
+                    if(ratingView != null) ratingView.setText(String.valueOf(String.format("%.02f", ratingCalcule / reviews.size())));
+                    if(ratingViewNbr != null) ratingViewNbr.setText(reviews.size()+" "+context.getResources().getString(R.string.avis));
                 }else {
                     if(ratingbar != null) ratingbar.setRating(0f);
-                    if(ratingView != null) ratingView.setText(0);
-
+                    if(ratingView != null) ratingView.setText(0+"");
+                    if(ratingViewNbr != null) ratingViewNbr.setText(0+" "+context.getResources().getString(R.string.avis));
                 }
             }
 
@@ -365,6 +366,7 @@ public class SimpleAdapterTechnicien extends RecyclerView.Adapter {
             public void dataLoadingError(int errorCode) {
                 if(ratingView != null) ratingView.setText("0");
                 if(ratingbar != null)  ratingbar.setRating(0);
+                if(ratingViewNbr != null) ratingViewNbr.setText(0+" "+context.getResources().getString(R.string.avis));
             }
         });
     }

@@ -77,7 +77,7 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
     public static final String MODE_MY_ACCOUNT = "MODE_MY_ACCOUNT";
     public static final String ARG_SRC_ACTION = "ARG_SRC_ACTION";
     public static final String ARG_MISSION_OBJECT = "ARG_MISSION_OBJECT";
-    public static final String TAG_IGNORE_MODIFICATION_DIALOGUE  = "TAG_IGNORE_MODIFICATION_DIALOGUE";
+    public static final String TAG_IGNORE_MODIFICATION_DIALOGUE = "TAG_IGNORE_MODIFICATION_DIALOGUE";
     private static final int PICK_FROM_CAMERA = 31;
     private static final int PICK_FROM_GALLERY = 32;
     private boolean mIsTheTitleVisible = false;
@@ -215,15 +215,15 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
         String nameConnectedUserToolbar = "";
         if (userToDisplay != null && userToDisplay.getNom() != null && userToDisplay.getPrenom() != null) {
             nameConnectedUser = userToDisplay.getNom().toUpperCase() + " " + userToDisplay.getPrenom().toUpperCase();
-            nameConnectedUserToolbar = userToDisplay.getNom().toUpperCase() + " " + userToDisplay.getPrenom().toUpperCase().substring(0,1)+".";
+            nameConnectedUserToolbar = userToDisplay.getNom().toUpperCase() + " " + userToDisplay.getPrenom().toUpperCase().substring(0, 1) + ".";
         }
         titleToolbar.setText(nameConnectedUserToolbar);
         userNamePname.setText(nameConnectedUser);
         categoryUser = findViewById(R.id.txt_category);
-        if (userToDisplay.getCategorie() != null){
+        if (userToDisplay.getCategorie() != null) {
             categoryUser.setVisibility(View.VISIBLE);
             categoryUser.setText(userToDisplay.getCategorie().getDescription());
-        }else{
+        } else {
             categoryUser.setVisibility(View.GONE);
         }
 
@@ -239,11 +239,16 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
             fabHire.setVisibility(View.GONE);
             fabSave.setVisibility(View.GONE);
             fabEdit.setVisibility(View.VISIBLE);
+        } else if (isFromDisplayMission) {
+            fabHire.setVisibility(View.GONE);
+            fabSave.setVisibility(View.GONE);
+            fabEdit.setVisibility(View.GONE);
         } else {
             fabHire.setVisibility(View.VISIBLE);
             fabSave.setVisibility(View.GONE);
             fabEdit.setVisibility(View.GONE);
         }
+
 
         fabHire.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -468,8 +473,8 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
 
     @Override
     public boolean onResult(@NonNull String dialogTag, int which, @NonNull Bundle extras) {
-        if(dialogTag.equals(TAG_IGNORE_MODIFICATION_DIALOGUE)){
-            if(which == BUTTON_POSITIVE){
+        if (dialogTag.equals(TAG_IGNORE_MODIFICATION_DIALOGUE)) {
+            if (which == BUTTON_POSITIVE) {
                 enableEditionMode(false);
             }
         }
@@ -617,7 +622,7 @@ public class A3techViewEditProfilActivity extends BaseActivity implements AppBar
 
         if (isModeEdition) {
             SimpleDialog.build().theme(R.style.SimpleDialogThemeProfile).title(R.string.ignore_modifications_label).msg(R.string.ignore_modifications_msg).pos(R.string.save).neg(R.string.cancel).show(A3techViewEditProfilActivity.this, TAG_IGNORE_MODIFICATION_DIALOGUE);
-        }else{
+        } else {
             super.onBackPressed();
         }
     }

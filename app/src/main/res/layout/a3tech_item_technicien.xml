@@ -201,7 +201,8 @@
                         android:fontFamily="sans-serif-meduim"
                         android:text="@string/nbr_intervention"
                         android:textColor="@color/black"
-                        android:textSize="13dp" />
+                        android:textSize="13dp"
+                        android:visibility="gone"/>
 
                 </RelativeLayout>
 
@@ -228,7 +229,7 @@
                             android:background="@drawable/a3tech_back_distance_bar"
                             android:max="100"
                             android:progress="0"
-                            android:progressDrawable="@drawable/progress_add_mission_bar_color_back" />
+                            android:progressDrawable="@drawable/progress_tech_distance_drawable" />
 
                         <TextView
                             android:id="@+id/distance_value"

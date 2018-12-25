@@ -669,7 +669,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="mission_default_title_without_cat">Mission</string>
     <string name="date_mission">Date d\'intervention</string>
     <string name="adresse_mission">Lieu d\'intervention</string>
-    <string name="tape_to_add_review">Ajouter un avis pour nous laisser savoir si le technicien a bien gérer cette mission</string>
+    <string name="tape_to_add_review">Ajouter votre avis sur cette Mission</string>
     <string name="hope_msg_header_rating_mission">Nous espérons que votre demande de mission a été traitée comme vous l\'avez souhaité</string>
     <string name="add_rating_mission_hint">Dites nous ce que vous penser du travail effectué</string>
     <string name="close_mission">Clôturer</string>
@@ -713,6 +713,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="error_create_mission">Erreur technique lors de la création de cette Mission, veuillez réessayer ultérieurement.</string>
     <string name="libelle_creatio_mission">Demande de Mission lancée</string>
     <string name="error_validation_mission">Problème réseau lors de la validation de la Mission, veuillez réessayer ultérieurement</string>
+    <string name="error_reseau_technique">Problème technique, Connexion non établie avec le serveur, veuillez réessayer ultérieurement</string>
     <string name="mission_validee">Mission validée avec succée</string>
     <string name="libelle_annulation_mission">Demande de Mission annulée</string>
     <string name="libelle_report_mission">Mission reportée</string>
@@ -838,4 +839,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="error_review_not_created">Un problème technique est survenu, prière de rééssayer ultérieurement</string>
     <string name="n_a">N/A</string>
     <string name="unkown">Inconnu</string>
+    <string name="msg_autorisation_location">Améliorer l\'utilisation de l\'application</string>
+    <string name="autorization_location_sub_msg">L\'application 3tec, doit accéder à votre position pour vous proposer les techniciens à proximité.</string>
+    <string name="autoriser">Autoriser</string>
 </resources>
