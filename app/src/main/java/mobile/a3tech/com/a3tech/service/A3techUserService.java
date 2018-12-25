@@ -137,6 +137,17 @@ public class A3techUserService extends AbstractService implements Constant, IA3t
 
         return result;
     }
+    public A3techUser updateUser(String userJson)
+            throws EducationException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("user", userJson);
+        A3techUser result = getResult(
+                A3TECH_UPDATE_USER_JSON, params,
+                new TypeReference<A3techUser>() {
+                });
+
+        return result;
+    }
     public String initPassword(String email, String newPassword)
             throws EducationException {
         Map<String, String> params = new HashMap<String, String>();

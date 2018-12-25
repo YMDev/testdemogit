@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import com.google.gson.Gson;
 
 import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
+import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.model.A3techUserType;
 
@@ -35,6 +36,15 @@ public class PreferencesValuesUtils {
         String jsonuserConnected = PreferencesValuesUtils.getPreferenceStringByParam(context, PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, "");
         return new Gson().fromJson(jsonuserConnected, A3techUser.class);
     }
+    public static A3techUser setConnectedUser(Activity context, A3techUser user) {
+        final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
+                context.getApplicationContext()).edit();
+        editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(user));
+        editor.commit();
+        return user;
+    }
+
+
 
     public static Integer getPermietreRechercheTechniciens(Activity context) {
         Integer permResultat = PreferencesValuesUtils.getPreferenceIntegerByParam(context, PreferencesValuesUtils.KEY_PERIMETRE_RECHERCHE_TECHNICIEN, 0);

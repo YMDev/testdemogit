@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     tools:context=".activity.A3techDisplayMissionActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -394,7 +395,8 @@
                         android:layout_below="@id/rating_mission"
                         android:layout_marginTop="10dp"
                         android:fontFamily="sans-serif-meduim"
-                        android:gravity="center"
+                        android:layout_centerHorizontal="true"
+                        android:textAlignment="center"
                         android:text="Commentaire Commentaire"
                         android:textColor="@color/black"
                         android:textSize="16dp" />

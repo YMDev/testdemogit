@@ -8,8 +8,11 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import java.util.Calendar;
 
 import mobile.a3tech.com.a3tech.R;
+import mobile.a3tech.com.a3tech.images.Image;
 import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.Avis;
 
@@ -28,10 +32,11 @@ public class A3techDialogAddReview {
 		final  Dialog progressDialog = new Dialog(param.getContext());
         progressDialog.show();
 		LayoutInflater inflater =((Activity)param.getContext()).getLayoutInflater();
-    	View content =inflater.inflate(R.layout.a3tech_add_rating_dialogue, null);
+    	final View content =inflater.inflate(R.layout.a3tech_add_rating_dialogue, null);
 		final RatingBar mRatingBar = (RatingBar) content.findViewById(R.id.ratingBar);
 		final TextView mRatingScale = (TextView) content.findViewById(R.id.rating_comment);
 		final  EditText mFeedback = (EditText) content.findViewById(R.id.comment_to_insert);
+		final ImageView close = (ImageView) content.findViewById(R.id.close_dialog);
 		Button mSendFeedback = (Button) content.findViewById(R.id.btnSubmit);
 		mRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
 			@Override
@@ -63,7 +68,13 @@ public class A3techDialogAddReview {
 			mFeedback.setText(review.getCommentaire());
 		}
 
-
+		close.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				hideKeyboard(mFeedback, param.getContext());
+				progressDialog.dismiss();
+			}
+		});
 		mSendFeedback.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
@@ -84,13 +95,26 @@ public class A3techDialogAddReview {
     	progressDialog.setContentView(content);
 		progressDialog.setCancelable(true);
 		Window window = progressDialog.getWindow();
-		window.setLayout(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-		window.setGravity(Gravity.CENTER);
-        return progressDialog;
+		WindowManager.LayoutParams params = window.getAttributes();
+		params.width = WindowManager.LayoutParams.MATCH_PARENT;
+		params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+		params.gravity = Gravity.CENTER;
+		window.setAttributes(params);
+		window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE );
+		return progressDialog;
     }
+
 
 	public interface AddReviewParam {
 		void actionsubmitt(A3techReviewMission review);
 		Context getContext();
 	}
+
+
+	public static void hideKeyboard(View view, Context context) {
+		if (view == null) return;
+		InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+	}
+
 }

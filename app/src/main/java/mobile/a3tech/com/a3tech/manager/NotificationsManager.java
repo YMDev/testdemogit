@@ -29,8 +29,7 @@ public class NotificationsManager implements Constant {
         return uniqueInstance;
     }
 
-    public static A3techNotification getNotificationInstance(A3techUser userClient,
-                                                             A3techUser tech, A3techMission mission,
+    public static A3techNotification getNotificationInstance(A3techMission mission,
                                                              A3techNotificationType type,
                                                              String commentaire,
                                                              String libelle) {
@@ -41,8 +40,6 @@ public class NotificationsManager implements Constant {
         notification.setTitre(libelle);
         notification.setTypeNotification(type);
         notification.setDateNotification(new Date());
-        notification.setUserClient(userClient);
-        notification.setUserTech(tech);
         return  notification;
     }
 

@@ -372,10 +372,10 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
                         .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                 A3techMission missionSaved = (A3techMission) data;
                 Intent resultIntent = new Intent();
-                if(dialogwaiting != null) dialogwaiting.dismiss();
                 resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH, new Gson().toJson(missionSaved));
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();
+                if(dialogwaiting != null) dialogwaiting.dismiss();
             }
 
             @Override

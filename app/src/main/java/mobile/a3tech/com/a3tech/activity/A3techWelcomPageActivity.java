@@ -25,10 +25,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gauravbhola.ripplepulsebackground.RipplePulseLayout;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.fragment.A3techWelcomHomeFragment;
 import mobile.a3tech.com.a3tech.manager.UserManager;
+import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
 import mobile.a3tech.com.a3tech.utils.PermissionsStuffs;
@@ -54,10 +58,33 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
         saveUserNewLocation();
         onNetworkUp();
         /*installListener();*/
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(A3techWelcomPageActivity.this, new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String newToken = instanceIdResult.getToken();
+                Log.e("KKKKKKKKK : newToken", newToken);
+                A3techUser connectedUser = PreferencesValuesUtils.getConnectedUser(A3techWelcomPageActivity.this);
+                if (connectedUser != null && connectedUser.getId() != null) {
+                    connectedUser.setFcmId(newToken);
+                    UserManager.getInstance().updateUser(connectedUser, new DataLoadCallback() {
+                        @Override
+                        public void dataLoaded(Object data, int method, int typeOperation) {
+                            A3techUser userAjour = (A3techUser)data;
+                            PreferencesValuesUtils.setConnectedUser(A3techWelcomPageActivity.this,userAjour);
+                        }
 
+                        @Override
+                        public void dataLoadingError(int errorCode) {
+
+                        }
+                    });
+                }
+
+            }
+        });
     }
 
-       protected void setFragment(Fragment fragment) {
+    protected void setFragment(Fragment fragment) {
         android.support.v4.app.FragmentTransaction t = getSupportFragmentManager().beginTransaction();
         t.replace(R.id.fragment_frame, fragment);
         t.addToBackStack(fragment.getClass().getName());
@@ -68,7 +95,7 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     protected void onResume() {
         super.onResume();
         RipplePulseLayout mPulsator = (RipplePulseLayout) findViewById(R.id.layout_ripplepulse);
-        if(mPulsator != null) mPulsator.startRippleAnimation();
+        if (mPulsator != null) mPulsator.startRippleAnimation();
     }
 
     @Override
@@ -88,7 +115,7 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     public void startAddMission() {
         Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techAddMissionActivity.class);
         intentAddMissionn.putExtra(TAG_ADD_MISSION_FROM_WELCOM, Boolean.TRUE);
-        startActivityForResult(intentAddMissionn,REQ_ADD_MISSION_FROM_WELCOM);
+        startActivityForResult(intentAddMissionn, REQ_ADD_MISSION_FROM_WELCOM);
     }
 
     @Override
@@ -161,15 +188,16 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     }
 
     GPSTracker gps;
-    private void saveUserNewLocation(){
 
-        if(!PermissionsStuffs.canAccessLocation(getActivity())){
+    private void saveUserNewLocation() {
+
+        if (!PermissionsStuffs.canAccessLocation(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);
             }
-        }else{
+        } else {
             gps = new GPSTracker(A3techWelcomPageActivity.this);
-            if(gps.canGetLocation()){
+            if (gps.canGetLocation()) {
                 double latitude = gps.getLatitude();
                 double longitude = gps.getLongitude();
                 try {
@@ -193,20 +221,22 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }else{
+            } else {
                 gps.showSettingsAlert();
             }
         }
 
 
     }
+
     public static String KEY_IS_AFTER_ADD_MISSION = "ISAFTERADDMISSION";
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQ_ADD_MISSION_FROM_WELCOM && resultCode == Activity.RESULT_OK){
+        if (requestCode == REQ_ADD_MISSION_FROM_WELCOM && resultCode == Activity.RESULT_OK) {
             Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techMissionListeActivity.class);
-            intentAddMissionn.putExtra(KEY_IS_AFTER_ADD_MISSION,true);
+            intentAddMissionn.putExtra(KEY_IS_AFTER_ADD_MISSION, true);
             startActivity(intentAddMissionn);
         }
     }

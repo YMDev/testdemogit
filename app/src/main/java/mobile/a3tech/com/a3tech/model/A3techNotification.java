@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.model;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.Date;
 
@@ -10,8 +11,6 @@ public class A3techNotification {
     private String titre;
     private String commentaire;
     private Date dateCreation;
-    private A3techUser userClient;
-    private A3techUser userTech;
     private A3techMission mission;
     private Date dateNotification;
     private A3techNotificationType typeNotification;
@@ -52,21 +51,6 @@ public class A3techNotification {
         this.dateCreation = dateCreation;
     }
 
-    public A3techUser getUserClient() {
-        return userClient;
-    }
-
-    public void setUserClient(A3techUser userClient) {
-        this.userClient = userClient;
-    }
-
-    public A3techUser getUserTech() {
-        return userTech;
-    }
-
-    public void setUserTech(A3techUser userTech) {
-        this.userTech = userTech;
-    }
 
     public A3techMission getMission() {
         return mission;
@@ -92,24 +76,26 @@ public class A3techNotification {
         this.typeNotification = typeNotification;
     }
 
-    public A3techNotification(Long id, String titre, String commentaire, Date dateCreation, A3techUser userClient, A3techUser userTech, A3techMission mission, Date dateNotification, A3techNotificationType typeNotification) {
+    public A3techNotification(Long id, String titre, String commentaire, Date dateCreation,  A3techMission mission, Date dateNotification, A3techNotificationType typeNotification) {
         this.id = id;
         this.titre = titre;
         this.commentaire = commentaire;
         this.dateCreation = dateCreation;
-        this.userClient = userClient;
-        this.userTech = userTech;
         this.mission = mission;
         this.dateNotification = dateNotification;
         this.typeNotification = typeNotification;
     }
 
     public String to_Json() {
-        return new Gson().toJson(this);
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        return gson.toJson(this);
     }
 
     public A3techNotification from_Json(String jsonValue) {
-        return new Gson().fromJson(jsonValue, A3techNotification.class);
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+        return   gson.fromJson(jsonValue, A3techNotification.class);
     }
 
 }

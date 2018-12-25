@@ -712,6 +712,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="valider_cloturer_mission_msg_dialog">Voulez-vous clôturer cette Mission ?</string>
     <string name="error_create_mission">Erreur technique lors de la création de cette Mission, veuillez réessayer ultérieurement.</string>
     <string name="libelle_creatio_mission">Demande de Mission lancée</string>
+    <string name="libelle_pause_mission">Mission en pause</string>
     <string name="error_validation_mission">Problème réseau lors de la validation de la Mission, veuillez réessayer ultérieurement</string>
     <string name="error_reseau_technique">Problème technique, Connexion non établie avec le serveur, veuillez réessayer ultérieurement</string>
     <string name="mission_validee">Mission validée avec succée</string>
@@ -842,4 +843,9 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="msg_autorisation_location">Améliorer l\'utilisation de l\'application</string>
     <string name="autorization_location_sub_msg">L\'application 3tec, doit accéder à votre position pour vous proposer les techniciens à proximité.</string>
     <string name="autoriser">Autoriser</string>
+    <string name="msg_notification_pause">Mission en pause</string>
+    <string name="body_notification_pause">Bonjour, Le technicien est en Pause maintenant pour la Mission : %1$s  à l\'adresse suivante %2$s .</string>
+    <string name="envoyer">Envoyer</string>
+    <string name="offre_mission">Offre de mission</string>
+    <string name="body_notification_validation">Bonjour, une demande de mission a été validé pour le %1$s à l\'adresse suivante  %2$s voulez vous la prendre en charge ?</string>
 </resources>

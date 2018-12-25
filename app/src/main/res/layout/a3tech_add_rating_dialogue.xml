@@ -1,64 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     android:padding="20dp">
 
-    <TextView
-        android:id="@+id/header_label"
+    <ImageView
+        android:id="@+id/close_dialog"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/hope_msg_header_rating_mission"
-        android:textSize="16dp"
-        android:textStyle="italic"
-        android:gravity="center"/>
+        android:layout_gravity="right"
+        android:src="@drawable/a3tech_cancel_mission" />
 
-
-    <RatingBar
-        android:id="@+id/ratingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/header_label"
-        android:layout_marginTop="20dp"
-        android:numStars="5"
-        android:stepSize="1"
-        android:progressTint="@color/laranja_claro"/>
-
-    <TextView
-        android:id="@+id/rating_comment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/ratingBar"
-        android:layout_marginTop="10dp"
-        android:text="Awesome. I love it"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/comment_to_insert"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rating_comment"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:gravity="top|center"
-        android:hint="@string/add_rating_mission_hint"
-        android:inputType="textMultiLine"
-        android:lines="6"
-        android:textSize="17dp" />
+        android:layout_weight="1">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:id="@+id/container_review_elements"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/header_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="@string/hope_msg_header_rating_mission"
+                    android:textSize="16dp"
+                    android:textStyle="italic" />
+
+
+                <RatingBar
+                    android:id="@+id/ratingBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/header_label"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/laranja_claro"
+                    android:stepSize="1" />
+
+                <TextView
+                    android:id="@+id/rating_comment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ratingBar"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:text="Awesome. I love it"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/comment_to_insert"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/rating_comment"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="20dp"
+                    android:gravity="top|center"
+                    android:hint="@string/add_rating_mission_hint"
+                    android:inputType="textMultiLine"
+                    android:lines="6"
+                    android:textSize="17dp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </ScrollView>
 
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/comment_to_insert"
         android:layout_marginTop="10dp"
+        android:layout_weight="0"
         android:background="@drawable/a3tech_btn_facebook"
-        android:text="Send feedback"
+        android:text="@string/envoyer"
         android:textColor="@android:color/white" />
-
-</RelativeLayout>
+</LinearLayout>

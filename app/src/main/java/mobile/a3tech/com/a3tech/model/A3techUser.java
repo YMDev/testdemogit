@@ -46,6 +46,7 @@ public class A3techUser {
     private A3techUserType typeUser;
     private Integer nbrReview;
 
+    private String fcmId;
     private Boolean isNew;
 
 
@@ -283,5 +284,13 @@ public class A3techUser {
 
     public void setNew(Boolean aNew) {
         isNew = aNew;
+    }
+
+    public String getFcmId() {
+        return fcmId;
+    }
+
+    public void setFcmId(String fcmId) {
+        this.fcmId = fcmId;
     }
 }

@@ -266,8 +266,7 @@ public class A3techMissionsHomeFragment extends Fragment {
                         public void dataLoaded(Object data, int method, int typeOperation) {
                             //TODO commentaire a reconstituer.
                             String commentaire = "Demande créée pour une Mission en  " + mission.getCategorie().getLibelle() + "";
-                            A3techNotification notification = NotificationsManager.getNotificationInstance(PreferencesValuesUtils.getConnectedUser(getActivity()),
-                                    null, mission, A3techNotificationType.CREATION_MISSION, commentaire, getString(R.string.libelle_creatio_mission));
+                            A3techNotification notification = NotificationsManager.getNotificationInstance(mission, A3techNotificationType.CREATION_MISSION, commentaire, getString(R.string.libelle_creatio_mission));
                             NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
                                 @Override
                                 public void dataLoaded(Object data, int method, int typeOperation) {

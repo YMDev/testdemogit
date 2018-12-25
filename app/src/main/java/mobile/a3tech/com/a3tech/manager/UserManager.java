@@ -2,6 +2,8 @@ package mobile.a3tech.com.a3tech.manager;
 import android.os.Handler;
 import android.os.Message;
 
+import com.google.gson.Gson;
+
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
@@ -155,7 +157,43 @@ public class UserManager implements Constant {
 			}
 		}.start();
 	}
+	public void updateUser(final A3techUser userJson,
+								  final DataLoadCallback dataLoadCallback) {
+		final Handler handler = new Handler() {
+			// @Override
+			public void handleMessage(Message message) {
+				if (message.obj instanceof Integer) {
+					dataLoadCallback.dataLoadingError((Integer) message.obj);
+				} else {
+					dataLoadCallback.dataLoaded(message.obj,
+							KEY_USER_MANAGER_CREATE_ACCOUNT,0);
+				}
+			}
+		};
 
+		new Thread() {
+			@Override
+			public void run() {
+				try {
+
+					A3techUserService service = new A3techUserService();
+
+					A3techUser user = service.updateUser(new Gson().toJson(userJson));
+					if (user == null) {
+						Message message = handler.obtainMessage(0, 0);
+						handler.sendMessage(message);
+					} else {
+						Message message = handler.obtainMessage(0, user);
+						handler.sendMessage(message);
+					}
+				} catch (EducationException e) {
+					Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+					handler.sendMessage(message);
+				}
+
+			}
+		}.start();
+	}
 	// login avec application
 	public void login(final String email, final String password,
 			final DataLoadCallback dataLoadCallback) {

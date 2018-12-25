@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.service;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.codehaus.jackson.type.TypeReference;
 
@@ -18,13 +19,13 @@ public class A3techNotificationService extends AbstractService implements Consta
 
 
 	public A3techNotification createNotification(A3techNotification notification) throws EducationException{
-		Map<String, String> params = new HashMap<String, String>();
+
+	    Map<String, String> params = new HashMap<String, String>();
 		params.put("notification", notification.to_Json());
-		HashMap<String, String> result = getResult(A3TECH_CREATE_NOTIFICATION, params,
-				new TypeReference<HashMap<String, String>>() {
+		A3techNotification result = getResult(A3TECH_CREATE_NOTIFICATION, params,
+				new TypeReference<A3techNotification>() {
 				});
-		String s = result.get("result");
-		return new Gson().fromJson(s, A3techNotification.class);
+		return   result;
 	}
 
 	public List<A3techNotification> filtreNotification(String lang, Long connectedUser, String keyWord, String start, String limit, String key, final Long missionID,final Long userTechID, String password, int order, int type) throws EducationException {

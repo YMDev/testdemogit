@@ -77,6 +77,8 @@ public class A3techCreateAccountActivity extends BaseActivity implements A3techS
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null) {
+
+                    account.setFcmId(user.getUid());
                     // User is signed in
                     // NOTE: this Activity should get onpen only when the user is not signed in, otherwise
                     // the user will receive another verification email.
