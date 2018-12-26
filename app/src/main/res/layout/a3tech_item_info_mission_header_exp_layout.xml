@@ -12,7 +12,7 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_marginTop="2dp"
         android:layout_marginBottom="2dp"
         android:foreground="?android:attr/selectableItemBackground"
@@ -44,7 +44,7 @@
                     android:layout_centerVertical="true"
                     android:fontFamily="sans-serif-meduim"
                     android:text="CREEE"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/white"
                     android:textSize="12dp"
                     android:textStyle="bold" />
             </RelativeLayout>

@@ -154,5 +154,44 @@ public class NotificationsManager implements Constant {
         }.start();
     }
 
+    public void filtreNotificationByMission( final A3techMission mission, final String start,
+                                   final String limit, final DataLoadCallback dataLoadCallback) {
+        final Handler handler = new Handler() {
+            // @Override
+            public void handleMessage(Message message) {
+                if (message.obj instanceof Integer) {
+                    dataLoadCallback.dataLoadingError((Integer) message.obj);
+                } else {
+                    dataLoadCallback.dataLoaded(message.obj, KEY_MISSION_MANAGER_FILTRE_MISSION,0);
+                }
+            }
+        };
+
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+
+
+                    A3techNotificationService service = new A3techNotificationService();
+                    List<A3techNotification> result = service.filtreNotification(mission, start, limit);
+
+                    if (result == null) {
+                        Message message = handler.obtainMessage(0, 0);
+                        handler.sendMessage(message);
+                    } else {
+                        Message message = handler.obtainMessage(0, result);
+                        handler.sendMessage(message);
+                    }
+
+
+                } catch (EducationException e) {
+                    Message message = handler.obtainMessage(0, UNKNOWN_ERROR);
+                    handler.sendMessage(message);
+                }
+
+            }
+        }.start();
+    }
 
 }

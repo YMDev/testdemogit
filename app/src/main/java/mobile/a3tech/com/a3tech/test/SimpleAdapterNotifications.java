@@ -24,7 +24,10 @@ import java.util.List;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
+import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techNotification;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.view.A3techTimeLineMissionEventItem;
 
@@ -65,11 +68,23 @@ public class SimpleAdapterNotifications extends RecyclerView.Adapter<SimpleAdapt
     }
 
     @Override
-    public void onBindViewHolder(SimpleItemVH holder, int position) {
+    public void onBindViewHolder(final SimpleItemVH holder, int position) {
         final A3techMission missionTmp = listeObjects.get(position);
         if (missionTmp == null) return;
-        holder.itemNotification.setExpandableLayoutInRecycleView(Boolean.TRUE);
-         holder.itemNotification.initDataMission(missionTmp);
+        NotificationsManager.getInstance().filtreNotificationByMission(missionTmp, "0", "0", new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+                holder.itemNotification.initDataMission(missionTmp,(List<A3techNotification>) data);
+                holder.itemNotification.setExpandableLayoutInRecycleView(Boolean.TRUE);
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                holder.itemNotification.setExpandableLayoutInRecycleView(Boolean.TRUE);
+                holder.itemNotification.initDataMission(missionTmp,new ArrayList<>());
+            }
+        });
+
     }
 
     @Override

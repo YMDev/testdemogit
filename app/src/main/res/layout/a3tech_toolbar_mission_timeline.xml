@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:minHeight="?attr/actionBarSize">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="10dp">
+
+        <ImageView
+            android:id="@+id/back_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/black"
+            android:src="@drawable/a3tech_back_black" />
+
+        <TextView
+            android:id="@+id/big_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/back_action"
+            android:text="@string/toolbar_display_mission_title"
+            android:textColor="@color/black"
+            android:textSize="22dp"
+            android:textStyle="bold" />
+
+
+
+        <LinearLayout
+            android:id="@+id/cancel_mission_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal"
+            android:background="@drawable/ripple_effect_red_color">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:textColor="@color/red_dark"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:text="@string/cancel"
+                android:layout_marginRight="7dp"/>
+            <ImageView
+                android:id="@+id/cancel_mission_action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/red_dark"
+                android:src="@drawable/a3tech_cancel_mission" />
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</android.support.v7.widget.Toolbar>
+

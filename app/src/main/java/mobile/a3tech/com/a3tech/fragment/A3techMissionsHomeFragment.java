@@ -74,7 +74,7 @@ public class A3techMissionsHomeFragment extends Fragment {
     String connectedUser = "";
     String password = "";
     int distance = -1;
-    int limit = 10;
+    int limit = 1500;
 
     private RecyclerView recycleMission;
     private FloatingActionButton addMission;

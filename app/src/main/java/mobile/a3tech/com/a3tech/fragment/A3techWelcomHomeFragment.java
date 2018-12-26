@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techWelcomPageActivity;
 import mobile.a3tech.com.a3tech.model.A3techUser;
+import mobile.a3tech.com.a3tech.model.A3techUserType;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
 
 /**
@@ -79,6 +80,7 @@ public class A3techWelcomHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        userFirebase = PreferencesValuesUtils.getConnectedUser(getActivity());
         View viewFr = inflater.inflate(R.layout.fragment_a3tech_welcom_home, container, false);
         final RipplePulseLayout mPulsator = (RipplePulseLayout ) viewFr.findViewById(R.id.layout_ripplepulse);
         RelativeLayout containerPulse = viewFr.findViewById(R.id.container_image_pulsed);
@@ -86,8 +88,16 @@ public class A3techWelcomHomeFragment extends Fragment {
         RelativeLayout containerAccount = viewFr.findViewById(R.id.container_image_account);
         RelativeLayout containerBrowse = viewFr.findViewById(R.id.container_image_browse);
         RelativeLayout containerSetting = viewFr.findViewById(R.id.container_image_account);
+
+        TextView welcomMessage = viewFr.findViewById(R.id.welcom_message_under_action);
+        if(userFirebase.getTypeUser() != null && userFirebase.getTypeUser().getId() == A3techUserType.CLIENT.getId()){
+            welcomMessage.setText(getResources().getString(R.string.need_a_tech));
+        }else{
+            welcomMessage.setText(getResources().getString(R.string.display_evenements));
+        }
+
         welcomUserName = viewFr.findViewById(R.id.tech_name_welcom);
-        userFirebase = PreferencesValuesUtils.getConnectedUser(getActivity());
+
         if(userFirebase != null){
             StringBuilder nomSb = new StringBuilder();
             if(userFirebase.getNom() != null){
@@ -106,7 +116,12 @@ public class A3techWelcomHomeFragment extends Fragment {
             public void onClick(View view) {
                 if(mListener != null){
                     mPulsator.stopRippleAnimation();
-                    mListener.startAddMission();
+                    if(userFirebase.getTypeUser() != null && userFirebase.getTypeUser().getId() == A3techUserType.CLIENT.getId()){
+                        mListener.startAddMission();
+                    }else{
+                        mListener.startAddMission();
+                    }
+
                 }
             }
         });
@@ -180,5 +195,6 @@ public class A3techWelcomHomeFragment extends Fragment {
         void startAddMission();
         void startBrowse();
         void startAccount();
+        void startBrowseEents();
     }
 }

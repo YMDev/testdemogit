@@ -192,9 +192,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             @Override
             public void onClick(View v) {
                 hideKeyboard();
-                SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission).theme(R.style.SimpleDialogThemeProfile);
-                cal.setCancelable(true);
-                cal.show(A3techPostMissionFragment.this, TAG_CALENDAR_MISSION);
+                showAlarmDatePickup();
             }
         });
         btnGetLocation = viewFr.findViewById(R.id.getMyLocation);
@@ -218,7 +216,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             @Override
             public void onClick(View view) {
                 hideKeyboard();
-                SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission).theme(R.style.SimpleDialogThemeProfile);
+                SimpleDateDialog cal = SimpleDateDialog.build().title(R.string.hint_date_mission).theme(R.style.SimpleDialogThemeProfile).minDate(new Date());
                 cal.setCancelable(true);
                 cal.show(A3techPostMissionFragment.this, TAG_CALENDAR_MISSION);
             }
@@ -453,6 +451,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
     private void showAlarmDateTimePickup() {
         SimpleTimeDialog cal = SimpleTimeDialog.build().title(R.string.choose_time_mission).cancelable(true).neg(R.string.cancel).pos(R.string.ok_label).theme(R.style.SimpleDialogThemeProfile);
         cal.setCancelable(true);
+        cal.set24HourView(true);
         cal.show(this, TAG_TIME_MISSION);
     }
 

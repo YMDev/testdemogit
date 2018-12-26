@@ -44,13 +44,19 @@ import mobile.a3tech.com.a3tech.fragment.A3techSelectCategoryMissionFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techSelecteAccountFragment;
 import mobile.a3tech.com.a3tech.fragment.A3techStep1CreatAccountFragment;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
+import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techNotification;
+import mobile.a3tech.com.a3tech.model.A3techNotificationType;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.model.Mission;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.service.GPSTracker;
+import mobile.a3tech.com.a3tech.service.MailService;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.utils.PushNotifictionHelper;
 import mobile.a3tech.com.a3tech.view.A3techCustomToastDialog;
 import mobile.a3tech.com.a3tech.view.A3techDialogFilterTechniciens;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
@@ -375,7 +381,7 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
                 resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH, new Gson().toJson(missionSaved));
                 setResult(Activity.RESULT_OK, resultIntent);
                 finish();
-                if(dialogwaiting != null) dialogwaiting.dismiss();
+                notificiationValidationDemande(dialogwaiting,missionSaved);
             }
 
             @Override
@@ -385,7 +391,42 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
             }
         });
     }
+    private void notificiationValidationDemande(final ProgressDialog dialogueWaiting, final A3techMission selectedMission) {
+        String commentaire = "";
+        if (selectedMission.getCategorie() != null) {
+            commentaire = "Demande validée pour une Mission en  " + selectedMission.getCategorie().getLibelle() + "";
+        } else {
+            commentaire = "Demande validée";
+        }
+        A3techNotification notification = NotificationsManager.getNotificationInstance(selectedMission, A3techNotificationType.VALIDATION_MISSION, commentaire, getString(R.string.libelle_creatio_mission));
+        NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
 
+                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_validee), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            String msg_notif = getResources().getString(R.string.body_notification_validation, DateStuffs.dateToString(DateStuffs.DATE_DAY_APLHA, selectedMission.getDateIntervention()), selectedMission.getAdresse());
+                            PushNotifictionHelper.sendPushNotification(selectedMission.getTechnicien().getFcmId(), getResources().getString(R.string.offre_mission), msg_notif);
+                            MailService mail = new MailService("company@company.com", selectedMission.getTechnicien().getEmail(), getResources().getString(R.string.offre_mission), msg_notif, "");
+                            mail.send();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                dialogueWaiting.dismiss();
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+                // A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+            }
+        });
+    }
     public void hideToolbar(Boolean hide) {
 
         if (getSupportActionBar() == null) return;

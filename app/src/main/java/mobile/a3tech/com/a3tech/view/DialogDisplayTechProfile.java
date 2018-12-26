@@ -36,15 +36,21 @@ import mobile.a3tech.com.a3tech.activity.A3techMissionListeActivity;
 import mobile.a3tech.com.a3tech.activity.A3techViewEditProfilActivity;
 import mobile.a3tech.com.a3tech.activity.A3techWelcomPageActivity;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
+import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techNotification;
+import mobile.a3tech.com.a3tech.model.A3techNotificationType;
 import mobile.a3tech.com.a3tech.model.A3techReviewMission;
 import mobile.a3tech.com.a3tech.model.A3techUser;
 import mobile.a3tech.com.a3tech.service.A3techUserService;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
+import mobile.a3tech.com.a3tech.service.MailService;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTechnicien;
+import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.utils.PreferencesValuesUtils;
+import mobile.a3tech.com.a3tech.utils.PushNotifictionHelper;
 import mobile.a3tech.com.a3tech.utils.SphericalUtil;
 
 public class DialogDisplayTechProfile {
@@ -178,15 +184,47 @@ public class DialogDisplayTechProfile {
                 A3techMission missionSaved = (A3techMission) data;
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra(A3techAddMissionActivity.TAG_RESULT_FROM_SELECT_TECH, gson.toJson(missionn));
-                 if(dialogwaiting != null) dialogwaiting.dismiss();
                 ((A3techAddMissionActivity) msContext).setResult(Activity.RESULT_OK, resultIntent);
                 ((A3techAddMissionActivity) msContext).finish();
+                notificiationValidationDemande(msContext,dialogwaiting,missionSaved);
             }
 
             @Override
             public void dataLoadingError(int errorCode) {
                 if(dialogwaiting != null) dialogwaiting.dismiss();
                 A3techCustomToastDialog.createSnackBar(msContext, msContext.getResources().getString(R.string.mission_error_creation), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+            }
+        });
+    }
+
+    private static void notificiationValidationDemande(final Context context , final ProgressDialog dialogueWaiting, final A3techMission selectedMission) {
+        String commentaire = "";
+        if (selectedMission.getCategorie() != null) {
+            commentaire = "Demande validée pour une Mission en  " + selectedMission.getCategorie().getLibelle() + "";
+        } else {
+            commentaire = "Demande validée";
+        }
+        A3techNotification notification = NotificationsManager.getNotificationInstance(selectedMission, A3techNotificationType.VALIDATION_MISSION, commentaire, context.getResources().getString(R.string.libelle_creatio_mission));
+        NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
+
+                A3techCustomToastDialog.createToastDialog(context, context.getResources().getString(R.string.mission_validee), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                        try {
+                            String msg_notif = context.getResources().getString(R.string.body_notification_validation, DateStuffs.dateToString(DateStuffs.DATE_DAY_APLHA, selectedMission.getDateIntervention()), selectedMission.getAdresse());
+                            PushNotifictionHelper.sendPushNotification(selectedMission.getTechnicien().getFcmId(), context.getResources().getString(R.string.offre_mission), msg_notif);
+                            MailService mail = new MailService("company@company.com", selectedMission.getTechnicien().getEmail(), context.getResources().getString(R.string.offre_mission), msg_notif, "");
+                            mail.send();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                dialogueWaiting.dismiss();
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+                // A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
             }
         });
     }

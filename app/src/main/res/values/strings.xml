@@ -637,7 +637,7 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="description_mission_header">Description</string>
     <string name="hint_description_mission">Ajouter plus de détails</string>
     <string name="date_mission_header">Date intervention</string>
-    <string name="hint_date_mission">Ajouter une Date pour cette mission</string>
+    <string name="hint_date_mission">Date d\'intervention</string>
     <string name="location_mission_header">Adresse</string>
     <string name="affecter_un_technicien">Affecter à un Technicien Atech</string>
     <string name="choose_time_mission">Séléctionner l\'heure de l\'intervention</string>
@@ -847,5 +847,16 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="body_notification_pause">Bonjour, Le technicien est en Pause maintenant pour la Mission : %1$s  à l\'adresse suivante %2$s .</string>
     <string name="envoyer">Envoyer</string>
     <string name="offre_mission">Offre de mission</string>
-    <string name="body_notification_validation">Bonjour, une demande de mission a été validé pour le %1$s à l\'adresse suivante  %2$s voulez vous la prendre en charge ?</string>
+    <string name="body_notification_validation">Bonjour, la demande de mission a été validée pour le %1$s à l\'adresse suivante  %2$s </string>
+    <string name="title_activity_a3tech_mission_time_line">A3techMissionTimeLineActivity</string>
+    <string name="need_a_tech">Besoin d\'un Technicien ?</string>
+    <string name="display_evenements">Derniers événements..</string>
+    <string name="rejeter">Rejeter</string>
+    <string name="accepter">Prendre en charge</string>
+    <string name="rejeter_mission">Rejeter la mission</string>
+    <string name="msg_rejeter_mission">Voulez-vous rejeter cette mission ?</string>
+    <string name="accpeter_mission">Accepter la mission</string>
+    <string name="msg_accepter_mission">Voulez-vous accepter de prendre en charge cette mission ?</string>
+    <string name="mission_closed">Mission clôturée avec succès</string>
+    <string name="mission_closed_sub_msg">Nous vous remercions pour votre Collaboration, ci-dessus vous trouvez le montant à demander au client</string>
 </resources>

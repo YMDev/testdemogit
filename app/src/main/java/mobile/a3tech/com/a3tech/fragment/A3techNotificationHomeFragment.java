@@ -11,16 +11,21 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.gson.Gson;
 
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
+import mobile.a3tech.com.a3tech.adapter.A3techMissionsListeAdapter;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterNotifications;
 import mobile.a3tech.com.a3tech.utils.Constant;
@@ -98,16 +103,15 @@ public class A3techNotificationHomeFragment extends Fragment {
         recycleNotifications = viewFr.findViewById(R.id.recycle_notifications);
 
         final ProgressDialog dd = CustomProgressDialog.createProgressDialog(getActivityContext(), "");
-
+        A3techMission criteriaM = new A3techMission();
         MissionManager.getInstance().filtreMission(lang, connectedUser,
-                keyWord, String.valueOf(distance), "",
-                Constant.LOAD_DATA_FINISH, String.valueOf(0),
-                String.valueOf(limit), connectedUser, null, premium, password, 0, 0,
+                new Gson().toJson(criteriaM),
+                String.valueOf("0"), String.valueOf(limit), 0, 0,
                 new DataLoadCallback() {
                     @Override
                     public void dataLoaded(Object data, int method, int typeOperation) {
                         List<A3techMission> listeRetour = (List<A3techMission>) data;
-                        SimpleAdapterNotifications adapter = new SimpleAdapterNotifications(getActivityContext(), listeRetour, (A3techHomeActivity) getActivity());
+                        SimpleAdapterNotifications adapter = new SimpleAdapterNotifications(getActivityContext(), listeRetour,  getActivity());
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivityContext());
                         recycleNotifications.setLayoutManager(mLayoutManager);
                         recycleNotifications.setItemAnimator(new DefaultItemAnimator());

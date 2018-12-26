@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/welcom_title"
             android:layout_centerHorizontal="true"
+            android:textAlignment="center"
             android:layout_marginTop="10dp"
             android:fontFamily="sans-serif-meduim"
             android:text="Plus de 1530 Technicien hautement qualifié"
@@ -80,13 +81,14 @@
             </RelativeLayout>
 
             <TextView
+                android:id="@+id/welcom_message_under_action"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/container_image_pulsed"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-meduim"
-                android:text="Besoin d'un Technicien ?"
+                android:text="@string/need_a_tech"
                 android:textColor="@color/white"
                 android:textSize="18dp"
                 android:textStyle="bold" />

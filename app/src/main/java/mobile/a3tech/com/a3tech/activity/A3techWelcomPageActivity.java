@@ -131,6 +131,12 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     }
 
     @Override
+    public void startBrowseEents() {
+        Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techMissionTimeLineActivity.class);
+        startActivity(intentAddMissionn);
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finishAffinity();

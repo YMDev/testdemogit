@@ -1,6 +1,7 @@
 package mobile.a3tech.com.a3tech.view;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -19,17 +20,21 @@ import com.github.aakira.expandablelayout.ExpandableLayout;
 import com.github.aakira.expandablelayout.ExpandableLinearLayout;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
+import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techEvenementiMission;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techNotification;
+import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterTimeLine;
 
 public class A3techTimeLineMissionEventItem extends RelativeLayout {
 
-    private List<A3techEvenementiMission> evenementiMission;
+    private List<A3techNotification> evenementiMission;
     private A3techMission currentMission;
     private ExpandableRelativeLayout expandableLayout;
     private RecyclerView recyclerViewEvents;
@@ -55,10 +60,6 @@ public class A3techTimeLineMissionEventItem extends RelativeLayout {
         initView(context);
     }
 
-    public A3techTimeLineMissionEventItem(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        initView(context);
-    }
 
     private void initView(final Context context){
         pContext = context;
@@ -77,11 +78,13 @@ public class A3techTimeLineMissionEventItem extends RelativeLayout {
         layoutJeader.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                expandableLayout.toggle();
+
                 if(!expandableLayout.isExpanded()){
+                    expandableLayout.expand();
                     indicatorExpandableLayout.setImageDrawable(context.getResources().getDrawable(R.drawable.a3tech_exp_collapse));
                 }else{
                     indicatorExpandableLayout.setImageDrawable(context.getResources().getDrawable(R.drawable.a3tech_exp_expand));
+                    expandableLayout.collapse();
                 }
             }
         });
@@ -92,15 +95,13 @@ public class A3techTimeLineMissionEventItem extends RelativeLayout {
         //expandableLayout.setInRecyclerView(value);
     }
 
-    public void initDataMission(A3techMission mission){
-
+    public void initDataMission(A3techMission mission, List event){
         if(mission != null){
             currentMission = mission;
             titreMission.setText(currentMission.getTitre());
             adresseMission.setText(currentMission.getAdresse());
             statutMission.setText(currentMission.getStatut().getDiscreptionEnum());
-            evenementiMission = currentMission.getEvenement();
-            SimpleAdapterTimeLine adapter = new SimpleAdapterTimeLine(pContext,evenementiMission,(Activity)pContext);
+            SimpleAdapterTimeLine adapter = new SimpleAdapterTimeLine(pContext,event,(Activity)pContext);
             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(pContext.getApplicationContext());
             recyclerViewEvents.setLayoutManager(mLayoutManager);
             recyclerViewEvents.setItemAnimator(new DefaultItemAnimator());

@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
 import mobile.a3tech.com.a3tech.manager.UserManager;
 import mobile.a3tech.com.a3tech.model.A3techUser;
+import mobile.a3tech.com.a3tech.model.A3techUserStatut;
 import mobile.a3tech.com.a3tech.model.A3techUserType;
 
 public class PreferencesValuesUtils {
@@ -46,6 +47,10 @@ public class PreferencesValuesUtils {
 
 
 
+    public static Boolean isUserConnectedTechnicien(Activity activity){
+        A3techUser userconnectyed = getConnectedUser(activity);
+        return userconnectyed.getStatut() != null && (userconnectyed.getTypeUser().getId() == A3techUserType.TECHNICIEN.getId() || userconnectyed.getTypeUser().getId() == A3techUserType.TECH_USER.getId());
+    }
     public static Integer getPermietreRechercheTechniciens(Activity context) {
         Integer permResultat = PreferencesValuesUtils.getPreferenceIntegerByParam(context, PreferencesValuesUtils.KEY_PERIMETRE_RECHERCHE_TECHNICIEN, 0);
         return permResultat;

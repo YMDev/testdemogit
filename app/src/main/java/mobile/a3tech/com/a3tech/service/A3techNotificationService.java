@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import mobile.a3tech.com.a3tech.exception.EducationException;
+import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techNotification;
 import mobile.a3tech.com.a3tech.model.Categorie;
 import mobile.a3tech.com.a3tech.utils.Constant;
@@ -59,4 +60,18 @@ public class A3techNotificationService extends AbstractService implements Consta
 		String s = result.get("result");
 		return s;
 	}
+
+	public List<A3techNotification> filtreNotification(A3techMission mission, String start, String limit) throws EducationException {
+		Gson gson = new GsonBuilder()
+				.setDateFormat("yyyy-MM-dd HH:mm:ss").create();
+		Map<String, String> params = new HashMap<String, String>();
+		params.put("mission", gson.toJson(mission));
+		params.put("start", start+"");
+		params.put("limit", limit);
+		List<A3techNotification> result = getResult(A3TECH_FETCH_NOTIFICATION_BY_MISSION,params,
+				new TypeReference<List<A3techNotification>>() {
+				});
+		return result;
+	}
+
 }

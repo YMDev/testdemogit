@@ -27,6 +27,7 @@ import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.model.A3techEvenementiMission;
 import mobile.a3tech.com.a3tech.model.A3techMission;
+import mobile.a3tech.com.a3tech.model.A3techNotification;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.view.CircleImageView;
@@ -43,7 +44,7 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
     private static final int VIEW_TYPE_BOTTOM = 2;
 
     //  Data
-    private List<A3techEvenementiMission> listeObjects = new ArrayList<>();
+    private List<A3techNotification> listeObjects = new ArrayList<>();
 
     private Context context;
     private Activity parentActivity;
@@ -58,7 +59,8 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
         parentActivity = parent;
     }
 
-    public void addEvenementMission(A3techEvenementiMission missionV) {
+    public void addEvenementMission(A3techNotification missionV) {
+        if(this.listeObjects == null) this.listeObjects = new ArrayList<A3techNotification>();
         this.listeObjects.add(missionV);
         this.notifyDataSetChanged();
     }
@@ -74,7 +76,7 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
 
     @Override
     public void onBindViewHolder(SimpleItemVH holder, int position) {
-        final A3techEvenementiMission evenementiMission = listeObjects.get(position);
+        final A3techNotification evenementiMission = listeObjects.get(position);
         if (evenementiMission == null) return;
         /*switch(holder.getItemViewType()) {
             case VIEW_TYPE_TOP:
@@ -92,23 +94,19 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
             holder.titreEvenement.setText(evenementiMission.getTitre());
          }
 
-         if(evenementiMission.getDateDebut() != null){
-             Date dateEvenet = new Date(evenementiMission.getDateDebut());
+         if(evenementiMission.getDateCreation() != null){
+             Date dateEvenet = evenementiMission.getDateCreation();
              holder.timeEvent.setText(DateStuffs.dateToString(DateStuffs.TIME_FORMAT, dateEvenet));
          }else{
              holder.timeEvent.setVisibility(View.GONE);
          }
 
-         if(evenementiMission.getDescription() != null){
-            holder.discreptionEvenement.setText(evenementiMission.getDescription());
+         if(evenementiMission.getCommentaire() != null){
+            holder.discreptionEvenement.setText(evenementiMission.getCommentaire());
          }else{
             holder.discreptionEvenement.setVisibility(View.GONE);
          }
 
-         if(evenementiMission.getUserResponsable() != null){
-
-            // if(evenementiMission.getUserResponsable().get)
-         }
          holder.userResponsable.setImageBitmap(new  LetterTileProvider(context).getLetterTile("BBB", "KK",140,140));
 
     }
