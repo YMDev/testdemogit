@@ -15,7 +15,7 @@ import java.net.URL;
 public class PushNotifictionHelper {
 
 
-    public final static String AUTH_KEY_FCM = "AAAATh9nIZw:APA91bHIFjCq4zXPSYQ7OJGKjAL-_1v96IF1U-oq6cYNowgf8YbUzZvA9R4wWNbsgh0Bhpp3o6KC2vVFAQgPePvDDkPxM37CXakoaPNTUelgTL98eOOsb2Ue4qwvVuHCGO3Fhs8rxoxq";
+    public final static String AUTH_KEY_FCM = "ssss";
     public final static String API_URL_FCM = "https://fcm.googleapis.com/fcm/send";
 
     public static String sendPushNotification(String deviceToken, String title, String body)
