@@ -3,9 +3,46 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <mobile.a3tech.com.a3tech.view.A3techTimeLineMissionEventItem
-        android:id="@+id/item_notifcation"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </mobile.a3tech.com.a3tech.view.A3techTimeLineMissionEventItem>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/header_exp_info_mission"
+            layout="@layout/a3tech_item_info_mission_header_exp_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/expandableLayoutEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/header_exp_info_mission"
+            app:el_duration="400"
+            app:el_expanded="true"
+            app:el_parallax="0.5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/waiting_for_notifs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_gravity="center"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_events"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"></android.support.v7.widget.RecyclerView>
+
+            </LinearLayout>
+        </net.cachapa.expandablelayout.ExpandableLayout>
+    </RelativeLayout>
 </RelativeLayout>

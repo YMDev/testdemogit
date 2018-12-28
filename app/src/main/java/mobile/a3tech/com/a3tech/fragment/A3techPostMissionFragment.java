@@ -1,15 +1,20 @@
 package mobile.a3tech.com.a3tech.fragment;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +39,7 @@ import java.util.Locale;
 import eltos.simpledialogfragment.SimpleDateDialog;
 import eltos.simpledialogfragment.SimpleDialog;
 import eltos.simpledialogfragment.SimpleTimeDialog;
+import mobile.a3tech.com.a3tech.LocationGpsListener;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
 import mobile.a3tech.com.a3tech.activity.BaseActivity;
@@ -267,52 +273,57 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(gps == null) gps = new GPSTracker(getActivity());
-                if (gps.canGetLocation()) {
+                    final  LocationGpsListener listener = new LocationGpsListener(getActivity());
+                    latitude = listener.getLatitude();
+                    longitude = listener.getLongitude();
+                    if(latitude == 0 && longitude == 0){
+                        A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.erro_location_not_available), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);
+                        waitingDialog.dismiss();
+                        listener.stopLocationUpdates();
+                    }else{
+                        Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
+                        try {
+                            List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 10);
+                            if(addresses != null && addresses.size() > 1){
+                                displayListAdresse(addresses,waitingDialog,listener);
+                            }else if(addresses != null && addresses.size() > 0){
+                                cityName = addresses.get(0).getAddressLine(0); // adresse
+                                if (cityName != null) {
+                                    try {
+                                        getActivity().runOnUiThread(new Runnable() {
 
-                    latitude = gps.getLatitude();
-                    longitude = gps.getLongitude();
-                    Geocoder geocoder = new Geocoder(getActivity(), Locale.getDefault());
-                    try {
-                        List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-                        if(addresses != null && addresses.size() > 1){
-                            displayListAdresse(addresses,waitingDialog);
-                        }else if(addresses != null && addresses.size() > 0){
-                            cityName = addresses.get(0).getAddressLine(0); // adresse
-                            if (cityName != null) {
-                                try {
-                                    getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                locationMission.setText(cityName);
+                                                waitingDialog.dismiss();
+                                                listener.stopLocationUpdates();
+                                            }
+                                        });
+                                        Thread.sleep(300);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                        listener.stopLocationUpdates();
+                                    }
 
-                                        @Override
-                                        public void run() {
-                                            locationMission.setText(cityName);
-                                            waitingDialog.dismiss();
-                                        }
-                                    });
-                                    Thread.sleep(300);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
                                 }
-
                             }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            waitingDialog.dismiss();
+                            listener.stopLocationUpdates();
                         }
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                        waitingDialog.dismiss();
                     }
 
                     // \n is for new line
-                } else {
-                    waitingDialog.dismiss();
-                    gps.showSettingsAlert();
-                }
+
             }
         });
 
     }
 
-    private void displayListAdresse(List<Address> adresses, final ProgressDialog waitingDialog) {
+    private void displayListAdresse(List<Address> adresses, final ProgressDialog waitingDialog, final LocationGpsListener lisetener) {
         AlertDialog.Builder builderSingle = new AlertDialog.Builder(getActivity());
         //builderSingle.setIcon(R.drawable.ic_launcher);
         builderSingle.setTitle(R.string.select_adresse);
@@ -322,8 +333,8 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
         for (Address addresses : adresses
                 ) {
             if (addresses != null) {
-                _cityName = addresses.getAddressLine(0); // adresse
-                arrayAdapter.add(_cityName);
+              //  _cityName = addresses.getAddressLine(0); // adresse
+                arrayAdapter.add(getAddress(addresses));
             }
         }
 
@@ -332,6 +343,7 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
             public void onClick(DialogInterface dialog, int which) {
                 waitingDialog.dismiss();
                 dialog.dismiss();
+                lisetener.stopLocationUpdates();
             }
         });
 
@@ -347,19 +359,42 @@ public class A3techPostMissionFragment extends A3techBaseFragment implements Sim
                             public void run() {
                                 locationMission.setText(cityName);
                                 waitingDialog.dismiss();
+                                lisetener.stopLocationUpdates();
                             }
                         });
                         Thread.sleep(300);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
+                        lisetener.stopLocationUpdates();
                     }
 
                 }
             }
         });
+        builderSingle.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialogInterface) {
+                lisetener.stopLocationUpdates();
+                waitingDialog.dismiss();
+            }
+        });
         builderSingle.show();
     }
-
+    public String getAddress(Address addresss) {
+        String strCompAdd = "";
+        try {
+            for(int i = 0; i <= addresss.getMaxAddressLineIndex(); i++) {
+                strCompAdd = strCompAdd + addresss.getAddressLine(i);
+            }
+                strCompAdd = strCompAdd.replaceAll("null", "");
+                strCompAdd = strCompAdd.replaceAll("Unnamed", "");
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            // Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        return strCompAdd;
+    }
     private Boolean verifyDataInserted() {
         if (StringUtils.isBlank(dateIntervension.getText().toString())) {
             A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.error_date_intervention_empty), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_ERROR);

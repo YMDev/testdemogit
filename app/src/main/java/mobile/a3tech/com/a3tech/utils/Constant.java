@@ -2,7 +2,7 @@ package mobile.a3tech.com.a3tech.utils;
 
 public interface Constant {
 
-    static String IP = "http://ec2-34-247-70-12.eu-west-1.compute.amazonaws.com:8080/";
+   static String IP = "http://ec2-34-247-70-12.eu-west-1.compute.amazonaws.com:8080/";
     // static String IP = "http://192.168.1.24:8080/";
     //static String IP = "http://192.168.43.242:8080/";
 

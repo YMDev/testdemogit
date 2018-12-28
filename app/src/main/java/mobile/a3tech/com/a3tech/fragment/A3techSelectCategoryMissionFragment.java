@@ -19,6 +19,7 @@ import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techAddMissionActivity;
+import mobile.a3tech.com.a3tech.activity.A3techWelcomPageActivity;
 import mobile.a3tech.com.a3tech.activity.BaseActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techSelectMissionCategoryAdapter;
 import mobile.a3tech.com.a3tech.manager.CategorieManager;
@@ -39,11 +40,13 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_CAT = "ARG_CAT";
     public static final int ACTION_SELECT_CATEGORY_MISSION = 1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Integer catSelected;
 
     private RecyclerView recycleSelectCategory;
     private OnFragmentInteractionListener mListener;
@@ -69,13 +72,21 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    public static A3techSelectCategoryMissionFragment newInstance(String param1, Integer categorySelected) {
+        A3techSelectCategoryMissionFragment fragment = new A3techSelectCategoryMissionFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putInt(ARG_CAT, categorySelected);
+        fragment.setArguments(args);
+        return fragment;
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
+            catSelected = getArguments().getInt(ARG_CAT);
         }
     }
 
@@ -122,11 +133,32 @@ public class A3techSelectCategoryMissionFragment extends Fragment {
                         break;
                 }
 
-                A3techSelectMissionCategoryAdapter mAdapter = new A3techSelectMissionCategoryAdapter(getActivity(), listeRetour, A3techSelectCategoryMissionFragment.this);
-                RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-                recycleSelectCategory.setLayoutManager(mLayoutManager);
-                recycleSelectCategory.setItemAnimator(new DefaultItemAnimator());
-                recycleSelectCategory.setAdapter(mAdapter);
+                if(catSelected != null && catSelected != -1){
+                    for (Categorie cateTmp:listeRetour
+                         ) {
+                        switch (catSelected){
+                            case A3techWelcomPageActivity.TYPE_CLIM:
+                                if(cateTmp.getCode() != null && cateTmp.getCode().equals("CLIM")){
+                                    if(mListener != null){
+                                        mListener.actionNext(A3techSelectCategoryMissionFragment.ACTION_SELECT_CATEGORY_MISSION, cateTmp);
+                                    }
+                                }
+                                if(cateTmp.getCode() != null && cateTmp.getCode().equals("PLOM")){
+                                    if(mListener != null){
+                                        mListener.actionNext(A3techSelectCategoryMissionFragment.ACTION_SELECT_CATEGORY_MISSION, cateTmp);
+                                    }
+                                }
+                                break;
+                        }
+                    }
+                }else{
+                    A3techSelectMissionCategoryAdapter mAdapter = new A3techSelectMissionCategoryAdapter(getActivity(), listeRetour, A3techSelectCategoryMissionFragment.this);
+                    RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
+                    recycleSelectCategory.setLayoutManager(mLayoutManager);
+                    recycleSelectCategory.setItemAnimator(new DefaultItemAnimator());
+                    recycleSelectCategory.setAdapter(mAdapter);
+                }
+
             }
 
             @Override

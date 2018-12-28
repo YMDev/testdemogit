@@ -19,7 +19,8 @@ public class PermissionsStuffs {
             Manifest.permission.READ_CONTACTS
     };
     public static final String[] LOCATION_PERMS={
-            Manifest.permission.ACCESS_FINE_LOCATION
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
     };
 
     public static final int INITIAL_REQUEST=1337;
@@ -28,7 +29,7 @@ public class PermissionsStuffs {
     public static final int CONTACTS_REQUEST=INITIAL_REQUEST+2;
     public static final int LOCATION_REQUEST=INITIAL_REQUEST+3;
     public static boolean canAccessLocation(Context context) {
-        return(hasPermission(context,Manifest.permission.ACCESS_FINE_LOCATION));
+        return(hasPermission(context,Manifest.permission.ACCESS_FINE_LOCATION) && hasPermission(context,Manifest.permission.ACCESS_COARSE_LOCATION));
     }
 
     public static boolean canAccessCamera(Context context) {

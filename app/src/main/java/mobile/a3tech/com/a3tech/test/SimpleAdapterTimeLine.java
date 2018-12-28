@@ -28,6 +28,7 @@ import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.model.A3techEvenementiMission;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techNotification;
+import mobile.a3tech.com.a3tech.model.A3techNotificationType;
 import mobile.a3tech.com.a3tech.utils.DateStuffs;
 import mobile.a3tech.com.a3tech.utils.LetterTileProvider;
 import mobile.a3tech.com.a3tech.view.CircleImageView;
@@ -53,7 +54,7 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
         this.context = context;
     }
 
-    public SimpleAdapterTimeLine(Context context, List objectMenu, Activity parent) {
+    public SimpleAdapterTimeLine(Context context, List<A3techNotification> objectMenu, Activity parent) {
         this.context = context;
         listeObjects = objectMenu;
         parentActivity = parent;
@@ -65,7 +66,12 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
         this.notifyDataSetChanged();
     }
 
-
+    public void addEvents(List<A3techNotification> events) {
+      if(events == null) return;
+        if(this.listeObjects == null) this.listeObjects = new ArrayList<A3techNotification>();
+         this.listeObjects.addAll(events);
+        this.notifyDataSetChanged();
+    }
     @Override
     public SimpleItemVH onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
@@ -107,10 +113,74 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
             holder.discreptionEvenement.setVisibility(View.GONE);
          }
 
-         holder.userResponsable.setImageBitmap(new  LetterTileProvider(context).getLetterTile("BBB", "KK",140,140));
+
+         if(evenementiMission.getMission() != null){
+             if(evenementiMission.getTypeNotification() != null){
+                 if (evenementiMission.getTypeNotification().getId() == A3techNotificationType.CREATION_MISSION.getId()){
+                     setupUserInfo(1,holder,evenementiMission);
+                 }else if (evenementiMission.getTypeNotification().getId() == A3techNotificationType.ACCEPTATION_MISSION.getId()){
+                     setupUserInfo(2,holder,evenementiMission);
+                 }else if (evenementiMission.getTypeNotification().getId() == A3techNotificationType.ANNULATION_MISSION.getId()){
+                     setupUserInfo(1,holder,evenementiMission);
+                 }else if (evenementiMission.getTypeNotification().getId() == A3techNotificationType.DEMARRAGE_MISSION.getId()){
+                     setupUserInfo(2,holder,evenementiMission);
+                 }else if (evenementiMission.getTypeNotification().getId() == A3techNotificationType.PAUSE_MISSION.getId()){
+                     setupUserInfo(2,holder,evenementiMission);
+                 }else if (evenementiMission.getTypeNotification().getId() == A3techNotificationType.REJET_MISSION.getId()){
+                     setupUserInfo(2,holder,evenementiMission);
+                 }else if (evenementiMission.getTypeNotification().getId() == A3techNotificationType.VALIDATION_MISSION.getId()){
+                     setupUserInfo(2,holder,evenementiMission);
+                 }else if (evenementiMission.getTypeNotification().getId() == A3techNotificationType.REPORTATION_MISSION.getId()){
+                     setupUserInfo(1,holder,evenementiMission);
+                 }else if (evenementiMission.getTypeNotification().getId() == A3techNotificationType.CLOTURE_MISSION.getId()){
+                     setupUserInfo(1,holder,evenementiMission);
+                 }
+             }
+         }
 
     }
 
+
+    public void setupUserInfo(int type, SimpleItemVH holder,A3techNotification evenementiMission){
+        switch (type){
+            case 1:
+                try{
+                    holder.respName.setText(evenementiMission.getMission().getClient().getNom().toUpperCase()+" "+evenementiMission.getMission().getClient().getPrenom().toUpperCase().substring(0,1)+".");
+
+                } catch (Exception e){
+                    if(evenementiMission.getMission().getClient() != null && evenementiMission.getMission().getClient().getNom() != null){
+                        holder.respName.setText(evenementiMission.getMission().getClient().getNom().toUpperCase());
+                    }else
+                        holder.respName.setText("");
+                }
+
+                try{
+                    holder.userResponsable.setImageBitmap(new  LetterTileProvider(context).getLetterTile(evenementiMission.getMission().getClient().getNom(), evenementiMission.getMission().getClient().getNom(),140,140));
+                }catch (Exception e){
+                    e.printStackTrace();
+                    holder.userResponsable.setImageBitmap(new  LetterTileProvider(context).getLetterTile("?", "?",140,140));
+                }
+                break;
+            case 2:
+                try{
+                    holder.respName.setText(evenementiMission.getMission().getTechnicien().getNom().toUpperCase()+" "+evenementiMission.getMission().getTechnicien().getPrenom().toUpperCase().substring(0,1)+".");
+
+                } catch (Exception e){
+                    if(evenementiMission.getMission().getTechnicien() != null && evenementiMission.getMission().getTechnicien().getNom() != null){
+                        holder.respName.setText(evenementiMission.getMission().getTechnicien().getNom().toUpperCase());
+                    }else
+                        holder.respName.setText("");
+                }
+
+                try{
+                    holder.userResponsable.setImageBitmap(new  LetterTileProvider(context).getLetterTile(evenementiMission.getMission().getTechnicien().getNom(), evenementiMission.getMission().getTechnicien().getNom(),140,140));
+                }catch (Exception e){
+                    e.printStackTrace();
+                    holder.userResponsable.setImageBitmap(new  LetterTileProvider(context).getLetterTile("?", "?",140,140));
+                }
+                break;
+        }
+    }
     @Override
     public int getItemCount() {
         return listeObjects != null ? listeObjects.size() : 0;
@@ -130,6 +200,7 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
         TextView titreEvenement;
         TextView discreptionEvenement;
         TextView timeEvent;
+        TextView respName;
         RelativeLayout mItemLine;
         CircleImageView userResponsable;
 
@@ -140,6 +211,7 @@ public class SimpleAdapterTimeLine extends RecyclerView.Adapter<SimpleAdapterTim
             mItemLine = (RelativeLayout) itemView.findViewById(R.id.item_line);
             userResponsable = itemView.findViewById(R.id.user_resp);
             timeEvent = itemView.findViewById(R.id.item_time_event);
+            respName = itemView.findViewById(R.id.resp_name);
         }
     }
 

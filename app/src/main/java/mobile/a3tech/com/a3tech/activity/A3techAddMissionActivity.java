@@ -91,8 +91,9 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
         updateAppbarLayout(0);
         getSupportActionBar().setElevation(0);
         if(typeActionAdd == -1){
-            setFragment(A3techSelectCategoryMissionFragment.newInstance(null, null), false, false);
+            setFragment(A3techSelectCategoryMissionFragment.newInstance(null, ""), false, false);
         }else{
+            setFragment(A3techSelectCategoryMissionFragment.newInstance(null, -1), false, false);
 
         }
 
@@ -403,16 +404,16 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
     private void notificiationValidationDemande(final ProgressDialog dialogueWaiting, final A3techMission selectedMission) {
         String commentaire = "";
         if (selectedMission.getCategorie() != null) {
-            commentaire = "Demande validée pour une Mission en  " + selectedMission.getCategorie().getLibelle() + "";
+            commentaire = "Demande Créée pour une Mission en  " + selectedMission.getCategorie().getLibelle() + "";
         } else {
-            commentaire = "Demande validée";
+            commentaire = "Demande Créée";
         }
         A3techNotification notification = NotificationsManager.getNotificationInstance(selectedMission, A3techNotificationType.VALIDATION_MISSION, commentaire, getString(R.string.libelle_creatio_mission));
         NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
 
-                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_validee), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.mission_cree), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

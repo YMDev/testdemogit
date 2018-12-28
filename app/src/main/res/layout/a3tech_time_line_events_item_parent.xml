@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -10,24 +9,22 @@
         android:id="@+id/header_exp_info_mission"
         layout="@layout/a3tech_item_info_mission_header_exp_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:layout_height="wrap_content" />
 
-    <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+   <!-- <com.github.aakira.expandablelayout.ExpandableLinearLayout
         android:id="@+id/expandableLayoutEvents"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:ael_duration="400"
-        app:ael_expanded="false"
-        app:ael_interpolator="accelerate"
-        app:ael_orientation="vertical"
         android:layout_below="@id/header_exp_info_mission"
-       >
+        app:ael_duration="400"
+        app:ael_expanded="true"
+        app:ael_interpolator="accelerate"
+        app:ael_orientation="vertical">
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycle_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
-    </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycle_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"></android.support.v7.widget.RecyclerView>
+    </com.github.aakira.expandablelayout.ExpandableLinearLayout >-->
 </RelativeLayout>

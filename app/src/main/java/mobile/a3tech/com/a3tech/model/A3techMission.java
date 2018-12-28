@@ -1,5 +1,7 @@
 package mobile.a3tech.com.a3tech.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,8 @@ public class A3techMission {
     private Date dateCloture;
     private Double montantFacture;
     private List<A3techEvenementiMission> evenements;
+    @JsonIgnore
+    private List<A3techNotification> notifications;
     private List<A3techMissionDuree> missionDurees;
     private String motifRejet;
     private String motifReport;
@@ -202,6 +206,14 @@ public class A3techMission {
 
     public void setMissionDurees(List<A3techMissionDuree> missionDurees) {
         this.missionDurees = missionDurees;
+    }
+
+    public List<A3techNotification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<A3techNotification> notifications) {
+        this.notifications = notifications;
     }
 
     @Override

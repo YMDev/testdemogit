@@ -31,6 +31,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 
+import mobile.a3tech.com.a3tech.LocationGpsListener;
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.fragment.A3techWelcomHomeFragment;
 import mobile.a3tech.com.a3tech.manager.UserManager;
@@ -148,7 +149,7 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
 
     @Override
     public void startAddMission(int type) {
-        Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techMissionListeActivity.class);
+        Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techAddMissionActivity.class);
         intentAddMissionn.putExtra(TAG_ADD_MISSION_FROM_WELCOM_TYPE, type);
         startActivity(intentAddMissionn);
     }
@@ -213,7 +214,6 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     GPSTracker gps;
 
     private void saveUserNewLocation() {
-
         if (!PermissionsStuffs.canAccessLocation(getActivity())) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 requestPermissions(PermissionsStuffs.INITIAL_PERMS, PermissionsStuffs.INITIAL_REQUEST);

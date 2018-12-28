@@ -3,33 +3,26 @@ package mobile.a3tech.com.a3tech.test;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import net.cachapa.expandablelayout.ExpandableLayout;
 
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
-import mobile.a3tech.com.a3tech.activity.A3techDisplayMissionActivity;
-import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techNotification;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
-import mobile.a3tech.com.a3tech.utils.DateStuffs;
-import mobile.a3tech.com.a3tech.view.A3techTimeLineMissionEventItem;
 
 /**
  * Created by Suleiman on 03/02/17.
@@ -38,25 +31,26 @@ import mobile.a3tech.com.a3tech.view.A3techTimeLineMissionEventItem;
 public class SimpleAdapterNotifications extends RecyclerView.Adapter<SimpleAdapterNotifications.SimpleItemVH> {
 
     //  Data
-    private List<A3techMission> listeObjects = new ArrayList<>();
+    private   List<A3techMission>  listeObjects;
 
     private Context context;
     private Activity parentActivity;
+    private List<A3techNotification> evenementiMission;
+    private A3techMission currentMission;
+
+
 
     public SimpleAdapterNotifications(Context context) {
         this.context = context;
     }
 
-    public SimpleAdapterNotifications(Context context, List objectMenu, Activity parent) {
+    public SimpleAdapterNotifications(Context context,  List<A3techMission> listeMissions, Activity parent) {
         this.context = context;
-        listeObjects = objectMenu;
+        listeObjects = listeMissions;
         parentActivity = parent;
     }
 
-    public void addMissionb(A3techMission missionV) {
-        this.listeObjects.add(missionV);
-        this.notifyDataSetChanged();
-    }
+
 
 
     @Override
@@ -71,21 +65,50 @@ public class SimpleAdapterNotifications extends RecyclerView.Adapter<SimpleAdapt
     public void onBindViewHolder(final SimpleItemVH holder, int position) {
         final A3techMission missionTmp = listeObjects.get(position);
         if (missionTmp == null) return;
-        NotificationsManager.getInstance().filtreNotificationByMission(missionTmp, "0", "0", new DataLoadCallback() {
+        holder.setIsRecyclable(false);
+        holder.indicatorExpandableLayout.setImageDrawable(context.getResources().getDrawable(R.drawable.a3tech_exp_expand));
+        holder.layoutJeader.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void dataLoaded(Object data, int method, int typeOperation) {
-                holder.itemNotification.initDataMission(missionTmp,(List<A3techNotification>) data);
-                holder.itemNotification.setExpandableLayoutInRecycleView(Boolean.TRUE);
-            }
-
-            @Override
-            public void dataLoadingError(int errorCode) {
-                holder.itemNotification.setExpandableLayoutInRecycleView(Boolean.TRUE);
-                holder.itemNotification.initDataMission(missionTmp,new ArrayList<>());
+            public void onClick(View view) {
+                holder.expandableLayout.toggle();
+                if(!holder.expandableLayout.isExpanded()){
+                    holder.indicatorExpandableLayout.setImageDrawable(context.getResources().getDrawable(R.drawable.a3tech_exp_collapse));
+                }else{
+                    holder.recyclerViewEvents.setVisibility(View.GONE);
+                    holder.waitingBar.setVisibility(View.VISIBLE);
+                    NotificationsManager.getInstance().filtreNotificationByMission(missionTmp, "0", "0", new DataLoadCallback() {
+                        @Override
+                        public void dataLoaded(Object data, int method, int typeOperation) {
+                            List<A3techNotification> listeNotifs =  (List<A3techNotification>) data;
+                            evenementiMission = listeNotifs;
+                            SimpleAdapterTimeLine adapter = new SimpleAdapterTimeLine(context,evenementiMission,(Activity)context);
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(context.getApplicationContext());
+                            holder.recyclerViewEvents.setLayoutManager(mLayoutManager);
+                            holder.recyclerViewEvents.setItemAnimator(new DefaultItemAnimator());
+                            holder.recyclerViewEvents.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+                            holder.recyclerViewEvents.setVisibility(View.VISIBLE);
+                            holder.waitingBar.setVisibility(View.GONE);
+                        }
+                        @Override
+                        public void dataLoadingError(int errorCode) {
+                            holder.recyclerViewEvents.setVisibility(View.VISIBLE);
+                            holder.waitingBar.setVisibility(View.GONE);
+                        }
+                    });
+                    holder.indicatorExpandableLayout.setImageDrawable(context.getResources().getDrawable(R.drawable.a3tech_exp_expand));
+                }
             }
         });
+        currentMission = missionTmp;
+        holder.titreMission.setText(currentMission.getTitre());
+        holder.adresseMission.setText(currentMission.getAdresse());
+        holder.statutMission.setText(currentMission.getStatut().getDiscreptionEnum());
+
+
 
     }
+
 
     @Override
     public int getItemCount() {
@@ -94,11 +117,24 @@ public class SimpleAdapterNotifications extends RecyclerView.Adapter<SimpleAdapt
 
 
     protected static class SimpleItemVH extends RecyclerView.ViewHolder {
-        A3techTimeLineMissionEventItem itemNotification;
-
+        private ExpandableLayout expandableLayout;
+        private RecyclerView recyclerViewEvents;
+        private TextView statutMission, titreMission, adresseMission;
+        private RelativeLayout layoutJeader;
+        private ImageView indicatorExpandableLayout;
+        private ProgressBar waitingBar;
         public SimpleItemVH(View itemView) {
             super(itemView);
-            itemNotification = itemView.findViewById(R.id.item_notifcation);
+            expandableLayout = itemView.findViewById(R.id.expandableLayoutEvents);
+            expandableLayout.collapse();
+            expandableLayout.setDuration(230);
+            statutMission = itemView.findViewById(R.id.statut_mission_exp);
+            titreMission = itemView.findViewById(R.id.title_mission);
+            adresseMission = itemView.findViewById(R.id.adresse_alpha);
+            recyclerViewEvents = itemView.findViewById(R.id.recycle_events);
+            layoutJeader = itemView.findViewById(R.id.header_exp_info_mission);
+            indicatorExpandableLayout = itemView.findViewById(R.id.anchor_indicator_exp);
+            waitingBar = itemView.findViewById(R.id.waiting_for_notifs);
         }
     }
 

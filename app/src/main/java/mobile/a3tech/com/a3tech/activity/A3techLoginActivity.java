@@ -392,12 +392,20 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
                 public void dataLoadingError(int errorCode) {
                     if (dialog != null) dialog.dismiss();
                     // A3techCustomToastDialog.createToastDialog(A3techLoginActivity.this, getString(R.string.error_connexion_server), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
-                    final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) A3techLoginActivity.this
-                            .findViewById(android.R.id.content)).getChildAt(0);
-                    Snackbar
-                            .make(viewGroup, getString(R.string.error_connexion_server),
-                                    Snackbar.LENGTH_LONG)
-                            .show();
+                  if(errorCode == Constant.ERROR_USER_NOT_FOUND){
+
+                  }else if(errorCode == Constant.ERROR_USER_DISABLED){
+
+                  }else{
+                      final ViewGroup viewGroup = (ViewGroup) ((ViewGroup) A3techLoginActivity.this
+                              .findViewById(android.R.id.content)).getChildAt(0);
+                      Snackbar
+                              .make(viewGroup, getString(R.string.error_connexion_server),
+                                      Snackbar.LENGTH_LONG)
+                              .show();
+                  }
+
+
                 }
             });
 
@@ -407,7 +415,7 @@ public class A3techLoginActivity extends BaseActivity implements DataLoadCallbac
             // NOTE: don't forget to log out the user.
             //restart this activity
            // A3techCustomToastDialog.createSnackBar(A3techLoginActivity.this, getString(R.string.error_auth_email_not_verified), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
-            SimpleDialog.build().msg(R.string.mail_non_verifie).pos(R.string.verify).neg(R.string.cancel).theme(R.style.SimpleDialogThemeProfile).show(A3techLoginActivity.this, "MAIL_VERIF");
+            SimpleDialog.build().msg(R.string.mail_non_verifie).neg(R.string.cancel).theme(R.style.SimpleDialogThemeProfile).show(A3techLoginActivity.this, "MAIL_VERIF");
             if (dialog != null) dialog.dismiss();
         }
     }

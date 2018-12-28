@@ -37,6 +37,11 @@ public class PreferencesValuesUtils {
         String jsonuserConnected = PreferencesValuesUtils.getPreferenceStringByParam(context, PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, "");
         return new Gson().fromJson(jsonuserConnected, A3techUser.class);
     }
+    public static A3techUser getConnectedUser(Context context) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+        String jsonuserConnected = prefs.getString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, "");
+        return new Gson().fromJson(jsonuserConnected, A3techUser.class);
+    }
     public static A3techUser setConnectedUser(Activity context, A3techUser user) {
         final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
                 context.getApplicationContext()).edit();
@@ -45,7 +50,13 @@ public class PreferencesValuesUtils {
         return user;
     }
 
-
+    public static A3techUser setConnectedUser(Context context, A3techUser user) {
+        final SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(
+                context.getApplicationContext()).edit();
+        editor.putString(PreferencesValuesUtils.KEY_CONNECTED_USER_GSON, new Gson().toJson(user));
+        editor.commit();
+        return user;
+    }
 
     public static Boolean isUserConnectedTechnicien(Activity activity){
         A3techUser userconnectyed = getConnectedUser(activity);

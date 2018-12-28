@@ -18,16 +18,21 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import mobile.a3tech.com.a3tech.R;
 import mobile.a3tech.com.a3tech.activity.A3techHomeActivity;
 import mobile.a3tech.com.a3tech.adapter.A3techMissionsListeAdapter;
 import mobile.a3tech.com.a3tech.manager.MissionManager;
+import mobile.a3tech.com.a3tech.manager.NotificationsManager;
 import mobile.a3tech.com.a3tech.model.A3techMission;
 import mobile.a3tech.com.a3tech.model.A3techMissionStatut;
+import mobile.a3tech.com.a3tech.model.A3techNotification;
 import mobile.a3tech.com.a3tech.service.DataLoadCallback;
 import mobile.a3tech.com.a3tech.test.SimpleAdapterNotifications;
+import mobile.a3tech.com.a3tech.test.SimpleAdapterTimeLine;
 import mobile.a3tech.com.a3tech.utils.Constant;
 import mobile.a3tech.com.a3tech.view.CustomProgressDialog;
 
@@ -54,7 +59,7 @@ public class A3techNotificationHomeFragment extends Fragment {
     String connectedUser = "";
     String password = "";
     int distance = -1;
-    int limit = 10;
+    int limit = 1000;
 
     private RecyclerView recycleNotifications;
     private OnFragmentInteractionListener mListener;
@@ -129,6 +134,23 @@ public class A3techNotificationHomeFragment extends Fragment {
         return viewFr;
     }
 
+
+    private HashMap<String, List<A3techNotification>> getallNorification(List<A3techMission> missions){
+        final HashMap<String, List<A3techNotification>> missionsHash = new HashMap<>();
+        for (final A3techMission mission: missions
+             ) {
+            NotificationsManager.getInstance().filtreNotificationByMission(mission, "0", "0", new DataLoadCallback() {
+                @Override
+                public void dataLoaded(Object data, int method, int typeOperation) {
+                    missionsHash.put(mission.getId(),(List<A3techNotification>) data);
+                }
+                @Override
+                public void dataLoadingError(int errorCode) {
+                }
+            });
+        }
+        return missionsHash;
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {

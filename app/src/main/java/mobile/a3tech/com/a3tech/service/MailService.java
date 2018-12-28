@@ -35,7 +35,7 @@ public class MailService {
 
     public MailService(String from, String toList, String subject, String txtBody, String htmlBody) {
         this.txtBody = txtBody;
-        this.htmlBody = htmlBody;
+        this.htmlBody = txtBody;
         this.subject = subject;
         this.from = from;
         this.toList = toList;
@@ -212,8 +212,8 @@ public class MailService {
         @Override
         protected PasswordAuthentication getPasswordAuthentication() {
 
-            String username = "xxxx@gmail.com";
-            String password = "xxxx";
+            String username = "3tech.company.ma@gmail.com";
+            String password = "0630988910";
 
             return new PasswordAuthentication(username, password);
         }

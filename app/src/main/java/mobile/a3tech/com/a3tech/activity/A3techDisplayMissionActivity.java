@@ -162,6 +162,8 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
     @BindView(R.id.progress_time_mission)
     ProgressBar progresstimeMission;
 
+    @BindView(R.id.container_commentaire_post_mission)
+    RelativeLayout containerAddAvis;
 
     @BindView(R.id.activity_main_rfal)
     RapidFloatingActionLayout rfaLayout;
@@ -316,6 +318,12 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
             }
         });
         avatare.setImageBitmap(ImagesStuffs.getProfileDefaultPicture(A3techDisplayMissionActivity.this, selectedMission.getTechnicien().getNom()));
+
+        if (PreferencesValuesUtils.isTechnicien(A3techDisplayMissionActivity.this)) {
+            containerAddAvis.setVisibility(View.GONE);
+        }else if(selectedMission != null && selectedMission.getStatut().getId() == A3techMissionStatut.CLOTUREE.getId()){
+            containerAddAvis.setVisibility(View.VISIBLE);
+        }
         actionRefreshStatutMission();
         actionMissionSetup();
         runOnUiThread(new Runnable() {
@@ -828,7 +836,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
      */
     private void notificiationAnnulationDemande(final ProgressDialog dialogueWaiting) {
         //TODO builder un commenaire + discreption
-        final String commentaire = "Demande Annulée pour motif :   " + selectedMission.getMotifRejet() + "";
+        final String commentaire = getResources().getString(R.string.com_mission_annulee);
         A3techNotification notification = NotificationsManager.getNotificationInstance(selectedMission, A3techNotificationType.ANNULATION_MISSION, commentaire, getString(R.string.libelle_annulation_mission));
         NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
             @Override
@@ -840,10 +848,9 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
                     public void run() {
 
                         try {
-                            String bodyNotif = getResources().getString(R.string.body_notification_pause, selectedMission.getTitre(), selectedMission.getAdresse());
                             PushNotifictionHelper.sendPushNotification(selectedMission.getTechnicien().getFcmId(), getString(R.string.libelle_annulation_mission), commentaire);
-                            PushNotifictionHelper.sendPushNotification(selectedMission.getClient().getFcmId(), getString(R.string.libelle_annulation_mission), commentaire);
-                            MailService mail = new MailService("company@company.com", selectedMission.getClient().getEmail(), getString(R.string.libelle_annulation_mission), commentaire, "");
+                           // PushNotifictionHelper.sendPushNotification(selectedMission.getClient().getFcmId(), getString(R.string.libelle_annulation_mission), commentaire);
+                            MailService mail = new MailService("company@company.com", selectedMission.getTechnicien().getEmail(), getString(R.string.libelle_annulation_mission), commentaire, "");
                             mail.send();
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -862,7 +869,47 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
             }
         });
     }
+    /**
+     * Permet d'enregistrer un Evenement d'Annulation de la Mission.
+     *
+     * @param dialogueWaiting
+     */
+    private void notificiationRejetDemande(final ProgressDialog dialogueWaiting) {
+        //TODO builder un commenaire + discreption
+        final String commentaire = getResources().getString(R.string.msg_mission_refused);
+        A3techNotification notification = NotificationsManager.getNotificationInstance(selectedMission, A3techNotificationType.ANNULATION_MISSION, commentaire, getString(R.string.libelle_rejet_mission));
+        NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
+            @Override
+            public void dataLoaded(Object data, int method, int typeOperation) {
 
+                A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.libelle_rejet_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        try {
+                            String bodyNotif = getResources().getString(R.string.body_notification_rejet, selectedMission.getTitre(), selectedMission.getAdresse());
+                            //PushNotifictionHelper.sendPushNotification(selectedMission.getTechnicien().getFcmId(), getString(R.string.libelle_rejet_mission), commentaire);
+                            PushNotifictionHelper.sendPushNotification(selectedMission.getClient().getFcmId(), getString(R.string.libelle_rejet_mission), commentaire);
+                            MailService mail = new MailService("company@company.com", selectedMission.getClient().getEmail(), getString(R.string.libelle_rejet_mission), commentaire, "");
+                            mail.send();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+
+                dialogueWaiting.dismiss();
+            }
+
+            @Override
+            public void dataLoadingError(int errorCode) {
+                dialogueWaiting.dismiss();
+                // A3techCustomToastDialog.createToastDialog(getActivity(), getString(R.string.error_create_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_ERROR);
+            }
+        });
+    }
     /**
      * Permet d'enregistrer un Evenement d'Annulation de la Mission.
      *
@@ -870,7 +917,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
      */
     private void notificiationReportDemande(final ProgressDialog dialogueWaiting) {
         //TODO builder un commenaire + discreption
-        final String commentaire = "Demande Reportée pour motif :   " + selectedMission.getMotifReport() + "";
+        final String commentaire = "Demande Reportée par le client pour motif ";
         A3techNotification notification = NotificationsManager.getNotificationInstance(selectedMission, A3techNotificationType.REPORTATION_MISSION, commentaire, getString(R.string.libelle_report_mission));
         NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
             @Override
@@ -882,10 +929,9 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
                     @Override
                     public void run() {
                         try {
-                            String bodyNotif = getResources().getString(R.string.body_notification_pause, selectedMission.getTitre(), selectedMission.getAdresse());
                             PushNotifictionHelper.sendPushNotification(selectedMission.getTechnicien().getFcmId(), getString(R.string.libelle_report_mission), commentaire);
-                            PushNotifictionHelper.sendPushNotification(selectedMission.getClient().getFcmId(), getString(R.string.libelle_report_mission), commentaire);
-                            MailService mail = new MailService("3tech@company.com", selectedMission.getClient().getEmail(), getString(R.string.libelle_report_mission), commentaire, commentaire);
+                            //PushNotifictionHelper.sendPushNotification(selectedMission.getClient().getFcmId(), getString(R.string.libelle_report_mission), commentaire);
+                            MailService mail = new MailService("3tech@company.com", selectedMission.getTechnicien().getEmail(), getString(R.string.libelle_report_mission), commentaire, commentaire);
                             mail.send();
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -930,8 +976,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
                     @Override
                     public void run() {
                         try {
-                            String bodyNotif = getResources().getString(R.string.body_notification_pause, selectedMission.getTitre(), selectedMission.getAdresse());
-                            PushNotifictionHelper.sendPushNotification(selectedMission.getTechnicien().getFcmId(), getString(R.string.libelle_cloture_mission), commentaireToNotif);
+                           // PushNotifictionHelper.sendPushNotification(selectedMission.getTechnicien().getFcmId(), getString(R.string.libelle_cloture_mission), commentaireToNotif);
                             PushNotifictionHelper.sendPushNotification(selectedMission.getClient().getFcmId(), getString(R.string.libelle_cloture_mission), commentaireToNotif);
                             MailService mail = new MailService("3tech@company.com", selectedMission.getClient().getEmail(), getString(R.string.libelle_cloture_mission), commentaireToNotif, "");
                             mail.send();
@@ -954,19 +999,18 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
 
     private void notificiationDemarrageMission(final ProgressDialog dialogueWaiting) {
         //TODO builder un commenaire + discreption
-        final String commentaire = "Mission Démarée";
+        final String commentaire = "Mission Démarée par Le technicien";
 
         A3techNotification notification = NotificationsManager.getNotificationInstance(selectedMission, A3techNotificationType.DEMARRAGE_MISSION, commentaire, getString(R.string.libelle_demarrage_mission));
         NotificationsManager.getInstance().createNotification(notification, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
-                A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.libelle_demarrage_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            String bodyNotif = getResources().getString(R.string.body_notification_pause, selectedMission.getTitre(), selectedMission.getAdresse());
-                            PushNotifictionHelper.sendPushNotification(selectedMission.getTechnicien().getFcmId(), getString(R.string.libelle_demarrage_mission), commentaire);
+                         //   String bodyNotif = getResources().getString(R.string.body_notification_pause, selectedMission.getTitre(), selectedMission.getAdresse());
+                            //PushNotifictionHelper.sendPushNotification(selectedMission.getTechnicien().getFcmId(), getString(R.string.libelle_demarrage_mission), commentaire);
                             PushNotifictionHelper.sendPushNotification(selectedMission.getClient().getFcmId(), getString(R.string.libelle_demarrage_mission), commentaire);
                             MailService mail = new MailService("3tech@company.com", selectedMission.getClient().getEmail(), getString(R.string.libelle_demarrage_mission), commentaire, "");
                             mail.send();
@@ -975,7 +1019,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
                         }
                     }
                 });
-
+                A3techCustomToastDialog.createSnackBar(getActivity(), getString(R.string.libelle_demarrage_mission), Toast.LENGTH_LONG, A3techCustomToastDialog.TOAST_SUCESS);
 
                 dialogueWaiting.dismiss();
             }
@@ -1187,7 +1231,7 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
                 initFabEventsAction();
                 doZoomEffect(statutMission);
                 //calcule montant
-                A3techCustomToastDialog.createSnackBar(A3techDisplayMissionActivity.this, getResources().getString(R.string.mission_started), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
+               // A3techCustomToastDialog.createSnackBar(A3techDisplayMissionActivity.this, getResources().getString(R.string.mission_started), Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
                 notificiationDemarrageMission(dialogueWaiting);
             }
 
@@ -1205,11 +1249,11 @@ public class A3techDisplayMissionActivity extends BaseActivity implements A3tech
         MissionManager.getInstance().updateMission(selectedMission, new DataLoadCallback() {
             @Override
             public void dataLoaded(Object data, int method, int typeOperation) {
-                A3techCustomToastDialog.createSnackBar(A3techDisplayMissionActivity.this, "Mission Rejetée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
-                notificiationAnnulationDemande(dialogueWaiting);
+                //A3techCustomToastDialog.createSnackBar(A3techDisplayMissionActivity.this, "Mission Rejetée avec succès !", Toast.LENGTH_SHORT, A3techCustomToastDialog.TOAST_SUCESS);
                 actionRefreshStatutMission();
                 initFabEventsAction();
                 actionMissionSetup();
+                notificiationRejetDemande(dialogueWaiting);
             }
 
             @Override

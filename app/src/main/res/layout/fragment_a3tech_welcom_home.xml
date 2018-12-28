@@ -30,35 +30,33 @@
         </android.support.design.widget.AppBarLayout>
 
 
-
         <TextView
             android:id="@+id/tech_name_welcom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/appbar_display_dispo"
             android:layout_centerHorizontal="true"
-            android:textAlignment="center"
             android:layout_marginTop="10dp"
-            android:fontFamily="sans-serif-meduim"
-            android:text="Mouad BHJ"
-            android:textColor="@color/white"
-            android:textSize="24dp"
-            android:textStyle="bold"
             android:padding="2dp"
             android:shadowColor="@color/white"
             android:shadowDx="2"
             android:shadowDy="2"
-            android:shadowRadius="0.8" />
+            android:shadowRadius="0.8"
+            android:text="Mouad BHJ"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="24dp"
+            android:textStyle="bold" />
 
         <com.gauravbhola.ripplepulsebackground.RipplePulseLayout
             android:id="@+id/layout_ripplepulse"
-            android:layout_width="190dp"
-            android:layout_height="190dp"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
             android:layout_below="@+id/tech_name_welcom"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:clipChildren="false"
-            app:duration="1000"
+            app:duration="800"
             app:endRadius="80dp"
             app:rippleColor="@color/white"
             app:rippleType="fill"
@@ -189,7 +187,7 @@
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="130dp"
             android:layout_below="@+id/view_under_logo"
             android:id="@+id/logo_center"
             android:scaleType="centerCrop"
@@ -218,18 +216,28 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:src="@drawable/icon_params_welcom"
-                    android:tint="@color/white" />
+               />
             </RelativeLayout>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/container_image_setting"
-                    android:layout_centerHorizontal="true"
-                    android:fontFamily="sans-serif-meduim"
-                    android:text="Paramétrage"
-                    android:textColor="@color/white"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
+               <android.support.v7.widget.CardView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_below="@id/container_image_setting"
+                   android:layout_centerHorizontal="true"
+                   app:cardBackgroundColor="@color/colorPrimary"
+                   app:cardCornerRadius="3dp">
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:paddingLeft="5dp"
+                       android:paddingRight="5dp"
+                       android:paddingBottom="2dp"
+                       android:paddingTop="2dp"
+                       android:fontFamily="sans-serif-meduim"
+                       android:text="Paramétrage"
+                       android:textColor="@color/white"
+                       android:textSize="14dp"
+                       android:textStyle="bold" />
+               </android.support.v7.widget.CardView>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -248,18 +256,28 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:src="@drawable/icon_compte_welcom"
-                    android:tint="@color/white" />
+                      />
             </RelativeLayout>
-                <TextView
+                <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/container_image_account"
                     android:layout_centerHorizontal="true"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="3dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-meduim"
                     android:text="Compte"
                     android:textColor="@color/white"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"/>
+                </android.support.v7.widget.CardView>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -279,20 +297,29 @@
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
                         android:src="@drawable/icon_missions_welcom"
-                        android:tint="@color/white"
-                        android:background="@color/transparent"/>
+                         />
 
                 </RelativeLayout>
-                <TextView
+                <android.support.v7.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/container_image_browse"
                     android:layout_centerHorizontal="true"
+                    app:cardBackgroundColor="@color/colorPrimary"
+                    app:cardCornerRadius="3dp">>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-meduim"
                     android:text="Mes Missions"
                     android:textColor="@color/white"
-                    android:textSize="16dp"
-                    android:textStyle="bold" />
+                    android:textSize="14dp"
+                    android:textStyle="bold"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="2dp"
+                    android:paddingTop="2dp"/>
+                </android.support.v7.widget.CardView>
             </RelativeLayout>
 
 

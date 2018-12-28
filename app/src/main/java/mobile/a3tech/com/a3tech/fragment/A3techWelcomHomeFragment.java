@@ -152,7 +152,7 @@ public class A3techWelcomHomeFragment extends Fragment {
                     if(userFirebase.getTypeUser() != null && userFirebase.getTypeUser().getId() == A3techUserType.CLIENT.getId()){
                         mListener.startAddMission();
                     }else{
-                        mListener.startAddMission();
+                        mListener.startBrowseEents();
                     }
 
                 }

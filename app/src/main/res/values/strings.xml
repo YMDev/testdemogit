@@ -860,4 +860,10 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="mission_closed">Mission clôturée avec succès</string>
     <string name="mission_closed_sub_msg">Nous vous remercions pour votre Collaboration, ci-dessus vous trouvez le montant à demander au client</string>
     <string name="bienvenue">Bienvenue</string>
+    <string name="msg_mission_refused">Mission Rejetée par le technicien</string>
+    <string name="libelle_rejet_mission">Mission Rejetée</string>
+    <string name="body_notification_rejet">Bonjour, Le technicien a rejeté votre demande de Mission : %1$s  à l\'adresse suivante %2$s .</string>
+    <string name="com_mission_annulee">Mission Annulée par le client</string>
+    <string name="erro_location_not_available">Service de Localisation n\'est pas disponible, prière de réssayer à nouveau.</string>
+
 </resources>

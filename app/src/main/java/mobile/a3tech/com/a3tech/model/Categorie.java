@@ -11,6 +11,8 @@ public class Categorie implements Parcelable {
 	private String service;
 	private String srvcType  ;
 
+	private String code;
+
 	private boolean selected;
 	private String libelle;
 	private String logo;
@@ -147,4 +149,11 @@ public class Categorie implements Parcelable {
 		return 0;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
 }
