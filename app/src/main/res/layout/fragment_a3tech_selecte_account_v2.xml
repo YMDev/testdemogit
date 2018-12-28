@@ -31,7 +31,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/header_select_account_creation_methode"
             android:layout_marginLeft="40dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginRight="40dp"
             app:cardCornerRadius="5dp"
             app:cardElevation="2dp"
             app:cardBackgroundColor="@color/dark_bleu_gray"

@@ -148,12 +148,12 @@
     <color name="info_toast_color">#585dfa</color>
 
 
-    <color name="light_bleu_gray">#ff435e6c</color>
-    <color name="dark_bleu_gray">#ff2a4959</color>
-    <color name="back_color">#FF286F95</color>
+    <color name="light_bleu_gray">#FF32769F</color>
+    <color name="dark_bleu_gray">#FF32769F</color>
+    <color name="back_color">#FF32769F</color>
 
-    <color name="colorPrimary">#FF286F95</color>
-    <color name="colorPrimaryDark">#ff2a4959</color>
+    <color name="colorPrimary">#FF32769F</color>
+    <color name="colorPrimaryDark">#FF3379A3</color>
 
 
     <color name="disabled_gray">#FF999999</color>

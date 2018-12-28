@@ -86,15 +86,21 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
     }
 
     private void initiInterfaceActivity() {
+        getExtratData();
         bindComponents();
         updateAppbarLayout(0);
         getSupportActionBar().setElevation(0);
-        setFragment(A3techSelectCategoryMissionFragment.newInstance(null, null), false, false);
-        getExtratData();
+        if(typeActionAdd == -1){
+            setFragment(A3techSelectCategoryMissionFragment.newInstance(null, null), false, false);
+        }else{
+
+        }
+
+
     }
 
     Boolean isFromWelcom = Boolean.FALSE;
-
+    Integer typeActionAdd = -1;
     private void getExtratData() {
         Bundle b = getIntent().getExtras();
         if (b != null) {
@@ -104,6 +110,9 @@ public class A3techAddMissionActivity extends BaseActivity implements A3techSele
             } else {
                 isFromWelcom = Boolean.FALSE;
             }
+
+              typeActionAdd = b.getInt(A3techWelcomPageActivity.TAG_ADD_MISSION_FROM_WELCOM_TYPE);
+
         }
     }
 

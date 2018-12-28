@@ -17,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,10 +49,18 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     public static final String TAG_WELCOM_ACCOUNT = "TAG_WELCOM_ACCOUNT";
     public static final String TAG_WELCOM_BROWSE = "TAG_WELCOM_BROWSE";
     public static final String KEY_WELCOM_BROWSE_OR_ACCOUNT = "KEY_WELCOM_BROWSE_OR_ACCOUNT";
+    public static final String TAG_ADD_MISSION_FROM_WELCOM_TYPE = "TAG_ADD_MISSION_FROM_WELCOM_TYPE";
+    public static final int TYPE_CLIM = 0;
+    public static final int TYPE_PLOM = 1;
+    public static final int TYPE_ELEC = 2;
+    public static final int TYPE_DEP = 3;
     RelativeLayout networkOn, networkDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a3tech_welcom_page_activity);
         networkDown = findViewById(R.id.network_down);
@@ -133,6 +143,13 @@ public class A3techWelcomPageActivity extends BaseActivity implements A3techWelc
     @Override
     public void startBrowseEents() {
         Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techMissionTimeLineActivity.class);
+        startActivity(intentAddMissionn);
+    }
+
+    @Override
+    public void startAddMission(int type) {
+        Intent intentAddMissionn = new Intent(A3techWelcomPageActivity.this, A3techMissionListeActivity.class);
+        intentAddMissionn.putExtra(TAG_ADD_MISSION_FROM_WELCOM_TYPE, type);
         startActivity(intentAddMissionn);
     }
 

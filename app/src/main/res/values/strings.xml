@@ -859,4 +859,5 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="msg_accepter_mission">Voulez-vous accepter de prendre en charge cette mission ?</string>
     <string name="mission_closed">Mission clôturée avec succès</string>
     <string name="mission_closed_sub_msg">Nous vous remercions pour votre Collaboration, ci-dessus vous trouvez le montant à demander au client</string>
+    <string name="bienvenue">Bienvenue</string>
 </resources>

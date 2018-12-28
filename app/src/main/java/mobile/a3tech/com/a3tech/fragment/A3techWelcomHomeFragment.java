@@ -89,12 +89,45 @@ public class A3techWelcomHomeFragment extends Fragment {
         RelativeLayout containerBrowse = viewFr.findViewById(R.id.container_image_browse);
         RelativeLayout containerSetting = viewFr.findViewById(R.id.container_image_account);
 
-        TextView welcomMessage = viewFr.findViewById(R.id.welcom_message_under_action);
+        RelativeLayout containerImgClim = viewFr.findViewById(R.id.container_img_clim);
+        RelativeLayout containerImgPlom = viewFr.findViewById(R.id.container_img_plombier);
+        RelativeLayout containerImgDep = viewFr.findViewById(R.id.container_img_depanage);
+        RelativeLayout containerImgElec = viewFr.findViewById(R.id.container_img_tri);
+
+
+        containerImgClim.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickActions(A3techWelcomPageActivity.TYPE_CLIM);
+            }
+        });
+
+        containerImgPlom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickActions(A3techWelcomPageActivity.TYPE_PLOM);
+            }
+        });
+
+        containerImgDep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickActions(A3techWelcomPageActivity.TYPE_DEP);
+            }
+        });
+
+        containerImgElec.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                clickActions(A3techWelcomPageActivity.TYPE_ELEC);
+            }
+        });
+        /*TextView welcomMessage = viewFr.findViewById(R.id.welcom_message_under_action);
         if(userFirebase.getTypeUser() != null && userFirebase.getTypeUser().getId() == A3techUserType.CLIENT.getId()){
             welcomMessage.setText(getResources().getString(R.string.need_a_tech));
         }else{
             welcomMessage.setText(getResources().getString(R.string.display_evenements));
-        }
+        }*/
 
         welcomUserName = viewFr.findViewById(R.id.tech_name_welcom);
 
@@ -155,6 +188,12 @@ public class A3techWelcomHomeFragment extends Fragment {
 
 
 
+    private void clickActions(int type){
+        if(mListener != null){
+            mListener.startAddMission(type);
+        }
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -196,5 +235,6 @@ public class A3techWelcomHomeFragment extends Fragment {
         void startBrowse();
         void startAccount();
         void startBrowseEents();
+        void startAddMission(int type);
     }
 }

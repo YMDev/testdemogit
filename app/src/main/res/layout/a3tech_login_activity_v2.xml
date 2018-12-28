@@ -5,20 +5,29 @@
     android:id="@+id/about_dados"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/a3tech_background_login">
+    android:background="@drawable/baground">
 
     <ImageView
         android:id="@+id/logo_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
         android:layout_alignParentTop="true"
-        android:src="@drawable/a3tech_logo_back" />
+        android:src="@drawable/a3tech_logo_white" />
+
+
+    <View
+        android:id="@+id/view_under_logo"
+        android:layout_width="match_parent"
+        android:layout_below="@id/logo_header"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="2dp" />
 
     <RelativeLayout
         android:id="@+id/container_edit_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/logo_header">
+        android:layout_below="@id/view_under_logo">
 
 
         <android.support.v7.widget.CardView
@@ -50,11 +59,13 @@
                     android:layout_height="50dp"
                     android:layout_gravity="top"
                     android:background="@color/white"
-                    android:backgroundTint="@color/light_bleu_gray"
+                    android:backgroundTint="@color/colorPrimary"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:hint="@string/hint_username_log"
                     android:inputType="textEmailAddress"
+                    android:drawableLeft="@drawable/a3tech_email_icon_signup"
+                    android:drawablePadding="20dp"
                     android:padding="8dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
@@ -73,11 +84,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_gravity="bottom"
-                    android:background="@color/light_bleu_gray"
+                    android:background="@color/colorPrimary"
                     android:focusable="true"
                     android:focusableInTouchMode="true"
                     android:hint="@string/hint_passwor_log_in"
                     android:inputType="textPassword"
+                    android:drawableLeft="@drawable/a3tech_password_icon_signup"
+                    android:drawablePadding="20dp"
                     android:padding="8dp"
                     android:textColor="@color/white"
                     android:textColorHint="@color/white"
@@ -102,7 +115,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            app:cardBackgroundColor="@color/dark_bleu_gray"
+            app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="5dp"
             app:cardElevation="2dp">
 
@@ -116,11 +129,11 @@
                     android:id="@+id/btn_start_connexion"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
-                    android:background="@color/dark_bleu_gray"
+                    android:background="@color/white"
                     android:padding="8dp"
                     android:text="@string/connexion"
                     android:textAllCaps="false"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimary"
                     android:textSize="16dp"
                     android:textStyle="bold" />
 
@@ -186,7 +199,8 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/signin_social_media"
                 android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="18dp"
+                android:textStyle="bold"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -194,29 +208,29 @@
                 android:layout_below="@id/signin_social_media"
                 android:layout_centerHorizontal="true"
 
-                android:layout_marginTop="5dp">
+                android:layout_marginTop="10dp">
 
                 <ImageView
                     android:id="@+id/facebook_signin_btn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/fb" />
+                    android:src="@drawable/icon_fb" />
 
                 <ImageView
                     android:id="@+id/gplus_signin_btn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_marginRight="20dp"
                     android:layout_toRightOf="@id/facebook_signin_btn"
-                    android:src="@drawable/google_plus" />
+                    android:src="@drawable/icon_gm" />
 
                 <ImageView
                     android:id="@+id/twitter_signin_btn"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:layout_toRightOf="@id/gplus_signin_btn"
-                    android:src="@drawable/twitter" />
+                    android:src="@drawable/icon_twitt" />
             </RelativeLayout>
 
         </RelativeLayout>

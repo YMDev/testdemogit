@@ -10,7 +10,7 @@
         android:id="@+id/container_home_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/back_techniciens_6">
+        >
         <TextView
             android:id="@+id/welcom_title"
             android:layout_width="wrap_content"
